@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html data-revision="$Revision: 8891 $" lang="en-GB-x-hixie"><head><meta charset="utf-8"><title>References | HTML 5.1</title><style>/* WHAT 1 */
+[hidden] { display: none; }
+
+.proposal { border: blue solid; padding: 1em; }
+.bad, .bad *:not(.X\58X) { color: gray; border-color: gray; background: transparent; }
+#updatesStatus { display: none; z-index: 10; }
+#updatesStatus.relevant { display: block; position: fixed; right: 1em; top: 1em; padding: 0.5em; font: bold small sans-serif; min-width: 25em; width: 30%; max-width: 40em; height: auto; border: ridge 4px gray; background: #EEEEEE; color: black; }
+div.head .logo { width: 11em; margin-bottom: 20em; }
+
+@media print { #configUI, #alert { display: none; } }
+
+.fingerprint { position: absolute; right: 0; z-index: 5; }
+
+.panel { position: fixed; z-index: 30; top: 10%; left: 0; margin: auto; right: 0; width: 35em; border: double thick; background: #EEEEEE; color: black; padding: 1em; font: 1em sans-serif; max-height: 70%; overflow: auto; }
+.panel h2 { margin: 0; text-align: center; }
+.panel ul { min-height: 6em; }
+.panel p { text-align: right; margin: 0; }
+.panel form { background: transparent; color: black; margin: 0.5em -0.5em 1em; padding: 0.5em; }
+.panel form.changed { background: yellow; color: black; }
+.panel form p { text-align: left; margin: 1em 0 0; }
+.panel form p:first-child { margin-top: 0; }
+.panel form p:last-child { margin-bottom: 0; }
+.panel form p textarea { width: 100% /* need the keyword that makes it fit to the parent here XXX */; min-height: 4em; display: block; }
+.panel form dl { line-height: 1.5em; }
+.panel form dt { display: inline-block; width: 20em; white-space: nowrap; text-align: right; font-weight: normal; margin: 0; padding: 0; }
+.panel form dd { display: inline; margin: 0 0 0 1em; padding: 0; }
+.panel form dd:after { display: block; }
+ul.checkboxes { list-style-type: none; }
+.progress { text-decoration: blink; }
+
+.applies .yes { background: yellow; }
+
+/* WHAT 2 */
+
+.applies thead th > * { display: block; }
+.applies thead code { display: block; }
+.applies td { text-align: center; }
+
+.matrix, .matrix td { border: hidden; text-align: right; }
+.matrix { margin-left: 2em; }
+
+.vertical-summary-table tr > th[rowspan="2"]:first-child + th,
+.vertical-summary-table tr > td[rowspan="2"]:first-child + td { border-bottom: hidden; }
+
+.dice-example { border-collapse: collapse; border-style: hidden solid solid hidden; border-width: thin; margin-left: 3em; }
+.dice-example caption { width: 30em; font-size: smaller; font-style: italic; padding: 0.75em 0; text-align: left; }
+.dice-example td, .dice-example th { border: solid thin; width: 1.35em; height: 1.05em; text-align: center; padding: 0; }
+
+td.eg { border-width: thin; text-align: center; }
+
+#table-example-1 { border: solid thin; border-collapse: collapse; margin-left: 3em; }
+#table-example-1 caption { padding-bottom: 0.5em; }
+#table-example-1 thead, #table-example-1 tbody { border: none; }
+#table-example-1 th, #table-example-1 td { border: solid thin; }
+#table-example-1 th { font-weight: normal; }
+#table-example-1 td { border-style: none solid; vertical-align: top; }
+#table-example-1 th { padding: 0.5em; vertical-align: middle; text-align: center; }
+#table-example-1 tbody tr:first-child td { padding-top: 0.5em; }
+#table-example-1 tbody tr:last-child td { padding-bottom: 1.5em; }
+#table-example-1 tbody td:first-child { padding-left: 2.5em; padding-right: 0; width: 9em; }
+#table-example-1 tbody td { padding-left: 2em; padding-right: 2em; }
+#table-example-1 tbody td:first-child + td { width: 10em; }
+#table-example-1 tbody td:first-child + td ~ td { width: 2.5em; }
+#table-example-1 tbody td:first-child + td + td + td ~ td { width: 1.25em; }
+
+.apple-table-examples { border: none; border-collapse: separate; border-spacing: 1.5em 0em; width: 40em; margin-left: 3em; }
+.apple-table-examples * { font-family: "Times", serif; }
+.apple-table-examples td, .apple-table-examples th { border: none; white-space: nowrap; padding-top: 0; padding-bottom: 0; }
+.apple-table-examples tbody th:first-child { border-left: none; width: 100%; }
+.apple-table-examples thead th:first-child ~ th { font-size: smaller; font-weight: bolder; border-bottom: solid 2px; text-align: center; }
+.apple-table-examples tbody th, .apple-table-examples tfoot th { font: inherit; text-align: left; }
+.apple-table-examples td { text-align: right; vertical-align: top; }
+.apple-table-examples.e1 tbody tr:last-child td { border-bottom: solid 1px; }
+.apple-table-examples.e1 tbody + tbody tr:last-child td { border-bottom: double 3px; }
+.apple-table-examples.e2 th[scope=row] { padding-left: 1em; }
+.apple-table-examples sup { line-height: 0; }
+
+.three-column-nowrap tr > td:first-child,
+.three-column-nowrap tr > td:first-child + td,
+.three-column-nowrap tr > td:first-child + td + td { white-space: nowrap; }
+
+.details-example img { vertical-align: top; }
+
+#base64-table {
+ white-space: nowrap;
+ font-size: 0.6em;
+ column-width: 6em;
+ column-count: 5;
+ column-gap: 1em;
+}
+#base64-table thead { display: none; }
+#base64-table * { border: none; }
+#base64-table tbody td:first-child:after { content: ':'; }
+#base64-table tbody td:last-child { text-align: right; }
+
+#named-character-references-table {
+ white-space: nowrap;
+ font-size: 0.6em;
+ column-width: 30em;
+ column-gap: 1em;
+}
+#named-character-references-table > table > tbody > tr > td:first-child + td,
+#named-character-references-table > table > tbody > tr > td:last-child { text-align: center; }
+#named-character-references-table > table > tbody > tr > td:last-child:hover > span { position: absolute; top: auto; left: auto; margin-left: 0.5em; line-height: 1.2; font-size: 5em; border: outset; padding: 0.25em 0.5em; background: white; width: 1.25em; height: auto; text-align: center; }
+#named-character-references-table > table > tbody > tr#entity-CounterClockwiseContourIntegral > td:first-child { font-size: 0.5em; }
+
+.glyph.control { color: red; }
+
+/* WHAT 3 */
+#table-example-1 * { font-family: "Essays1743", serif; line-height: 1.01em; }
+@font-face {
+    font-family: 'Essays1743';
+    src: url('fonts/Essays1743.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-weight: bold;
+    src: url('fonts/Essays1743-Bold.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-style: italic;
+    src: url('fonts/Essays1743-Italic.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-style: italic;
+    font-weight: bold;
+    src: url('fonts/Essays1743-BoldItalic.ttf');
+}
+
+/* HTML */
+pre { margin-left: 2em; white-space: pre-wrap; }
+h2 { margin: 3em 0 1em 0; }
+h3 { margin: 2.5em 0 1em 0; }
+h4 { margin: 2.5em 0 0.75em 0; }
+h5, h6 { margin: 2.5em 0 1em; }
+h1 + h2, h1 + h2 + h2, h1 + p, h1 + p + h2 { margin: 0.75em 0 0.75em; }
+h2 + h3, h3 + h4, h4 + h5, h5 + h6 { margin-top: 0.5em; }
+p { margin: 1em 0; }
+hr:not(.top) { display: block; background: none; border: none; padding: 0; margin: 2em 0; height: auto; }
+.element dd,  .element dl { margin-top: 0em; margin-bottom: 0.25em;}
+dt { margin-top: 0.75em; margin-bottom: 0.5em; clear: left; }
+ .element dt { margin-top: 0.5em; margin-bottom: 0.5em;  }
+dt + dt { margin-top: 0; }
+dd dt { margin-top: 0.25em; margin-bottom: 0; }
+dd p { margin-top: 0; }
+dd dl + p { margin-top: 1em; }
+dd table + p { margin-top: 1em; }
+p + * > li, dd li { margin: 1em 0; }
+dt, dfn { font-weight: bold; font-style: normal; }
+i, em { font-style: italic; }
+dt dfn { font-style: italic; }
+pre, code { font-size: inherit; font-family: monospace; font-variant: normal; }
+pre strong { color: black; font: inherit; font-weight: bold; background: yellow; }
+pre em { font-weight: bolder; font-style: normal; }
+@media screen { code { color: #D93B00; } code :link, code :visited { color: inherit; } }
+var { background-color: #f9f9f9; border: 1px solid #eee; padding: 0 2px; }
+var sub { vertical-align: bottom; font-size: smaller; position: relative; top: 0.1em; }
+table { border-collapse: collapse; border-style: hidden hidden none hidden; }
+table thead, table tbody { border-bottom: solid; }
+table tbody th:first-child { border-left: solid; }
+table tbody th { text-align: left; }
+table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
+blockquote { margin: 0 0 0 2em; border: 0; padding: 0; font-style: italic; }
+
+.bad, .bad *:not(.XXX) { color: #5F6D7A; border-color: gray; background: transparent; }
+.matrix, .matrix td { border: none; text-align: right; }
+.matrix { margin-left: 2em; }
+.dice-example { border-collapse: collapse; border-style: hidden solid solid hidden; border-width: thin; margin-left: 3em; }
+.dice-example caption { width: 30em; font-size: smaller; font-style: italic; padding: 0.75em 0; text-align: left; }
+.dice-example td, .dice-example th { border: solid thin; width: 1.35em; height: 1.05em; text-align: center; padding: 0; }
+
+.toc dfn, h1 dfn, h2 dfn, h3 dfn, h4 dfn, h5 dfn, h6 dfn { font: inherit; }
+img.extra, p.overview { float: right; }
+pre.idl { border: solid thin #d3d3d3; background: #FCFCFC; color: black; padding: 0.5em 1em; position: relative; }
+pre.idl :link, pre.idl :visited { color: inherit; background: transparent; }
+pre.idl::before { content: "IDL"; font: bold small sans-serif; padding: 0.5em; background: white; position: absolute; top: 0; margin: -1px 0 0 -4em; width: 1.5em; border: thin solid; border-radius: 0 0 0 0.5em }
+pre.css { border: solid thin; background: #FFFFEE; color: black; padding: 0.5em 1em; }
+pre.css:first-line { color: #AAAA50; }
+dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px solid lightgray; }
+hr + dl.domintro, div.impl + dl.domintro { margin-top: 2.5em; margin-bottom: 1.5em; }
+dl.domintro dt, dl.domintro dt * { color: black; text-decoration: none; }
+dl.domintro dd { margin: 0.5em 0 1em 2em; padding: 0; }
+dl.domintro dd p { margin: 0.5em 0; }
+dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This definition is non-normative. Implementation requirements are given below this definition.'; color: #606060; border:1px solid lightgray; background: white; padding: 0 0.25em;font-size:.9em;}
+dl.switch { padding-left: 2em; }
+dl.switch > dt { text-indent: -1.5em; }
+dl.switch > dt:before { content: '\21AA'; padding: 0 0.5em 0 0; display: inline-block; width: 1em; text-align: right; line-height: 0.5em; }
+dl.triple { padding: 0 0 0 1em; }
+dl.triple dt, dl.triple dd { margin: 0; display: inline }
+dl.triple dt:after { content: ':'; }
+dl.triple dd:after { content: '\A'; white-space: pre; }
+.diff-old { text-decoration: line-through; color: silver; background: transparent; }
+.diff-chg, .diff-new { text-decoration: underline; color: green; background: transparent; }
+a .diff-new { border-bottom: 1px blue solid; }
+
+figure.diagrams { border: double black; background: white; padding: 1em; }
+figure.diagrams img { display: block; margin: 1em auto; } 
+
+h2 { page-break-before: always; }
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+h1 + h2, hr + h2.no-toc { page-break-before: auto; }
+
+p  > span:not([title=""]):not([class="XXX"]):not([class="impl"]):not([class="note"]):not([class="t2"]):not([id]):not([lang]),
+li > span:not([title=""]):not([class="XXX"]):not([class="impl"]):not([class="note"]):not([class="t2"]):not([id]):not([lang])
+{ border-bottom: solid #9999CC; }
+
+div.head { margin: 0 0 1em; padding: 1em 0 0 0; }
+div.head p { margin: 0; }
+div.head h1 { margin: 0; }
+div.head .logo { float: right; margin: 0 1em; }
+div.head .logo img { border: none } /* remove border from top image */
+div.head dl { margin: 1em 0; }
+div.head p.copyright, div.head p.alt { font-size: x-small; font-style: oblique; margin: 0; }
+
+body > .toc > li { margin-top: 1em; margin-bottom: 1em; }
+body > .toc.brief > li { margin-top: 0.35em; margin-bottom: 0.35em; }
+body > .toc > li > * { margin-bottom: 0.5em; }
+body > .toc > li > * > li > * { margin-bottom: 0.25em; }
+.toc, .toc li { list-style: none; }
+
+.brief { margin-top: 1em; margin-bottom: 1em; line-height: 1.1; }
+.brief li { margin: 0; padding: 0; }
+.brief li p { margin: 0; padding: 0; }
+
+.category-list { margin-top: -0.75em; margin-bottom: 1em; line-height: 1.5; }
+.category-list::before { content: '\21D2\A0'; font-size: 1.2em; font-weight: 900; }
+.category-list li { display: inline; }
+.category-list li:not(:last-child)::after { content: ', '; }
+.category-list li > span, .category-list li > a { text-transform: lowercase; }
+.category-list li * { text-transform: none; } /* don't affect <code> nested in <a> */
+
+.XXX { color: #E50000; background: white; border: solid red; padding: 0.5em; margin: 1em 0; }
+.XXX > :first-child { margin-top: 0; }
+p .XXX { line-height: 3em; }
+.annotation { border: solid thin black; background: #0C479D; color: white; position: relative; margin: 8px 0 20px 0; }
+.annotation:before { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 6px -6px -6px 6px; background: #333333; z-index: -1; content: ''; }
+.annotation :link, .annotation :visited { color: inherit; }
+.annotation :link:hover, .annotation :visited:hover { background: transparent; }
+.annotation span { border: none ! important; }
+.note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
+.warning { background-color: #F9F0D4; border: medium double #FF0000; margin: 1em; padding: 1em; }
+.note em, .warning em, .note i, .warning i { font-style: normal; }
+p.note, div.note { padding: 0.5em 2em; }
+span.note { padding: 0 2em; }
+.note p:first-child, .warning p:first-child { margin-top: 0; }
+.note p:last-child, .warning p:last-child { margin-bottom: 0; }
+.warning:before { font-style: normal; }
+p.note:before { content: 'Note: '; font-weight: bolder;}
+p.warning:before { content: '\26A0 Warning! '; font-weight:bolder;}
+.critical {margin:1em; border:double red; padding:1em; background-color:#F9F0D4;}
+
+.bookkeeping:before { display: block; content: 'Bookkeeping details'; font-weight: bolder; font-style: italic; }
+.bookkeeping { font-size: 0.8em; margin: 2em 0; }
+.bookkeeping p { margin: 0.5em 2em; display: list-item; list-style: square; }
+.bookkeeping dt { margin: 0.5em 2em 0; }
+.bookkeeping dd { margin: 0 3em 0.5em; }
+
+h4 { position: relative; z-index: 3; }
+h4 + .element, h4 + div + .element { margin-top: -2.5em; padding-top: 2em; }
+.element {
+  background: #F4F4FA;
+  color: black;
+  margin: 0 0 1em 0.15em;
+  padding: 0 1em 0.25em 0.75em;
+  border-left: solid #9999FF 0.25em;
+  position: relative;
+  z-index: 1;
+}
+.element:before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: -1.15em;
+  height: 2em;
+  width: 0.9em;
+  background: #F4F4FA;
+  content: ' ';
+  border-style: none none solid solid;
+  border-color: #9999FF;
+  border-width: 0.25em;
+}
+
+.example { display: block; color: #222222; background: #FCFCFC; border-left-style: solid;border-color:#c0c0c0; border-left-width: 0.25em; margin-left: 1em; padding-left: 1em;padding-bottom: 0.5em;}
+div.example:before { content: 'Code Example: '; font-weight: bolder;}
+td > .example:only-child { margin: 0 0 0 0.1em; }
+
+ul.domTree, ul.domTree ul { padding: 0 0 0 1em; margin: 0; }
+ul.domTree li { padding: 0; margin: 0; list-style: none; position: relative; }
+ul.domTree li li { list-style: none; }
+ul.domTree li:first-child::before { position: absolute; top: 0; height: 0.6em; left: -0.75em; width: 0.5em; border-style: none none solid solid; content: ''; border-width: 0.1em; }
+ul.domTree li:not(:last-child)::after { position: absolute; top: 0; bottom: -0.6em; left: -0.75em; width: 0.5em; border-style: none none solid solid; content: ''; border-width: 0.1em; }
+ul.domTree span { font-style: italic; font-family: serif; }
+ul.domTree .t1 code { color: purple; font-weight: bold; }
+ul.domTree .t2 { font-style: normal; font-family: monospace; }
+ul.domTree .t2 .name { color: black; font-weight: bold; }
+ul.domTree .t2 .value { color: blue; font-weight: normal; }
+ul.domTree .t3 code, .domTree .t4 code, .domTree .t5 code { color: gray; }
+ul.domTree .t7 code, .domTree .t8 code { color: green; }
+ul.domTree .t10 code { color: teal; }
+
+body.dfnEnabled dfn { cursor: pointer; }
+.dfnPanel {
+  display: inline;
+  position: absolute;
+  z-index: 10;
+  height: auto;
+  width: auto;
+  padding: 0.5em 0.75em;
+  font: small sans-serif, Droid Sans Fallback;
+  background: #DDDDDD;
+  color: black;
+  border: outset 0.2em;
+}
+.dfnPanel * { margin: 0; padding: 0; font: inherit; text-indent: 0; }
+.dfnPanel :link, .dfnPanel :visited { color: black; }
+.dfnPanel p { font-weight: bolder; }
+.dfnPanel * + p { margin-top: 0.25em; }
+.dfnPanel li { list-style-position: inside; }
+
+#configUI { position: absolute; z-index: 20; top: 10em; right: 1em; width: 11em; font-size: small; }
+#configUI p { margin: 0.5em 0; padding: 0.3em; background: #EEEEEE; color: black; border: inset thin; }
+#configUI p label { display: block; }
+#configUI #updateUI, #configUI .loginUI { text-align: center; }
+#configUI input[type=button] { display: block; margin: auto; }
+
+fieldset { margin: 1em; padding: 0.5em 1em; }
+fieldset > legend + * { margin-top: 0; }
+fieldset > :last-child { margin-bottom: 0; }
+fieldset p { margin: 0.5em 0; }
+header p.subline {color:#005A9C; font: 140% sans-serif;margin: 0.75em 0;}
+#authorButton {overflow: visible; padding: 0.1em 0.3em; position: fixed; right: 2em; top: 6em; width: auto;}
+
+@media print {#authorButton { display:none;}}</style><link href="http://www.w3.org/StyleSheets/TR/W3C-WD" rel="stylesheet" type="text/css"></head><body class=" dfnEnabled">
+  
+
+  <div class="head">
+  <header>
+    <p>
+      <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a>
+    </p>
+    <h1 id="big-title">HTML 5.1</h1>
+    <h2 class="no-num no-toc subline">W3C Working Draft 06 May 2015</h2>
+  </header>
+  
+  
+
+  
+</div>
+<hr>
+
+
+
+  
+
+  
+
+  <nav class="prev_next"><a href="index.html#index">← Index</a> — <a href="Overview.html#contents">Table of contents</a> — <a href="acknowledgments.html#acknowledgments">Acknowledgements →</a></nav><section><h2 id="contents" class="no-num no-toc">Table of Contents</h2>
+  <ol class="toc"><li id="toc-references"><a href="references.html#references">References</a></li></ol></section>
+
+  
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+
+  
+
+
+
+
+
+  
+
+  
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+  
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  <section><h2 id="references" class="no-num">References</h2>
+
+  <p>All references are normative unless marked "Non-normative".</p>
+
+  
+
+  <dl id="ref-list"><dt id="refsABNF">[ABNF]</dt><dd><cite><a href="http://www.ietf.org/rfc/std/std68.txt">Augmented BNF for Syntax Specifications: ABNF</a></cite>, D. Crocker, P. Overell. IETF.</dd><dt id="refsABOUT">[ABOUT]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc6694">The 'about' URI scheme</a></cite>, S. Moonesamy. IETF.</dd><dt id="refsAPNG">[APNG]</dt><dd>(Non-normative) <cite><a href="https://wiki.mozilla.org/APNG_Specification">APNG Specification</a></cite>. S. Parmenter, V. Vukicevic, A. Smith. Mozilla.</dd><dt id="refsARIA">[ARIA]</dt><dd><cite><a href="http://www.w3.org/WAI/PF/aria/">Accessible Rich Internet Applications (WAI-ARIA)</a></cite>, J. Craig, M. Cooper, L. Pappas, R. Schwerdtfeger, L. Seeman. W3C.</dd><dt id="refsARIAIMPL">[ARIAIMPL]</dt><dd><cite><a href="http://www.w3.org/WAI/PF/aria-implementation/">WAI-ARIA 1.0 User Agent Implementation Guide</a></cite>, A. Snow-Weaver, M. Cooper. W3C.</dd><dt id="refsATAG">[ATAG]</dt><dd>(Non-normative) <cite><a href="http://www.w3.org/TR/ATAG20/">Authoring Tool Accessibility Guidelines (ATAG) 2.0</a></cite>, J. Richards, J. Spellman, J. Treviranus. W3C.</dd><dt id="refsATOM">[ATOM]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc4287">The Atom Syndication Format</a></cite>, M. Nottingham, R. Sayre. IETF.</dd><dt id="refsBCP47">[BCP47]</dt><dd><cite><a href="http://www.ietf.org/rfc/bcp/bcp47.txt">Tags for Identifying Languages; Matching of Language Tags</a></cite>, A. Phillips, M. Davis. IETF.</dd><dt id="refsBECSS">[BECSS]</dt><dd><cite><a href="http://www.w3.org/TR/becss/">Behavioral Extensions to CSS</a></cite>, I. Hickson. W3C.</dd><dt id="refsBIDI">[BIDI]</dt><dd><cite><a href="http://www.unicode.org/reports/tr9/">UAX #9: Unicode Bidirectional Algorithm</a></cite>, M. Davis. Unicode Consortium.</dd><dt id="refsBOCU1">[BOCU1]</dt><dd>(Non-normative) <cite><a href="http://www.unicode.org/notes/tn6/">UTN #6: BOCU-1: MIME-Compatible Unicode Compression</a></cite>, M. Scherer, M. Davis. Unicode Consortium.</dd><dt id="refsCESU8">[CESU8]</dt><dd>(Non-normative) <cite><a href="http://www.unicode.org/reports/tr26/">UTR #26: Compatibility Encoding Scheme For UTF-16: 8-BIT (CESU-8)</a></cite>, T. Phipps. Unicode Consortium.</dd><dt id="refsCHARMOD">[CHARMOD]</dt><dd>(Non-normative) <cite><a href="http://www.w3.org/TR/charmod/">Character Model for the World Wide Web 1.0: Fundamentals</a></cite>, M. Dürst, F. Yergeau, R. Ishida, M. Wolf, T. Texin. W3C.</dd><dt id="refsCLDR">[CLDR]</dt><dd><cite><a href="http://cldr.unicode.org/">Unicode Common Locale Data Repository</a></cite>. Unicode.</dd><dt id="refsCOMPUTABLE">[COMPUTABLE]</dt><dd>(Non-normative) <cite><a href="http://www.turingarchive.org/browse.php/B/12">On computable numbers, with an application to the Entscheidungsproblem</a></cite>, A. Turing. In <cite>Proceedings of the London Mathematical Society</cite>, series 2, volume 42, pages 230-265. London Mathematical Society, 1937.</dd><dt id="refsCOOKIES">[COOKIES]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a></cite>, A. Barth. IETF.</dd><dt id="refsCP50220">[CP50220]</dt><dd>(Non-normative) <cite><a href="http://www.iana.org/assignments/charset-reg/CP50220">CP50220</a></cite>, Y. Naruse. IANA.</dd><dt id="refsCSP">[CSP]</dt><dd>(Non-normative) <cite><a href="https://dvcs.w3.org/hg/content-security-policy/raw-file/tip/csp-specification.dev.html">Content Security Policy</a></cite>, B. Sterne, A. Barth. W3C.</dd><dt id="refsCSS">[CSS]</dt><dd><cite><a href="http://www.w3.org/TR/CSS2/">Cascading Style Sheets Level 2 Revision 1</a></cite>, B. Bos, T. Çelik, I. Hickson, H. Lie. W3C.</dd><dt id="refsCSSANIMATIONS">[CSSANIMATIONS]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-animations/">CSS Animations</a></cite>, D. Jackson, D. Hyatt, C. Marrin, S. Galineau, L. Baron. W3C.</dd><dt id="refsCSSATTR">[CSSATTR]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-style-attr/">CSS Styling Attribute Syntax</a></cite>, T. Çelik, E. Etemad. W3C.</dd><dt id="refsCSSCOLOR">[CSSCOLOR]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-color/">CSS Color Module Level 3</a></cite>, T. Çelik, C. Lilley, L. Baron. W3C.</dd><dt id="refsCSSFONTLOAD">[CSSFONTLOAD]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-font-loading/">CSS Font Loading</a></cite>, T. Atkins, J. Daggett. W3C.</dd><dt id="refsCSSFONTS">[CSSFONTS]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-fonts/">CSS Fonts</a></cite>, J. Daggett. W3C.</dd><dt id="refsCSSGC">[CSSGC]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-content">CSS Generated Content</a></cite>, H. Lie, E. Etemad, I. Hickson. W3C.</dd><dt id="refsCSSIMAGES">[CSSIMAGES]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-images/">CSS Image Values and Replaced Content Module</a></cite>, E. Etemad, T. Atkins. W3C.</dd><dt id="refsCSSOM">[CSSOM]</dt><dd><cite><a href="http://dev.w3.org/csswg/cssom/">Cascading Style Sheets Object Model (CSSOM)</a></cite>, S. Pieters, G. Adams. W3C.</dd><dt id="refsCSSOMVIEW">[CSSOMVIEW]</dt><dd><cite><a href="http://dev.w3.org/csswg/cssom-view/">CSSOM View Module</a></cite>, S. Pieters, G. Adams. W3C.</dd><dt id="refsCSSRUBY">[CSSRUBY]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-ruby/">CSS3 Ruby Module</a></cite>, R. Ishida. W3C.</dd><dt id="refsCSSTRANSITIONS">[CSSTRANSITIONS]</dt><dd>(Non-normative) <cite><a href="http://dev.w3.org/csswg/css-transitions/">CSS Transitions</a></cite>, D. Jackson, D. Hyatt, C. Marrin, L. Baron. W3C.</dd><dt id="refsCSSUI">[CSSUI]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-ui/">CSS3 Basic User Interface Module</a></cite>, T. Çelik. W3C.</dd><dt id="refsCSSSCOPED">[CSSSCOPED]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-scoping/">CSS Scoping</a></cite>, T. Atkins, E. Etemad. W3C.</dd><dt id="refsCSSSYNTAX">[CSSSYNTAX]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-syntax/">CSS Syntax</a></cite>, T. Atkins, S. Sapin. W3C.</dd><dt id="refsCSSVALUES">[CSSVALUES]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-values/">CSS3 Values and Units</a></cite>, H. Lie, T. Atkins, E. Etemad. W3C.</dd><dt id="refsCSSWM">[CSSWM]</dt><dd><cite><a href="http://dev.w3.org/csswg/css-writing-modes">CSS Writing Modes</a></cite>, E. Etemad, K. Ishii. W3C.</dd><dt id="refsDASH">[DASH]</dt><dd><cite><a href="http://www.iso.org/iso/home/store/catalogue_ics/catalogue_detail_ics.htm?csnumber=65274">Dynamic adaptive streaming over HTTP (DASH)</a></cite>. ISO.</dd><dt id="refsDOM">[DOM]</dt><dd><cite><a href="https://dom.spec.whatwg.org/">DOM</a></cite>, A. van Kesteren, A. Gregor, Ms2ger. WHATWG.</dd><dt id="refsDOMEVENTS">[DOMEVENTS]</dt><dd><cite><a href="https://dvcs.w3.org/hg/dom3events/raw-file/tip/html/DOM3-Events.html">Document Object Model (DOM) Level 3 Events Specification</a></cite>, G. Kacmarcik, T. Leithead, J. Rossi, D. Schepers, B. Höhrmann, P. Le Hégaret, T. Pixley. W3C.</dd><dt id="refsDOMPARSING">[DOMPARSING]</dt><dd><cite><a href="https://dvcs.w3.org/hg/innerhtml/raw-file/tip/index.html" lang="en-US">DOM Parsing and Serialization</a></cite>, T. Leithead. W3C.</dd><dt id="refsDOT">[DOT]</dt><dd>(Non-normative) <cite><a href="http://www.graphviz.org/content/dot-language">The DOT Language</a></cite>. Graphviz.</dd><dt id="refsECMA262">[ECMA262]</dt><dd><cite><a href="http://people.mozilla.org/~jorendorff/es6-draft.html">ECMAScript Language Specification</a></cite>. ECMA.</dd><dt id="refsEDITING">[EDITING]</dt><dd><cite><a href="https://dvcs.w3.org/hg/editing/raw-file/tip/editing.html">HTML Editing APIs</a></cite>, A. Gregor. W3C Editing APIs CG.</dd><dt id="refsENCODING">[ENCODING]</dt><dd><cite><a href="https://encoding.spec.whatwg.org/">Encoding</a></cite>, A. van Kesteren, J. Bell. WHATWG.</dd><dt id="refsFETCH">[FETCH]</dt><dd><cite><a href="https://fetch.spec.whatwg.org/">Fetch</a></cite>, A. van Kesteren. WHATWG.</dd><dt id="refsFILEAPI">[FILEAPI]</dt><dd><cite><a href="http://dev.w3.org/2006/webapi/FileAPI/">File API</a></cite>, A. Ranganathan. W3C.</dd><dt id="refsFULLSCREEN">[FULLSCREEN]</dt><dd><cite><a href="https://fullscreen.spec.whatwg.org/">Fullscreen</a></cite>, A. van Kesteren, T. Çelik. WHATWG.</dd><dt id="refsGIF">[GIF]</dt><dd>(Non-normative) <cite><a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">Graphics Interchange Format</a></cite>. CompuServe.</dd><dt id="refsGRAPHICS">[GRAPHICS]</dt><dd>(Non-normative) <cite>Computer Graphics: Principles and Practice in C</cite>, Second Edition, J. Foley, A. van Dam, S. Feiner, J. Hughes. Addison-Wesley. ISBN 0-201-84840-6.</dd><dt id="refsGREGORIAN">[GREGORIAN]</dt><dd>(Non-normative) <cite>Inter Gravissimas</cite>, A. Lilius, C. Clavius. Gregory XIII Papal Bull, February 1582.</dd><dt id="refsHRT">[HRT]</dt><dd><cite><a href="https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/HighResolutionTime/Overview.html">High Resolution Time</a></cite>, J. Mann. W3C.</dd><dt id="refsHTMLDIFF">[HTMLDIFF]</dt><dd>
+  (Non-normative) <cite><a href="http://www.w3.org/TR/html5-diff/">HTML5 differences from HTML4</a>
+  (URL: <a href="http://www.w3.org/TR/html5-diff/">http://www.w3.org/TR/html5-diff/</a>)</cite>, S.
+  Pieters. W3C.
+</dd><dt id="refsHTTP">[HTTP]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a></cite>, R. Fielding, J. Reschke. IETF.</dd><dd><cite><a href="http://tools.ietf.org/html/rfc7231">Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content</a></cite>, R. Fielding, J. Reschke. IETF.</dd><dd><cite><a href="http://tools.ietf.org/html/rfc7232">Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests</a></cite>, R. Fielding, J. Reschke. IETF.</dd><dd><cite><a href="http://tools.ietf.org/html/rfc7233">Hypertext Transfer Protocol (HTTP/1.1): Range Requests</a></cite>, R. Fielding, Y. Lafon, J. Reschke. IETF.</dd><dd><cite><a href="http://tools.ietf.org/html/rfc7234">Hypertext Transfer Protocol (HTTP/1.1): Caching</a></cite>, R. Fielding, M. Nottingham, J. Reschke. IETF.</dd><dd><cite><a href="http://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a></cite>, R. Fielding, J. Reschke. IETF.</dd><dt id="refsIANAPERMHEADERS">[IANAPERMHEADERS]</dt><dd><cite><a href="http://www.iana.org/assignments/message-headers/perm-headers.html">Permanent Message Header Field Names</a></cite>. IANA.</dd><dt id="refsINBAND">[INBAND]</dt><dd><cite><a href="http://dev.w3.org/html5/html-sourcing-inband-tracks/">Sourcing In-band Media Resource Tracks from Media Containers into HTML</a></cite>, S. Pfeiffer, B. Lund. W3C.</dd><dt id="refsINBANDTRACKS">[INBANDTRACKS]</dt><dd>
+  (Non-normative) <cite><a href="http://dev.w3.org/html5/html-sourcing-inband-tracks/">Sourcing
+  In-band Media Resource Tracks from Media Containers into HTML</a> (URL: <a href="http://dev.w3.org/html5/html-sourcing-inband-tracks/">http://dev.w3.org/html5/html-sourcing-inband-tracks/</a>)</cite>,
+  S. Pfeiffer, B. Lund. W3C.
+</dd><dt id="refsISO3166">[ISO3166]</dt><dd><cite><a href="http://www.iso.org/iso/home/standards/country_codes.htm">ISO 3166: Codes for the representation of names of countries and their subdivisions</a></cite>. ISO.</dd><dt id="refsISO4217">[ISO4217]</dt><dd><cite><a href="http://www.iso.org/iso/home/standards/currency_codes.htm">ISO 4217: Codes for the representation of currencies and funds</a></cite>. ISO.</dd><dt id="refsISO8601">[ISO8601]</dt><dd>(Non-normative) <cite><a href="http://isotc.iso.org/livelink/livelink/4021199/ISO_8601_2004_E.zip?func=doc.Fetch&amp;nodeid=4021199">ISO8601: Data elements and interchange formats — Information interchange — Representation of dates and times</a></cite>. ISO.</dd><dt id="refsJLREQ">[JLREQ]</dt><dd><cite><a href="http://www.w3.org/TR/jlreq/">Requirements for Japanese Text Layout</a></cite>. W3C.</dd><dt id="refsJPEG">[JPEG]</dt><dd><cite><a href="http://www.w3.org/Graphics/JPEG/jfif3.pdf">JPEG File Interchange Format</a></cite>, E. Hamilton.</dd><dt id="refsJSON">[JSON]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc4627">The application/json Media Type for JavaScript Object Notation (JSON)</a></cite>, D. Crockford. IETF.</dd><dt id="refsMAILTO">[MAILTO]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc6068">The 'mailto' URI scheme</a></cite>, M. Duerst, L. Masinter, J. Zawinski. IETF.</dd><dt id="refsMATHML">[MATHML]</dt><dd><cite><a href="http://www.w3.org/TR/MathML/">Mathematical Markup Language (MathML)</a></cite>, D. Carlisle, P. Ion, R. Miner, N. Poppelier. W3C.</dd><dt id="refsMEDIAFRAG">[MEDIAFRAG]</dt><dd><cite><a href="http://www.w3.org/2008/WebVideo/Fragments/WD-media-fragments-spec/">Media Fragments URI</a></cite>, R. Troncy, E. Mannens, S. Pfeiffer, D. Van Deursen. W3C.</dd><dt id="refsMEDIASOURCE">[MEDIASOURCE]</dt><dd><cite><a href="https://dvcs.w3.org/hg/html-media/raw-file/tip/media-source/media-source.html">Media Source Extensions</a></cite>, A. Colwell, A. Bateman, M. Watson. W3C.</dd><dt id="refsMEDIASTREAM">[MEDIASTREAM]</dt><dd><cite><a href="http://w3c.github.io/mediacapture-main/getusermedia.html">Media Capture and Streams</a></cite>, D. Burnett, A. Bergkvist, C. Jennings, A. Narayanan. W3C.</dd><dt id="refsMFREL">[MFREL]</dt><dd><cite><a href="http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions">Microformats Wiki: existing rel values</a></cite>. Microformats.</dd><dt id="refsMIMESNIFF">[MIMESNIFF]</dt><dd><cite><a href="https://mimesniff.spec.whatwg.org/">MIME Sniffing</a></cite>, G. Hemsley. WHATWG.</dd><dt id="refsMNG">[MNG]</dt><dd><cite><a href="http://www.libpng.org/pub/mng/spec/">MNG (Multiple-image Network Graphics) Format</a></cite>. G. Randers-Pehrson.</dd><dt id="refsMPEG2">[MPEG2]</dt><dd><cite>ISO/IEC 13818-1: Information technology — Generic coding of moving pictures and associated audio information: Systems</cite>. ISO/IEC.</dd><dt id="refsMPEG4">[MPEG4]</dt><dd><cite>ISO/IEC 14496-12: ISO base media file format</cite>. ISO/IEC.</dd><dt id="refsMQ">[MQ]</dt><dd><cite><a href="http://drafts.csswg.org/mediaqueries/">Media Queries</a></cite>, H. Lie, T. Çelik, D. Glazman, A. van Kesteren. W3C.</dd><dt id="refsNPAPI">[NPAPI]</dt><dd>(Non-normative) <cite><a href="https://developer.mozilla.org/en-US/Add-ons/Plugins/Gecko_Plugin_API_Reference">Gecko Plugin API Reference</a></cite>. Mozilla.</dd><dt id="refsOGGSKELETONHEADERS">[OGGSKELETONHEADERS]</dt><dd><cite><a href="http://wiki.xiph.org/SkeletonHeaders">SkeletonHeaders</a></cite>. Xiph.Org.</dd><dt id="refsOPENSEARCH">[OPENSEARCH]</dt><dd><cite><a href="http://www.opensearch.org/Specifications/OpenSearch/1.1#Autodiscovery_in_HTML.2FXHTML">Autodiscovery in HTML/XHTML</a></cite>. In <cite>OpenSearch 1.1 Draft 4</cite>, Section 4.6.2. OpenSearch.org.</dd><dt id="refsORIGIN">[ORIGIN]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc6454">The Web Origin Concept</a></cite>, A. Barth. IETF.</dd><dt id="refsPAGEVIS">[PAGEVIS]</dt><dd>(Non-normative) <cite><a href="https://w3c.github.io/web-performance/specs/PageVisibility/Overview.html">Page Visibility</a></cite>, J. Mann, A. Jain. W3C.</dd><dt id="refsPDF">[PDF]</dt><dd>(Non-normative) <cite><a href="http://www.adobe.com/devnet/acrobat/pdfs/PDF32000_2008.pdf">Document management — Portable document format — Part 1: PDF</a></cite>. ISO.</dd><dt id="refsPNG">[PNG]</dt><dd><cite><a href="http://www.w3.org/TR/PNG/">Portable Network Graphics (PNG) Specification</a></cite>, D. Duce. W3C.</dd><dt id="refsPOINTERLOCK">[POINTERLOCK]</dt><dd><cite><a href="https://dvcs.w3.org/hg/pointerlock/raw-file/default/index.html">Pointer Lock</a></cite>, V. Scheib. W3C.</dd><dt id="refsPPUTF8">[PPUTF8]</dt><dd>(Non-normative) <cite><a href="http://www.sw.it.aoyama.ac.jp/2012/pub/IUC11-UTF-8.pdf">The Properties and Promises  of UTF-8</a></cite>, M. Dürst. University of Zürich. In <cite>Proceedings of the 11th International Unicode Conference</cite>.</dd><dt id="refsPSL">[PSL]</dt><dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.
+   Mozilla Foundation.</dd><dt id="refsRFC1034">[RFC1034]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc1034">Domain Names - Concepts and Facilities</a></cite>, P. Mockapetris. IETF, November 1987.</dd><dt id="refsRFC1123">[RFC1123]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc1123">Requirements for Internet Hosts -- Application and Support</a></cite>, R. Braden. IETF, October 1989.</dd><dt id="refsRFC1345">[RFC1345]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc1345">Character Mnemonics and Character Sets</a></cite>, K. Simonsen. IETF.</dd><dt id="refsRFC1468">[RFC1468]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc1468">Japanese Character Encoding for Internet Messages</a></cite>, J. Murai, M. Crispin, E. van der Poel. IETF.</dd><dt id="refsRFC1554">[RFC1554]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc1554">ISO-2022-JP-2: Multilingual Extension of ISO-2022-JP</a></cite>, M. Ohta, K. Handa. IETF.</dd><dt id="refsRFC1557">[RFC1557]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc1557">Korean Character Encoding for Internet Messages</a></cite>, U. Choi, K. Chon, H. Park. IETF.</dd><dt id="refsRFC1842">[RFC1842]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc1842">ASCII Printable Characters-Based Chinese Character Encoding for Internet Messages</a></cite>, Y. Wei, Y. Zhang, J. Li, J. Ding, Y. Jiang. IETF.</dd><dt id="refsRFC1922">[RFC1922]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc1922">Chinese Character Encoding for Internet Messages</a></cite>, HF. Zhu, DY. Hu, ZG. Wang, TC. Kao, WCH. Chang, M. Crispin. IETF.</dd><dt id="refsRFC2046">[RFC2046]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc2046">Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types</a></cite>, N. Freed, N.  Borenstein. IETF.</dd><dt id="refsRFC2119">[RFC2119]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, S. Bradner. IETF.</dd><dt id="refsRFC2237">[RFC2237]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc2237">Japanese Character Encoding for Internet Messages</a></cite>, K. Tamaru. IETF.</dd><dt id="refsRFC3447">[RFC3447]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc3447">Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications</a></cite>, J. Jonsson, B. Kaliski. IETF.</dd><dt id="refsRFC2318">[RFC2318]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc2318">The text/css Media Type</a></cite>, H. Lie, B. Bos, C. Lilley. IETF.</dd><dt id="refsRFC2388">[RFC2388]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc2388">Returning Values from Forms: multipart/form-data</a></cite>, L. Masinter. IETF.</dd><dt id="refsRFC2397">[RFC2397]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc2397">The "data" URL scheme</a></cite>, L. Masinter. IETF.</dd><dt id="refsRFC2483">[RFC2483]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc2483">URI Resolution Services Necessary for URN Resolution</a></cite>, M. Mealling, R. Daniel. IETF.</dd><dt id="refsRFC3279">[RFC3279]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc3279">Algorithms and Identifiers for the Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a></cite>, W. Polk, R. Housley, L. Bassham. IETF.</dd><dt id="refsRFC3676">[RFC3676]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc3676">The Text/Plain Format and DelSp Parameters</a></cite>, R. Gellens. IETF.</dd><dt id="refsRFC4329">[RFC4329]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc4329">Scripting Media Types</a></cite>, B. Höhrmann. IETF.</dd><dt id="refsRFC4337">[RFC4337]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc4337">MIME Type Registration for MPEG-4</a></cite>, Y. Lim, D. Singer. IETF.</dd><dt id="refsRFC4395">[RFC4395]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc4395">Guidelines and Registration Procedures for New URI Schemes</a></cite>, T. Hansen, T. Hardie, L. Masinter. IETF.</dd><dt id="refsRFC4648">[RFC4648]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc4648">The Base16, Base32, and Base64 Data Encodings</a></cite>, S. Josefsson. IETF.</dd><dt id="refsRFC5280">[RFC5280]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc5280">Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</a></cite>, D. Cooper, S. Santesson, S. Farrell, S. Boeyen, R. Housley, W. Polk. IETF.</dd><dt id="refsRFC5322">[RFC5322]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc5322">Internet Message Format</a></cite>, P. Resnick. IETF.</dd><dt id="refsRFC6381">[RFC6381]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc6381">The 'Codecs' and 'Profiles' Parameters for "Bucket" Media Types</a></cite>, R. Gellens, D. Singer, P. Frojdh. IETF.</dd><dt id="refsRFC6266">[RFC6266]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc6266">Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)</a></cite>, J. Reschke. IETF.</dd><dt id="refsRFC6350">[RFC6350]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc6350">vCard Format Specification</a></cite>, S. Perreault. IETF.</dd><dt id="refsRFC7303">[RFC7303]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc7303">XML Media Types</a></cite>, H. Thompson, C. Lilley. IETF.</dd><dt id="refsRUBY-UC">[RUBY-UC]</dt><dd>
+  (Non-normative) <cite><a href="http://www.w3.org/TR/ruby-use-cases/">Use Cases &amp; Exploratory
+  Approaches for Ruby Markup</a> (URL: <a href="http://www.w3.org/TR/ruby-use-cases/">http://www.w3.org/TR/ruby-use-cases/</a>)</cite>, R.
+  Ishida. W3C.
+</dd><dt id="refsSCSU">[SCSU]</dt><dd>(Non-normative) <cite><a href="http://www.unicode.org/reports/tr6/">UTR #6: A Standard Compression Scheme For Unicode</a></cite>, M. Wolf, K. Whistler, C. Wicksteed, M. Davis, A. Freytag, M. Scherer. Unicode Consortium.</dd><dt id="refsSELECTORS">[SELECTORS]</dt><dd><cite><a href="http://dev.w3.org/csswg/selectors/">Selectors</a></cite>, E. Etemad, T. Çelik, D. Glazman, I. Hickson, P. Linss, J. Williams. W3C.</dd><dt id="refsSMS">[SMS]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc5724">URI Scheme for Global System for Mobile Communications (GSM) Short Message Service (SMS)</a></cite>, E. Wilde, A. Vaha-Sipila. IETF.</dd><dt id="refsSRGB">[SRGB]</dt><dd><cite lang="en-GB"><a href="http://webstore.iec.ch/webstore/webstore.nsf/artnum/025408!OpenDocument&amp;Click=">IEC 61966-2-1: Multimedia systems and equipment — Colour measurement and management — Part 2-1: Colour management — Default RGB colour space — sRGB</a></cite>. IEC.</dd><dt id="refsSVG">[SVG]</dt><dd><cite><a href="http://www.w3.org/TR/SVGTiny12/">Scalable Vector Graphics (SVG) Tiny 1.2 Specification</a></cite>, O. Andersson, R. Berjon, E. Dahlström, A. Emmons, J. Ferraiolo, A. Grasso, V. Hardy, S. Hayman, D. Jackson, C. Lilley, C. McCormack, A. Neumann, C. Northway, A. Quint, N. Ramani, D. Schepers, A. Shellshear. W3C.</dd><dt id="refsTIMEZONES">[TIMEZONES]</dt><dd>
+  (Non-normative) <cite><a href="http://www.w3.org/TR/timezone/">Working with Time Zones</a> (URL:
+  <a href="http://www.w3.org/TR/timezone/">http://www.w3.org/TR/timezone/</a>)</cite>, A. Phillips,
+  N. Lindenberg, M. Davis, M.J. Dürst, F. Sasaki, R. Ishida. W3C.
+</dd><dt id="refsTOR">[TOR]</dt><dd>(Non-normative) <cite><a href="https://www.torproject.org/">Tor</a></cite>.</dd><dt id="refsTOUCH">[TOUCH]</dt><dd><cite><a href="https://dvcs.w3.org/hg/webevents/raw-file/v1/touchevents.html">Touch Events</a></cite>, D. Schepers, S. Moon, M. Brubeck, A. Barstow. W3C.</dd><dt id="refsTZDATABASE">[TZDATABASE]</dt><dd>(Non-normative) <cite><a href="http://www.iana.org/time-zones">Time Zone Database</a></cite>. IANA.</dd><dt id="refsUAAG">[UAAG]</dt><dd>(Non-normative) <cite><a href="http://www.w3.org/TR/UAAG20/">User Agent Accessibility Guidelines (UAAG) 2.0</a></cite>, J. Allan, K. Ford, J. Richards, J. Spellman. W3C.</dd><dt id="refsUCA">[UCA]</dt><dd><cite><a href="http://www.unicode.org/reports/tr10/">UTR #10: Unicode Collation Algorithm</a></cite>, M. Davis, K. Whistler. Unicode Consortium.</dd><dt id="refsUNICODE">[UNICODE]</dt><dd><cite><a href="http://www.unicode.org/versions/">The Unicode Standard</a></cite>. Unicode Consortium.</dd><dt id="refsUNIVCHARDET">[UNIVCHARDET]</dt><dd>(Non-normative) <cite><a href="http://www-archive.mozilla.org/projects/intl/UniversalCharsetDetection.html">A composite approach to language/encoding detection</a></cite>, S. Li, K. Momoi. Netscape. In <cite>Proceedings of the 19th International Unicode Conference</cite>.</dd><dt id="refsURL">[URL]</dt><dd><cite><a href="https://url.spec.whatwg.org/">URL</a></cite>, A. van Kesteren. WHATWG.</dd><dt id="refsURN">[URN]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc2141">URN Syntax</a></cite>, R. Moats. IETF.</dd><dt id="refsUTF7">[UTF7]</dt><dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc2152">UTF-7: A Mail-Safe Transformation Format of Unicode</a></cite>, D. Goldsmith, M. Davis. IETF.</dd><dt id="refsUTF8DET">[UTF8DET]</dt><dd>(Non-normative) <cite><a href="http://www.w3.org/International/questions/qa-forms-utf-8">Multilingual form encoding</a></cite>, M. Dürst. W3C.</dd><dt id="refsUTR36">[UTR36]</dt><dd>(Non-normative) <cite><a href="http://www.unicode.org/reports/tr36/">UTR #36: Unicode Security Considerations</a></cite>, M. Davis, M. Suignard. Unicode Consortium.</dd><dt id="refsWCAG">[WCAG]</dt><dd>(Non-normative) <cite><a href="http://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines (WCAG) 2.0</a></cite>, B. Caldwell, M. Cooper, L. Reid, G. Vanderheiden. W3C.</dd><dt id="refsWEBGL">[WEBGL]</dt><dd><cite><a href="http://www.khronos.org/registry/webgl/specs/latest/">WebGL Specification</a></cite>, D. Jackson. Khronos Group.</dd><dt id="refsWEBIDL">[WEBIDL]</dt><dd><cite><a href="http://dev.w3.org/2006/webapi/WebIDL/">Web IDL</a></cite>, C. McCormack. W3C.</dd><dt id="refsWEBLINK">[WEBLINK]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc5988">Web Linking</a></cite>, M. Nottingham. IETF.</dd><dt id="refsWEBMCG">[WEBMCG]</dt><dd><cite><a href="http://www.webmproject.org/code/specs/container/">WebM Container Guidelines</a></cite>. The WebM Project.</dd><dt id="refsWEBVTT">[WEBVTT]</dt><dd><cite><a href="http://dev.w3.org/html5/webvtt/">WebVTT</a></cite>, I. Hickson. W3C.</dd><dt id="refsWHATWGWIKI">[WHATWGWIKI]</dt><dd><cite><a href="https://wiki.whatwg.org/">The WHATWG Wiki</a></cite>. WHATWG.</dd><dt id="refsWSP">[WSP]</dt><dd><cite><a href="http://tools.ietf.org/html/rfc6455">The WebSocket protocol</a></cite>, I. Fette, A. Melnikov. IETF.</dd><dt id="refsX690">[X690]</dt><dd><cite><a href="http://www.itu.int/ITU-T/studygroups/com17/languages/X.690-0207.pdf">Recommendation X.690 — Information Technology — ASN.1 Encoding Rules — Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER), and Distinguished Encoding Rules (DER)</a></cite>. International Telecommunication Union.</dd><dt id="refsXHR">[XHR]</dt><dd><cite><a href="https://xhr.spec.whatwg.org/"><code>XMLHttpRequest</code></a></cite>, A. van Kesteren. WHATWG.</dd><dt id="refsXML">[XML]</dt><dd><cite><a href="http://www.w3.org/TR/xml/">Extensible Markup Language</a></cite>, T. Bray, J. Paoli, C. Sperberg-McQueen, E. Maler, F. Yergeau. W3C.</dd><dt id="refsXMLBASE">[XMLBASE]</dt><dd><cite><a href="http://www.w3.org/TR/xmlbase/">XML Base</a></cite>, J. Marsh, R. Tobin. W3C.</dd><dt id="refsXMLNS">[XMLNS]</dt><dd><cite><a href="http://www.w3.org/TR/xml-names/">Namespaces in XML</a></cite>, T. Bray, D. Hollander, A. Layman, R. Tobin. W3C.</dd><dt id="refsXMLSSPI">[XMLSSPI]</dt><dd><cite><a href="http://www.w3.org/TR/xml-stylesheet/">Associating Style Sheets with XML documents</a></cite>, J. Clark, S. Pieters, H. Thompson. W3C.</dd><dt id="refsXPATH10">[XPATH10]</dt><dd><cite><a href="http://www.w3.org/TR/1999/REC-xpath-19991116/">XML Path Language (XPath) Version 1.0</a></cite>, J. Clark, S. DeRose. W3C.</dd><dt id="refsXSLT10">[XSLT10]</dt><dd>(Non-normative) <cite><a href="http://www.w3.org/TR/1999/REC-xslt-19991116">XSL Transformations (XSLT) Version 1.0</a></cite>, J. Clark. W3C.</dd></dl></section>
+
+
+  
+
+  
+
+ 
+
+
+
+
+<nav class="prev_next"><a href="index.html#index">← Index</a> — <a href="Overview.html#contents">Table of contents</a> — <a href="acknowledgments.html#acknowledgments">Acknowledgements →</a></nav><script src="redirection.js"></script></body></html>

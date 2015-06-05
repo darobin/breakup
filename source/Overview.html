@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html data-revision="$Revision: 8891 $" lang="en-GB-x-hixie"><head><meta charset="utf-8"><title>HTML 5.1</title><style>/* WHAT 1 */
+[hidden] { display: none; }
+
+.proposal { border: blue solid; padding: 1em; }
+.bad, .bad *:not(.X\58X) { color: gray; border-color: gray; background: transparent; }
+#updatesStatus { display: none; z-index: 10; }
+#updatesStatus.relevant { display: block; position: fixed; right: 1em; top: 1em; padding: 0.5em; font: bold small sans-serif; min-width: 25em; width: 30%; max-width: 40em; height: auto; border: ridge 4px gray; background: #EEEEEE; color: black; }
+div.head .logo { width: 11em; margin-bottom: 20em; }
+
+@media print { #configUI, #alert { display: none; } }
+
+.fingerprint { position: absolute; right: 0; z-index: 5; }
+
+.panel { position: fixed; z-index: 30; top: 10%; left: 0; margin: auto; right: 0; width: 35em; border: double thick; background: #EEEEEE; color: black; padding: 1em; font: 1em sans-serif; max-height: 70%; overflow: auto; }
+.panel h2 { margin: 0; text-align: center; }
+.panel ul { min-height: 6em; }
+.panel p { text-align: right; margin: 0; }
+.panel form { background: transparent; color: black; margin: 0.5em -0.5em 1em; padding: 0.5em; }
+.panel form.changed { background: yellow; color: black; }
+.panel form p { text-align: left; margin: 1em 0 0; }
+.panel form p:first-child { margin-top: 0; }
+.panel form p:last-child { margin-bottom: 0; }
+.panel form p textarea { width: 100% /* need the keyword that makes it fit to the parent here XXX */; min-height: 4em; display: block; }
+.panel form dl { line-height: 1.5em; }
+.panel form dt { display: inline-block; width: 20em; white-space: nowrap; text-align: right; font-weight: normal; margin: 0; padding: 0; }
+.panel form dd { display: inline; margin: 0 0 0 1em; padding: 0; }
+.panel form dd:after { display: block; }
+ul.checkboxes { list-style-type: none; }
+.progress { text-decoration: blink; }
+
+.applies .yes { background: yellow; }
+
+/* WHAT 2 */
+
+.applies thead th > * { display: block; }
+.applies thead code { display: block; }
+.applies td { text-align: center; }
+
+.matrix, .matrix td { border: hidden; text-align: right; }
+.matrix { margin-left: 2em; }
+
+.vertical-summary-table tr > th[rowspan="2"]:first-child + th,
+.vertical-summary-table tr > td[rowspan="2"]:first-child + td { border-bottom: hidden; }
+
+.dice-example { border-collapse: collapse; border-style: hidden solid solid hidden; border-width: thin; margin-left: 3em; }
+.dice-example caption { width: 30em; font-size: smaller; font-style: italic; padding: 0.75em 0; text-align: left; }
+.dice-example td, .dice-example th { border: solid thin; width: 1.35em; height: 1.05em; text-align: center; padding: 0; }
+
+td.eg { border-width: thin; text-align: center; }
+
+#table-example-1 { border: solid thin; border-collapse: collapse; margin-left: 3em; }
+#table-example-1 caption { padding-bottom: 0.5em; }
+#table-example-1 thead, #table-example-1 tbody { border: none; }
+#table-example-1 th, #table-example-1 td { border: solid thin; }
+#table-example-1 th { font-weight: normal; }
+#table-example-1 td { border-style: none solid; vertical-align: top; }
+#table-example-1 th { padding: 0.5em; vertical-align: middle; text-align: center; }
+#table-example-1 tbody tr:first-child td { padding-top: 0.5em; }
+#table-example-1 tbody tr:last-child td { padding-bottom: 1.5em; }
+#table-example-1 tbody td:first-child { padding-left: 2.5em; padding-right: 0; width: 9em; }
+#table-example-1 tbody td { padding-left: 2em; padding-right: 2em; }
+#table-example-1 tbody td:first-child + td { width: 10em; }
+#table-example-1 tbody td:first-child + td ~ td { width: 2.5em; }
+#table-example-1 tbody td:first-child + td + td + td ~ td { width: 1.25em; }
+
+.apple-table-examples { border: none; border-collapse: separate; border-spacing: 1.5em 0em; width: 40em; margin-left: 3em; }
+.apple-table-examples * { font-family: "Times", serif; }
+.apple-table-examples td, .apple-table-examples th { border: none; white-space: nowrap; padding-top: 0; padding-bottom: 0; }
+.apple-table-examples tbody th:first-child { border-left: none; width: 100%; }
+.apple-table-examples thead th:first-child ~ th { font-size: smaller; font-weight: bolder; border-bottom: solid 2px; text-align: center; }
+.apple-table-examples tbody th, .apple-table-examples tfoot th { font: inherit; text-align: left; }
+.apple-table-examples td { text-align: right; vertical-align: top; }
+.apple-table-examples.e1 tbody tr:last-child td { border-bottom: solid 1px; }
+.apple-table-examples.e1 tbody + tbody tr:last-child td { border-bottom: double 3px; }
+.apple-table-examples.e2 th[scope=row] { padding-left: 1em; }
+.apple-table-examples sup { line-height: 0; }
+
+.three-column-nowrap tr > td:first-child,
+.three-column-nowrap tr > td:first-child + td,
+.three-column-nowrap tr > td:first-child + td + td { white-space: nowrap; }
+
+.details-example img { vertical-align: top; }
+
+#base64-table {
+ white-space: nowrap;
+ font-size: 0.6em;
+ column-width: 6em;
+ column-count: 5;
+ column-gap: 1em;
+}
+#base64-table thead { display: none; }
+#base64-table * { border: none; }
+#base64-table tbody td:first-child:after { content: ':'; }
+#base64-table tbody td:last-child { text-align: right; }
+
+#named-character-references-table {
+ white-space: nowrap;
+ font-size: 0.6em;
+ column-width: 30em;
+ column-gap: 1em;
+}
+#named-character-references-table > table > tbody > tr > td:first-child + td,
+#named-character-references-table > table > tbody > tr > td:last-child { text-align: center; }
+#named-character-references-table > table > tbody > tr > td:last-child:hover > span { position: absolute; top: auto; left: auto; margin-left: 0.5em; line-height: 1.2; font-size: 5em; border: outset; padding: 0.25em 0.5em; background: white; width: 1.25em; height: auto; text-align: center; }
+#named-character-references-table > table > tbody > tr#entity-CounterClockwiseContourIntegral > td:first-child { font-size: 0.5em; }
+
+.glyph.control { color: red; }
+
+/* WHAT 3 */
+#table-example-1 * { font-family: "Essays1743", serif; line-height: 1.01em; }
+@font-face {
+    font-family: 'Essays1743';
+    src: url('fonts/Essays1743.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-weight: bold;
+    src: url('fonts/Essays1743-Bold.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-style: italic;
+    src: url('fonts/Essays1743-Italic.ttf');
+}
+@font-face {
+    font-family: 'Essays1743';
+    font-style: italic;
+    font-weight: bold;
+    src: url('fonts/Essays1743-BoldItalic.ttf');
+}
+
+/* HTML */
+pre { margin-left: 2em; white-space: pre-wrap; }
+h2 { margin: 3em 0 1em 0; }
+h3 { margin: 2.5em 0 1em 0; }
+h4 { margin: 2.5em 0 0.75em 0; }
+h5, h6 { margin: 2.5em 0 1em; }
+h1 + h2, h1 + h2 + h2, h1 + p, h1 + p + h2 { margin: 0.75em 0 0.75em; }
+h2 + h3, h3 + h4, h4 + h5, h5 + h6 { margin-top: 0.5em; }
+p { margin: 1em 0; }
+hr:not(.top) { display: block; background: none; border: none; padding: 0; margin: 2em 0; height: auto; }
+.element dd,  .element dl { margin-top: 0em; margin-bottom: 0.25em;}
+dt { margin-top: 0.75em; margin-bottom: 0.5em; clear: left; }
+ .element dt { margin-top: 0.5em; margin-bottom: 0.5em;  }
+dt + dt { margin-top: 0; }
+dd dt { margin-top: 0.25em; margin-bottom: 0; }
+dd p { margin-top: 0; }
+dd dl + p { margin-top: 1em; }
+dd table + p { margin-top: 1em; }
+p + * > li, dd li { margin: 1em 0; }
+dt, dfn { font-weight: bold; font-style: normal; }
+i, em { font-style: italic; }
+dt dfn { font-style: italic; }
+pre, code { font-size: inherit; font-family: monospace; font-variant: normal; }
+pre strong { color: black; font: inherit; font-weight: bold; background: yellow; }
+pre em { font-weight: bolder; font-style: normal; }
+@media screen { code { color: #D93B00; } code :link, code :visited { color: inherit; } }
+var { background-color: #f9f9f9; border: 1px solid #eee; padding: 0 2px; }
+var sub { vertical-align: bottom; font-size: smaller; position: relative; top: 0.1em; }
+table { border-collapse: collapse; border-style: hidden hidden none hidden; }
+table thead, table tbody { border-bottom: solid; }
+table tbody th:first-child { border-left: solid; }
+table tbody th { text-align: left; }
+table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
+blockquote { margin: 0 0 0 2em; border: 0; padding: 0; font-style: italic; }
+
+.bad, .bad *:not(.XXX) { color: #5F6D7A; border-color: gray; background: transparent; }
+.matrix, .matrix td { border: none; text-align: right; }
+.matrix { margin-left: 2em; }
+.dice-example { border-collapse: collapse; border-style: hidden solid solid hidden; border-width: thin; margin-left: 3em; }
+.dice-example caption { width: 30em; font-size: smaller; font-style: italic; padding: 0.75em 0; text-align: left; }
+.dice-example td, .dice-example th { border: solid thin; width: 1.35em; height: 1.05em; text-align: center; padding: 0; }
+
+.toc dfn, h1 dfn, h2 dfn, h3 dfn, h4 dfn, h5 dfn, h6 dfn { font: inherit; }
+img.extra, p.overview { float: right; }
+pre.idl { border: solid thin #d3d3d3; background: #FCFCFC; color: black; padding: 0.5em 1em; position: relative; }
+pre.idl :link, pre.idl :visited { color: inherit; background: transparent; }
+pre.idl::before { content: "IDL"; font: bold small sans-serif; padding: 0.5em; background: white; position: absolute; top: 0; margin: -1px 0 0 -4em; width: 1.5em; border: thin solid; border-radius: 0 0 0 0.5em }
+pre.css { border: solid thin; background: #FFFFEE; color: black; padding: 0.5em 1em; }
+pre.css:first-line { color: #AAAA50; }
+dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px solid lightgray; }
+hr + dl.domintro, div.impl + dl.domintro { margin-top: 2.5em; margin-bottom: 1.5em; }
+dl.domintro dt, dl.domintro dt * { color: black; text-decoration: none; }
+dl.domintro dd { margin: 0.5em 0 1em 2em; padding: 0; }
+dl.domintro dd p { margin: 0.5em 0; }
+dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This definition is non-normative. Implementation requirements are given below this definition.'; color: #606060; border:1px solid lightgray; background: white; padding: 0 0.25em;font-size:.9em;}
+dl.switch { padding-left: 2em; }
+dl.switch > dt { text-indent: -1.5em; }
+dl.switch > dt:before { content: '\21AA'; padding: 0 0.5em 0 0; display: inline-block; width: 1em; text-align: right; line-height: 0.5em; }
+dl.triple { padding: 0 0 0 1em; }
+dl.triple dt, dl.triple dd { margin: 0; display: inline }
+dl.triple dt:after { content: ':'; }
+dl.triple dd:after { content: '\A'; white-space: pre; }
+.diff-old { text-decoration: line-through; color: silver; background: transparent; }
+.diff-chg, .diff-new { text-decoration: underline; color: green; background: transparent; }
+a .diff-new { border-bottom: 1px blue solid; }
+
+figure.diagrams { border: double black; background: white; padding: 1em; }
+figure.diagrams img { display: block; margin: 1em auto; } 
+
+h2 { page-break-before: always; }
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+h1 + h2, hr + h2.no-toc { page-break-before: auto; }
+
+p  > span:not([title=""]):not([class="XXX"]):not([class="impl"]):not([class="note"]):not([class="t2"]):not([id]):not([lang]),
+li > span:not([title=""]):not([class="XXX"]):not([class="impl"]):not([class="note"]):not([class="t2"]):not([id]):not([lang])
+{ border-bottom: solid #9999CC; }
+
+div.head { margin: 0 0 1em; padding: 1em 0 0 0; }
+div.head p { margin: 0; }
+div.head h1 { margin: 0; }
+div.head .logo { float: right; margin: 0 1em; }
+div.head .logo img { border: none } /* remove border from top image */
+div.head dl { margin: 1em 0; }
+div.head p.copyright, div.head p.alt { font-size: x-small; font-style: oblique; margin: 0; }
+
+body > .toc > li { margin-top: 1em; margin-bottom: 1em; }
+body > .toc.brief > li { margin-top: 0.35em; margin-bottom: 0.35em; }
+body > .toc > li > * { margin-bottom: 0.5em; }
+body > .toc > li > * > li > * { margin-bottom: 0.25em; }
+.toc, .toc li { list-style: none; }
+
+.brief { margin-top: 1em; margin-bottom: 1em; line-height: 1.1; }
+.brief li { margin: 0; padding: 0; }
+.brief li p { margin: 0; padding: 0; }
+
+.category-list { margin-top: -0.75em; margin-bottom: 1em; line-height: 1.5; }
+.category-list::before { content: '\21D2\A0'; font-size: 1.2em; font-weight: 900; }
+.category-list li { display: inline; }
+.category-list li:not(:last-child)::after { content: ', '; }
+.category-list li > span, .category-list li > a { text-transform: lowercase; }
+.category-list li * { text-transform: none; } /* don't affect <code> nested in <a> */
+
+.XXX { color: #E50000; background: white; border: solid red; padding: 0.5em; margin: 1em 0; }
+.XXX > :first-child { margin-top: 0; }
+p .XXX { line-height: 3em; }
+.annotation { border: solid thin black; background: #0C479D; color: white; position: relative; margin: 8px 0 20px 0; }
+.annotation:before { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 6px -6px -6px 6px; background: #333333; z-index: -1; content: ''; }
+.annotation :link, .annotation :visited { color: inherit; }
+.annotation :link:hover, .annotation :visited:hover { background: transparent; }
+.annotation span { border: none ! important; }
+.note { border-left-style: solid; border-left-width: 0.25em; background: none repeat scroll 0 0 #E9FBE9; border-color: #52E052; }
+.warning { background-color: #F9F0D4; border: medium double #FF0000; margin: 1em; padding: 1em; }
+.note em, .warning em, .note i, .warning i { font-style: normal; }
+p.note, div.note { padding: 0.5em 2em; }
+span.note { padding: 0 2em; }
+.note p:first-child, .warning p:first-child { margin-top: 0; }
+.note p:last-child, .warning p:last-child { margin-bottom: 0; }
+.warning:before { font-style: normal; }
+p.note:before { content: 'Note: '; font-weight: bolder;}
+p.warning:before { content: '\26A0 Warning! '; font-weight:bolder;}
+.critical {margin:1em; border:double red; padding:1em; background-color:#F9F0D4;}
+
+.bookkeeping:before { display: block; content: 'Bookkeeping details'; font-weight: bolder; font-style: italic; }
+.bookkeeping { font-size: 0.8em; margin: 2em 0; }
+.bookkeeping p { margin: 0.5em 2em; display: list-item; list-style: square; }
+.bookkeeping dt { margin: 0.5em 2em 0; }
+.bookkeeping dd { margin: 0 3em 0.5em; }
+
+h4 { position: relative; z-index: 3; }
+h4 + .element, h4 + div + .element { margin-top: -2.5em; padding-top: 2em; }
+.element {
+  background: #F4F4FA;
+  color: black;
+  margin: 0 0 1em 0.15em;
+  padding: 0 1em 0.25em 0.75em;
+  border-left: solid #9999FF 0.25em;
+  position: relative;
+  z-index: 1;
+}
+.element:before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: -1.15em;
+  height: 2em;
+  width: 0.9em;
+  background: #F4F4FA;
+  content: ' ';
+  border-style: none none solid solid;
+  border-color: #9999FF;
+  border-width: 0.25em;
+}
+
+.example { display: block; color: #222222; background: #FCFCFC; border-left-style: solid;border-color:#c0c0c0; border-left-width: 0.25em; margin-left: 1em; padding-left: 1em;padding-bottom: 0.5em;}
+div.example:before { content: 'Code Example: '; font-weight: bolder;}
+td > .example:only-child { margin: 0 0 0 0.1em; }
+
+ul.domTree, ul.domTree ul { padding: 0 0 0 1em; margin: 0; }
+ul.domTree li { padding: 0; margin: 0; list-style: none; position: relative; }
+ul.domTree li li { list-style: none; }
+ul.domTree li:first-child::before { position: absolute; top: 0; height: 0.6em; left: -0.75em; width: 0.5em; border-style: none none solid solid; content: ''; border-width: 0.1em; }
+ul.domTree li:not(:last-child)::after { position: absolute; top: 0; bottom: -0.6em; left: -0.75em; width: 0.5em; border-style: none none solid solid; content: ''; border-width: 0.1em; }
+ul.domTree span { font-style: italic; font-family: serif; }
+ul.domTree .t1 code { color: purple; font-weight: bold; }
+ul.domTree .t2 { font-style: normal; font-family: monospace; }
+ul.domTree .t2 .name { color: black; font-weight: bold; }
+ul.domTree .t2 .value { color: blue; font-weight: normal; }
+ul.domTree .t3 code, .domTree .t4 code, .domTree .t5 code { color: gray; }
+ul.domTree .t7 code, .domTree .t8 code { color: green; }
+ul.domTree .t10 code { color: teal; }
+
+body.dfnEnabled dfn { cursor: pointer; }
+.dfnPanel {
+  display: inline;
+  position: absolute;
+  z-index: 10;
+  height: auto;
+  width: auto;
+  padding: 0.5em 0.75em;
+  font: small sans-serif, Droid Sans Fallback;
+  background: #DDDDDD;
+  color: black;
+  border: outset 0.2em;
+}
+.dfnPanel * { margin: 0; padding: 0; font: inherit; text-indent: 0; }
+.dfnPanel :link, .dfnPanel :visited { color: black; }
+.dfnPanel p { font-weight: bolder; }
+.dfnPanel * + p { margin-top: 0.25em; }
+.dfnPanel li { list-style-position: inside; }
+
+#configUI { position: absolute; z-index: 20; top: 10em; right: 1em; width: 11em; font-size: small; }
+#configUI p { margin: 0.5em 0; padding: 0.3em; background: #EEEEEE; color: black; border: inset thin; }
+#configUI p label { display: block; }
+#configUI #updateUI, #configUI .loginUI { text-align: center; }
+#configUI input[type=button] { display: block; margin: auto; }
+
+fieldset { margin: 1em; padding: 0.5em 1em; }
+fieldset > legend + * { margin-top: 0; }
+fieldset > :last-child { margin-bottom: 0; }
+fieldset p { margin: 0.5em 0; }
+header p.subline {color:#005A9C; font: 140% sans-serif;margin: 0.75em 0;}
+#authorButton {overflow: visible; padding: 0.1em 0.3em; position: fixed; right: 2em; top: 6em; width: auto;}
+
+@media print {#authorButton { display:none;}}</style><link href="http://www.w3.org/StyleSheets/TR/W3C-WD" rel="stylesheet" type="text/css"></head><body class=" dfnEnabled">
+  
+
+  <div class="head">
+  <header>
+    <p>
+      <a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a>
+    </p>
+    <h1 id="big-title">HTML 5.1</h1>
+    <h2 class="no-num no-toc subline">W3C Working Draft 06 May 2015</h2>
+  </header>
+  
+  <dl>
+    <dt>This Version:</dt>
+    <dd><a href="http://www.w3.org/TR/2015/WD-html51-20150506/">http://www.w3.org/TR/2015/WD-html51-20150506/</a></dd>
+
+    <dt>Latest Published Version:</dt>
+    <dd><a href="http://www.w3.org/TR/html51/">http://www.w3.org/TR/html51/</a></dd>
+    
+    <dt>Previous Version:</dt>
+    <dd><a href="http://www.w3.org/TR/2015/WD-html51-20150417/">http://www.w3.org/TR/2015/WD-html51-20150417/</a></dd>
+    
+    <dt id="specification-editors">Editors:</dt>
+    <dd>WHATWG:</dd>
+    <dd data-editor-id="15392"><a href="mailto:ian@hixie.ch">Ian Hickson</a>, Google, Inc.</dd>
+
+    <dd>W3C:</dd>
+    <dd data-editor-id="34327"><a href="http://berjon.com/">Robin Berjon</a>, W3C</dd>
+    <dd data-editor-id="35007"><a href="mailto:sfaulkner@paciellogroup.com">Steve Faulkner</a>, The Paciello Group</dd>
+    <dd data-editor-id="40117"><a href="mailto:travil@microsoft.com">Travis Leithead</a>, Microsoft</dd>
+    <dd data-editor-id="56802"><a href="mailto:Erika.Doyle@microsoft.com">Erika Doyle Navara</a>, Microsoft</dd>
+    <dd data-editor-id="40614"><a href="mailto:eoconnor@apple.com">Edward O'Connor</a>, Apple Inc.</dd>
+
+    <dd>For the <code><a href="semantics.html#the-img-element">img</a></code> and <code><a href="semantics.html#the-picture-element">picture</a></code> elements:</dd>
+    <dd data-editor-id="42199"><a class="p-name fn u-url url" href="http://xanthir.com/contact/">Tab Atkins</a> (<span class="p-org org">Google</span>)</dd>
+    <dd data-editor-id="40332"><a class="p-name fn u-email email" href="mailto:simonp@opera.com">Simon Pieters</a> (<span class="p-org org">Opera Software</span>)</dd>
+    <dd data-editor-id="58673"><a class="p-name fn u-url url" href="http://blog.yoav.ws/">Yoav Weiss</a></dd>
+    <dd data-editor-id="39125"><span class="p-name fn">Marcos Cáceres</span> (<span class="p-org org">Mozilla</span>)</dd>
+    <dd data-editor-id="52558"><a class="p-name fn u-url url" href="http://matmarquis.com/">Mat Marquis</a></dd>
+  </dl>
+
+  <p class="copyright">
+    <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a>
+    © 2015 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup>
+    (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>,
+    <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>,
+    <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>).
+    W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>,
+    <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a>
+    and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document
+    use</a> rules apply.
+  </p>
+</div>
+<hr><section>
+  <h2 id="abstract" class="no-num no-toc">Abstract</h2>
+  <p>
+    This specification defines the 5th major version, first minor revision of the core language of
+    the World Wide Web: the Hypertext Markup Language (HTML). In this version, new features continue
+    to be introduced to help Web application authors, new elements continue to be introduced based
+    on research into prevailing authoring practices, and special attention continues to be given to
+    defining clear conformance criteria for user agents in an effort to improve interoperability.
+  </p>
+</section>
+<section id="sotd">
+  <h2 class="no-num no-toc">Status of This Document</h2>
+  <p>
+    <em>This section describes the status of this document at the time of its publication. Other
+    documents may supersede this document. A list of current <abbr title="World Wide Web
+    Consortium">W3C</abbr> publications and the latest revision of this technical report can be
+    found in the <a href="http://www.w3.org/TR/"><abbr title="World Wide Web
+    Consortium">W3C</abbr> technical reports index</a> at http://www.w3.org/TR/.</em>
+  </p>
+  <p>
+    The management and production of this document follows a relatively complex setup. Details are
+    provided as part of the introduction.
+  </p>
+  <p>
+    This document was published by the <a href="http://www.w3.org/html/wg/">HTML Working Group</a>
+    as a Working Draft.
+
+    If you wish to make comments regarding this document, please send them to 
+    <a href="mailto:public-html@w3.org">public-html@w3.org</a> 
+    (<a href="mailto:public-html-request@w3.org?subject=subscribe">subscribe</a>,
+    <a href="http://lists.w3.org/Archives/Public/public-html/">archives</a>).
+      
+    All comments are welcome.
+  </p>
+  <p>
+    Publication as a Working Draft does not imply endorsement by the <abbr title="World Wide Web
+    Consortium">W3C</abbr> Membership. This is a draft document and may be updated, replaced or
+    obsoleted by other documents at any time. It is inappropriate to cite this document as other
+    than work in progress.
+  </p>
+  <p>
+    This document was produced by a group operating under the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/" id="sotd_patent">5 February 2004
+    <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>. <abbr title="World Wide
+    Web Consortium">W3C</abbr> maintains a <a rel="disclosure" href="http://www.w3.org/2004/01/pp-impl/40318/status">public list of any patent disclosures</a>
+    made in connection with the deliverables of the group; that page also includes instructions for
+    disclosing a patent. An individual who has actual knowledge of a patent which the individual
+    believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a>
+    must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the
+    <abbr title="World Wide Web Consortium">W3C</abbr> Patent Policy</a>.
+  </p>
+  <p>
+    This document is governed by the <a href="http://www.w3.org/2014/Process-20140801/" id="w3c_process_revision">1 August 2014 <abbr title="World Wide Web Consortium">W3C</abbr>
+    Process Document</a>.
+  </p>
+</section>
+
+
+  
+
+  <section><h2 id="table-of-contents" class="no-num no-toc">Table of Contents</h2>
+  <ol class="brief toc"><li><a href="#toc-introduction">1 Introduction</a></li><li><a href="#toc-infrastructure">2 Common infrastructure</a></li><li><a href="#toc-dom">3 Semantics, structure, and APIs of HTML documents</a></li><li><a href="#toc-semantics">4 The elements of HTML</a></li><li><a href="#toc-editing">5 User interaction</a></li><li><a href="#toc-browsers">6 Loading Web pages</a></li><li><a href="#toc-webappapis">7 Web application APIs</a></li><li><a href="#toc-syntax">8 The HTML syntax</a></li><li><a href="#toc-the-xhtml-syntax">9 The XHTML syntax</a></li><li><a href="#toc-rendering">10 Rendering</a></li><li><a href="#toc-obsolete">11 Obsolete features</a></li><li><a href="#toc-iana">12 IANA considerations</a></li><li><a href="#toc-index">Index</a></li><li><a href="#toc-references">References</a></li><li><a href="#toc-acknowledgments">Acknowledgements</a></li></ol></section>
+
+  <section><h2 id="contents" class="no-num no-toc">Full Table of Contents</h2>
+  <ol class="toc"><li id="toc-introduction"><a href="introduction.html#introduction">1 Introduction</a><ol><li><a href="introduction.html#background">1.1 Background</a></li><li><a href="introduction.html#audience">1.2 Audience</a></li><li><a href="introduction.html#scope">1.3 Scope</a></li><li><a href="introduction.html#history-2">1.4 History</a></li><li><a href="introduction.html#design-notes">1.5 Design notes</a><ol><li><a href="introduction.html#serialisability-of-script-execution">1.5.1 Serialisability of script execution</a></li><li><a href="introduction.html#compliance-with-other-specifications">1.5.2 Compliance with other specifications</a></li><li><a href="introduction.html#extensibility">1.5.3 Extensibility</a></li></ol></li><li><a href="introduction.html#html-vs-xhtml">1.6 HTML vs XHTML</a></li><li><a href="introduction.html#structure-of-this-specification">1.7 Structure of this specification</a><ol><li><a href="introduction.html#how-to-read-this-specification">1.7.1 How to read this specification</a></li><li><a href="introduction.html#typographic-conventions">1.7.2 Typographic conventions</a></li></ol></li><li><a href="introduction.html#fingerprint">1.8 Privacy concerns</a><ol><li><a href="introduction.html#fingerprint-postMessage">1.8.1 Cross-site communication</a></li></ol></li><li><a href="introduction.html#a-quick-introduction-to-html">1.9 A quick introduction to HTML</a><ol><li><a href="introduction.html#writing-secure-applications-with-html">1.9.1 Writing secure applications with HTML</a></li><li><a href="introduction.html#common-pitfalls-to-avoid-when-using-the-scripting-apis">1.9.2 Common pitfalls to avoid when using the scripting APIs</a></li><li><a href="introduction.html#how-to-catch-mistakes-when-writing-html:-validators-and-conformance-checkers">1.9.3 How to catch mistakes when writing HTML: validators and conformance checkers</a></li></ol></li><li><a href="introduction.html#conformance-requirements-for-authors">1.10 Conformance requirements for authors</a><ol><li><a href="introduction.html#presentational-markup">1.10.1 Presentational markup</a></li><li><a href="introduction.html#syntax-errors">1.10.2 Syntax errors</a></li><li><a href="introduction.html#restrictions-on-content-models-and-on-attribute-values">1.10.3 Restrictions on content models and on attribute values</a></li></ol></li><li><a href="introduction.html#suggested-reading">1.11 Suggested reading</a></li><li><a href="introduction.html#landscape">1.12 About this document</a></li></ol></li><li id="toc-infrastructure"><a href="infrastructure.html#infrastructure">2 Common infrastructure</a><ol><li><a href="infrastructure.html#terminology">2.1 Terminology</a><ol><li><a href="infrastructure.html#resources">2.1.1 Resources</a></li><li><a href="infrastructure.html#xml">2.1.2 XML</a></li><li><a href="infrastructure.html#dom-trees">2.1.3 DOM trees</a></li><li><a href="infrastructure.html#scripting-2">2.1.4 Scripting</a></li><li><a href="infrastructure.html#plugins">2.1.5 Plugins</a></li><li><a href="infrastructure.html#encoding-terminology">2.1.6 Character encodings</a></li></ol></li><li><a href="infrastructure.html#conformance-requirements">2.2 Conformance requirements</a><ol><li><a href="infrastructure.html#conformance-classes">2.2.1 Conformance classes</a></li><li><a href="infrastructure.html#dependencies">2.2.2 Dependencies</a></li><li><a href="infrastructure.html#extensibility-2">2.2.3 Extensibility</a></li><li><a href="infrastructure.html#interactions-with-xpath-and-xslt">2.2.4 Interactions with XPath and XSLT</a></li></ol></li><li><a href="infrastructure.html#case-sensitivity-and-string-comparison">2.3 Case-sensitivity and string comparison</a></li><li><a href="infrastructure.html#common-microsyntaxes">2.4 Common microsyntaxes</a><ol><li><a href="infrastructure.html#common-parser-idioms">2.4.1 Common parser idioms</a></li><li><a href="infrastructure.html#boolean-attributes">2.4.2 Boolean attributes</a></li><li><a href="infrastructure.html#keywords-and-enumerated-attributes">2.4.3 Keywords and enumerated attributes</a></li><li><a href="infrastructure.html#numbers">2.4.4 Numbers</a><ol><li><a href="infrastructure.html#signed-integers">2.4.4.1 Signed integers</a></li><li><a href="infrastructure.html#non-negative-integers">2.4.4.2 Non-negative integers</a></li><li><a href="infrastructure.html#floating-point-numbers">2.4.4.3 Floating-point numbers</a></li><li><a href="infrastructure.html#percentages-and-dimensions">2.4.4.4 Percentages and lengths</a></li><li><a href="infrastructure.html#lists-of-integers">2.4.4.5 Lists of integers</a></li><li><a href="infrastructure.html#lists-of-dimensions">2.4.4.6 Lists of dimensions</a></li></ol></li><li><a href="infrastructure.html#dates-and-times">2.4.5 Dates and times</a><ol><li><a href="infrastructure.html#months">2.4.5.1 Months</a></li><li><a href="infrastructure.html#dates">2.4.5.2 Dates</a></li><li><a href="infrastructure.html#yearless-dates">2.4.5.3 Yearless dates</a></li><li><a href="infrastructure.html#times">2.4.5.4 Times</a></li><li><a href="infrastructure.html#floating-dates-and-times">2.4.5.5 Floating dates and times</a></li><li><a href="infrastructure.html#time-zones">2.4.5.6 Time zones</a></li><li><a href="infrastructure.html#global-dates-and-times">2.4.5.7 Global dates and times</a></li><li><a href="infrastructure.html#weeks">2.4.5.8 Weeks</a></li><li><a href="infrastructure.html#durations">2.4.5.9 Durations</a></li><li><a href="infrastructure.html#vaguer-moments-in-time">2.4.5.10 Vaguer moments in time</a></li></ol></li><li><a href="infrastructure.html#colours">2.4.6 Colours</a></li><li><a href="infrastructure.html#space-separated-tokens">2.4.7 Space-separated tokens</a></li><li><a href="infrastructure.html#comma-separated-tokens">2.4.8 Comma-separated tokens</a></li><li><a href="infrastructure.html#syntax-references">2.4.9 References</a></li><li><a href="infrastructure.html#mq">2.4.10 Media queries</a></li></ol></li><li><a href="infrastructure.html#urls">2.5 URLs</a><ol><li><a href="infrastructure.html#terminology-2">2.5.1 Terminology</a></li><li><a href="infrastructure.html#resolving-urls">2.5.2 Resolving URLs</a></li><li><a href="infrastructure.html#dynamic-changes-to-base-urls">2.5.3 Dynamic changes to base URLs</a></li></ol></li><li><a href="infrastructure.html#fetching-resources">2.6 Fetching resources</a><ol><li><a href="infrastructure.html#terminology-3">2.6.1 Terminology</a></li><li><a href="infrastructure.html#processing-model">2.6.2 Processing model</a></li><li><a href="infrastructure.html#encrypted-http-and-related-security-concerns">2.6.3 Encrypted HTTP and related security concerns</a></li><li><a href="infrastructure.html#content-type-sniffing">2.6.4 Determining the type of a resource</a></li><li><a href="infrastructure.html#extracting-character-encodings-from-meta-elements">2.6.5 Extracting character encodings from <code>meta</code> elements</a></li><li><a href="infrastructure.html#cors-settings-attributes">2.6.6 CORS settings attributes</a></li><li><a href="infrastructure.html#cors-enabled-fetch">2.6.7 CORS-enabled fetch</a></li></ol></li><li><a href="infrastructure.html#common-dom-interfaces">2.7 Common DOM interfaces</a><ol><li><a href="infrastructure.html#reflecting-content-attributes-in-idl-attributes">2.7.1 Reflecting content attributes in IDL attributes</a></li><li><a href="infrastructure.html#collections-2">2.7.2 Collections</a><ol><li><a href="infrastructure.html#the-htmlallcollection-interface">2.7.2.1 The <code>HTMLAllCollection</code> interface</a></li><li><a href="infrastructure.html#the-htmlformcontrolscollection-interface">2.7.2.2 The <code>HTMLFormControlsCollection</code> interface</a></li><li><a href="infrastructure.html#the-htmloptionscollection-interface">2.7.2.3 The <code>HTMLOptionsCollection</code> interface</a></li><li><a href="infrastructure.html#the-htmlpropertiescollection-interface">2.7.2.4 The <code>HTMLPropertiesCollection</code> interface</a></li></ol></li><li><a href="infrastructure.html#the-domstringmap-interface">2.7.3 The <code>DOMStringMap</code> interface</a></li><li><a href="infrastructure.html#domelementmap">2.7.4 DOMElementMap</a></li><li><a href="infrastructure.html#transferable-objects">2.7.5 Transferable objects</a></li><li><a href="infrastructure.html#safe-passing-of-structured-data">2.7.6 Safe passing of structured data</a></li><li><a href="infrastructure.html#callbacks">2.7.7 Callbacks</a></li><li><a href="infrastructure.html#garbage-collection">2.7.8 Garbage collection</a></li></ol></li><li><a href="infrastructure.html#namespaces">2.8 Namespaces</a></li></ol></li><li id="toc-dom"><a href="dom.html#dom">3 Semantics, structure, and APIs of HTML documents</a><ol><li><a href="dom.html#documents">3.1 Documents</a><ol><li><a href="dom.html#the-document-object">3.1.1 The <code>Document</code> object</a></li><li><a href="dom.html#resource-metadata-management">3.1.2 Resource metadata management</a></li><li><a href="dom.html#dom-tree-accessors">3.1.3 DOM tree accessors</a></li><li><a href="dom.html#loading-xml-documents">3.1.4 Loading XML documents</a></li></ol></li><li><a href="dom.html#elements">3.2 Elements</a><ol><li><a href="dom.html#semantics-2">3.2.1 Semantics</a></li><li><a href="dom.html#elements-in-the-dom">3.2.2 Elements in the DOM</a></li><li><a href="dom.html#element-definitions">3.2.3 Element definitions</a><ol><li><a href="dom.html#attributes">3.2.3.1 Attributes</a></li></ol></li><li><a href="dom.html#content-models">3.2.4 Content models</a><ol><li><a href="dom.html#the-nothing-content-model">3.2.4.1 The "nothing" content model</a></li><li><a href="dom.html#kinds-of-content">3.2.4.2 Kinds of content</a><ol><li><a href="dom.html#metadata-content">3.2.4.2.1 Metadata content</a></li><li><a href="dom.html#flow-content">3.2.4.2.2 Flow content</a></li><li><a href="dom.html#sectioning-content">3.2.4.2.3 Sectioning content</a></li><li><a href="dom.html#heading-content">3.2.4.2.4 Heading content</a></li><li><a href="dom.html#phrasing-content">3.2.4.2.5 Phrasing content</a></li><li><a href="dom.html#embedded-content-2">3.2.4.2.6 Embedded content</a></li><li><a href="dom.html#interactive-content">3.2.4.2.7 Interactive content</a></li><li><a href="dom.html#palpable-content">3.2.4.2.8 Palpable content</a></li><li><a href="dom.html#script-supporting-elements">3.2.4.2.9 Script-supporting elements</a></li></ol></li><li><a href="dom.html#transparent-content-models">3.2.4.3 Transparent content models</a></li><li><a href="dom.html#paragraphs">3.2.4.4 Paragraphs</a></li></ol></li><li><a href="dom.html#global-attributes">3.2.5 Global attributes</a><ol><li><a href="dom.html#the-id-attribute">3.2.5.1 The <code>id</code> attribute</a></li><li><a href="dom.html#the-title-attribute">3.2.5.2 The <code>title</code> attribute</a></li><li><a href="dom.html#the-lang-and-xml:lang-attributes">3.2.5.3 The <code>lang</code> and <code>xml:lang</code> attributes</a></li><li><a href="dom.html#the-translate-attribute">3.2.5.4 The <code>translate</code> attribute</a></li><li><a href="dom.html#the-xml:base-attribute-(xml-only)">3.2.5.5 The <code>xml:base</code> attribute (XML only)</a></li><li><a href="dom.html#the-dir-attribute">3.2.5.6 The <code>dir</code> attribute</a></li><li><a href="dom.html#classes">3.2.5.7 The <code>class</code> attribute</a></li><li><a href="dom.html#the-style-attribute">3.2.5.8 The <code>style</code> attribute</a></li><li><a href="dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes">3.2.5.9 Embedding custom non-visible data with the <code>data-*</code> attributes</a></li></ol></li><li><a href="dom.html#requirements-relating-to-the-bidirectional-algorithm">3.2.6 Requirements relating to the bidirectional algorithm</a><ol><li><a href="dom.html#authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters">3.2.6.1 Authoring conformance criteria for bidirectional-algorithm formatting characters</a></li><li><a href="dom.html#user-agent-conformance-criteria">3.2.6.2 User agent conformance criteria</a></li></ol></li><li><a href="dom.html#wai-aria">3.2.7 WAI-ARIA and HTML Accessibility API Mappings</a><ol><li><a href="dom.html#aria-authoring-requirements">3.2.7.1 ARIA Authoring Requirements</a></li><li><a href="dom.html#aria-conformance-requirements">3.2.7.2 Conformance Checker Implementation Requirements</a></li><li><a href="dom.html#user-agent-requirements">3.2.7.3 User Agent Implementation Requirements</a><ol><li><a href="dom.html#aria-role-attribute">3.2.7.3.1 ARIA Role Attribute</a></li><li><a href="dom.html#state-and-property-attributes">3.2.7.3.2 State and Property Attributes</a></li></ol></li></ol></li><li><a href="dom.html#allowed-aria-roles,-states-and-properties">3.2.8 ARIA roles, states and properties</a></li></ol></li></ol></li><li id="toc-semantics"><a href="semantics.html#semantics">4 The elements of HTML</a><ol><li><a href="semantics.html#the-root-element">4.1 The root element</a><ol><li><a href="semantics.html#the-html-element">4.1.1 The <code>html</code> element</a></li></ol></li><li><a href="semantics.html#document-metadata">4.2 Document metadata</a><ol><li><a href="semantics.html#the-head-element">4.2.1 The <code>head</code> element</a></li><li><a href="semantics.html#the-title-element">4.2.2 The <code>title</code> element</a></li><li><a href="semantics.html#the-base-element">4.2.3 The <code>base</code> element</a></li><li><a href="semantics.html#the-link-element">4.2.4 The <code>link</code> element</a></li><li><a href="semantics.html#the-meta-element">4.2.5 The <code>meta</code> element</a><ol><li><a href="semantics.html#standard-metadata-names">4.2.5.1 Standard metadata names</a></li><li><a href="semantics.html#other-metadata-names">4.2.5.2 Other metadata names</a></li><li><a href="semantics.html#pragma-directives">4.2.5.3 Pragma directives</a></li><li><a href="semantics.html#other-pragma-directives">4.2.5.4 Other pragma directives</a></li><li><a href="semantics.html#charset">4.2.5.5 Specifying the document's character encoding</a></li></ol></li><li><a href="semantics.html#the-style-element">4.2.6 The <code>style</code> element</a></li><li><a href="semantics.html#interactions-of-styling-and-scripting">4.2.7 Interactions of styling and scripting</a></li></ol></li><li><a href="semantics.html#sections">4.3 Sections</a><ol><li><a href="semantics.html#the-body-element">4.3.1 The <code>body</code> element</a></li><li><a href="semantics.html#the-article-element">4.3.2 The <code>article</code> element</a></li><li><a href="semantics.html#the-section-element">4.3.3 The <code>section</code> element</a></li><li><a href="semantics.html#the-nav-element">4.3.4 The <code>nav</code> element</a></li><li><a href="semantics.html#the-aside-element">4.3.5 The <code>aside</code> element</a></li><li><a href="semantics.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">4.3.6 The <code>h1</code>, <code>h2</code>, <code>h3</code>, <code>h4</code>, <code>h5</code>, and
+  <code>h6</code> elements</a></li><li><a href="semantics.html#the-header-element">4.3.7 The <code>header</code> element</a></li><li><a href="semantics.html#the-footer-element">4.3.8 The <code>footer</code> element</a></li><li><a href="semantics.html#the-address-element">4.3.9 The <code>address</code> element</a></li><li><a href="semantics.html#headings-and-sections">4.3.10 Headings and sections</a><ol><li><a href="semantics.html#outlines">4.3.10.1 Creating an outline</a></li><li><a href="semantics.html#sample-outlines">4.3.10.2 Sample outlines</a></li><li><a href="semantics.html#exposing-outlines-to-users">4.3.10.3 Exposing outlines to users</a></li></ol></li><li><a href="semantics.html#usage-summary-2">4.3.11 Usage summary</a><ol><li><a href="semantics.html#article-or-section">4.3.11.1 Article or section?</a></li></ol></li></ol></li><li><a href="semantics.html#grouping-content">4.4 Grouping content</a><ol><li><a href="semantics.html#the-p-element">4.4.1 The <code>p</code> element</a></li><li><a href="semantics.html#the-hr-element">4.4.2 The <code>hr</code> element</a></li><li><a href="semantics.html#the-pre-element">4.4.3 The <code>pre</code> element</a></li><li><a href="semantics.html#the-blockquote-element">4.4.4 The <code>blockquote</code> element</a></li><li><a href="semantics.html#the-ol-element">4.4.5 The <code>ol</code> element</a></li><li><a href="semantics.html#the-ul-element">4.4.6 The <code>ul</code> element</a></li><li><a href="semantics.html#the-li-element">4.4.7 The <code>li</code> element</a></li><li><a href="semantics.html#the-dl-element">4.4.8 The <code>dl</code> element</a></li><li><a href="semantics.html#the-dt-element">4.4.9 The <code>dt</code> element</a></li><li><a href="semantics.html#the-dd-element">4.4.10 The <code>dd</code> element</a></li><li><a href="semantics.html#the-figure-element">4.4.11 The <code>figure</code> element</a></li><li><a href="semantics.html#the-figcaption-element">4.4.12 The <code>figcaption</code> element</a></li><li><a href="semantics.html#the-main-element">4.4.13 The <code>main</code> element</a></li><li><a href="semantics.html#the-div-element">4.4.14 The <code>div</code> element</a></li></ol></li><li><a href="semantics.html#text-level-semantics">4.5 Text-level semantics</a><ol><li><a href="semantics.html#the-a-element">4.5.1 The <code>a</code> element</a></li><li><a href="semantics.html#the-em-element">4.5.2 The <code>em</code> element</a></li><li><a href="semantics.html#the-strong-element">4.5.3 The <code>strong</code> element</a></li><li><a href="semantics.html#the-small-element">4.5.4 The <code>small</code> element</a></li><li><a href="semantics.html#the-s-element">4.5.5 The <code>s</code> element</a></li><li><a href="semantics.html#the-cite-element">4.5.6 The <code>cite</code> element</a></li><li><a href="semantics.html#the-q-element">4.5.7 The <code>q</code> element</a></li><li><a href="semantics.html#the-dfn-element">4.5.8 The <code>dfn</code> element</a></li><li><a href="semantics.html#the-abbr-element">4.5.9 The <code>abbr</code> element</a></li><li><a href="semantics.html#the-ruby-element">4.5.10 The <code>ruby</code> element</a></li><li><a href="semantics.html#the-rb-element">4.5.11 The <code>rb</code> element</a></li><li><a href="semantics.html#the-rt-element">4.5.12 The <code>rt</code> element</a></li><li><a href="semantics.html#the-rtc-element">4.5.13 The <code>rtc</code> element</a></li><li><a href="semantics.html#the-rp-element">4.5.14 The <code>rp</code> element</a></li><li><a href="semantics.html#the-data-element">4.5.15 The <code>data</code> element</a></li><li><a href="semantics.html#the-time-element">4.5.16 The <code>time</code> element</a></li><li><a href="semantics.html#the-code-element">4.5.17 The <code>code</code> element</a></li><li><a href="semantics.html#the-var-element">4.5.18 The <code>var</code> element</a></li><li><a href="semantics.html#the-samp-element">4.5.19 The <code>samp</code> element</a></li><li><a href="semantics.html#the-kbd-element">4.5.20 The <code>kbd</code> element</a></li><li><a href="semantics.html#the-sub-and-sup-elements">4.5.21 The <code>sub</code> and <code>sup</code> elements</a></li><li><a href="semantics.html#the-i-element">4.5.22 The <code>i</code> element</a></li><li><a href="semantics.html#the-b-element">4.5.23 The <code>b</code> element</a></li><li><a href="semantics.html#the-u-element">4.5.24 The <code>u</code> element</a></li><li><a href="semantics.html#the-mark-element">4.5.25 The <code>mark</code> element</a></li><li><a href="semantics.html#the-bdi-element">4.5.26 The <code>bdi</code> element</a></li><li><a href="semantics.html#the-bdo-element">4.5.27 The <code>bdo</code> element</a></li><li><a href="semantics.html#the-span-element">4.5.28 The <code>span</code> element</a></li><li><a href="semantics.html#the-br-element">4.5.29 The <code>br</code> element</a></li><li><a href="semantics.html#the-wbr-element">4.5.30 The <code>wbr</code> element</a></li><li><a href="semantics.html#usage-summary">4.5.31 Usage summary</a></li></ol></li><li><a href="semantics.html#links">4.6 Links</a><ol><li><a href="semantics.html#introduction-2">4.6.1 Introduction</a></li><li><a href="semantics.html#links-created-by-a-and-area-elements">4.6.2 Links created by <code>a</code> and <code>area</code> elements</a></li><li><a href="semantics.html#following-hyperlinks">4.6.3 Following hyperlinks</a></li><li><a href="semantics.html#downloading-resources">4.6.4 Downloading resources</a></li><li><a href="semantics.html#linkTypes">4.6.5 Link types</a><ol><li><a href="semantics.html#rel-alternate">4.6.5.1 Link type "<code>alternate</code>"</a></li><li><a href="semantics.html#link-type-author">4.6.5.2 Link type "<code>author</code>"</a></li><li><a href="semantics.html#link-type-bookmark">4.6.5.3 Link type "<code>bookmark</code>"</a></li><li><a href="semantics.html#link-type-help">4.6.5.4 Link type "<code>help</code>"</a></li><li><a href="semantics.html#rel-icon">4.6.5.5 Link type "<code>icon</code>"</a></li><li><a href="semantics.html#link-type-license">4.6.5.6 Link type "<code>license</code>"</a></li><li><a href="semantics.html#link-type-nofollow">4.6.5.7 Link type "<code>nofollow</code>"</a></li><li><a href="semantics.html#link-type-noreferrer">4.6.5.8 Link type "<code>noreferrer</code>"</a></li><li><a href="semantics.html#link-type-prefetch">4.6.5.9 Link type "<code>prefetch</code>"</a></li><li><a href="semantics.html#link-type-search">4.6.5.10 Link type "<code>search</code>"</a></li><li><a href="semantics.html#link-type-stylesheet">4.6.5.11 Link type "<code>stylesheet</code>"</a></li><li><a href="semantics.html#link-type-tag">4.6.5.12 Link type "<code>tag</code>"</a></li><li><a href="semantics.html#sequential-link-types">4.6.5.13 Sequential link types</a><ol><li><a href="semantics.html#link-type-next">4.6.5.13.1 Link type "<code>next</code>"</a></li><li><a href="semantics.html#link-type-prev">4.6.5.13.2 Link type "<code>prev</code>"</a></li></ol></li><li><a href="semantics.html#other-link-types">4.6.5.14 Other link types</a></li></ol></li></ol></li><li><a href="semantics.html#edits">4.7 Edits</a><ol><li><a href="semantics.html#the-ins-element">4.7.1 The <code>ins</code> element</a></li><li><a href="semantics.html#the-del-element">4.7.2 The <code>del</code> element</a></li><li><a href="semantics.html#attributes-common-to-ins-and-del-elements">4.7.3 Attributes common to <code>ins</code> and <code>del</code> elements</a></li><li><a href="semantics.html#edits-and-paragraphs">4.7.4 Edits and paragraphs</a></li><li><a href="semantics.html#edits-and-lists">4.7.5 Edits and lists</a></li><li><a href="semantics.html#edits-and-tables">4.7.6 Edits and tables</a></li></ol></li><li><a href="semantics.html#embedded-content">4.8 Embedded content</a><ol><li><a href="semantics.html#introduction-3">4.8.1 Introduction</a><ol><li><a href="semantics.html#adaptive-images">4.8.1.1 Adaptive images</a></li></ol></li><li><a href="semantics.html#dependencies-2">4.8.2 Dependencies</a></li><li><a href="semantics.html#the-picture-element">4.8.3 The <code>picture</code> element</a></li><li><a href="semantics.html#the-source-element-when-used-with-the-picture-element">4.8.4 The <code>source</code> element when used with the <code>picture</code> element</a></li><li><a href="semantics.html#the-img-element">4.8.5 The <code>img</code> element</a><ol><li><a href="semantics.html#alt">4.8.5.1 Requirements for providing text to act as an alternative for images</a><ol><li><a href="semantics.html#examples-of-scenarios-where-users-benefit-from-text-alternatives-for-images">4.8.5.1.1 Examples of scenarios where users benefit from text alternatives for images</a></li><li><a href="semantics.html#general-guidelines">4.8.5.1.2 General guidelines</a></li><li><a href="semantics.html#a-link-or-button-containing-nothing-but-an-image">4.8.5.1.3 A link or button containing nothing but an image</a></li><li><a href="semantics.html#graphical-representations:-charts,-diagrams,-graphs,-maps,-illustrations">4.8.5.1.4 Graphical Representations: Charts, diagrams, graphs, maps, illustrations</a></li><li><a href="semantics.html#images-of-text">4.8.5.1.5 Images of text</a></li><li><a href="semantics.html#images-that-include-text">4.8.5.1.6 Images that include text</a></li><li><a href="semantics.html#images-that-enhance-the-themes-or-subject-matter-of-the-page-content">4.8.5.1.7 Images that enhance the themes or subject matter of the page content</a></li><li><a href="semantics.html#a-graphical-representation-of-some-of-the-surrounding-text">4.8.5.1.8 A graphical representation of some of the surrounding text</a></li><li><a href="semantics.html#a-purely-decorative-image-that-doesn't-add-any-information">4.8.5.1.9 A purely decorative image that doesn't add any information</a></li><li><a href="semantics.html#inline">4.8.5.1.10 Inline images</a></li><li><a href="semantics.html#a-group-of-images-that-form-a-single-larger-picture-with-no-links">4.8.5.1.11 A group of images that form a single larger picture with no links</a></li><li><a href="semantics.html#image-maps-0">4.8.5.1.12 Image maps</a></li><li><a href="semantics.html#a-group-of-images-that-form-a-single-larger-picture-with-links">4.8.5.1.13 A group of images that form a single larger picture with links</a></li><li><a href="semantics.html#images-of-pictures">4.8.5.1.14 Images of Pictures</a></li><li><a href="semantics.html#webcam-images">4.8.5.1.15 Webcam images</a></li><li><a href="semantics.html#when-a-text-alternative-is-not-available-at-the-time-of-publication">4.8.5.1.16 When a text alternative is not available at the time of publication</a></li><li><a href="semantics.html#an-image-not-intended-for-the-user">4.8.5.1.17 An image not intended for the user</a></li><li><a href="semantics.html#icon-images">4.8.5.1.18 Icon Images</a></li><li><a href="semantics.html#logos,-insignia,-flags,-or-emblems">4.8.5.1.19 Logos, insignia, flags, or emblems</a></li><li><a href="semantics.html#captcha-images">4.8.5.1.20 CAPTCHA Images</a></li><li><a href="semantics.html#an-image-in-a-picture-element">4.8.5.1.21 An image in a <code>picture</code> element</a></li><li><a href="semantics.html#guidance-for-markup-generators">4.8.5.1.22 Guidance for markup generators</a></li><li><a href="semantics.html#guidance-for-conformance-checkers">4.8.5.1.23 Guidance for conformance checkers</a></li></ol></li></ol></li><li><a href="semantics.html#the-iframe-element">4.8.6 The <code>iframe</code> element</a></li><li><a href="semantics.html#the-embed-element">4.8.7 The <code>embed</code> element</a></li><li><a href="semantics.html#the-object-element">4.8.8 The <code>object</code> element</a></li><li><a href="semantics.html#the-param-element">4.8.9 The <code>param</code> element</a></li><li><a href="semantics.html#the-video-element">4.8.10 The <code>video</code> element</a></li><li><a href="semantics.html#the-audio-element">4.8.11 The <code>audio</code> element</a></li><li><a href="semantics.html#the-source-element">4.8.12 The <code>source</code> element</a></li><li><a href="semantics.html#the-track-element">4.8.13 The <code>track</code> element</a></li><li><a href="semantics.html#media-elements">4.8.14 Media elements</a><ol><li><a href="semantics.html#error-codes">4.8.14.1 Error codes</a></li><li><a href="semantics.html#location-of-the-media-resource">4.8.14.2 Location of the media resource</a></li><li><a href="semantics.html#mime-types">4.8.14.3 MIME types</a></li><li><a href="semantics.html#network-states">4.8.14.4 Network states</a></li><li><a href="semantics.html#loading-the-media-resource">4.8.14.5 Loading the media resource</a></li><li><a href="semantics.html#offsets-into-the-media-resource">4.8.14.6 Offsets into the media resource</a></li><li><a href="semantics.html#ready-states">4.8.14.7 Ready states</a></li><li><a href="semantics.html#playing-the-media-resource">4.8.14.8 Playing the media resource</a></li><li><a href="semantics.html#seeking">4.8.14.9 Seeking</a></li><li><a href="semantics.html#media-resources-with-multiple-media-tracks">4.8.14.10 Media resources with multiple media tracks</a><ol><li><a href="semantics.html#audiotracklist-and-videotracklist-objects">4.8.14.10.1 <code>AudioTrackList</code> and <code>VideoTrackList</code> objects</a></li><li><a href="semantics.html#selecting-specific-audio-and-video-tracks-declaratively">4.8.14.10.2 Selecting specific audio and video tracks declaratively</a></li></ol></li><li><a href="semantics.html#synchronising-multiple-media-elements">4.8.14.11 Synchronising multiple media elements</a><ol><li><a href="semantics.html#introduction-4">4.8.14.11.1 Introduction</a></li><li><a href="semantics.html#media-controllers">4.8.14.11.2 Media controllers</a></li><li><a href="semantics.html#assigning-a-media-controller-declaratively">4.8.14.11.3 Assigning a media controller declaratively</a></li></ol></li><li><a href="semantics.html#timed-text-tracks">4.8.14.12 Timed text tracks</a><ol><li><a href="semantics.html#text-track-model">4.8.14.12.1 Text track model</a></li><li><a href="semantics.html#sourcing-in-band-text-tracks">4.8.14.12.2 Sourcing in-band text tracks</a></li><li><a href="semantics.html#sourcing-out-of-band-text-tracks">4.8.14.12.3 Sourcing out-of-band text tracks</a></li><li><a href="semantics.html#guidelines-for-exposing-cues-in-various-formats-as-text-track-cues">4.8.14.12.4 Guidelines for exposing cues in various formats as text track cues</a></li><li><a href="semantics.html#text-track-api">4.8.14.12.5 Text track API</a></li><li><a href="semantics.html#text-tracks-exposing-in-band-metadata">4.8.14.12.6 Text tracks exposing in-band metadata</a></li><li><a href="semantics.html#text-tracks-describing-chapters">4.8.14.12.7 Text tracks describing chapters</a></li><li><a href="semantics.html#cue-events">4.8.14.12.8 Event handlers for objects of the text track APIs</a></li><li><a href="semantics.html#best-practices-for-metadata-text-tracks">4.8.14.12.9 Best practices for metadata text tracks</a></li></ol></li><li><a href="semantics.html#user-interface">4.8.14.13 User interface</a></li><li><a href="semantics.html#time-ranges">4.8.14.14 Time ranges</a></li><li><a href="semantics.html#the-trackevent-interface">4.8.14.15 The <code>TrackEvent</code> interface</a></li><li><a href="semantics.html#mediaevents">4.8.14.16 Event summary</a></li><li><a href="semantics.html#security-and-privacy-considerations">4.8.14.17 Security and privacy considerations</a></li><li><a href="semantics.html#best-practices-for-authors-using-media-elements">4.8.14.18 Best practices for authors using media elements</a></li><li><a href="semantics.html#best-practices-for-implementors-of-media-elements">4.8.14.19 Best practices for implementors of media elements</a></li></ol></li><li><a href="semantics.html#the-map-element">4.8.15 The <code>map</code> element</a></li><li><a href="semantics.html#the-area-element">4.8.16 The <code>area</code> element</a></li><li><a href="semantics.html#image-maps">4.8.17 Image maps</a><ol><li><a href="semantics.html#authoring">4.8.17.1 Authoring</a></li><li><a href="semantics.html#processing-model-2">4.8.17.2 Processing model</a></li></ol></li><li><a href="semantics.html#mathml">4.8.18 MathML</a></li><li><a href="semantics.html#svg-0">4.8.19 SVG</a></li><li><a href="semantics.html#dimension-attributes">4.8.20 Dimension attributes</a></li></ol></li><li><a href="semantics.html#tables">4.9 Tabular data</a><ol><li><a href="semantics.html#the-table-element">4.9.1 The <code>table</code> element</a><ol><li><a href="semantics.html#table-descriptions-techniques">4.9.1.1 Techniques for describing tables</a></li><li><a href="semantics.html#table-layout-techniques">4.9.1.2 Techniques for table design</a></li></ol></li><li><a href="semantics.html#the-caption-element">4.9.2 The <code>caption</code> element</a></li><li><a href="semantics.html#the-colgroup-element">4.9.3 The <code>colgroup</code> element</a></li><li><a href="semantics.html#the-col-element">4.9.4 The <code>col</code> element</a></li><li><a href="semantics.html#the-tbody-element">4.9.5 The <code>tbody</code> element</a></li><li><a href="semantics.html#the-thead-element">4.9.6 The <code>thead</code> element</a></li><li><a href="semantics.html#the-tfoot-element">4.9.7 The <code>tfoot</code> element</a></li><li><a href="semantics.html#the-tr-element">4.9.8 The <code>tr</code> element</a></li><li><a href="semantics.html#the-td-element">4.9.9 The <code>td</code> element</a></li><li><a href="semantics.html#the-th-element">4.9.10 The <code>th</code> element</a></li><li><a href="semantics.html#attributes-common-to-td-and-th-elements">4.9.11 Attributes common to <code>td</code> and <code>th</code> elements</a></li><li><a href="semantics.html#processing-model-3">4.9.12 Processing model</a><ol><li><a href="semantics.html#forming-a-table">4.9.12.1 Forming a table</a></li><li><a href="semantics.html#header-and-data-cell-semantics">4.9.12.2 Forming relationships between data cells and header cells</a></li></ol></li><li><a href="semantics.html#table-sorting-model">4.9.13 Table sorting model</a></li><li><a href="semantics.html#table-examples">4.9.14 Examples</a></li></ol></li><li><a href="semantics.html#forms">4.10 Forms</a><ol><li><a href="semantics.html#introduction-5">4.10.1 Introduction</a><ol><li><a href="semantics.html#writing-a-form's-user-interface">4.10.1.1 Writing a form's user interface</a></li><li><a href="semantics.html#implementing-the-server-side-processing-for-a-form">4.10.1.2 Implementing the server-side processing for a form</a></li><li><a href="semantics.html#configuring-a-form-to-communicate-with-a-server">4.10.1.3 Configuring a form to communicate with a server</a></li><li><a href="semantics.html#client-side-form-validation">4.10.1.4 Client-side form validation</a></li><li><a href="semantics.html#enabling-client-side-automatic-filling-of-form-controls">4.10.1.5 Enabling client-side automatic filling of form controls</a></li><li><a href="semantics.html#improving-the-user-experience-on-mobile-devices">4.10.1.6 Improving the user experience on mobile devices</a></li><li><a href="semantics.html#the-difference-between-the-field-type,-the-autofill-field-name,-and-the-input-modality">4.10.1.7 The difference between the field type, the autofill field name, and the input modality</a></li><li><a href="semantics.html#input-author-notes">4.10.1.8 Date, time, and number formats</a></li></ol></li><li><a href="semantics.html#categories">4.10.2 Categories</a></li><li><a href="semantics.html#the-form-element">4.10.3 The <code>form</code> element</a></li><li><a href="semantics.html#the-label-element">4.10.4 The <code>label</code> element</a></li><li><a href="semantics.html#the-input-element">4.10.5 The <code>input</code> element</a><ol><li><a href="semantics.html#states-of-the-type-attribute">4.10.5.1 States of the <code>type</code> attribute</a><ol><li><a href="semantics.html#hidden-state-(type=hidden)">4.10.5.1.1 Hidden state (<code>type=hidden</code>)</a></li><li><a href="semantics.html#text-(type=text)-state-and-search-state-(type=search)">4.10.5.1.2 Text (<code>type=text</code>) state and Search state (<code>type=search</code>)</a></li><li><a href="semantics.html#telephone-state-(type=tel)">4.10.5.1.3 Telephone state (<code>type=tel</code>)</a></li><li><a href="semantics.html#url-state-(type=url)">4.10.5.1.4 URL state (<code>type=url</code>)</a></li><li><a href="semantics.html#e-mail-state-(type=email)">4.10.5.1.5 E-mail state (<code>type=email</code>)</a></li><li><a href="semantics.html#password-state-(type=password)">4.10.5.1.6 Password state (<code>type=password</code>)</a></li><li><a href="semantics.html#date-and-time-state-(type=datetime)">4.10.5.1.7 Date and Time state (<code>type=datetime</code>)</a></li><li><a href="semantics.html#date-state-(type=date)">4.10.5.1.8 Date state (<code>type=date</code>)</a></li><li><a href="semantics.html#month-state-(type=month)">4.10.5.1.9 Month state (<code>type=month</code>)</a></li><li><a href="semantics.html#week-state-(type=week)">4.10.5.1.10 Week state (<code>type=week</code>)</a></li><li><a href="semantics.html#time-state-(type=time)">4.10.5.1.11 Time state (<code>type=time</code>)</a></li><li><a href="semantics.html#number-state-(type=number)">4.10.5.1.12 Number state (<code>type=number</code>)</a></li><li><a href="semantics.html#range-state-(type=range)">4.10.5.1.13 Range state (<code>type=range</code>)</a></li><li><a href="semantics.html#color-state-(type=color)">4.10.5.1.14 Colour state (<code>type=color</code>)</a></li><li><a href="semantics.html#checkbox-state-(type=checkbox)">4.10.5.1.15 Checkbox state (<code>type=checkbox</code>)</a></li><li><a href="semantics.html#radio-button-state-(type=radio)">4.10.5.1.16 Radio Button state (<code>type=radio</code>)</a></li><li><a href="semantics.html#file-upload-state-(type=file)">4.10.5.1.17 File Upload state (<code>type=file</code>)</a></li><li><a href="semantics.html#submit-button-state-(type=submit)">4.10.5.1.18 Submit Button state (<code>type=submit</code>)</a></li><li><a href="semantics.html#image-button-state-(type=image)">4.10.5.1.19 Image Button state (<code>type=image</code>)</a></li><li><a href="semantics.html#reset-button-state-(type=reset)">4.10.5.1.20 Reset Button state (<code>type=reset</code>)</a></li><li><a href="semantics.html#button-state-(type=button)">4.10.5.1.21 Button state (<code>type=button</code>)</a></li></ol></li><li><a href="semantics.html#input-impl-notes">4.10.5.2 Implemention notes regarding localization of form controls</a></li><li><a href="semantics.html#common-input-element-attributes">4.10.5.3 Common <code>input</code> element attributes</a><ol><li><a href="semantics.html#the-maxlength-and-minlength-attributes">4.10.5.3.1 The <code>maxlength</code> and <code>minlength</code> attributes</a></li><li><a href="semantics.html#the-size-attribute">4.10.5.3.2 The <code>size</code> attribute</a></li><li><a href="semantics.html#the-readonly-attribute">4.10.5.3.3 The <code>readonly</code> attribute</a></li><li><a href="semantics.html#the-required-attribute">4.10.5.3.4 The <code>required</code> attribute</a></li><li><a href="semantics.html#the-multiple-attribute">4.10.5.3.5 The <code>multiple</code> attribute</a></li><li><a href="semantics.html#the-pattern-attribute">4.10.5.3.6 The <code>pattern</code> attribute</a></li><li><a href="semantics.html#the-min-and-max-attributes">4.10.5.3.7 The <code>min</code> and <code>max</code> attributes</a></li><li><a href="semantics.html#the-step-attribute">4.10.5.3.8 The <code>step</code> attribute</a></li><li><a href="semantics.html#the-list-attribute">4.10.5.3.9 The <code>list</code> attribute</a></li><li><a href="semantics.html#the-placeholder-attribute">4.10.5.3.10 The <code>placeholder</code> attribute</a></li></ol></li><li><a href="semantics.html#common-input-element-apis">4.10.5.4 Common <code>input</code> element APIs</a></li><li><a href="semantics.html#common-input-element-events">4.10.5.5 Common event behaviours</a></li></ol></li><li><a href="semantics.html#the-button-element">4.10.6 The <code>button</code> element</a></li><li><a href="semantics.html#the-select-element">4.10.7 The <code>select</code> element</a></li><li><a href="semantics.html#the-datalist-element">4.10.8 The <code>datalist</code> element</a></li><li><a href="semantics.html#the-optgroup-element">4.10.9 The <code>optgroup</code> element</a></li><li><a href="semantics.html#the-option-element">4.10.10 The <code>option</code> element</a></li><li><a href="semantics.html#the-textarea-element">4.10.11 The <code>textarea</code> element</a></li><li><a href="semantics.html#the-keygen-element">4.10.12 The <code>keygen</code> element</a></li><li><a href="semantics.html#the-output-element">4.10.13 The <code>output</code> element</a></li><li><a href="semantics.html#the-progress-element">4.10.14 The <code>progress</code> element</a></li><li><a href="semantics.html#the-meter-element">4.10.15 The <code>meter</code> element</a></li><li><a href="semantics.html#the-fieldset-element">4.10.16 The <code>fieldset</code> element</a></li><li><a href="semantics.html#the-legend-element">4.10.17 The <code>legend</code> element</a></li><li><a href="semantics.html#form-control-infrastructure">4.10.18 Form control infrastructure</a><ol><li><a href="semantics.html#a-form-control's-value">4.10.18.1 A form control's value</a></li><li><a href="semantics.html#mutability">4.10.18.2 Mutability</a></li><li><a href="semantics.html#association-of-controls-and-forms">4.10.18.3 Association of controls and forms</a></li></ol></li><li><a href="semantics.html#attributes-common-to-form-controls">4.10.19 Attributes common to form controls</a><ol><li><a href="semantics.html#naming-form-controls:-the-name-attribute">4.10.19.1 Naming form controls: the <code>name</code> attribute</a></li><li><a href="semantics.html#submitting-element-directionality:-the-dirname-attribute">4.10.19.2 Submitting element directionality: the <code>dirname</code> attribute</a></li><li><a href="semantics.html#limiting-user-input-length:-the-maxlength-attribute">4.10.19.3 Limiting user input length: the <code>maxlength</code> attribute</a></li><li><a href="semantics.html#setting-minimum-input-length-requirements:-the-minlength-attribute">4.10.19.4 Setting minimum input length requirements: the <code>minlength</code> attribute</a></li><li><a href="semantics.html#enabling-and-disabling-form-controls:-the-disabled-attribute">4.10.19.5 Enabling and disabling form controls: the <code>disabled</code> attribute</a></li><li><a href="semantics.html#form-submission">4.10.19.6 Form submission</a><ol><li><a href="semantics.html#autofocusing-a-form-control:-the-autofocus-attribute">4.10.19.6.1 Autofocusing a form control: the <code>autofocus</code> attribute</a></li></ol></li><li><a href="semantics.html#input-modalities:-the-inputmode-attribute">4.10.19.7 Input modalities: the <code>inputmode</code> attribute</a></li><li><a href="semantics.html#autofill">4.10.19.8 Autofill</a><ol><li><a href="semantics.html#autofilling-form-controls:-the-autocomplete-attribute">4.10.19.8.1 Autofilling form controls: the <code>autocomplete</code> attribute</a></li><li><a href="semantics.html#processing-model-4">4.10.19.8.2 Processing model</a></li><li><a href="semantics.html#user-interface-for-bulk-autofill">4.10.19.8.3 User interface for bulk autofill</a></li><li><a href="semantics.html#the-autocompleteerrorevent-interface">4.10.19.8.4 The <code>AutocompleteErrorEvent</code> interface</a></li></ol></li></ol></li><li><a href="semantics.html#textFieldSelection">4.10.20 APIs for the text field selections</a></li><li><a href="semantics.html#constraints">4.10.21 Constraints</a><ol><li><a href="semantics.html#definitions">4.10.21.1 Definitions</a></li><li><a href="semantics.html#constraint-validation">4.10.21.2 Constraint validation</a></li><li><a href="semantics.html#the-constraint-validation-api">4.10.21.3 The constraint validation API</a></li><li><a href="semantics.html#security-forms">4.10.21.4 Security</a></li></ol></li><li><a href="semantics.html#form-submission-2">4.10.22 Form submission</a><ol><li><a href="semantics.html#introduction-6">4.10.22.1 Introduction</a></li><li><a href="semantics.html#implicit-submission">4.10.22.2 Implicit submission</a></li><li><a href="semantics.html#form-submission-algorithm">4.10.22.3 Form submission algorithm</a></li><li><a href="semantics.html#constructing-form-data-set">4.10.22.4 Constructing the form data set</a></li><li><a href="semantics.html#selecting-a-form-submission-encoding">4.10.22.5 Selecting a form submission encoding</a></li><li><a href="semantics.html#url-encoded-form-data">4.10.22.6 URL-encoded form data</a></li><li><a href="semantics.html#multipart-form-data">4.10.22.7 Multipart form data</a></li><li><a href="semantics.html#plain-text-form-data">4.10.22.8 Plain text form data</a></li></ol></li><li><a href="semantics.html#resetting-a-form">4.10.23 Resetting a form</a></li></ol></li><li><a href="semantics.html#interactive-elements">4.11 Interactive elements</a><ol><li><a href="semantics.html#the-details-element">4.11.1 The <code>details</code> element</a></li><li><a href="semantics.html#the-summary-element">4.11.2 The <code>summary</code> element</a></li><li><a href="semantics.html#the-menu-element">4.11.3 The <code>menu</code> element</a></li><li><a href="semantics.html#the-menuitem-element">4.11.4 The <code>menuitem</code> element</a></li><li><a href="semantics.html#context-menus">4.11.5 Context menus</a><ol><li><a href="semantics.html#declaring-a-context-menu">4.11.5.1 Declaring a context menu</a></li><li><a href="semantics.html#processing-model-5">4.11.5.2 Processing model</a></li><li><a href="semantics.html#the-relatedevent-interfaces">4.11.5.3 The <code>RelatedEvent</code> interfaces</a></li></ol></li><li><a href="semantics.html#commands">4.11.6 Commands</a><ol><li><a href="semantics.html#facets-2">4.11.6.1 Facets</a></li><li><a href="semantics.html#using-the-a-element-to-define-a-command">4.11.6.2 Using the <code>a</code> element to define a command</a></li><li><a href="semantics.html#using-the-button-element-to-define-a-command">4.11.6.3 Using the <code>button</code> element to define a command</a></li><li><a href="semantics.html#using-the-input-element-to-define-a-command">4.11.6.4 Using the <code>input</code> element to define a command</a></li><li><a href="semantics.html#using-the-option-element-to-define-a-command">4.11.6.5 Using the <code>option</code> element to define a command</a></li><li><a href="semantics.html#using-the-menuitem-element-to-define-a-command">4.11.6.6 Using the <code>menuitem</code> element to define a
+  command</a></li><li><a href="semantics.html#using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly">4.11.6.7 Using the <code>command</code> attribute on <code>menuitem</code> elements to define
+  a command indirectly</a></li><li><a href="semantics.html#using-the-accesskey-attribute-on-a-label-element-to-define-a-command">4.11.6.8 Using the <code>accesskey</code> attribute
+  on a <code>label</code> element to define a command</a></li><li><a href="semantics.html#using-the-accesskey-attribute-on-a-legend-element-to-define-a-command">4.11.6.9 Using the <code>accesskey</code> attribute
+  on a <code>legend</code> element to define a command</a></li><li><a href="semantics.html#using-the-accesskey-attribute-to-define-a-command-on-other-elements">4.11.6.10 Using the <code>accesskey</code>
+  attribute to define a command on other elements</a></li></ol></li><li><a href="semantics.html#the-dialog-element">4.11.7 The <code>dialog</code> element</a><ol><li><a href="semantics.html#anchor-points">4.11.7.1 Anchor points</a></li></ol></li></ol></li><li><a href="semantics.html#scripting-3">4.12 Scripting</a><ol><li><a href="semantics.html#the-script-element">4.12.1 The <code>script</code> element</a><ol><li><a href="semantics.html#scriptingLanguages">4.12.1.1 Scripting languages</a></li><li><a href="semantics.html#restrictions-for-contents-of-script-elements">4.12.1.2 Restrictions for contents of <code>script</code> elements</a></li><li><a href="semantics.html#inline-documentation-for-external-scripts">4.12.1.3 Inline documentation for external scripts</a></li><li><a href="semantics.html#scriptTagXSLT">4.12.1.4 Interaction of <code>script</code> elements and XSLT</a></li></ol></li><li><a href="semantics.html#the-noscript-element">4.12.2 The <code>noscript</code> element</a></li><li><a href="semantics.html#the-template-element">4.12.3 The <code>template</code> element</a><ol><li><a href="semantics.html#template-XSLT-XPath">4.12.3.1 Interaction of <code>template</code> elements with XSLT and XPath</a></li></ol></li><li><a href="semantics.html#the-canvas-element">4.12.4 The <code>canvas</code> element</a><ol><li><a href="semantics.html#proxying-canvases-to-workers">4.12.4.1 Proxying canvases to workers</a></li><li><a href="semantics.html#colour-spaces-and-colour-correction">4.12.4.2 Colour spaces and colour correction</a></li><li><a href="semantics.html#serialising-bitmaps-to-a-file">4.12.4.3 Serialising bitmaps to a file</a></li><li><a href="semantics.html#security-with-canvas-elements">4.12.4.4 Security with <code>canvas</code> elements</a></li></ol></li></ol></li><li><a href="semantics.html#common-idioms">4.13 Common idioms without dedicated elements</a><ol><li><a href="semantics.html#sub-head">4.13.1 Subheadings, subtitles, alternative titles and taglines</a></li><li><a href="semantics.html#rel-up">4.13.2 Bread crumb navigation</a></li><li><a href="semantics.html#tag-clouds">4.13.3 Tag clouds</a></li><li><a href="semantics.html#conversations">4.13.4 Conversations</a></li><li><a href="semantics.html#footnotes">4.13.5 Footnotes</a></li></ol></li><li><a href="semantics.html#disabled-elements">4.14 Disabled elements</a></li><li><a href="semantics.html#selectors">4.15 Matching HTML elements using selectors</a><ol><li><a href="semantics.html#case-sensitivity">4.15.1 Case-sensitivity</a></li><li><a href="semantics.html#pseudo-classes">4.15.2 Pseudo-classes</a></li></ol></li></ol></li><li id="toc-editing"><a href="editing.html#editing">5 User interaction</a><ol><li><a href="editing.html#the-hidden-attribute">5.1 The <code>hidden</code> attribute</a></li><li><a href="editing.html#inert-subtrees">5.2 Inert subtrees</a></li><li><a href="editing.html#activation">5.3 Activation</a></li><li><a href="editing.html#focus">5.4 Focus</a><ol><li><a href="editing.html#introduction-8">5.4.1 Introduction</a></li><li><a href="editing.html#data-model">5.4.2 Data model</a></li><li><a href="editing.html#the-tabindex-attribute">5.4.3 The <code>tabindex</code> attribute</a></li><li><a href="editing.html#processing-model-6">5.4.4 Processing model</a></li><li><a href="editing.html#sequential-focus-navigation">5.4.5 Sequential focus navigation</a></li><li><a href="editing.html#focus-management-apis">5.4.6 Focus management APIs</a></li></ol></li><li><a href="editing.html#assigning-keyboard-shortcuts">5.5 Assigning keyboard shortcuts</a><ol><li><a href="editing.html#introduction-9">5.5.1 Introduction</a></li><li><a href="editing.html#the-accesskey-attribute">5.5.2 The <code>accesskey</code> attribute</a></li><li><a href="editing.html#processing-model-7">5.5.3 Processing model</a></li></ol></li><li><a href="editing.html#editing-2">5.6 Editing</a><ol><li><a href="editing.html#contenteditable">5.6.1 Making document regions editable: The <code>contenteditable</code> content attribute</a></li><li><a href="editing.html#making-entire-documents-editable:-the-designmode-idl-attribute">5.6.2 Making entire documents editable: The <code>designMode</code> IDL attribute</a></li><li><a href="editing.html#best-practices-for-in-page-editors">5.6.3 Best practices for in-page editors</a></li><li><a href="editing.html#editing-apis">5.6.4 Editing APIs</a></li><li><a href="editing.html#spelling-and-grammar-checking">5.6.5 Spelling and grammar checking</a></li></ol></li><li><a href="editing.html#dnd">5.7 Drag and drop</a><ol><li><a href="editing.html#event-drag">5.7.1 Introduction</a></li><li><a href="editing.html#the-drag-data-store">5.7.2 The drag data store</a></li><li><a href="editing.html#the-datatransfer-interface">5.7.3 The <code>DataTransfer</code> interface</a><ol><li><a href="editing.html#the-datatransferitemlist-interface">5.7.3.1 The <code>DataTransferItemList</code> interface</a></li><li><a href="editing.html#the-datatransferitem-interface">5.7.3.2 The <code>DataTransferItem</code> interface</a></li></ol></li><li><a href="editing.html#the-dragevent-interface">5.7.4 The <code>DragEvent</code> interface</a></li><li><a href="editing.html#drag-and-drop-processing-model">5.7.5 Drag-and-drop processing model</a></li><li><a href="editing.html#dndevents">5.7.6 Events summary</a></li><li><a href="editing.html#the-draggable-attribute">5.7.7 The <code>draggable</code> attribute</a></li><li><a href="editing.html#the-dropzone-attribute">5.7.8 The <code>dropzone</code> attribute</a></li><li><a href="editing.html#security-risks-in-the-drag-and-drop-model">5.7.9 Security risks in the drag-and-drop model</a></li></ol></li></ol></li><li id="toc-browsers"><a href="browsers.html#browsers">6 Loading Web pages</a><ol><li><a href="browsers.html#windows">6.1 Browsing contexts</a><ol><li><a href="browsers.html#nested-browsing-contexts">6.1.1 Nested browsing contexts</a><ol><li><a href="browsers.html#navigating-nested-browsing-contexts-in-the-dom">6.1.1.1 Navigating nested browsing contexts in the DOM</a></li></ol></li><li><a href="browsers.html#auxiliary-browsing-contexts">6.1.2 Auxiliary browsing contexts</a><ol><li><a href="browsers.html#navigating-auxiliary-browsing-contexts-in-the-dom">6.1.2.1 Navigating auxiliary browsing contexts in the DOM</a></li></ol></li><li><a href="browsers.html#secondary-browsing-contexts">6.1.3 Secondary browsing contexts</a></li><li><a href="browsers.html#security-nav">6.1.4 Security</a></li><li><a href="browsers.html#groupings-of-browsing-contexts">6.1.5 Groupings of browsing contexts</a></li><li><a href="browsers.html#browsing-context-names">6.1.6 Browsing context names</a></li></ol></li><li><a href="browsers.html#the-window-object">6.2 The <code>Window</code> object</a><ol><li><a href="browsers.html#security-window">6.2.1 Security</a></li><li><a href="browsers.html#apis-for-creating-and-navigating-browsing-contexts-by-name">6.2.2 APIs for creating and navigating browsing contexts by name</a></li><li><a href="browsers.html#accessing-other-browsing-contexts">6.2.3 Accessing other browsing contexts</a></li><li><a href="browsers.html#named-access-on-the-window-object">6.2.4 Named access on the <code>Window</code> object</a></li><li><a href="browsers.html#garbage-collection-and-browsing-contexts">6.2.5 Garbage collection and browsing contexts</a></li><li><a href="browsers.html#closing-browsing-contexts">6.2.6 Closing browsing contexts</a></li><li><a href="browsers.html#browser-interface-elements">6.2.7 Browser interface elements</a></li><li><a href="browsers.html#the-windowproxy-object">6.2.8 The <code>WindowProxy</code> object</a></li></ol></li><li><a href="browsers.html#origin">6.3 Origin</a><ol><li><a href="browsers.html#relaxing-the-same-origin-restriction">6.3.1 Relaxing the same-origin restriction</a></li></ol></li><li><a href="browsers.html#sandboxing">6.4 Sandboxing</a></li><li><a href="browsers.html#history">6.5 Session history and navigation</a><ol><li><a href="browsers.html#the-session-history-of-browsing-contexts">6.5.1 The session history of browsing contexts</a></li><li><a href="browsers.html#the-history-interface">6.5.2 The <code>History</code> interface</a></li><li><a href="browsers.html#the-location-interface">6.5.3 The <code>Location</code> interface</a><ol><li><a href="browsers.html#security-location">6.5.3.1 Security</a></li></ol></li><li><a href="browsers.html#history-notes">6.5.4 Implementation notes for session history</a></li></ol></li><li><a href="browsers.html#browsing-the-web">6.6 Browsing the Web</a><ol><li><a href="browsers.html#navigating-across-documents">6.6.1 Navigating across documents</a></li><li><a href="browsers.html#read-html">6.6.2 Page load processing model for HTML files</a></li><li><a href="browsers.html#read-xml">6.6.3 Page load processing model for XML files</a></li><li><a href="browsers.html#read-text">6.6.4 Page load processing model for text files</a></li><li><a href="browsers.html#read-multipart-x-mixed-replace">6.6.5 Page load processing model for <code>multipart/x-mixed-replace</code> resources</a></li><li><a href="browsers.html#read-media">6.6.6 Page load processing model for media</a></li><li><a href="browsers.html#read-plugin">6.6.7 Page load processing model for content that uses plugins</a></li><li><a href="browsers.html#read-ua-inline">6.6.8 Page load processing model for inline
+  content that doesn't have a DOM</a></li><li><a href="browsers.html#scroll-to-fragid">6.6.9 Navigating to a fragment identifier</a></li><li><a href="browsers.html#history-traversal">6.6.10 History traversal</a><ol><li><a href="browsers.html#the-popstateevent-interface">6.6.10.1 The <code>PopStateEvent</code> interface</a></li><li><a href="browsers.html#the-hashchangeevent-interface">6.6.10.2 The <code>HashChangeEvent</code> interface</a></li><li><a href="browsers.html#the-pagetransitionevent-interface">6.6.10.3 The <code>PageTransitionEvent</code> interface</a></li></ol></li><li><a href="browsers.html#unloading-documents">6.6.11 Unloading documents</a><ol><li><a href="browsers.html#the-beforeunloadevent-interface">6.6.11.1 The <code>BeforeUnloadEvent</code> interface</a></li></ol></li><li><a href="browsers.html#aborting-a-document-load">6.6.12 Aborting a document load</a></li></ol></li><li><a href="browsers.html#offline">6.7 Offline Web applications</a><ol><li><a href="browsers.html#introduction-10">6.7.1 Introduction</a><ol><li><a href="browsers.html#supporting-offline-caching-for-legacy-applications">6.7.1.1 Supporting offline caching for legacy applications</a></li><li><a href="browsers.html#appcacheevents">6.7.1.2 Event summary</a></li></ol></li><li><a href="browsers.html#appcache">6.7.2 Application caches</a></li><li><a href="browsers.html#manifests">6.7.3 The cache manifest syntax</a><ol><li><a href="browsers.html#some-sample-manifests">6.7.3.1 Some sample manifests</a></li><li><a href="browsers.html#writing-cache-manifests">6.7.3.2 Writing cache manifests</a></li><li><a href="browsers.html#parsing-cache-manifests">6.7.3.3 Parsing cache manifests</a></li></ol></li><li><a href="browsers.html#downloading-or-updating-an-application-cache">6.7.4 Downloading or updating an application cache</a></li><li><a href="browsers.html#the-application-cache-selection-algorithm">6.7.5 The application cache selection algorithm</a></li><li><a href="browsers.html#changesToNetworkingModel">6.7.6 Changes to the networking model</a></li><li><a href="browsers.html#expiring-application-caches">6.7.7 Expiring application caches</a></li><li><a href="browsers.html#disk-space">6.7.8 Disk space</a></li><li><a href="browsers.html#security-concerns-with-offline-applications-caches">6.7.9 Security concerns with offline applications caches</a></li><li><a href="browsers.html#application-cache-api">6.7.10 Application cache API</a></li><li><a href="browsers.html#navigator.online">6.7.11 <span>Browser state</span></a></li></ol></li></ol></li><li id="toc-webappapis"><a href="webappapis.html#webappapis">7 Web application APIs</a><ol><li><a href="webappapis.html#scripting">7.1 Scripting</a><ol><li><a href="webappapis.html#introduction-11">7.1.1 Introduction</a></li><li><a href="webappapis.html#enabling-and-disabling-scripting">7.1.2 Enabling and disabling scripting</a></li><li><a href="webappapis.html#processing-model-8">7.1.3 Processing model</a><ol><li><a href="webappapis.html#definitions-2">7.1.3.1 Definitions</a></li><li><a href="webappapis.html#script-settings-for-browsing-contexts">7.1.3.2 Script settings for browsing contexts</a></li><li><a href="webappapis.html#calling-scripts">7.1.3.3 Calling scripts</a></li><li><a href="webappapis.html#creating-scripts">7.1.3.4 Creating scripts</a></li><li><a href="webappapis.html#killing-scripts">7.1.3.5 Killing scripts</a></li><li><a href="webappapis.html#runtime-script-errors">7.1.3.6 Runtime script errors</a><ol><li><a href="webappapis.html#runtime-script-errors-in-documents">7.1.3.6.1 Runtime script errors in documents</a></li><li><a href="webappapis.html#the-errorevent-interface">7.1.3.6.2 The <code>ErrorEvent</code> interface</a></li></ol></li></ol></li><li><a href="webappapis.html#event-loops">7.1.4 Event loops</a><ol><li><a href="webappapis.html#definitions-3">7.1.4.1 Definitions</a></li><li><a href="webappapis.html#processing-model-9">7.1.4.2 Processing model</a></li><li><a href="webappapis.html#generic-task-sources">7.1.4.3 Generic task sources</a></li></ol></li><li><a href="webappapis.html#events">7.1.5 Events</a><ol><li><a href="webappapis.html#event-handler-attributes">7.1.5.1 Event handlers</a></li><li><a href="webappapis.html#event-handlers-on-elements,-document-objects,-and-window-objects">7.1.5.2 Event handlers on elements, <code>Document</code> objects, and <code>Window</code> objects</a><ol><li><a href="webappapis.html#idl-definitions">7.1.5.2.1 IDL definitions</a></li></ol></li><li><a href="webappapis.html#event-firing">7.1.5.3 Event firing</a></li><li><a href="webappapis.html#events-and-the-window-object">7.1.5.4 Events and the <code>Window</code> object</a></li></ol></li></ol></li><li><a href="webappapis.html#atob">7.2 Base64 utility methods</a></li><li><a href="webappapis.html#dynamic-markup-insertion">7.3 Dynamic markup insertion</a><ol><li><a href="webappapis.html#opening-the-input-stream">7.3.1 Opening the input stream</a></li><li><a href="webappapis.html#closing-the-input-stream">7.3.2 Closing the input stream</a></li><li><a href="webappapis.html#document.write()">7.3.3 <code>document.write()</code></a></li><li><a href="webappapis.html#document.writeln()">7.3.4 <code>document.writeln()</code></a></li></ol></li><li><a href="webappapis.html#timers">7.4 Timers</a></li><li><a href="webappapis.html#user-prompts">7.5 User prompts</a><ol><li><a href="webappapis.html#simple-dialogs">7.5.1 Simple dialogs</a></li><li><a href="webappapis.html#printing">7.5.2 Printing</a></li><li><a href="webappapis.html#dialogs-implemented-using-separate-documents">7.5.3 Dialogs implemented using separate documents with <code>showModalDialog()</code></a></li></ol></li><li><a href="webappapis.html#system-state-and-capabilities">7.6 System state and capabilities</a><ol><li><a href="webappapis.html#the-navigator-object">7.6.1 The <code>Navigator</code> object</a><ol><li><a href="webappapis.html#client-identification">7.6.1.1 Client identification</a></li><li><a href="webappapis.html#language-preferences">7.6.1.2 Language preferences</a></li><li><a href="webappapis.html#custom-handlers">7.6.1.3 Custom scheme and content handlers: the <code>registerProtocolHandler()</code> and <code>registerContentHandler()</code> methods</a><ol><li><a href="webappapis.html#security-and-privacy">7.6.1.3.1 Security and privacy</a></li><li><a href="webappapis.html#sample-handler-impl">7.6.1.3.2 Sample user interface</a></li></ol></li><li><a href="webappapis.html#manually-releasing-the-storage-mutex">7.6.1.4 Manually releasing the storage mutex</a></li><li><a href="webappapis.html#plugins-2">7.6.1.5 Plugins</a></li></ol></li><li><a href="webappapis.html#the-external-interface">7.6.2 The <code>External</code> interface</a></li></ol></li><li><a href="webappapis.html#images">7.7 Images</a></li><li><a href="webappapis.html#animation-frames">7.8 Animation Frames</a></li></ol></li><li id="toc-syntax"><a href="syntax.html#syntax">8 The HTML syntax</a><ol><li><a href="syntax.html#writing">8.1 Writing HTML documents</a><ol><li><a href="syntax.html#the-doctype">8.1.1 The DOCTYPE</a></li><li><a href="syntax.html#elements-2">8.1.2 Elements</a><ol><li><a href="syntax.html#start-tags">8.1.2.1 Start tags</a></li><li><a href="syntax.html#end-tags">8.1.2.2 End tags</a></li><li><a href="syntax.html#attributes-2">8.1.2.3 Attributes</a></li><li><a href="syntax.html#optional-tags">8.1.2.4 Optional tags</a></li><li><a href="syntax.html#element-restrictions">8.1.2.5 Restrictions on content models</a></li><li><a href="syntax.html#cdata-rcdata-restrictions">8.1.2.6 Restrictions on the contents of raw text and escapable raw text elements</a></li></ol></li><li><a href="syntax.html#text-2">8.1.3 Text</a><ol><li><a href="syntax.html#newlines">8.1.3.1 Newlines</a></li></ol></li><li><a href="syntax.html#character-references">8.1.4 Character references</a></li><li><a href="syntax.html#cdata-sections">8.1.5 CDATA sections</a></li><li><a href="syntax.html#comments">8.1.6 Comments</a></li></ol></li><li><a href="syntax.html#parsing">8.2 Parsing HTML documents</a><ol><li><a href="syntax.html#overview-of-the-parsing-model">8.2.1 Overview of the parsing model</a></li><li><a href="syntax.html#the-input-byte-stream">8.2.2 The input byte stream</a><ol><li><a href="syntax.html#parsing-with-a-known-character-encoding">8.2.2.1 Parsing with a known character encoding</a></li><li><a href="syntax.html#determining-the-character-encoding">8.2.2.2 Determining the character encoding</a></li><li><a href="syntax.html#character-encodings">8.2.2.3 Character encodings</a></li><li><a href="syntax.html#changing-the-encoding-while-parsing">8.2.2.4 Changing the encoding while parsing</a></li><li><a href="syntax.html#preprocessing-the-input-stream">8.2.2.5 Preprocessing the input stream</a></li></ol></li><li><a href="syntax.html#parse-state">8.2.3 Parse state</a><ol><li><a href="syntax.html#the-insertion-mode">8.2.3.1 The insertion mode</a></li><li><a href="syntax.html#the-stack-of-open-elements">8.2.3.2 The stack of open elements</a></li><li><a href="syntax.html#the-list-of-active-formatting-elements">8.2.3.3 The list of active formatting elements</a></li><li><a href="syntax.html#the-element-pointers">8.2.3.4 The element pointers</a></li><li><a href="syntax.html#other-parsing-state-flags">8.2.3.5 Other parsing state flags</a></li></ol></li><li><a href="syntax.html#tokenization">8.2.4 Tokenization</a><ol><li><a href="syntax.html#data-state">8.2.4.1 Data state</a></li><li><a href="syntax.html#character-reference-in-data-state">8.2.4.2 Character reference in data state</a></li><li><a href="syntax.html#rcdata-state">8.2.4.3 RCDATA state</a></li><li><a href="syntax.html#character-reference-in-rcdata-state">8.2.4.4 Character reference in RCDATA state</a></li><li><a href="syntax.html#rawtext-state">8.2.4.5 RAWTEXT state</a></li><li><a href="syntax.html#script-data-state">8.2.4.6 Script data state</a></li><li><a href="syntax.html#plaintext-state">8.2.4.7 PLAINTEXT state</a></li><li><a href="syntax.html#tag-open-state">8.2.4.8 Tag open state</a></li><li><a href="syntax.html#end-tag-open-state">8.2.4.9 End tag open state</a></li><li><a href="syntax.html#tag-name-state">8.2.4.10 Tag name state</a></li><li><a href="syntax.html#rcdata-less-than-sign-state">8.2.4.11 RCDATA less-than sign state</a></li><li><a href="syntax.html#rcdata-end-tag-open-state">8.2.4.12 RCDATA end tag open state</a></li><li><a href="syntax.html#rcdata-end-tag-name-state">8.2.4.13 RCDATA end tag name state</a></li><li><a href="syntax.html#rawtext-less-than-sign-state">8.2.4.14 RAWTEXT less-than sign state</a></li><li><a href="syntax.html#rawtext-end-tag-open-state">8.2.4.15 RAWTEXT end tag open state</a></li><li><a href="syntax.html#rawtext-end-tag-name-state">8.2.4.16 RAWTEXT end tag name state</a></li><li><a href="syntax.html#script-data-less-than-sign-state">8.2.4.17 Script data less-than sign state</a></li><li><a href="syntax.html#script-data-end-tag-open-state">8.2.4.18 Script data end tag open state</a></li><li><a href="syntax.html#script-data-end-tag-name-state">8.2.4.19 Script data end tag name state</a></li><li><a href="syntax.html#script-data-escape-start-state">8.2.4.20 Script data escape start state</a></li><li><a href="syntax.html#script-data-escape-start-dash-state">8.2.4.21 Script data escape start dash state</a></li><li><a href="syntax.html#script-data-escaped-state">8.2.4.22 Script data escaped state</a></li><li><a href="syntax.html#script-data-escaped-dash-state">8.2.4.23 Script data escaped dash state</a></li><li><a href="syntax.html#script-data-escaped-dash-dash-state">8.2.4.24 Script data escaped dash dash state</a></li><li><a href="syntax.html#script-data-escaped-less-than-sign-state">8.2.4.25 Script data escaped less-than sign state</a></li><li><a href="syntax.html#script-data-escaped-end-tag-open-state">8.2.4.26 Script data escaped end tag open state</a></li><li><a href="syntax.html#script-data-escaped-end-tag-name-state">8.2.4.27 Script data escaped end tag name state</a></li><li><a href="syntax.html#script-data-double-escape-start-state">8.2.4.28 Script data double escape start state</a></li><li><a href="syntax.html#script-data-double-escaped-state">8.2.4.29 Script data double escaped state</a></li><li><a href="syntax.html#script-data-double-escaped-dash-state">8.2.4.30 Script data double escaped dash state</a></li><li><a href="syntax.html#script-data-double-escaped-dash-dash-state">8.2.4.31 Script data double escaped dash dash state</a></li><li><a href="syntax.html#script-data-double-escaped-less-than-sign-state">8.2.4.32 Script data double escaped less-than sign state</a></li><li><a href="syntax.html#script-data-double-escape-end-state">8.2.4.33 Script data double escape end state</a></li><li><a href="syntax.html#before-attribute-name-state">8.2.4.34 Before attribute name state</a></li><li><a href="syntax.html#attribute-name-state">8.2.4.35 Attribute name state</a></li><li><a href="syntax.html#after-attribute-name-state">8.2.4.36 After attribute name state</a></li><li><a href="syntax.html#before-attribute-value-state">8.2.4.37 Before attribute value state</a></li><li><a href="syntax.html#attribute-value-(double-quoted)-state">8.2.4.38 Attribute value (double-quoted) state</a></li><li><a href="syntax.html#attribute-value-(single-quoted)-state">8.2.4.39 Attribute value (single-quoted) state</a></li><li><a href="syntax.html#attribute-value-(unquoted)-state">8.2.4.40 Attribute value (unquoted) state</a></li><li><a href="syntax.html#character-reference-in-attribute-value-state">8.2.4.41 Character reference in attribute value state</a></li><li><a href="syntax.html#after-attribute-value-(quoted)-state">8.2.4.42 After attribute value (quoted) state</a></li><li><a href="syntax.html#self-closing-start-tag-state">8.2.4.43 Self-closing start tag state</a></li><li><a href="syntax.html#bogus-comment-state">8.2.4.44 Bogus comment state</a></li><li><a href="syntax.html#markup-declaration-open-state">8.2.4.45 Markup declaration open state</a></li><li><a href="syntax.html#comment-start-state">8.2.4.46 Comment start state</a></li><li><a href="syntax.html#comment-start-dash-state">8.2.4.47 Comment start dash state</a></li><li><a href="syntax.html#comment-state">8.2.4.48 Comment state</a></li><li><a href="syntax.html#comment-end-dash-state">8.2.4.49 Comment end dash state</a></li><li><a href="syntax.html#comment-end-state">8.2.4.50 Comment end state</a></li><li><a href="syntax.html#comment-end-bang-state">8.2.4.51 Comment end bang state</a></li><li><a href="syntax.html#doctype-state">8.2.4.52 DOCTYPE state</a></li><li><a href="syntax.html#before-doctype-name-state">8.2.4.53 Before DOCTYPE name state</a></li><li><a href="syntax.html#doctype-name-state">8.2.4.54 DOCTYPE name state</a></li><li><a href="syntax.html#after-doctype-name-state">8.2.4.55 After DOCTYPE name state</a></li><li><a href="syntax.html#after-doctype-public-keyword-state">8.2.4.56 After DOCTYPE public keyword state</a></li><li><a href="syntax.html#before-doctype-public-identifier-state">8.2.4.57 Before DOCTYPE public identifier state</a></li><li><a href="syntax.html#doctype-public-identifier-(double-quoted)-state">8.2.4.58 DOCTYPE public identifier (double-quoted) state</a></li><li><a href="syntax.html#doctype-public-identifier-(single-quoted)-state">8.2.4.59 DOCTYPE public identifier (single-quoted) state</a></li><li><a href="syntax.html#after-doctype-public-identifier-state">8.2.4.60 After DOCTYPE public identifier state</a></li><li><a href="syntax.html#between-doctype-public-and-system-identifiers-state">8.2.4.61 Between DOCTYPE public and system identifiers state</a></li><li><a href="syntax.html#after-doctype-system-keyword-state">8.2.4.62 After DOCTYPE system keyword state</a></li><li><a href="syntax.html#before-doctype-system-identifier-state">8.2.4.63 Before DOCTYPE system identifier state</a></li><li><a href="syntax.html#doctype-system-identifier-(double-quoted)-state">8.2.4.64 DOCTYPE system identifier (double-quoted) state</a></li><li><a href="syntax.html#doctype-system-identifier-(single-quoted)-state">8.2.4.65 DOCTYPE system identifier (single-quoted) state</a></li><li><a href="syntax.html#after-doctype-system-identifier-state">8.2.4.66 After DOCTYPE system identifier state</a></li><li><a href="syntax.html#bogus-doctype-state">8.2.4.67 Bogus DOCTYPE state</a></li><li><a href="syntax.html#cdata-section-state">8.2.4.68 CDATA section state</a></li><li><a href="syntax.html#tokenizing-character-references">8.2.4.69 Tokenizing character references</a></li></ol></li><li><a href="syntax.html#tree-construction">8.2.5 Tree construction</a><ol><li><a href="syntax.html#creating-and-inserting-nodes">8.2.5.1 Creating and inserting nodes</a></li><li><a href="syntax.html#parsing-elements-that-contain-only-text">8.2.5.2 Parsing elements that contain only text</a></li><li><a href="syntax.html#parsing-main-inhtml">8.2.5.3 The rules for parsing tokens in HTML content</a><ol><li><a href="syntax.html#the-initial-insertion-mode">8.2.5.3.1 The "initial" insertion mode</a></li><li><a href="syntax.html#the-before-html-insertion-mode">8.2.5.3.2 The "before html" insertion mode</a></li><li><a href="syntax.html#the-before-head-insertion-mode">8.2.5.3.3 The "before head" insertion mode</a></li><li><a href="syntax.html#parsing-main-inhead">8.2.5.3.4 The "in head" insertion mode</a></li><li><a href="syntax.html#parsing-main-inheadnoscript">8.2.5.3.5 The "in head noscript" insertion mode</a></li><li><a href="syntax.html#the-after-head-insertion-mode">8.2.5.3.6 The "after head" insertion mode</a></li><li><a href="syntax.html#parsing-main-inbody">8.2.5.3.7 The "in body" insertion mode</a></li><li><a href="syntax.html#parsing-main-incdata">8.2.5.3.8 The "text" insertion mode</a></li><li><a href="syntax.html#parsing-main-intable">8.2.5.3.9 The "in table" insertion mode</a></li><li><a href="syntax.html#parsing-main-intabletext">8.2.5.3.10 The "in table text" insertion mode</a></li><li><a href="syntax.html#parsing-main-incaption">8.2.5.3.11 The "in caption" insertion mode</a></li><li><a href="syntax.html#parsing-main-incolgroup">8.2.5.3.12 The "in column group" insertion mode</a></li><li><a href="syntax.html#parsing-main-intbody">8.2.5.3.13 The "in table body" insertion mode</a></li><li><a href="syntax.html#parsing-main-intr">8.2.5.3.14 The "in row" insertion mode</a></li><li><a href="syntax.html#parsing-main-intd">8.2.5.3.15 The "in cell" insertion mode</a></li><li><a href="syntax.html#parsing-main-inselect">8.2.5.3.16 The "in select" insertion mode</a></li><li><a href="syntax.html#parsing-main-inselectintable">8.2.5.3.17 The "in select in table" insertion mode</a></li><li><a href="syntax.html#parsing-main-intemplate">8.2.5.3.18 The "in template" insertion mode</a></li><li><a href="syntax.html#parsing-main-afterbody">8.2.5.3.19 The "after body" insertion mode</a></li><li><a href="syntax.html#parsing-main-inframeset">8.2.5.3.20 The "in frameset" insertion mode</a></li><li><a href="syntax.html#parsing-main-afterframeset">8.2.5.3.21 The "after frameset" insertion mode</a></li><li><a href="syntax.html#the-after-after-body-insertion-mode">8.2.5.3.22 The "after after body" insertion mode</a></li><li><a href="syntax.html#the-after-after-frameset-insertion-mode">8.2.5.3.23 The "after after frameset" insertion mode</a></li></ol></li><li><a href="syntax.html#parsing-main-inforeign">8.2.5.4 The rules for parsing tokens in foreign content</a></li></ol></li><li><a href="syntax.html#the-end">8.2.6 The end</a></li><li><a href="syntax.html#coercing-an-html-dom-into-an-infoset">8.2.7 Coercing an HTML DOM into an infoset</a></li><li><a href="syntax.html#an-introduction-to-error-handling-and-strange-cases-in-the-parser">8.2.8 An introduction to error handling and strange cases in the parser</a><ol><li><a href="syntax.html#misnested-tags:-b-i-/b-/i">8.2.8.1 Misnested tags: &lt;b&gt;&lt;i&gt;&lt;/b&gt;&lt;/i&gt;</a></li><li><a href="syntax.html#misnested-tags:-b-p-/b-/p">8.2.8.2 Misnested tags: &lt;b&gt;&lt;p&gt;&lt;/b&gt;&lt;/p&gt;</a></li><li><a href="syntax.html#unexpected-markup-in-tables">8.2.8.3 Unexpected markup in tables</a></li><li><a href="syntax.html#scripts-that-modify-the-page-as-it-is-being-parsed">8.2.8.4 Scripts that modify the page as it is being parsed</a></li><li><a href="syntax.html#the-execution-of-scripts-that-are-moving-across-multiple-documents">8.2.8.5 The execution of scripts that are moving across multiple documents</a></li><li><a href="syntax.html#unclosed-formatting-elements">8.2.8.6 Unclosed formatting elements</a></li></ol></li></ol></li><li><a href="syntax.html#serialising-html-fragments">8.3 Serialising HTML fragments</a></li><li><a href="syntax.html#parsing-html-fragments">8.4 Parsing HTML fragments</a></li><li><a href="syntax.html#named-character-references">8.5 Named character references</a></li></ol></li><li id="toc-the-xhtml-syntax"><a href="the-xhtml-syntax.html#the-xhtml-syntax">9 The XHTML syntax</a><ol><li><a href="the-xhtml-syntax.html#writing-xhtml-documents">9.1 Writing XHTML documents</a></li><li><a href="the-xhtml-syntax.html#parsing-xhtml-documents">9.2 Parsing XHTML documents</a></li><li><a href="the-xhtml-syntax.html#serialising-xhtml-fragments">9.3 Serialising XHTML fragments</a></li><li><a href="the-xhtml-syntax.html#parsing-xhtml-fragments">9.4 Parsing XHTML fragments</a></li></ol></li><li id="toc-rendering"><a href="rendering.html#rendering">10 Rendering</a><ol><li><a href="rendering.html#introduction-16">10.1 Introduction</a></li><li><a href="rendering.html#the-css-user-agent-style-sheet-and-presentational-hints">10.2 The CSS user agent style sheet and presentational hints</a></li><li><a href="rendering.html#non-replaced-elements">10.3 Non-replaced elements</a><ol><li><a href="rendering.html#hidden-elements">10.3.1 Hidden elements</a></li><li><a href="rendering.html#the-page">10.3.2 The page</a></li><li><a href="rendering.html#flow-content-3">10.3.3 Flow content</a></li><li><a href="rendering.html#phrasing-content-3">10.3.4 Phrasing content</a></li><li><a href="rendering.html#bidi-rendering">10.3.5 Bidirectional text</a></li><li><a href="rendering.html#quotes">10.3.6 Quotes</a></li><li><a href="rendering.html#sections-and-headings">10.3.7 Sections and headings</a></li><li><a href="rendering.html#lists">10.3.8 Lists</a></li><li><a href="rendering.html#tables-2">10.3.9 Tables</a></li><li><a href="rendering.html#margin-collapsing-quirks">10.3.10 Margin collapsing quirks</a></li><li><a href="rendering.html#form-controls">10.3.11 Form controls</a></li><li><a href="rendering.html#the-hr-element-2">10.3.12 The <code>hr</code> element</a></li><li><a href="rendering.html#the-fieldset-and-legend-elements">10.3.13 The <code>fieldset</code> and <code>legend</code> elements</a></li></ol></li><li><a href="rendering.html#replaced-elements">10.4 Replaced elements</a><ol><li><a href="rendering.html#embedded-content-rendering-rules">10.4.1 Embedded content</a></li><li><a href="rendering.html#images-2">10.4.2 Images</a></li><li><a href="rendering.html#attributes-for-embedded-content-and-images">10.4.3 Attributes for embedded content and images</a></li><li><a href="rendering.html#image-maps-2">10.4.4 Image maps</a></li></ol></li><li><a href="rendering.html#bindings">10.5 Bindings</a><ol><li><a href="rendering.html#introduction-17">10.5.1 Introduction</a></li><li><a href="rendering.html#the-button-element-2">10.5.2 The <code>button</code> element</a></li><li><a href="rendering.html#the-details-element-2">10.5.3 The <code>details</code> element</a></li><li><a href="rendering.html#the-input-element-as-a-text-entry-widget">10.5.4 The <code>input</code> element as a text entry widget</a></li><li><a href="rendering.html#the-input-element-as-domain-specific-widgets">10.5.5 The <code>input</code> element as domain-specific widgets</a></li><li><a href="rendering.html#the-input-element-as-a-range-control">10.5.6 The <code>input</code> element as a range control</a></li><li><a href="rendering.html#the-input-element-as-a-colour-well">10.5.7 The <code>input</code> element as a colour well</a></li><li><a href="rendering.html#the-input-element-as-a-checkbox-and-radio-button-widgets">10.5.8 The <code>input</code> element as a checkbox and radio button widgets</a></li><li><a href="rendering.html#the-input-element-as-a-file-upload-control">10.5.9 The <code>input</code> element as a file upload control</a></li><li><a href="rendering.html#the-input-element-as-a-button">10.5.10 The <code>input</code> element as a button</a></li><li><a href="rendering.html#the-marquee-element">10.5.11 The <code>marquee</code> element</a></li><li><a href="rendering.html#the-meter-element-2">10.5.12 The <code>meter</code> element</a></li><li><a href="rendering.html#the-progress-element-2">10.5.13 The <code>progress</code> element</a></li><li><a href="rendering.html#the-select-element-2">10.5.14 The <code>select</code> element</a></li><li><a href="rendering.html#the-textarea-element-2">10.5.15 The <code>textarea</code> element</a></li><li><a href="rendering.html#the-keygen-element-2">10.5.16 The <code>keygen</code> element</a></li></ol></li><li><a href="rendering.html#frames-and-framesets">10.6 Frames and framesets</a></li><li><a href="rendering.html#interactive-media">10.7 Interactive media</a><ol><li><a href="rendering.html#links,-forms,-and-navigation">10.7.1 Links, forms, and navigation</a></li><li><a href="rendering.html#the-title-attribute-2">10.7.2 The <code>title</code> attribute</a></li><li><a href="rendering.html#editing-hosts">10.7.3 Editing hosts</a></li><li><a href="rendering.html#text-rendered-in-native-user-interfaces">10.7.4 Text rendered in native user interfaces</a></li></ol></li><li><a href="rendering.html#print-media">10.8 Print media</a></li><li><a href="rendering.html#unstyled-xml-documents">10.9 Unstyled XML documents</a></li></ol></li><li id="toc-obsolete"><a href="obsolete.html#obsolete">11 Obsolete features</a><ol><li><a href="obsolete.html#obsolete-but-conforming-features">11.1 Obsolete but conforming features</a><ol><li><a href="obsolete.html#warnings-for-obsolete-but-conforming-features">11.1.1 Warnings for obsolete but conforming features</a></li></ol></li><li><a href="obsolete.html#non-conforming-features">11.2 Non-conforming features</a></li><li><a href="obsolete.html#requirements-for-implementations">11.3 Requirements for implementations</a><ol><li><a href="obsolete.html#the-applet-element">11.3.1 The <code>applet</code> element</a></li><li><a href="obsolete.html#the-marquee-element-2">11.3.2 The <code>marquee</code> element</a></li><li><a href="obsolete.html#frames">11.3.3 Frames</a></li><li><a href="obsolete.html#other-elements,-attributes-and-apis">11.3.4 Other elements, attributes and APIs</a></li></ol></li></ol></li><li id="toc-iana"><a href="iana.html#iana">12 IANA considerations</a><ol><li><a href="iana.html#text/html">12.1 <code>text/html</code></a></li><li><a href="iana.html#multipart/x-mixed-replace">12.2 <code>multipart/x-mixed-replace</code></a></li><li><a href="iana.html#application/xhtml+xml">12.3 <code>application/xhtml+xml</code></a></li><li><a href="iana.html#application/x-www-form-urlencoded">12.4 <code>application/x-www-form-urlencoded</code></a></li><li><a href="iana.html#text/cache-manifest">12.5 <code>text/cache-manifest</code></a></li><li><a href="iana.html#application/microdata+json">12.6 <code>application/microdata+json</code></a></li><li><a href="iana.html#web+-scheme-prefix">12.7 <code>web+</code> scheme prefix</a></li></ol></li><li id="toc-index"><a href="index.html#index">Index</a><ol><li><a href="index.html#elements-3">Elements</a></li><li><a href="index.html#element-content-categories">Element content categories</a></li><li><a href="index.html#attributes-3">Attributes</a></li><li><a href="index.html#element-interfaces">Element Interfaces</a></li><li><a href="index.html#all-interfaces">All Interfaces</a></li><li><a href="index.html#events-2">Events</a></li><li><a href="index.html#mime-types-2">MIME Types</a></li></ol></li><li id="toc-references"><a href="references.html#references">References</a></li><li id="toc-acknowledgments"><a href="acknowledgments.html#acknowledgments">Acknowledgements</a></li></ol></section>
+
+  
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+
+  
+
+
+
+
+
+  
+
+  
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+  
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+
+
+
+
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+  
+
+  
+
+ 
+
+
+
+
+<script src="redirection.js"></script></body></html>
