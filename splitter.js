@@ -32,8 +32,8 @@ function makeDoc (data, cb) {
 }
 
 function moveOver ($el, doc) {
-    $el = $el.clone();
-    var el = doc.importNode($el.get(0), true);
+    var $newEl = $el.clone();
+    var el = doc.importNode($newEl.get(0), true);
     doc.body.appendChild(el);
     $el.remove();
 }
@@ -74,18 +74,21 @@ jsdom.env(
                 });
             });
         }
+        console.log("IDs found");
         
         // rewrite all links using a given base URL and split
         $("a[href^='#']").each(function () {
             var $a = $(this);
             if (idMap[$a.attr("href")]) $a.attr("href", idMap[$a.attr("href")]);
         });
+        console.log("Links remapped");
 
         // actually extract each bit
         async.forEachOfSeries(
                 config
             ,   function (data, spec, cb) {
                     data.shortName = spec;
+                    console.log("Processing " + spec);
                     makeDoc(data, function (err, doc) {
                         if (err) return console.error(err);
                         config[spec].content.forEach(function (id) {
