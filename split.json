@@ -10,6 +10,7 @@
     ,   "#iana"
     ,   "#usage-summary-2"
     ,   "#usage-summary"
+    ,   "#table-examples"
     ]
 ,   "split":     {
         "html": {
@@ -346,8 +347,10 @@
         }
     ,   "html-best-practices":  {
             "title":    "HTML Best Practices"
-        ,   "abstract": "There is currently nothing in here, but the idea is to progressively move over everything related to linting."
-        ,   "content":  []
+        ,   "abstract": "There is currently very little in here, but the idea is to progressively move over everything related to linting and advice."
+        ,   "content":  [
+                "#common-idioms"
+            ]
         }
     ,   "html-embedding":  {
             "title":    "HTML Embedding"
