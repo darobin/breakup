@@ -1,0 +1,11 @@
+{
+  "name": "breakup",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "latest",
+    "jsdom": "latest",
+    "nopt": "^3.0.2"
+  }
+}

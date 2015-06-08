@@ -1,0 +1,14 @@
+{
+    "html": {
+        "title":    "HTML"
+    ,   "abstract": "This document introduces HTML and provides a map of the HTML specifications family."
+    }
+,   "core-algorithms": {
+        "title":    "Core Algorithms"
+    ,   "abstract": "This document is a reference for a number of basic algorithms that are reused across the platform."
+    }
+,   "browser-dom":  {
+        "title":    "The Browser DOM"
+    ,   "abstract": "Some DOM interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>."
+    }
+}
