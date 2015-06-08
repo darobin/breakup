@@ -1,367 +1,384 @@
 {
-    "html": {
-        "title":    "HTML"
-    ,   "abstract": "This document introduces HTML and provides a map of the HTML specifications family."
-    ,   "content":  [
-            {
-                "id":       "#introduction"
-            ,   "unwrap":   true
-            }
-        ,   "#elements-3"
-        ,   "#attributes-3"
-        ,   "#element-interfaces"
-        ,   "#all-interfaces"
-        ,   "#events-2"
-        ]
-    }
-,   "core-algorithms": {
-        "title":    "Core Algorithms"
-    ,   "abstract": "This document is a reference for a number of basic algorithms that are reused across the platform."
-    ,   "content":  [
-            {
-                "id":       "#infrastructure"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "browser-dom":  {
-        "title":    "The Browser DOM"
-    ,   "abstract": "Some DOM interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>."
-    ,   "content":  [
-            "#documents"
-        ,   "#windows"
-        ,   "#the-window-object"
-        ,   "#origin"
-        ,   "#sandboxing"
-        ,   "#history"
-        ,   {
-                "id":       "#webappapis"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "html-attributes":  {
-        "title":    "Core Attributes of HTML"
-    ,   "abstract": "A set of attributes available globally in HTML and reusable in other languages."
-    ,   "content":  [
-            "#global-attributes"
-        ]
-    }
-,   "rendering-html":  {
-        "title":    "Rendering HTML"
-    ,   "XXX":      "WE LOSE THE SMALL BLURB INTRO HERE"
-    ,   "abstract": "The default style sheet and general rendering advice for HTML."
-    ,   "content":  [
-            {
-                "id":       "#rendering"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "html-syntax":  {
-        "title":    "The HTML Syntax"
-    ,   "abstract": "Rules for parsing and producing HTML documents."
-    ,   "content":  [
-            {
-                "id":       "#syntax"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "xhtml-syntax":  {
-        "title":    "The XHTML Syntax"
-    ,   "abstract": "Rules for parsing and producing XHTML documents."
-    ,   "content":  [
-            {
-                "id":       "#the-xhtml-syntax"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "appcache":  {
-        "title":    "The Application Cache"
-    ,   "abstract": "A system for offlining content automatically."
-    ,   "content":  [
-            {
-                "id":       "#offline"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "browsing":  {
-        "title":    "Browsing the Web"
-    ,   "abstract": "How navigation works."
-    ,   "content":  [
-            {
-                "id":       "#browsing-the-web"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "dnd":  {
-        "title":    "Drag &amp; Drop"
-    ,   "abstract": "Drag &amp drop support for HTML."
-    ,   "content":  [
-            {
-                "id":       "#dnd"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "html-editing":  {
-        "title":    "HTML Editing"
-    ,   "abstract": "Enabling in-browser editing of HTML content."
-    ,   "content":  [
-            {
-                "id":       "#editing-2"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "html-interacton-attr":  {
-        "title":    "HTML Interactivity Attributes"
-    ,   "abstract": "A set of attributes that enables essential interactivity features."
-    ,   "content":  [
-            "#the-hidden-attribute"
-        ,   "#inert-subtrees"
-        ,   "#activation"
-        ,   "#focus"
-        ,   "#assigning-keyboard-shortcuts"
-        ]
-    }
-,   "html-canvas":  {
-        "title":    "HTML Canvas"
-    ,   "abstract": "An element and API that enables drawing surfaces."
-    ,   "content":  [
-            "#the-canvas-element"
-        ]
-    }
-,   "html-template":  {
-        "title":    "HTML Templates"
-    ,   "abstract": "An element and API that enables templating."
-    ,   "content":  [
-            "#the-template-element"
-        ]
-    }
-,   "html-forms":  {
-        "title":    "HTML Forms"
-    ,   "abstract": "Forms. The bane of the Web developer brought to you in all its gory detail."
-    ,   "content":  [
-            {
-                "id":       "#forms"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "sortable-tables":  {
-        "title":    "Sortable Tables for HTML"
-    ,   "abstract": "Additions to HTML tables that enable sorting."
-    ,   "content":  [
-            "#table-sorting-model"
-        ]
-    }
-,   "html-tables":  {
-        "title":    "HTML Tables"
-    ,   "abstract": "Tables, your secret layout friend!"
-    ,   "content":  [
-            "#the-table-element"
-        ,   "#the-caption-element"
-        ,   "#the-colgroup-element"
-        ,   "#the-col-element"
-        ,   "#the-tbody-element"
-        ,   "#the-thead-element"
-        ,   "#the-tfoot-element"
-        ,   "#the-tr-element"
-        ,   "#the-td-element"
-        ,   "#the-th-element"
-        ,   "#attributes-common-to-td-and-th-elements"
-        ,   "#processing-model-3"
-        ]
-    }
-,   "html-structure":  {
-        "title":    "The Structure of HTML"
-    ,   "abstract": "All you need to structure an HTML document."
-    ,   "content":  [
-            "#the-html-element"
-        ,   "#the-head-element"
-        ,   "#the-title-element"
-        ,   "#the-body-element"
-        ]
-    }
-,   "html-sectioning":  {
-        "title":    "Sections in HTML"
-    ,   "abstract": "How to make sections of various types in HTML."
-    ,   "content":  [
-            "#the-article-element"
-        ,   "#the-section-element"
-        ,   "#the-nav-element"
-        ,   "#the-aside-element"
-        ,   "#the-h1\\,-h2\\,-h3\\,-h4\\,-h5\\,-and-h6-elements"
-        ,   "#the-header-element"
-        ,   "#the-footer-element"
-        ,   "#the-main-element"
-        ,   "#headings-and-sections"
-        ]
-    }
-,   "html-styling":  {
-        "title":    "Styling HTML"
-    ,   "abstract": "Putting style in HTML."
-    ,   "content":  [
-            "#the-style-element"
-        ,   "#interactions-of-styling-and-scripting"
-        ,   "#link-type-stylesheet"
-        ]
-    }
-,   "html-scripting":  {
-        "title":    "Scripting HTML"
-    ,   "abstract": "Putting scripts in HTML."
-    ,   "content":  [
-            "#the-script-element"
-        ,   "#the-noscript-element"
-        ]
-    }
-,   "html-blocks":  {
-        "title":    "HTML Blocks"
-    ,   "abstract": "Blocks."
-    ,   "content":  [
-            "#the-p-element"
-        ,   "#the-div-element"
-        ,   "#the-hr-element"
-        ,   "#the-pre-element"
-        ,   "#the-blockquote-element"
-        ,   "#the-address-element"
-        ]
-    }
-,   "html-lists":  {
-        "title":    "HTML Lists"
-    ,   "abstract": "Lists."
-    ,   "content":  [
-            "#the-ul-element"
-        ,   "#the-ol-element"
-        ,   "#the-li-element"
-        ,   "#the-dl-element"
-        ,   "#the-dt-element"
-        ,   "#the-dd-element"
-        ]
-    }
-,   "html-figures":  {
-        "title":    "HTML Figures"
-    ,   "abstract": "Figures."
-    ,   "content":  [
-            "#the-figure-element"
-        ,   "#the-figcaption-element"
-        ]
-    }
-,   "html-metadata":  {
-        "title":    "HTML Metadata"
-    ,   "abstract": "Metadata."
-    ,   "content":  [
-            "#the-meta-element"
-        ,   "#the-link-element"
-        ]
-    }
-,   "html-linking":  {
-        "title":    "HTML Linking"
-    ,   "abstract": "Links."
-    ,   "content":  [
-            "#the-a-element"
-        ,   "#the-base-element"
-        ,   "#the-map-element"
-        ,   "#the-area-element"
-        ,   "#image-maps"
-        ,   "#links"
-        ]
-    }
-,   "html-images":  {
-        "title":    "HTML Images"
-    ,   "abstract": "Pretty pictures."
-    ,   "content":  [
-            "#introduction-3"
-        ,   "#dependencies-2"
-        ,   "#the-picture-element"
-        ,   "#the-source-element-when-used-with-the-picture-element"
-        ,   "#the-img-element"
-        ]
-    }
-,   "html-text":  {
-        "title":    "HTML Text"
-    ,   "abstract": "Text."
-    ,   "content":  [
-            "#the-em-element"
-        ,   "#the-strong-element"
-        ,   "#the-small-element"
-        ,   "#the-s-element"
-        ,   "#the-cite-element"
-        ,   "#the-q-element"
-        ,   "#the-dfn-element"
-        ,   "#the-abbr-element"
-        ,   "#the-ruby-element"
-        ,   "#the-rb-element"
-        ,   "#the-rt-element"
-        ,   "#the-rtc-element"
-        ,   "#the-rp-element"
-        ,   "#the-data-element"
-        ,   "#the-time-element"
-        ,   "#the-code-element"
-        ,   "#the-var-element"
-        ,   "#the-samp-element"
-        ,   "#the-kbd-element"
-        ,   "#the-sub-and-sup-elements"
-        ,   "#the-i-element"
-        ,   "#the-b-element"
-        ,   "#the-u-element"
-        ,   "#the-mark-element"
-        ,   "#the-bdi-element"
-        ,   "#the-bdo-element"
-        ,   "#the-span-element"
-        ,   "#the-br-element"
-        ,   "#the-wbr-element"
-        ]
-    }
-,   "html-edits":  {
-        "title":    "HTML Edits"
-    ,   "abstract": "Stuff that's changed."
-    ,   "content":  [
-            {
-                "id":       "#edits"
-            ,   "unwrap":   true
-            }
-        ]
-    }
-,   "html-best-practices":  {
-        "title":    "HTML Best Practices"
-    ,   "abstract": "There is currently nothing in here, but the idea is to progressively move over everything related to linting."
-    ,   "content":  []
-    }
-,   "html-embedding":  {
-        "title":    "HTML Embedding"
-    ,   "abstract": "Stuff in stuff."
-    ,   "content":  [
-            "#the-iframe-element"
-        ,   "#the-embed-element"
-        ,   "#the-object-element"
-        ,   "#the-param-element"
-        ]
-    }
-,   "html-media":  {
-        "title":    "HTML Media"
-    ,   "abstract": "Media."
-    ,   "content":  [
-            "#the-video-element"
-        ,   "#the-audio-element"
-        ,   "#the-source-element"
-        ,   "#the-track-element"
-        ,   "#media-elements"
-        ]
-    }
-,   "html-ui":  {
-        "title":    "HTML User Interfaces"
-    ,   "abstract": "UI Elements."
-    ,   "content":  [
-            {
-                "id":       "#interactive-elements"
-            ,   "unwrap":   true
-            }
-        ]
+    "delete": [
+        "#abstract"
+    ,   "#sotd"
+    ,   "#table-of-contents"
+    ,   "#contents"
+    ,   "#references"
+    ,   "#mime-types-2"
+    ,   "#element-content-categories"
+    ,   "#iana"
+    ,   "#usage-summary-2"
+    ,   "#usage-summary"
+    ]
+,   "split":     {
+        "html": {
+            "title":    "HTML"
+        ,   "abstract": "This document introduces HTML and provides a map of the HTML specifications family."
+        ,   "content":  [
+                {
+                    "id":       "#introduction"
+                ,   "unwrap":   true
+                }
+            ,   "#elements-3"
+            ,   "#attributes-3"
+            ,   "#element-interfaces"
+            ,   "#all-interfaces"
+            ,   "#events-2"
+            ,   "#acknowledgments"
+            ]
+        }
+    ,   "core-algorithms": {
+            "title":    "Core Algorithms"
+        ,   "abstract": "This document is a reference for a number of basic algorithms that are reused across the platform."
+        ,   "content":  [
+                {
+                    "id":       "#infrastructure"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "browser-dom":  {
+            "title":    "The Browser DOM"
+        ,   "abstract": "Some DOM interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>."
+        ,   "content":  [
+                "#documents"
+            ,   "#windows"
+            ,   "#the-window-object"
+            ,   "#origin"
+            ,   "#sandboxing"
+            ,   "#history"
+            ,   {
+                    "id":       "#webappapis"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-attributes":  {
+            "title":    "Core Attributes of HTML"
+        ,   "abstract": "A set of attributes available globally in HTML and reusable in other languages."
+        ,   "content":  [
+                "#global-attributes"
+            ]
+        }
+    ,   "rendering-html":  {
+            "title":    "Rendering HTML"
+        ,   "XXX":      "WE LOSE THE SMALL BLURB INTRO HERE"
+        ,   "abstract": "The default style sheet and general rendering advice for HTML."
+        ,   "content":  [
+                {
+                    "id":       "#rendering"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-syntax":  {
+            "title":    "The HTML Syntax"
+        ,   "abstract": "Rules for parsing and producing HTML documents."
+        ,   "content":  [
+                {
+                    "id":       "#syntax"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "xhtml-syntax":  {
+            "title":    "The XHTML Syntax"
+        ,   "abstract": "Rules for parsing and producing XHTML documents."
+        ,   "content":  [
+                {
+                    "id":       "#the-xhtml-syntax"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "appcache":  {
+            "title":    "The Application Cache"
+        ,   "abstract": "A system for offlining content automatically."
+        ,   "content":  [
+                {
+                    "id":       "#offline"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "browsing":  {
+            "title":    "Browsing the Web"
+        ,   "abstract": "How navigation works."
+        ,   "content":  [
+                {
+                    "id":       "#browsing-the-web"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "dnd":  {
+            "title":    "Drag &amp; Drop"
+        ,   "abstract": "Drag &amp drop support for HTML."
+        ,   "content":  [
+                {
+                    "id":       "#dnd"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-editing":  {
+            "title":    "HTML Editing"
+        ,   "abstract": "Enabling in-browser editing of HTML content."
+        ,   "content":  [
+                {
+                    "id":       "#editing-2"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-interacton-attr":  {
+            "title":    "HTML Interactivity Attributes"
+        ,   "abstract": "A set of attributes that enables essential interactivity features."
+        ,   "content":  [
+                "#the-hidden-attribute"
+            ,   "#inert-subtrees"
+            ,   "#activation"
+            ,   "#focus"
+            ,   "#assigning-keyboard-shortcuts"
+            ]
+        }
+    ,   "html-canvas":  {
+            "title":    "HTML Canvas"
+        ,   "abstract": "An element and API that enables drawing surfaces."
+        ,   "content":  [
+                "#the-canvas-element"
+            ]
+        }
+    ,   "html-template":  {
+            "title":    "HTML Templates"
+        ,   "abstract": "An element and API that enables templating."
+        ,   "content":  [
+                "#the-template-element"
+            ]
+        }
+    ,   "html-forms":  {
+            "title":    "HTML Forms"
+        ,   "abstract": "Forms. The bane of the Web developer brought to you in all its gory detail."
+        ,   "content":  [
+                {
+                    "id":       "#forms"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "sortable-tables":  {
+            "title":    "Sortable Tables for HTML"
+        ,   "abstract": "Additions to HTML tables that enable sorting."
+        ,   "content":  [
+                "#table-sorting-model"
+            ]
+        }
+    ,   "html-tables":  {
+            "title":    "HTML Tables"
+        ,   "abstract": "Tables, your secret layout friend!"
+        ,   "content":  [
+                "#the-table-element"
+            ,   "#the-caption-element"
+            ,   "#the-colgroup-element"
+            ,   "#the-col-element"
+            ,   "#the-tbody-element"
+            ,   "#the-thead-element"
+            ,   "#the-tfoot-element"
+            ,   "#the-tr-element"
+            ,   "#the-td-element"
+            ,   "#the-th-element"
+            ,   "#attributes-common-to-td-and-th-elements"
+            ,   "#processing-model-3"
+            ]
+        }
+    ,   "html-structure":  {
+            "title":    "The Structure of HTML"
+        ,   "abstract": "All you need to structure an HTML document."
+        ,   "content":  [
+                "#the-html-element"
+            ,   "#the-head-element"
+            ,   "#the-title-element"
+            ,   "#the-body-element"
+            ]
+        }
+    ,   "html-sectioning":  {
+            "title":    "Sections in HTML"
+        ,   "abstract": "How to make sections of various types in HTML."
+        ,   "content":  [
+                "#the-article-element"
+            ,   "#the-section-element"
+            ,   "#the-nav-element"
+            ,   "#the-aside-element"
+            ,   "#the-h1\\,-h2\\,-h3\\,-h4\\,-h5\\,-and-h6-elements"
+            ,   "#the-header-element"
+            ,   "#the-footer-element"
+            ,   "#the-main-element"
+            ,   "#headings-and-sections"
+            ]
+        }
+    ,   "html-styling":  {
+            "title":    "Styling HTML"
+        ,   "abstract": "Putting style in HTML."
+        ,   "content":  [
+                "#the-style-element"
+            ,   "#interactions-of-styling-and-scripting"
+            ,   "#link-type-stylesheet"
+            ,   "#disabled-elements"
+            ,   "#selectors"
+            ]
+        }
+    ,   "html-scripting":  {
+            "title":    "Scripting HTML"
+        ,   "abstract": "Putting scripts in HTML."
+        ,   "content":  [
+                "#the-script-element"
+            ,   "#the-noscript-element"
+            ]
+        }
+    ,   "html-blocks":  {
+            "title":    "HTML Blocks"
+        ,   "abstract": "Blocks."
+        ,   "content":  [
+                "#the-p-element"
+            ,   "#the-div-element"
+            ,   "#the-hr-element"
+            ,   "#the-pre-element"
+            ,   "#the-blockquote-element"
+            ,   "#the-address-element"
+            ]
+        }
+    ,   "html-lists":  {
+            "title":    "HTML Lists"
+        ,   "abstract": "Lists."
+        ,   "content":  [
+                "#the-ul-element"
+            ,   "#the-ol-element"
+            ,   "#the-li-element"
+            ,   "#the-dl-element"
+            ,   "#the-dt-element"
+            ,   "#the-dd-element"
+            ]
+        }
+    ,   "html-figures":  {
+            "title":    "HTML Figures"
+        ,   "abstract": "Figures."
+        ,   "content":  [
+                "#the-figure-element"
+            ,   "#the-figcaption-element"
+            ]
+        }
+    ,   "html-metadata":  {
+            "title":    "HTML Metadata"
+        ,   "abstract": "Metadata."
+        ,   "content":  [
+                "#the-meta-element"
+            ,   "#the-link-element"
+            ]
+        }
+    ,   "html-linking":  {
+            "title":    "HTML Linking"
+        ,   "abstract": "Links."
+        ,   "content":  [
+                "#the-a-element"
+            ,   "#the-base-element"
+            ,   "#the-map-element"
+            ,   "#the-area-element"
+            ,   "#image-maps"
+            ,   "#links"
+            ]
+        }
+    ,   "html-images":  {
+            "title":    "HTML Images"
+        ,   "abstract": "Pretty pictures."
+        ,   "content":  [
+                "#introduction-3"
+            ,   "#dependencies-2"
+            ,   "#the-picture-element"
+            ,   "#the-source-element-when-used-with-the-picture-element"
+            ,   "#the-img-element"
+            ]
+        }
+    ,   "html-text":  {
+            "title":    "HTML Text"
+        ,   "abstract": "Text."
+        ,   "content":  [
+                "#the-em-element"
+            ,   "#the-strong-element"
+            ,   "#the-small-element"
+            ,   "#the-s-element"
+            ,   "#the-cite-element"
+            ,   "#the-q-element"
+            ,   "#the-dfn-element"
+            ,   "#the-abbr-element"
+            ,   "#the-ruby-element"
+            ,   "#the-rb-element"
+            ,   "#the-rt-element"
+            ,   "#the-rtc-element"
+            ,   "#the-rp-element"
+            ,   "#the-data-element"
+            ,   "#the-time-element"
+            ,   "#the-code-element"
+            ,   "#the-var-element"
+            ,   "#the-samp-element"
+            ,   "#the-kbd-element"
+            ,   "#the-sub-and-sup-elements"
+            ,   "#the-i-element"
+            ,   "#the-b-element"
+            ,   "#the-u-element"
+            ,   "#the-mark-element"
+            ,   "#the-bdi-element"
+            ,   "#the-bdo-element"
+            ,   "#the-span-element"
+            ,   "#the-br-element"
+            ,   "#the-wbr-element"
+            ]
+        }
+    ,   "html-edits":  {
+            "title":    "HTML Edits"
+        ,   "abstract": "Stuff that's changed."
+        ,   "content":  [
+                {
+                    "id":       "#edits"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-best-practices":  {
+            "title":    "HTML Best Practices"
+        ,   "abstract": "There is currently nothing in here, but the idea is to progressively move over everything related to linting."
+        ,   "content":  []
+        }
+    ,   "html-embedding":  {
+            "title":    "HTML Embedding"
+        ,   "abstract": "Stuff in stuff."
+        ,   "content":  [
+                "#the-iframe-element"
+            ,   "#the-embed-element"
+            ,   "#the-object-element"
+            ,   "#the-param-element"
+            ]
+        }
+    ,   "html-media":  {
+            "title":    "HTML Media"
+        ,   "abstract": "Media."
+        ,   "content":  [
+                "#the-video-element"
+            ,   "#the-audio-element"
+            ,   "#the-source-element"
+            ,   "#the-track-element"
+            ,   "#media-elements"
+            ]
+        }
+    ,   "html-ui":  {
+            "title":    "HTML User Interfaces"
+        ,   "abstract": "UI Elements."
+        ,   "content":  [
+                {
+                    "id":       "#interactive-elements"
+                ,   "unwrap":   true
+                }
+            ]
+        }
     }
 }

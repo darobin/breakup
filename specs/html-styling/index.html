@@ -362,4 +362,286 @@ c-end         = "--&gt;"</pre>
     <ol><li><p>If the element has a <code id="link-type-stylesheet:attr-link-charset"><a href="#attr-link-charset">charset</a></code> attribute, <a href="https://encoding.spec.whatwg.org/#concept-encoding-get" id="link-type-stylesheet:getting-an-encoding" data-x-internal="getting-an-encoding">get an encoding</a> from that attribute's value. If that
      succeeds, return the resulting encoding and abort these steps. [[!ENCODING]]</p></li><li><p>Otherwise, return the <a href="/breakup/specs/core-algorithms/#document's-character-encoding" id="link-type-stylesheet:document's-character-encoding">document's character encoding</a>. [[!DOM]]</p></li></ol>
 
-   </li></ol></section></body></html>
+   </li></ol></section><section><h2>Disabled elements</h2>
+
+  <p>An element is said to be <dfn id="concept-element-disabled">actually disabled</dfn> if it
+  one of the following:</p>
+
+  <ul><li>a <code id="disabled-elements:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> element that is <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="disabled-elements:concept-fe-disabled">disabled</a></li><li>an <code id="disabled-elements:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element that is <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="disabled-elements:concept-fe-disabled-2">disabled</a></li><li>a <code id="disabled-elements:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> element that is <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="disabled-elements:concept-fe-disabled-3">disabled</a></li><li>a <code id="disabled-elements:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> element that is <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="disabled-elements:concept-fe-disabled-4">disabled</a></li><li>an <code id="disabled-elements:the-optgroup-element"><a href="/breakup/specs/html-forms/#the-optgroup-element">optgroup</a></code> element that has a <code id="disabled-elements:attr-optgroup-disabled"><a href="/breakup/specs/html-forms/#attr-optgroup-disabled">disabled</a></code> attribute</li><li>an <code id="disabled-elements:the-option-element"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> element that is <a href="/breakup/specs/html-forms/#concept-option-disabled" id="disabled-elements:concept-option-disabled">disabled</a></li><li>a <code id="disabled-elements:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element that has a <code id="disabled-elements:attr-menuitem-disabled"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code> attribute</li><li>a <code id="disabled-elements:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code> element that is a <a href="/breakup/specs/html-forms/#concept-fieldset-disabled" id="disabled-elements:concept-fieldset-disabled">disabled fieldset</a></li></ul>
+
+  <p class="note">This definition is used to determine what elements <a href="/breakup/specs/html-interacton-attr/#specially-focusable" id="disabled-elements:specially-focusable">can be focused</a> and which elements match the <code id="disabled-elements:selector-disabled"><a href="/breakup/specs/html-styling/#selector-disabled">:disabled</a></code> pseudo-class.</p></section><section><h2>Matching HTML elements using selectors</h2>
+
+  <section><h2>Case-sensitivity</h2>
+
+  <p>The Selectors specification leaves the case-sensitivity of element names, attribute names, and
+  attribute values to be defined by the host language. [[!SELECTORS]]</p>
+
+  <p class="note">The Selectors specification defines that ID and class selectors, when matched
+  against elements in documents that are in <a href="/breakup/specs/core-algorithms/#quirks-mode" id="case-sensitivity:quirks-mode">quirks mode</a>, will be work in an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="case-sensitivity:ascii-case-insensitive">ASCII
+  case-insensitive</a>.</p>
+
+  <p>When comparing a CSS element type selector to the names of <a href="/breakup/specs/core-algorithms/#html-elements" id="case-sensitivity:html-elements">HTML elements</a> in
+  <a href="/breakup/specs/core-algorithms/#html-documents" id="case-sensitivity:html-documents">HTML documents</a>, the CSS element type selector must first be <a href="/breakup/specs/core-algorithms/#converted-to-ascii-lowercase" id="case-sensitivity:converted-to-ascii-lowercase">converted to ASCII
+  lowercase</a>. The same selector when compared to other elements must be compared according to
+  its original case. In both cases, the comparison is <a href="/breakup/specs/core-algorithms/#case-sensitive" id="case-sensitivity:case-sensitive">case-sensitive</a>.</p>
+  
+
+  <p>When comparing the name part of a CSS attribute selector to the names of namespace-less
+  attributes on <a href="/breakup/specs/core-algorithms/#html-elements" id="case-sensitivity:html-elements-2">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#html-documents" id="case-sensitivity:html-documents-2">HTML documents</a>, the name part of the CSS
+  attribute selector must first be <a href="/breakup/specs/core-algorithms/#converted-to-ascii-lowercase" id="case-sensitivity:converted-to-ascii-lowercase-2">converted to ASCII lowercase</a>. The same selector when
+  compared to other attributes must be compared according to its original case. In both cases, the
+  comparison is <a href="/breakup/specs/core-algorithms/#case-sensitive" id="case-sensitivity:case-sensitive-2">case-sensitive</a>.</p>
+  
+
+  <p>Everything else must be treated as entirely <a href="/breakup/specs/core-algorithms/#case-sensitive" id="case-sensitivity:case-sensitive-3">case-sensitive</a> for the purposes of
+  selector matching. This includes:</p>
+
+  <ul class="brief"><li> IDs and classes in <a href="/breakup/specs/core-algorithms/#no-quirks-mode" id="case-sensitivity:no-quirks-mode">no-quirks mode</a> and <a href="/breakup/specs/core-algorithms/#limited-quirks-mode" id="case-sensitivity:limited-quirks-mode">limited-quirks mode</a>
+   </li><li> the names of elements not in the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="case-sensitivity:html-namespace-2">HTML namespace</a>
+   </li><li> the names of <a href="/breakup/specs/core-algorithms/#html-elements" id="case-sensitivity:html-elements-3">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#xml-documents" id="case-sensitivity:xml-documents">XML documents</a>
+   </li><li> the names of attributes of elements not in the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="case-sensitivity:html-namespace-2-2">HTML namespace</a>
+   </li><li> the names of attributes of <a href="/breakup/specs/core-algorithms/#html-elements" id="case-sensitivity:html-elements-4">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#xml-documents" id="case-sensitivity:xml-documents-2">XML documents</a>
+   </li><li> the names of attributes that themselves have namespaces
+   </li><li> all attribute values
+  </li></ul></section>
+
+
+  <section><h2>Pseudo-classes</h2>
+
+  <p>There are a number of dynamic selectors that can be used with HTML. This section defines when
+  these selectors match HTML elements. [[!SELECTORS]] [[!CSSUI]]</p>
+
+  <dl><dt><dfn id="selector-link"><code>:link</code></dfn></dt><dt><dfn id="selector-visited"><code>:visited</code></dfn></dt><dd>
+
+    <p>All <code id="pseudo-classes:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> elements that have an <code id="pseudo-classes:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code>
+    attribute, all <code id="pseudo-classes:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements that have an <code id="pseudo-classes:attr-hyperlink-href-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute, and all <code id="pseudo-classes:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements that have
+    an <code id="pseudo-classes:attr-link-href"><a href="/breakup/specs/html-metadata/#attr-link-href">href</a></code> attribute, must match one of <code id="pseudo-classes:selector-link"><a href="/breakup/specs/html-styling/#selector-link">:link</a></code> and <code id="pseudo-classes:selector-visited"><a href="/breakup/specs/html-styling/#selector-visited">:visited</a></code>.</p>
+
+    <p>Other specifications might apply more specific rules regarding how these elements are to
+    match these pseudo-classes, to mitigate some privacy concerns that apply with straightforward
+    implementations of this requirement.</p>
+
+   </dd><dt><dfn id="selector-active"><code>:active</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-active"><a href="/breakup/specs/html-styling/#selector-active">:active</a></code> pseudo-class is defined to match an element
+    <q cite="http://dev.w3.org/csswg/selectors3/#the-user-action-pseudo-classes-hover-act">while an
+    element is <dfn id="concept-selector-active"><i>being activated</i></dfn> by the user</q>.</p>
+
+    <p>To determine whether a particular element is <i id="pseudo-classes:concept-selector-active"><a href="/breakup/specs/html-styling/#concept-selector-active">being activated</a></i> for the purposes of
+    defining the <code id="pseudo-classes:selector-active-2"><a href="/breakup/specs/html-styling/#selector-active">:active</a></code> pseudo-class only, an HTML user agent
+    must use the first relevant entry in the following list.</p>
+
+    <dl><dt>If the element has a descendant that is currently matching the <code id="pseudo-classes:selector-active-3"><a href="/breakup/specs/html-styling/#selector-active">:active</a></code> pseudo-class</dt><dd><p>The element is <i id="pseudo-classes:concept-selector-active-2"><a href="/breakup/specs/html-styling/#concept-selector-active">being activated</a></i>.</p></dd><dt>If the element is the <a href="/breakup/specs/html-forms/#labeled-control" id="pseudo-classes:labeled-control">labeled control</a> of a <code id="pseudo-classes:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element that is
+     currently matching <a href="/breakup/specs/html-styling/#selector-active" id="pseudo-classes:selector-active-4">:active</a></dt><dd><p>The element is <i id="pseudo-classes:concept-selector-active-3"><a href="/breakup/specs/html-styling/#concept-selector-active">being activated</a></i>.</p></dd><dt>If the element is a <code id="pseudo-classes:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> element</dt><dt>If the element is an <code id="pseudo-classes:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="pseudo-classes:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#submit-button-state-(type=submit)" id="pseudo-classes:submit-button-state-(type=submit)">Submit Button</a>, <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="pseudo-classes:image-button-state-(type=image)">Image Button</a>, <a href="/breakup/specs/html-forms/#reset-button-state-(type=reset)" id="pseudo-classes:reset-button-state-(type=reset)">Reset
+     Button</a>, or <a href="/breakup/specs/html-forms/#button-state-(type=button)" id="pseudo-classes:button-state-(type=button)">Button</a> state</dt><dd>
+
+      <p>The element is <i id="pseudo-classes:concept-selector-active-4"><a href="/breakup/specs/html-styling/#concept-selector-active">being activated</a></i> if it is <a href="/breakup/specs/html-styling/#in-a-formal-activation-state" id="pseudo-classes:in-a-formal-activation-state">in a formal activation state</a>
+      and it is not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="pseudo-classes:concept-fe-disabled">disabled</a>.</p>
+
+      <p class="example">For example, if the user is using a keyboard to push a <code id="pseudo-classes:the-button-element-2"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code>
+      element by pressing the space bar, the element would match this pseudo-class in between the
+      time that the element received the <code id="pseudo-classes:event-keydown"><a href="/breakup/specs/core-algorithms/#event-keydown">keydown</a></code> event and the
+      time the element received the <code id="pseudo-classes:event-keyup"><a href="/breakup/specs/core-algorithms/#event-keyup">keyup</a></code> event.</p>
+
+     </dd><dt>If the element is a <code id="pseudo-classes:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element</dt><dd><p>The element is <i id="pseudo-classes:concept-selector-active-5"><a href="/breakup/specs/html-styling/#concept-selector-active">being activated</a></i> if it is <a href="/breakup/specs/html-styling/#in-a-formal-activation-state" id="pseudo-classes:in-a-formal-activation-state-2">in a formal activation state</a>
+     and it does not have a <code id="pseudo-classes:attr-menuitem-disabled"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code>
+     attribute.</p></dd><dt>If the element is an <code id="pseudo-classes:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element that has an <code id="pseudo-classes:attr-hyperlink-href-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute</dt><dt>If the element is an <code id="pseudo-classes:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element that has an <code id="pseudo-classes:attr-hyperlink-href-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute</dt><dt>If the element is a <code id="pseudo-classes:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element that has an <code id="pseudo-classes:attr-link-href-2"><a href="/breakup/specs/html-metadata/#attr-link-href">href</a></code> attribute</dt><dt>If the element has its <a href="/breakup/specs/html-interacton-attr/#specially-focusable" id="pseudo-classes:specially-focusable">tabindex focus flag</a> set</dt><dd><p>The element is <i id="pseudo-classes:concept-selector-active-6"><a href="/breakup/specs/html-styling/#concept-selector-active">being activated</a></i> if it is <a href="/breakup/specs/html-styling/#in-a-formal-activation-state" id="pseudo-classes:in-a-formal-activation-state-3">in a formal activation
+     state</a>.</p></dd><dt>If the element is <a href="/breakup/specs/html-styling/#being-actively-pointed-at" id="pseudo-classes:being-actively-pointed-at">being actively pointed at</a></dt><dd><p>The element is <i id="pseudo-classes:concept-selector-active-7"><a href="/breakup/specs/html-styling/#concept-selector-active">being activated</a></i>.</p></dd></dl>
+
+    <p>An element is said to be <dfn id="in-a-formal-activation-state">in a formal activation state</dfn> between the time the user
+    begins to indicate an intent to trigger the element's <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="pseudo-classes:activation-behaviour">activation behaviour</a> and
+    either the time the user stops indicating an intent to trigger the element's <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="pseudo-classes:activation-behaviour-2">activation
+    behaviour</a>, or the time the element's <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="pseudo-classes:activation-behaviour-3">activation behaviour</a> has finished
+    running, which ever comes first.</p>
+
+    <p>An element is said to be <dfn id="being-actively-pointed-at">being actively pointed at</dfn> while the user indicates the
+    element using a pointing device while that pointing device is in the "down" state (e.g. for a
+    mouse, between the time the mouse button is pressed and the time it is depressed; for a finger
+    in a multitouch environment, while the finger is touching the display surface).</p>
+
+   </dd><dt><dfn id="selector-hover"><code>:hover</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-hover"><a href="/breakup/specs/html-styling/#selector-hover">:hover</a></code> pseudo-class is defined to match an element <q cite="http://dev.w3.org/csswg/selectors3/#the-user-action-pseudo-classes-hover-act">while the
+    user <i>designates</i> an element with a pointing device</q>. For the purposes of defining the
+    <code id="pseudo-classes:selector-hover-2"><a href="/breakup/specs/html-styling/#selector-hover">:hover</a></code> pseudo-class only, an HTML user agent must consider
+    an element as being one that the user <i>designates</i> if it is:</p>
+
+    <ul><li>
+
+      <p>An element that the user indicates using a pointing device.</p>
+
+     </li><li>
+
+      <p>An element that has a descendant that the user indicates using a pointing device.</p>
+
+     </li><li>
+
+      <p>An element that is the <a href="/breakup/specs/html-forms/#labeled-control" id="pseudo-classes:labeled-control-2">labeled control</a> of a <code id="pseudo-classes:the-label-element-2"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element that is
+      currently matching <a href="/breakup/specs/html-styling/#selector-hover" id="pseudo-classes:selector-hover-3">:hover</a>.</p>
+
+     </li></ul>
+
+
+    <div class="example">
+
+     <p>Consider in particular a fragment such as:</p>
+
+     <pre>&lt;p&gt; &lt;label for=c&gt; &lt;input id=a&gt; &lt;/label&gt; &lt;span id=b&gt; &lt;input id=c&gt; &lt;/span&gt; &lt;/p&gt;</pre>
+
+     <p>If the user designates the element with ID "<code>a</code>" with their pointing
+     device, then the <code id="pseudo-classes:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element (and all its ancestors not shown in the snippet above),
+     the <code id="pseudo-classes:the-label-element-3"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element, the element with ID "<code>a</code>", and the element
+     with ID "<code>c</code>" will match the <a href="/breakup/specs/html-styling/#selector-hover" id="pseudo-classes:selector-hover-4">:hover</a>
+     pseudo-class. The element with ID "<code>a</code>" matches it from condition 1, the
+     <code id="pseudo-classes:the-label-element-4"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> and <code id="pseudo-classes:the-p-element-2"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> elements match it because of condition 2 (one of their
+     descendants is designated), and the element with ID "<code>c</code>" matches it
+     through condition 3 (its <code id="pseudo-classes:the-label-element-5"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element matches <a href="/breakup/specs/html-styling/#selector-hover" id="pseudo-classes:selector-hover-5">:hover</a>). However, the element with ID "<code>b</code>"
+     does <em>not</em> match <a href="/breakup/specs/html-styling/#selector-hover" id="pseudo-classes:selector-hover-6">:hover</a>: its descendant is not
+     designated, even though it matches <a href="/breakup/specs/html-styling/#selector-hover" id="pseudo-classes:selector-hover-7">:hover</a>.</p>
+
+    </div>
+
+   </dd><dt><dfn id="selector-focus"><code>:focus</code></dfn></dt><dd>
+
+    <p>For the purposes of the CSS ':focus' pseudo-class, an <dfn id="element-has-the-focus">element has the focus</dfn> when
+    its <a href="/breakup/specs/browser-dom/#top-level-browsing-context" id="pseudo-classes:top-level-browsing-context">top-level browsing context</a> has the system focus, it is not itself a
+    <a href="/breakup/specs/browser-dom/#browsing-context-container" id="pseudo-classes:browsing-context-container">browsing context container</a>, and it is one of the elements listed in the <a href="/breakup/specs/html-interacton-attr/#focus-chain" id="pseudo-classes:focus-chain">focus
+    chain</a> of the <a href="/breakup/specs/html-interacton-attr/#currently-focused-area-of-a-top-level-browsing-context" id="pseudo-classes:currently-focused-area-of-a-top-level-browsing-context">currently focused area of the top-level browsing context</a>.</p>
+
+   </dd><dt><dfn id="selector-enabled"><code>:enabled</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-enabled"><a href="/breakup/specs/html-styling/#selector-enabled">:enabled</a></code> pseudo-class must match any element
+    that is one of the following:</p>
+
+    <ul><li>a <code id="pseudo-classes:the-button-element-3"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> element that is not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="pseudo-classes:concept-fe-disabled-2">disabled</a></li><li>an <code id="pseudo-classes:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element that is not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="pseudo-classes:concept-fe-disabled-3">disabled</a></li><li>a <code id="pseudo-classes:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> element that is not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="pseudo-classes:concept-fe-disabled-4">disabled</a></li><li>a <code id="pseudo-classes:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> element that is not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="pseudo-classes:concept-fe-disabled-5">disabled</a></li><li>an <code id="pseudo-classes:the-optgroup-element"><a href="/breakup/specs/html-forms/#the-optgroup-element">optgroup</a></code> element that does not have a <code id="pseudo-classes:attr-optgroup-disabled"><a href="/breakup/specs/html-forms/#attr-optgroup-disabled">disabled</a></code> attribute</li><li>an <code id="pseudo-classes:the-option-element"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> element that is not <a href="/breakup/specs/html-forms/#concept-option-disabled" id="pseudo-classes:concept-option-disabled">disabled</a></li><li>a <code id="pseudo-classes:the-menuitem-element-2"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element that does not have a <code id="pseudo-classes:attr-menuitem-disabled-2"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code> attribute</li><li>a <code id="pseudo-classes:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code> element that is not a <a href="/breakup/specs/html-forms/#concept-fieldset-disabled" id="pseudo-classes:concept-fieldset-disabled">disabled fieldset</a></li></ul>
+
+   </dd><dt><dfn id="selector-disabled"><code>:disabled</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-disabled"><a href="/breakup/specs/html-styling/#selector-disabled">:disabled</a></code> pseudo-class must match any element that
+    is <a href="/breakup/specs/html-styling/#concept-element-disabled" id="pseudo-classes:concept-element-disabled">actually disabled</a>.</p>
+
+   </dd><dt><dfn id="selector-checked"><code>:checked</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-checked"><a href="/breakup/specs/html-styling/#selector-checked">:checked</a></code> pseudo-class must match any element
+    falling into one of the following categories:</p>
+
+    <ul><li><code id="pseudo-classes:the-input-element-3"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <code id="pseudo-classes:attr-input-type-2"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in
+     the <a href="/breakup/specs/html-forms/#checkbox-state-(type=checkbox)" id="pseudo-classes:checkbox-state-(type=checkbox)">Checkbox</a> state and whose <a href="/breakup/specs/html-forms/#concept-fe-checked" id="pseudo-classes:concept-fe-checked">checkedness</a> state is true</li><li><code id="pseudo-classes:the-input-element-4"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <code id="pseudo-classes:attr-input-type-3"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in
+     the <a href="/breakup/specs/html-forms/#radio-button-state-(type=radio)" id="pseudo-classes:radio-button-state-(type=radio)">Radio Button</a> state and whose <a href="/breakup/specs/html-forms/#concept-fe-checked" id="pseudo-classes:concept-fe-checked-2">checkedness</a> state is true</li><li><code id="pseudo-classes:the-option-element-2"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> elements whose <a href="/breakup/specs/html-forms/#concept-option-selectedness" id="pseudo-classes:concept-option-selectedness">selectedness</a> is true</li><li><code id="pseudo-classes:the-menuitem-element-3"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> elements whose <code id="pseudo-classes:attr-menuitem-type"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute
+     is in the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-checkbox" id="pseudo-classes:attr-menuitem-type-state-checkbox">Checkbox</a> state and that have a
+     <code id="pseudo-classes:attr-menuitem-checked"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> attribute</li><li><code id="pseudo-classes:the-menuitem-element-4"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> elements whose <code id="pseudo-classes:attr-menuitem-type-2"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute
+     is in the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-radio" id="pseudo-classes:attr-menuitem-type-state-radio">Radio</a> state and that have a <code id="pseudo-classes:attr-menuitem-checked-2"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> attribute</li></ul>
+
+   </dd><dt><dfn id="selector-indeterminate"><code>:indeterminate</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-indeterminate"><a href="/breakup/specs/html-styling/#selector-indeterminate">:indeterminate</a></code> pseudo-class must match any
+    element falling into one of the following categories:</p>
+
+    <ul><li><code id="pseudo-classes:the-input-element-5"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <code id="pseudo-classes:attr-input-type-4"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in
+     the <a href="/breakup/specs/html-forms/#checkbox-state-(type=checkbox)" id="pseudo-classes:checkbox-state-(type=checkbox)-2">Checkbox</a> state and whose <code id="pseudo-classes:dom-input-indeterminate"><a href="/breakup/specs/html-forms/#dom-input-indeterminate">indeterminate</a></code> IDL attribute is set to true</li><li><code id="pseudo-classes:the-input-element-6"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <code id="pseudo-classes:attr-input-type-5"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in
+     the <a href="/breakup/specs/html-forms/#radio-button-state-(type=radio)" id="pseudo-classes:radio-button-state-(type=radio)-2">Radio Button</a> state and whose <a href="/breakup/specs/html-forms/#radio-button-group" id="pseudo-classes:radio-button-group">radio button
+     group</a> contains no <code id="pseudo-classes:the-input-element-7"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <a href="/breakup/specs/html-forms/#concept-fe-checked" id="pseudo-classes:concept-fe-checked-3">checkedness</a> state is true.</li><li><code id="pseudo-classes:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code> elements with no <code id="pseudo-classes:attr-progress-value"><a href="/breakup/specs/html-forms/#attr-progress-value">value</a></code>
+     content attribute</li></ul>
+
+   </dd><dt><dfn id="selector-default"><code>:default</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-default"><a href="/breakup/specs/html-styling/#selector-default">:default</a></code> pseudo-class must match any element
+    falling into one of the following categories:</p>
+
+    <ul><li><code id="pseudo-classes:the-button-element-4"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> elements that are their form's <a href="/breakup/specs/html-forms/#default-button" id="pseudo-classes:default-button">default button</a></li><li><code id="pseudo-classes:the-input-element-8"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <code id="pseudo-classes:attr-input-type-6"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in
+     the <a href="/breakup/specs/html-forms/#submit-button-state-(type=submit)" id="pseudo-classes:submit-button-state-(type=submit)-2">Submit Button</a> or <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="pseudo-classes:image-button-state-(type=image)-2">Image Button</a> state, and that are their form's
+     <a href="/breakup/specs/html-forms/#default-button" id="pseudo-classes:default-button-2">default button</a></li><li><code id="pseudo-classes:the-input-element-9"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements to which the <code id="pseudo-classes:attr-input-checked"><a href="/breakup/specs/html-forms/#attr-input-checked">checked</a></code>
+     attribute applies and that have a <code id="pseudo-classes:attr-input-checked-2"><a href="/breakup/specs/html-forms/#attr-input-checked">checked</a></code>
+     attribute</li><li><code id="pseudo-classes:the-option-element-3"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> elements that have a <code id="pseudo-classes:attr-option-selected"><a href="/breakup/specs/html-forms/#attr-option-selected">selected</a></code>
+     attribute</li></ul>
+
+   </dd><dt><dfn id="selector-valid"><code>:valid</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-valid"><a href="/breakup/specs/html-styling/#selector-valid">:valid</a></code> pseudo-class must match any element falling
+    into one of the following categories:</p>
+
+    <ul><li>elements that are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation">candidates for
+     constraint validation</a> and that <a href="/breakup/specs/html-forms/#concept-fv-valid" id="pseudo-classes:concept-fv-valid">satisfy their
+     constraints</a></li><li><code id="pseudo-classes:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code> elements that are not the <a href="/breakup/specs/html-forms/#form-owner" id="pseudo-classes:form-owner">form owner</a> of any elements that
+     themselves are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation-2">candidates for constraint
+     validation</a> but do not <a href="/breakup/specs/html-forms/#concept-fv-valid" id="pseudo-classes:concept-fv-valid-2">satisfy their
+     constraints</a></li><li><code id="pseudo-classes:the-fieldset-element-2"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code> elements that have no descendant elements that themselves are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation-3">candidates for constraint validation</a> but do
+     not <a href="/breakup/specs/html-forms/#concept-fv-valid" id="pseudo-classes:concept-fv-valid-3">satisfy their constraints</a></li></ul>
+
+   </dd><dt><dfn id="selector-invalid"><code>:invalid</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-invalid"><a href="/breakup/specs/html-styling/#selector-invalid">:invalid</a></code> pseudo-class must match any element
+    falling into one of the following categories:</p>
+
+    <ul><li>elements that are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation-4">candidates for
+     constraint validation</a> but that do not <a href="/breakup/specs/html-forms/#concept-fv-valid" id="pseudo-classes:concept-fv-valid-4">satisfy their
+     constraints</a></li><li><code id="pseudo-classes:the-form-element-2"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code> elements that are the <a href="/breakup/specs/html-forms/#form-owner" id="pseudo-classes:form-owner-2">form owner</a> of one or more elements
+     that themselves are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation-5">candidates for constraint
+     validation</a> but do not <a href="/breakup/specs/html-forms/#concept-fv-valid" id="pseudo-classes:concept-fv-valid-5">satisfy their
+     constraints</a></li><li><code id="pseudo-classes:the-fieldset-element-3"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code> elements that have of one or more descendant elements that themselves
+     are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation-6">candidates for constraint
+     validation</a> but do not <a href="/breakup/specs/html-forms/#concept-fv-valid" id="pseudo-classes:concept-fv-valid-6">satisfy their
+     constraints</a></li></ul>
+
+   </dd><dt><dfn id="selector-in-range"><code>:in-range</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-in-range"><a href="/breakup/specs/html-styling/#selector-in-range">:in-range</a></code> pseudo-class must match all elements
+    that are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation-7">candidates for constraint
+    validation</a>, <a href="/breakup/specs/html-forms/#have-range-limitations" id="pseudo-classes:have-range-limitations">have range limitations</a>, and that are neither <a href="/breakup/specs/html-forms/#suffering-from-an-underflow" id="pseudo-classes:suffering-from-an-underflow">suffering
+    from an underflow</a> nor <a href="/breakup/specs/html-forms/#suffering-from-an-overflow" id="pseudo-classes:suffering-from-an-overflow">suffering from an overflow</a>.</p>
+
+   </dd><dt><dfn id="selector-out-of-range"><code>:out-of-range</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-out-of-range"><a href="/breakup/specs/html-styling/#selector-out-of-range">:out-of-range</a></code> pseudo-class must match all
+    elements that are <a href="/breakup/specs/html-forms/#candidate-for-constraint-validation" id="pseudo-classes:candidate-for-constraint-validation-8">candidates for constraint
+    validation</a>, <a href="/breakup/specs/html-forms/#have-range-limitations" id="pseudo-classes:have-range-limitations-2">have range limitations</a>, and that are either <a href="/breakup/specs/html-forms/#suffering-from-an-underflow" id="pseudo-classes:suffering-from-an-underflow-2">suffering from
+    an underflow</a> or <a href="/breakup/specs/html-forms/#suffering-from-an-overflow" id="pseudo-classes:suffering-from-an-overflow-2">suffering from an overflow</a>.</p>
+
+   </dd><dt><dfn id="selector-required"><code>:required</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-required"><a href="/breakup/specs/html-styling/#selector-required">:required</a></code> pseudo-class must match any element
+    falling into one of the following categories:</p>
+
+    <ul><li><code id="pseudo-classes:the-input-element-10"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements that are <i id="pseudo-classes:concept-input-required"><a href="/breakup/specs/html-forms/#concept-input-required">required</a></i></li><li><code id="pseudo-classes:the-select-element-2"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> elements that have a <code id="pseudo-classes:attr-select-required"><a href="/breakup/specs/html-forms/#attr-select-required">required</a></code>
+     attribute</li><li><code id="pseudo-classes:the-textarea-element-2"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements that have a <code id="pseudo-classes:attr-textarea-required"><a href="/breakup/specs/html-forms/#attr-textarea-required">required</a></code> attribute</li></ul>
+
+   </dd><dt><dfn id="selector-optional"><code>:optional</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-optional"><a href="/breakup/specs/html-styling/#selector-optional">:optional</a></code> pseudo-class must match any element
+    falling into one of the following categories:</p>
+
+    <ul><li><code id="pseudo-classes:the-input-element-11"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements to which the <code id="pseudo-classes:attr-input-required"><a href="/breakup/specs/html-forms/#attr-input-required">required</a></code>
+     attribute applies that are not <i id="pseudo-classes:concept-input-required-2"><a href="/breakup/specs/html-forms/#concept-input-required">required</a></i></li><li><code id="pseudo-classes:the-select-element-3"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> elements that do not have a <code id="pseudo-classes:attr-select-required-2"><a href="/breakup/specs/html-forms/#attr-select-required">required</a></code> attribute</li><li><code id="pseudo-classes:the-textarea-element-3"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements that do not have a <code id="pseudo-classes:attr-textarea-required-2"><a href="/breakup/specs/html-forms/#attr-textarea-required">required</a></code> attribute</li></ul>
+
+   </dd><dt><dfn id="selector-read-only"><code>:read-only</code></dfn></dt><dt><dfn id="selector-read-write"><code>:read-write</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-read-write"><a href="/breakup/specs/html-styling/#selector-read-write">:read-write</a></code> pseudo-class must match any element
+    falling into one of the following categories, which for the purposes of Selectors are thus
+    considered <i>user-alterable</i>: [[!SELECTORS]]</p>
+
+    <ul><li><code id="pseudo-classes:the-input-element-12"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements to which the <code id="pseudo-classes:attr-input-readonly"><a href="/breakup/specs/html-forms/#attr-input-readonly">readonly</a></code>
+     attribute applies, and that are <i id="pseudo-classes:concept-fe-mutable"><a href="/breakup/specs/html-forms/#concept-fe-mutable">mutable</a></i> (i.e. that do not
+     have the <code id="pseudo-classes:attr-input-readonly-2"><a href="/breakup/specs/html-forms/#attr-input-readonly">readonly</a></code> attribute specified and that are not
+     <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="pseudo-classes:concept-fe-disabled-6">disabled</a>)</li><li><code id="pseudo-classes:the-textarea-element-4"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements that do not have a <code id="pseudo-classes:attr-textarea-readonly"><a href="/breakup/specs/html-forms/#attr-textarea-readonly">readonly</a></code> attribute, and that are not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="pseudo-classes:concept-fe-disabled-7">disabled</a></li><li>elements that are <a href="/breakup/specs/html-editing/#editing-host" id="pseudo-classes:editing-host">editing hosts</a> or <a href="/breakup/specs/html-editing/#editable" id="pseudo-classes:editable">editable</a>
+     and are neither <code id="pseudo-classes:the-input-element-13"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements nor <code id="pseudo-classes:the-textarea-element-5"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements</li></ul>
+
+    <p>The <code id="pseudo-classes:selector-read-only"><a href="/breakup/specs/html-styling/#selector-read-only">:read-only</a></code> pseudo-class must match all other
+    <a href="/breakup/specs/core-algorithms/#html-elements" id="pseudo-classes:html-elements">HTML elements</a>.</p>
+
+   </dd><dt><dfn id="selector-ltr"><code>:dir(ltr)</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-ltr"><a href="/breakup/specs/html-styling/#selector-ltr">:dir(ltr)</a></code> pseudo-class must match all elements whose
+    <a href="/breakup/specs/html-attributes/#the-directionality" id="pseudo-classes:the-directionality">directionality</a> is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="pseudo-classes:concept-ltr">ltr</a>'.</p>
+
+   </dd><dt><dfn id="selector-rtl"><code>:dir(rtl)</code></dfn></dt><dd>
+
+    <p>The <code id="pseudo-classes:selector-rtl"><a href="/breakup/specs/html-styling/#selector-rtl">:dir(rtl)</a></code> pseudo-class must match all elements whose
+    <a href="/breakup/specs/html-attributes/#the-directionality" id="pseudo-classes:the-directionality-2">directionality</a> is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="pseudo-classes:concept-rtl">rtl</a>'.</p>
+
+   </dd></dl>
+
+  <p class="note">Another section of this specification defines the <i id="pseudo-classes:target-element"><a href="/breakup/specs/browsing/#target-element">target element</a></i> used with the <code id="pseudo-classes:selector-target"><a href="/breakup/specs/browsing/#selector-target">:target</a></code>
+  pseudo-class.</p>
+
+  <p class="note">This specification does not define when an element matches the <code>:lang()</code> dynamic pseudo-class, as it is defined in sufficient
+  detail in a language-agnostic fashion in the Selectors specification. [[!SELECTORS]]</p></section></section></body></html>

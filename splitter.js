@@ -98,9 +98,9 @@ jsdom.env(
         console.log("Created references map");
 
         // create a mapping of all IDs and links based on which document they end up in
-        for (var spec in config) {
-            splits.push({ title: spec, abstract: config[spec].abstract });
-            config[spec].content.forEach(function (id) {
+        for (var spec in config.split) {
+            splits.push({ title: spec, abstract: config.split[spec].abstract });
+            config.split[spec].content.forEach(function (id) {
                 // this assumes that all non-strings are instructions to unwrap, may be true, might not
                 var $secs = (typeof id === "string") ? section(id) : section(id.id).find("> section");
                 $secs.each(function () {
@@ -124,7 +124,7 @@ jsdom.env(
 
         // actually extract each bit
         async.forEachOfSeries(
-                config
+                config.split
             ,   function (data, spec, cb) {
                     data.shortName = spec;
                     console.log("Processing " + spec);
@@ -133,7 +133,7 @@ jsdom.env(
                         var doc = win.document;
                         if (err) return console.error(err);
                         // move sections beetwen documents
-                        config[spec].content.forEach(function (id) {
+                        config.split[spec].content.forEach(function (id) {
                             if (typeof id === "string") moveOver(section(id), doc);
                             else if (id.unwrap) {
                                 section(id.id).find("> section")
@@ -206,6 +206,11 @@ jsdom.env(
                 }
             ,   function (err) {
                     if (err) return console.error(err);
+                    config.delete.forEach(function (d) {
+                        var $s = $(d);
+                        if (!$s.is("section")) $s = $s.parent();
+                        $s.remove();
+                    });
                     // save the remaining document as leftovers.html with the stuff that hasn't been processed
                     fs.mkdirpSync(jn(options.out, "leftovers"));
                     fs.writeFileSync(jn(options.out, "leftovers/index.html"), jsdom.serializeDocument(win.document), { encoding: "utf8" });
