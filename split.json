@@ -333,4 +333,35 @@
     ,   "abstract": "There is currently nothing in here, but the idea is to progressively move over everything related to linting."
     ,   "content":  []
     }
+,   "html-embedding":  {
+        "title":    "HTML Embedding"
+    ,   "abstract": "Stuff in stuff."
+    ,   "content":  [
+            "#the-iframe-element"
+        ,   "#the-embed-element"
+        ,   "#the-object-element"
+        ,   "#the-param-element"
+        ]
+    }
+,   "html-media":  {
+        "title":    "HTML Media"
+    ,   "abstract": "Media."
+    ,   "content":  [
+            "#the-video-element"
+        ,   "#the-audio-element"
+        ,   "#the-source-element"
+        ,   "#the-track-element"
+        ,   "#media-elements"
+        ]
+    }
+,   "html-ui":  {
+        "title":    "HTML User Interfaces"
+    ,   "abstract": "UI Elements."
+    ,   "content":  [
+            {
+                "id":       "#interactive-elements"
+            ,   "unwrap":   true
+            }
+        ]
+    }
 }

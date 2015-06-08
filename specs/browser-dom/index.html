@@ -138,7 +138,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   boolean <a href="/breakup/specs/html-editing/#dom-document-querycommandstate" id="the-document-object:dom-document-querycommandstate">queryCommandState</a>(DOMString commandId);
   boolean <a href="/breakup/specs/html-editing/#dom-document-querycommandsupported" id="the-document-object:dom-document-querycommandsupported">queryCommandSupported</a>(DOMString commandId);
   DOMString <a href="/breakup/specs/html-editing/#dom-document-querycommandvalue" id="the-document-object:dom-document-querycommandvalue">queryCommandValue</a>(DOMString commandId);
-  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-document-object:htmlcollection-7">HTMLCollection</a> <a href="#dom-document-commands" id="the-document-object:dom-document-commands">commands</a>;
+  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-document-object:htmlcollection-7">HTMLCollection</a> <a href="/breakup/specs/html-ui/#dom-document-commands" id="the-document-object:dom-document-commands">commands</a>;
 
   // special <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="the-document-object:event-handler-idl-attributes">event handler IDL attributes</a> that only apply to Document objects
   [LenientThis] attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="the-document-object:eventhandler">EventHandler</a> <a href="/breakup/specs/browser-dom/#handler-onreadystatechange" id="the-document-object:handler-onreadystatechange">onreadystatechange</a>;
@@ -188,7 +188,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
     <p>Can be set, to add a new cookie to the element's set of HTTP cookies.</p>
 
     <p>If the contents are <a href="/breakup/specs/browser-dom/#sandboxed-origin-browsing-context-flag" id="resource-metadata-management:sandboxed-origin-browsing-context-flag">sandboxed into a
-    unique origin</a> (e.g. in an <code id="resource-metadata-management:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> with the <code id="resource-metadata-management:attr-iframe-sandbox"><a href="#attr-iframe-sandbox">sandbox</a></code> attribute), a <code id="resource-metadata-management:securityerror"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception
+    unique origin</a> (e.g. in an <code id="resource-metadata-management:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> with the <code id="resource-metadata-management:attr-iframe-sandbox"><a href="/breakup/specs/html-embedding/#attr-iframe-sandbox">sandbox</a></code> attribute), a <code id="resource-metadata-management:securityerror"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception
     will be thrown on getting and setting.</p>
 
    </dd></dl>
@@ -403,7 +403,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <dl class="domintro"><dt><var>document</var> . <code id="dom-tree-accessors:dom-document-images"><a href="/breakup/specs/browser-dom/#dom-document-images">images</a></code></dt><dd>
     <p>Returns an <code id="dom-tree-accessors:htmlcollection"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="dom-tree-accessors:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements in the <code id="dom-tree-accessors:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
    </dd><dt><var>document</var> . <code id="dom-tree-accessors:dom-document-embeds"><a href="/breakup/specs/browser-dom/#dom-document-embeds">embeds</a></code></dt><dt><var>document</var> . <code id="dom-tree-accessors:dom-document-plugins"><a href="/breakup/specs/browser-dom/#dom-document-plugins">plugins</a></code></dt><dd>
-    <p>Return an <code id="dom-tree-accessors:htmlcollection-2"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="dom-tree-accessors:the-embed-element"><a href="#the-embed-element">embed</a></code> elements in the <code id="dom-tree-accessors:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
+    <p>Return an <code id="dom-tree-accessors:htmlcollection-2"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="dom-tree-accessors:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> elements in the <code id="dom-tree-accessors:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
    </dd><dt><var>document</var> . <code id="dom-tree-accessors:dom-document-links"><a href="/breakup/specs/browser-dom/#dom-document-links">links</a></code></dt><dd>
     <p>Returns an <code id="dom-tree-accessors:htmlcollection-3"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="dom-tree-accessors:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="dom-tree-accessors:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements
     in the <code id="dom-tree-accessors:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that have <code id="dom-tree-accessors:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code>
@@ -424,7 +424,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   <p>The <dfn id="dom-document-embeds"><code>embeds</code></dfn> attribute must return an
   <code id="dom-tree-accessors:htmlcollection-7"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the <code id="dom-tree-accessors:document-7"><a href="/breakup/specs/browser-dom/#document">Document</a></code> node, whose filter matches only
-  <code id="dom-tree-accessors:the-embed-element-2"><a href="#the-embed-element">embed</a></code> elements.</p>
+  <code id="dom-tree-accessors:the-embed-element-2"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> elements.</p>
 
   <p>The <dfn id="dom-document-plugins"><code>plugins</code></dfn> attribute must return the
   same object as that returned by the <code id="dom-tree-accessors:dom-document-embeds-2"><a href="/breakup/specs/browser-dom/#dom-document-embeds">embeds</a></code>
@@ -486,7 +486,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   <p>Each entry in the <a href="/breakup/specs/browser-dom/#css-id-overrides-list" id="dom-tree-accessors:css-id-overrides-list">CSS ID overrides list</a>, while it is in the list and is either
   <a href="/breakup/specs/core-algorithms/#in-a-document" id="dom-tree-accessors:in-a-document">in the <code>Document</code></a> or is an <code id="dom-tree-accessors:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>,
-  <code id="dom-tree-accessors:the-video-element"><a href="#the-video-element">video</a></code>, or <code id="dom-tree-accessors:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, defines a <a href="/breakup/specs/core-algorithms/#css-element-reference-identifier" id="dom-tree-accessors:css-element-reference-identifier-3">CSS element reference
+  <code id="dom-tree-accessors:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>, or <code id="dom-tree-accessors:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, defines a <a href="/breakup/specs/core-algorithms/#css-element-reference-identifier" id="dom-tree-accessors:css-element-reference-identifier-3">CSS element reference
   identifier</a> mapping the given name to the given <code id="dom-tree-accessors:element-2"><a href="/breakup/specs/core-algorithms/#element">Element</a></code>. [[!CSSIMAGES]]</p>
 
   <p>On getting, the <code id="dom-tree-accessors:dom-document-csselementmap-2"><a href="/breakup/specs/browser-dom/#dom-document-csselementmap">cssElementMap</a></code> IDL attribute
@@ -550,15 +550,15 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   any moment consist of the values of the <code>name</code> content attributes of
   all the
     <code id="dom-tree-accessors:the-applet-element"><a href="#the-applet-element">applet</a></code>,
-    <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed">exposed</a> <code id="dom-tree-accessors:the-embed-element-3"><a href="#the-embed-element">embed</a></code>,
+    <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed">exposed</a> <code id="dom-tree-accessors:the-embed-element-3"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
     <code id="dom-tree-accessors:the-form-element-3"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
-    <code id="dom-tree-accessors:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>,
+    <code id="dom-tree-accessors:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>,
     <code id="dom-tree-accessors:the-img-element-4"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, and
-    <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-2">exposed</a> <code id="dom-tree-accessors:the-object-element"><a href="#the-object-element">object</a></code>
+    <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-2">exposed</a> <code id="dom-tree-accessors:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
   elements in the <code id="dom-tree-accessors:document-22"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that have non-empty <code>name</code> content
   attributes, and the values of the <code id="dom-tree-accessors:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attributes of all the
     <code id="dom-tree-accessors:the-applet-element-2"><a href="#the-applet-element">applet</a></code> and
-    <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-3">exposed</a> <code id="dom-tree-accessors:the-object-element-2"><a href="#the-object-element">object</a></code>
+    <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-3">exposed</a> <code id="dom-tree-accessors:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
   elements in the <code id="dom-tree-accessors:document-23"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that have non-empty <code id="dom-tree-accessors:the-id-attribute-2"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content
   attributes, and the values of the <code id="dom-tree-accessors:the-id-attribute-3"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attributes of all the
     <code id="dom-tree-accessors:the-img-element-5"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>
@@ -579,8 +579,8 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
    </li><li>
 
     <p>If <var>elements</var> has only one element, and that element is an
-    <code id="dom-tree-accessors:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code> element, then return the <code id="dom-tree-accessors:windowproxy"><a href="/breakup/specs/browser-dom/#windowproxy">WindowProxy</a></code> object of the <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="dom-tree-accessors:nested-browsing-context">nested
-    browsing context</a> represented by that <code id="dom-tree-accessors:the-iframe-element-3"><a href="#the-iframe-element">iframe</a></code> element, and abort these
+    <code id="dom-tree-accessors:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element, then return the <code id="dom-tree-accessors:windowproxy"><a href="/breakup/specs/browser-dom/#windowproxy">WindowProxy</a></code> object of the <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="dom-tree-accessors:nested-browsing-context">nested
+    browsing context</a> represented by that <code id="dom-tree-accessors:the-iframe-element-3"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element, and abort these
     steps.</p>
 
    </li><li>
@@ -598,16 +598,16 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   <p><dfn id="dom-document-nameditem-filter">Named elements</dfn> with the name <var>name</var>, for the purposes of the above algorithm, are those that are either:</p>
 
-  <ul><li><code id="dom-tree-accessors:the-applet-element-3"><a href="#the-applet-element">applet</a></code>, <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-4">exposed</a> <code id="dom-tree-accessors:the-embed-element-4"><a href="#the-embed-element">embed</a></code>, <code id="dom-tree-accessors:the-form-element-4"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
-   <code id="dom-tree-accessors:the-iframe-element-4"><a href="#the-iframe-element">iframe</a></code>, <code id="dom-tree-accessors:the-img-element-6"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-5">exposed</a> <code id="dom-tree-accessors:the-object-element-3"><a href="#the-object-element">object</a></code> elements that
-   have a <code>name</code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-applet-element-4"><a href="#the-applet-element">applet</a></code> or <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-6">exposed</a> <code id="dom-tree-accessors:the-object-element-4"><a href="#the-object-element">object</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-6"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-img-element-7"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-7"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute
+  <ul><li><code id="dom-tree-accessors:the-applet-element-3"><a href="#the-applet-element">applet</a></code>, <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-4">exposed</a> <code id="dom-tree-accessors:the-embed-element-4"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="dom-tree-accessors:the-form-element-4"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
+   <code id="dom-tree-accessors:the-iframe-element-4"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, <code id="dom-tree-accessors:the-img-element-6"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-5">exposed</a> <code id="dom-tree-accessors:the-object-element-3"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that
+   have a <code>name</code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-applet-element-4"><a href="#the-applet-element">applet</a></code> or <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-6">exposed</a> <code id="dom-tree-accessors:the-object-element-4"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-6"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-img-element-7"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-7"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute
    whose value is <var>name</var>, and that have a non-empty <code>name</code>
    content attribute present also.</li></ul>
 
-  <p>An <code id="dom-tree-accessors:the-embed-element-5"><a href="#the-embed-element">embed</a></code> or <code id="dom-tree-accessors:the-object-element-5"><a href="#the-object-element">object</a></code> element is said to be <dfn id="exposed">exposed</dfn> if it has
-  no <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-7">exposed</a> <code id="dom-tree-accessors:the-object-element-6"><a href="#the-object-element">object</a></code> ancestor, and, for <code id="dom-tree-accessors:the-object-element-7"><a href="#the-object-element">object</a></code> elements, is
-  additionally either not showing its <a href="#fallback-content" id="dom-tree-accessors:fallback-content">fallback content</a> or has no <code id="dom-tree-accessors:the-object-element-8"><a href="#the-object-element">object</a></code> or
-  <code id="dom-tree-accessors:the-embed-element-6"><a href="#the-embed-element">embed</a></code> descendants.</p>
+  <p>An <code id="dom-tree-accessors:the-embed-element-5"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> or <code id="dom-tree-accessors:the-object-element-5"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element is said to be <dfn id="exposed">exposed</dfn> if it has
+  no <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-7">exposed</a> <code id="dom-tree-accessors:the-object-element-6"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> ancestor, and, for <code id="dom-tree-accessors:the-object-element-7"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements, is
+  additionally either not showing its <a href="#fallback-content" id="dom-tree-accessors:fallback-content">fallback content</a> or has no <code id="dom-tree-accessors:the-object-element-8"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> or
+  <code id="dom-tree-accessors:the-embed-element-6"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> descendants.</p>
 
   
 
@@ -667,7 +667,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   presented to the user.</p>
 
   <p class="note">A tab or window in a Web browser typically contains a <a href="/breakup/specs/browser-dom/#browsing-context" id="windows:browsing-context">browsing
-  context</a>, as does an <code id="windows:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> or <code id="windows:frame"><a href="#frame">frame</a></code>s in a
+  context</a>, as does an <code id="windows:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> or <code id="windows:frame"><a href="#frame">frame</a></code>s in a
   <code id="windows:frameset"><a href="#frameset">frameset</a></code>.</p>
 
   <p>Each <a href="/breakup/specs/browser-dom/#browsing-context" id="windows:browsing-context-2">browsing context</a> has a corresponding <code id="windows:windowproxy"><a href="/breakup/specs/browser-dom/#windowproxy">WindowProxy</a></code> object.</p>
@@ -744,7 +744,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   <section><h2>Nested browsing contexts</h2>
 
-  <p>Certain elements (for example, <code id="nested-browsing-contexts:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> elements) can instantiate further <a href="/breakup/specs/browser-dom/#browsing-context" id="nested-browsing-contexts:browsing-context">browsing contexts</a>. These are called <dfn id="nested-browsing-context">nested browsing contexts</dfn>. If a browsing context <var>P</var> has a
+  <p>Certain elements (for example, <code id="nested-browsing-contexts:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> elements) can instantiate further <a href="/breakup/specs/browser-dom/#browsing-context" id="nested-browsing-contexts:browsing-context">browsing contexts</a>. These are called <dfn id="nested-browsing-context">nested browsing contexts</dfn>. If a browsing context <var>P</var> has a
   <code id="nested-browsing-contexts:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> <var>D</var> with an element <var>E</var> that nests
   another browsing context <var>C</var> inside it, then <var>C</var> is said to be
   <dfn id="browsing-context-nested-through">nested through</dfn> <var>D</var>, and <var>E</var> is said to be the <dfn id="browsing-context-container">browsing context container</dfn> of <var>C</var>.
@@ -791,8 +791,8 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   context</a>. User agents must not allow the user to interact with <a href="/breakup/specs/browser-dom/#child-browsing-context" id="nested-browsing-contexts:child-browsing-context-6">child browsing contexts</a> of elements that are in <code id="nested-browsing-contexts:document-7"><a href="/breakup/specs/browser-dom/#document">Document</a></code>s that are
   not themselves <a href="/breakup/specs/browser-dom/#fully-active" id="nested-browsing-contexts:fully-active-2">fully active</a>.</p>
 
-  <p>A <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="nested-browsing-contexts:nested-browsing-context-5">nested browsing context</a> can have a <a href="#seamless-browsing-context-flag" id="nested-browsing-contexts:seamless-browsing-context-flag">seamless browsing context flag</a>
-  set, if it is embedded through an <code id="nested-browsing-contexts:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code> element with a <code id="nested-browsing-contexts:attr-iframe-seamless"><a href="#attr-iframe-seamless">seamless</a></code> attribute.</p>
+  <p>A <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="nested-browsing-contexts:nested-browsing-context-5">nested browsing context</a> can have a <a href="/breakup/specs/html-embedding/#seamless-browsing-context-flag" id="nested-browsing-contexts:seamless-browsing-context-flag">seamless browsing context flag</a>
+  set, if it is embedded through an <code id="nested-browsing-contexts:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element with a <code id="nested-browsing-contexts:attr-iframe-seamless"><a href="/breakup/specs/html-embedding/#attr-iframe-seamless">seamless</a></code> attribute.</p>
 
   <p>A <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="nested-browsing-contexts:nested-browsing-context-6">nested browsing context</a> can be put into a <dfn id="delaying-load-events-mode">delaying <code>load</code> events mode</dfn>. This is used when it is <a href="/breakup/specs/browsing/#navigate" id="nested-browsing-contexts:navigate">navigated</a>, to <a href="/breakup/specs/html-syntax/#delay-the-load-event" id="nested-browsing-contexts:delay-the-load-event">delay the load event</a> of the <a href="/breakup/specs/browser-dom/#browsing-context-container" id="nested-browsing-contexts:browsing-context-container-2">browsing
   context container</a> before the new <code id="nested-browsing-contexts:document-8"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is created.</p>
@@ -1000,17 +1000,17 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <a href="/breakup/specs/browser-dom/#browsing-context" id="browsing-context-names:browsing-context">browsing context</a> that the link or script is in, "parent" means the <a href="/breakup/specs/browser-dom/#parent-browsing-context" id="browsing-context-names:parent-browsing-context">parent
   browsing context</a> of the one the link or script is in, "master" means the nearest
   <a href="/breakup/specs/browser-dom/#ancestor-browsing-context" id="browsing-context-names:ancestor-browsing-context">ancestor browsing context</a> of the one the link or script is in that is not itself in a
-  <a href="#attr-iframe-seamless" id="browsing-context-names:attr-iframe-seamless">seamless iframe</a>, "top" means the <a href="/breakup/specs/browser-dom/#top-level-browsing-context" id="browsing-context-names:top-level-browsing-context">top-level
+  <a href="/breakup/specs/html-embedding/#attr-iframe-seamless" id="browsing-context-names:attr-iframe-seamless">seamless iframe</a>, "top" means the <a href="/breakup/specs/browser-dom/#top-level-browsing-context" id="browsing-context-names:top-level-browsing-context">top-level
   browsing context</a> of the one the link or script is in, "new" means a new <a href="/breakup/specs/browser-dom/#top-level-browsing-context" id="browsing-context-names:top-level-browsing-context-2">top-level
   browsing context</a> or <a href="/breakup/specs/browser-dom/#auxiliary-browsing-context" id="browsing-context-names:auxiliary-browsing-context">auxiliary browsing context</a> is to be created, subject to
   various user preferences and user agent policies, "none" means that nothing will happen, and
   "maybe new" means the same as "new" if the "<code id="browsing-context-names:attr-iframe-sandbox-allow-popups"><a href="/breakup/specs/browser-dom/#attr-iframe-sandbox-allow-popups">allow-popups</a></code>" keyword is also specified on the
-  <code id="browsing-context-names:attr-iframe-sandbox"><a href="#attr-iframe-sandbox">sandbox</a></code> attribute (or if the user overrode the
+  <code id="browsing-context-names:attr-iframe-sandbox"><a href="/breakup/specs/html-embedding/#attr-iframe-sandbox">sandbox</a></code> attribute (or if the user overrode the
   sandboxing), and the same as "none" otherwise.</p>
 
   <table><thead><tr><th rowspan="2">Keyword
      </th><th rowspan="2">Ordinary effect
-     </th><th colspan="5">Effect in an <code id="browsing-context-names:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> with...
+     </th><th colspan="5">Effect in an <code id="browsing-context-names:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> with...
     </th></tr><tr><th><code>seamless=""</code>
      </th><th><code>sandbox=""</code>
      </th><th><code>sandbox="" seamless=""</code>
@@ -1208,7 +1208,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
     <p>If the given browsing context name is <code>_self</code>, then this is an
     <a href="/breakup/specs/browsing/#explicit-self-navigation-override" id="browsing-context-names:explicit-self-navigation-override">explicit self-navigation override</a>, which overrides the behaviour of the
-    <a href="#seamless-browsing-context-flag" id="browsing-context-names:seamless-browsing-context-flag">seamless browsing context flag</a> set by the <code id="browsing-context-names:attr-iframe-seamless-2"><a href="#attr-iframe-seamless">seamless</a></code> attribute on <code id="browsing-context-names:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code> elements.</p>
+    <a href="/breakup/specs/html-embedding/#seamless-browsing-context-flag" id="browsing-context-names:seamless-browsing-context-flag">seamless browsing context flag</a> set by the <code id="browsing-context-names:attr-iframe-seamless-2"><a href="/breakup/specs/html-embedding/#attr-iframe-seamless">seamless</a></code> attribute on <code id="browsing-context-names:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> elements.</p>
 
    </li><li><p>If the given browsing context name is <code>_parent</code>, then the chosen
    browsing context must be the <a href="/breakup/specs/browser-dom/#parent-browsing-context" id="browsing-context-names:parent-browsing-context-2"><em>parent</em> browsing context</a> of the current one,
@@ -1664,8 +1664,8 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   <ul><li>the <a href="/breakup/specs/browser-dom/#browsing-context-name" id="named-access-on-the-window-object:browsing-context-name">browsing context name</a> of any <a href="/breakup/specs/browser-dom/#child-browsing-context" id="named-access-on-the-window-object:child-browsing-context">child browsing context</a> of the
    <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document">active document</a> whose name is not the empty string,</li><li>the value of the <code>name</code> content attribute for all <code id="named-access-on-the-window-object:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>,
-   <code id="named-access-on-the-window-object:the-applet-element"><a href="#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element"><a href="#the-embed-element">embed</a></code>, <code id="named-access-on-the-window-object:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
-   <code id="named-access-on-the-window-object:frameset"><a href="#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, and <code id="named-access-on-the-window-object:the-object-element"><a href="#the-object-element">object</a></code> elements in the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-2">active
+   <code id="named-access-on-the-window-object:the-applet-element"><a href="#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="named-access-on-the-window-object:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
+   <code id="named-access-on-the-window-object:frameset"><a href="#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, and <code id="named-access-on-the-window-object:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements in the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-2">active
    document</a> that have a non-empty <code>name</code> content attribute, and</li><li>the value of the <code id="named-access-on-the-window-object:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute of any <a href="/breakup/specs/core-algorithms/#html-elements" id="named-access-on-the-window-object:html-elements">HTML element</a> in the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-3">active document</a> with a non-empty <code id="named-access-on-the-window-object:the-id-attribute-2"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute.</li></ul>
 
   <p>To <a href="/breakup/specs/core-algorithms/#determine-the-value-of-a-named-property" id="named-access-on-the-window-object:determine-the-value-of-a-named-property">determine the value of a named property</a> <var>name</var> when <dfn id="dom-window-nameditem">the <code>Window</code> object is indexed for property
@@ -1701,8 +1701,8 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <p><dfn id="dom-window-nameditem-filter">Named objects</dfn> with the name <var>name</var>, for the purposes of the above algorithm, are those that are either:</p>
 
   <ul><li><a href="/breakup/specs/browser-dom/#child-browsing-context" id="named-access-on-the-window-object:child-browsing-context-2">child browsing contexts</a> of the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-5">active
-   document</a> whose name is <var>name</var>,</li><li><code id="named-access-on-the-window-object:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, <code id="named-access-on-the-window-object:the-applet-element-2"><a href="#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element-2"><a href="#the-embed-element">embed</a></code>,
-   <code id="named-access-on-the-window-object:the-form-element-2"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>, <code id="named-access-on-the-window-object:frameset-2"><a href="#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="named-access-on-the-window-object:the-object-element-2"><a href="#the-object-element">object</a></code> elements that
+   document</a> whose name is <var>name</var>,</li><li><code id="named-access-on-the-window-object:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, <code id="named-access-on-the-window-object:the-applet-element-2"><a href="#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element-2"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
+   <code id="named-access-on-the-window-object:the-form-element-2"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>, <code id="named-access-on-the-window-object:frameset-2"><a href="#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="named-access-on-the-window-object:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that
    have a <code>name</code> content attribute whose value is <var>name</var>, or</li><li><a href="/breakup/specs/core-algorithms/#html-elements" id="named-access-on-the-window-object:html-elements-2">HTML elements</a> that have an <code id="named-access-on-the-window-object:the-id-attribute-3"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute
    whose value is <var>name</var>.</li></ul></section>
 
@@ -1987,7 +1987,7 @@ x === this; // true</pre>
       <p>The <a href="/breakup/specs/browser-dom/#effective-script-origin" id="origin:effective-script-origin-12">effective script origin</a> is initially an <a href="/breakup/specs/browser-dom/#concept-origin-alias" id="origin:concept-origin-alias-7">alias</a> to the <a href="/breakup/specs/browser-dom/#effective-script-origin" id="origin:effective-script-origin-13">effective script origin</a> of that
       same <code id="origin:document-13"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
 
-     </dd><dt>If a <code id="origin:document-14"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is <a href="#an-iframe-srcdoc-document" id="origin:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a></dt><dd>
+     </dd><dt>If a <code id="origin:document-14"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is <a href="/breakup/specs/html-embedding/#an-iframe-srcdoc-document" id="origin:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a></dt><dd>
 
       <p>The <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-17">origin</a> of the <code id="origin:document-15"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is an <a href="/breakup/specs/browser-dom/#concept-origin-alias" id="origin:concept-origin-alias-8">alias</a> to the <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-18">origin</a> of the
       <code id="origin:document-16"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/browser-dom/#browsing-context" id="origin:browsing-context-2">browsing context</a>'s <a href="/breakup/specs/browser-dom/#browsing-context-container" id="origin:browsing-context-container">browsing context
@@ -2022,13 +2022,13 @@ x === this; // true</pre>
 
     <p>Images do not have an <a href="/breakup/specs/browser-dom/#effective-script-origin" id="origin:effective-script-origin-18">effective script origin</a>.</p>
 
-   </dd><dt>For <code id="origin:the-audio-element"><a href="#the-audio-element">audio</a></code> and <code id="origin:the-video-element"><a href="#the-video-element">video</a></code> elements</dt><dd>
+   </dd><dt>For <code id="origin:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code> and <code id="origin:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> elements</dt><dd>
 
-    <dl class="switch"><dt>If the <a href="#media-data" id="origin:media-data">media data</a> is <a href="/breakup/specs/core-algorithms/#cors-cross-origin" id="origin:cors-cross-origin-2">CORS-cross-origin</a></dt><dd>The <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-24">origin</a> is a globally unique identifier assigned when the <a href="#media-data" id="origin:media-data-2">media
-     data</a> is <a href="/breakup/specs/core-algorithms/#fetch" id="origin:fetch">fetched</a>.</dd><dt>If the <a href="#media-data" id="origin:media-data-3">media data</a> is <a href="/breakup/specs/core-algorithms/#cors-same-origin" id="origin:cors-same-origin-2">CORS-same-origin</a></dt><dd>The <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-25">origin</a> is an <a href="/breakup/specs/browser-dom/#concept-origin-alias" id="origin:concept-origin-alias-12">alias</a> to the
-     <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-26">origin</a> of the <a href="#media-element" id="origin:media-element">media element</a>'s <a id="origin:node-document-5" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>.</dd></dl>
+    <dl class="switch"><dt>If the <a href="/breakup/specs/html-media/#media-data" id="origin:media-data">media data</a> is <a href="/breakup/specs/core-algorithms/#cors-cross-origin" id="origin:cors-cross-origin-2">CORS-cross-origin</a></dt><dd>The <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-24">origin</a> is a globally unique identifier assigned when the <a href="/breakup/specs/html-media/#media-data" id="origin:media-data-2">media
+     data</a> is <a href="/breakup/specs/core-algorithms/#fetch" id="origin:fetch">fetched</a>.</dd><dt>If the <a href="/breakup/specs/html-media/#media-data" id="origin:media-data-3">media data</a> is <a href="/breakup/specs/core-algorithms/#cors-same-origin" id="origin:cors-same-origin-2">CORS-same-origin</a></dt><dd>The <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-25">origin</a> is an <a href="/breakup/specs/browser-dom/#concept-origin-alias" id="origin:concept-origin-alias-12">alias</a> to the
+     <a href="/breakup/specs/browser-dom/#origin-2" id="origin:origin-2-26">origin</a> of the <a href="/breakup/specs/html-media/#media-element" id="origin:media-element">media element</a>'s <a id="origin:node-document-5" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>.</dd></dl>
 
-    <p><a href="#media-element" id="origin:media-element-2">Media elements</a> do not have an <a href="/breakup/specs/browser-dom/#effective-script-origin" id="origin:effective-script-origin-19">effective script
+    <p><a href="/breakup/specs/html-media/#media-element" id="origin:media-element-2">Media elements</a> do not have an <a href="/breakup/specs/browser-dom/#effective-script-origin" id="origin:effective-script-origin-19">effective script
     origin</a>.</p>
 
    </dd><dt>For fonts</dt><dd>
@@ -2045,7 +2045,7 @@ x === this; // true</pre>
    </dd></dl>
 
   <p>Other specifications can override the above definitions by themselves specifying the origin of
-  a particular <a href="/breakup/specs/core-algorithms/#url" id="origin:url-3">URL</a>, <code id="origin:document-24"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, image, <a href="#media-element" id="origin:media-element-3">media element</a>, or
+  a particular <a href="/breakup/specs/core-algorithms/#url" id="origin:url-3">URL</a>, <code id="origin:document-24"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, image, <a href="/breakup/specs/html-media/#media-element" id="origin:media-element-3">media element</a>, or
   font.</p>
 
   
@@ -2105,7 +2105,7 @@ x === this; // true</pre>
 
     <p>Can be set to a value that removes subdomains, to change the <a href="/breakup/specs/browser-dom/#effective-script-origin" id="relaxing-the-same-origin-restriction:effective-script-origin">effective script
     origin</a> to allow pages on other subdomains of the same domain (if they do the same thing)
-    to access each other. (Can't be set in sandboxed <code id="relaxing-the-same-origin-restriction:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>s.)</p>
+    to access each other. (Can't be set in sandboxed <code id="relaxing-the-same-origin-restriction:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>s.)</p>
 
    </dd></dl>
 
@@ -2262,13 +2262,13 @@ x === this; // true</pre>
    </dd><dt>The <dfn id="sandboxed-plugins-browsing-context-flag">sandboxed plugins browsing context flag</dfn></dt><dd>
 
     <p>This flag prevents content from instantiating <a href="/breakup/specs/core-algorithms/#plugin" id="sandboxing:plugin">plugins</a>, whether
-    using <a href="#sandboxPluginEmbed">the <code>embed</code> element</a>, <a href="#sandboxPluginObject">the <code>object</code> element</a>, <a href="#sandboxPluginApplet">the <code>applet</code> element</a>, or through <a href="/breakup/specs/browsing/#sandboxPluginNavigate">navigation</a> of a <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="sandboxing:nested-browsing-context">nested browsing context</a>, unless
+    using <a href="/breakup/specs/html-embedding/#sandboxPluginEmbed">the <code>embed</code> element</a>, <a href="/breakup/specs/html-embedding/#sandboxPluginObject">the <code>object</code> element</a>, <a href="#sandboxPluginApplet">the <code>applet</code> element</a>, or through <a href="/breakup/specs/browsing/#sandboxPluginNavigate">navigation</a> of a <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="sandboxing:nested-browsing-context">nested browsing context</a>, unless
     those <a href="/breakup/specs/core-algorithms/#plugin" id="sandboxing:plugin-2">plugins</a> can be <a href="/breakup/specs/core-algorithms/#concept-plugin-secure" id="sandboxing:concept-plugin-secure">secured</a>.</p>
 
    </dd><dt>The <dfn id="sandboxed-seamless-iframes-flag">sandboxed seamless iframes flag</dfn></dt><dd>
 
-    <p>This flag prevents content from using the <code id="sandboxing:attr-iframe-seamless"><a href="#attr-iframe-seamless">seamless</a></code>
-    attribute on descendant <code id="sandboxing:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> elements.</p>
+    <p>This flag prevents content from using the <code id="sandboxing:attr-iframe-seamless"><a href="/breakup/specs/html-embedding/#attr-iframe-seamless">seamless</a></code>
+    attribute on descendant <code id="sandboxing:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> elements.</p>
 
     <p class="note">This prevents a page inserted using the <code id="sandboxing:attr-iframe-sandbox-allow-same-origin"><a href="/breakup/specs/browser-dom/#attr-iframe-sandbox-allow-same-origin">allow-same-origin</a></code> keyword from using a
     CSS-selector-based method of probing the DOM of other pages on the same site (in particular,
@@ -2299,7 +2299,7 @@ x === this; // true</pre>
 
    </dd><dt>The <dfn id="sandboxed-automatic-features-browsing-context-flag">sandboxed automatic features browsing context flag</dfn></dt><dd>
 
-    <p>This flag blocks features that trigger automatically, such as <a href="#attr-media-autoplay" id="sandboxing:attr-media-autoplay">automatically playing a video</a> or <a href="/breakup/specs/html-forms/#attr-fe-autofocus" id="sandboxing:attr-fe-autofocus">automatically focusing a form control</a>.</p>
+    <p>This flag blocks features that trigger automatically, such as <a href="/breakup/specs/html-media/#attr-media-autoplay" id="sandboxing:attr-media-autoplay">automatically playing a video</a> or <a href="/breakup/specs/html-forms/#attr-fe-autofocus" id="sandboxing:attr-fe-autofocus">automatically focusing a form control</a>.</p>
 
    </dd><dt>The <dfn id="sandboxed-storage-area-urls-flag">sandboxed storage area URLs flag</dfn></dt><dd>
 
@@ -2371,7 +2371,7 @@ x === this; // true</pre>
   <p>Every <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="sandboxing:nested-browsing-context-2">nested browsing context</a> has an <dfn id="iframe-sandboxing-flag-set"><code>iframe</code> sandboxing flag
   set</dfn>, which is a <a href="/breakup/specs/browser-dom/#sandboxing-flag-set" id="sandboxing:sandboxing-flag-set-3">sandboxing flag set</a>. Which flags in a <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="sandboxing:nested-browsing-context-3">nested browsing
   context</a>'s <a href="/breakup/specs/browser-dom/#iframe-sandboxing-flag-set" id="sandboxing:iframe-sandboxing-flag-set"><code>iframe</code> sandboxing flag set</a> are set at any particular
-  time is determined by the <code id="sandboxing:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code> element's <code id="sandboxing:attr-iframe-sandbox"><a href="#attr-iframe-sandbox">sandbox</a></code> attribute.</p>
+  time is determined by the <code id="sandboxing:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element's <code id="sandboxing:attr-iframe-sandbox"><a href="/breakup/specs/html-embedding/#attr-iframe-sandbox">sandbox</a></code> attribute.</p>
 
   <p>Every <code id="sandboxing:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> has an <dfn id="active-sandboxing-flag-set">active sandboxing flag set</dfn>, which is a
   <a href="/breakup/specs/browser-dom/#sandboxing-flag-set" id="sandboxing:sandboxing-flag-set-4">sandboxing flag set</a>. When the <code id="sandboxing:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is created, its <a href="/breakup/specs/browser-dom/#active-sandboxing-flag-set" id="sandboxing:active-sandboxing-flag-set">active
@@ -2593,7 +2593,7 @@ x === this; // true</pre>
 
   <p class="note">Since each <code id="the-history-interface:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> in a <a href="/breakup/specs/browser-dom/#browsing-context" id="the-history-interface:browsing-context-2">browsing context</a> might have a
   different <a href="/breakup/specs/browser-dom/#event-loop" id="the-history-interface:event-loop">event loop</a>, the actual state of the <a href="/breakup/specs/browser-dom/#joint-session-history" id="the-history-interface:joint-session-history-6">joint session history</a> can
-  be somewhat nebulous. For example, two sibling <code id="the-history-interface:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> elements could both <a href="/breakup/specs/browsing/#traverse-the-history" id="the-history-interface:traverse-the-history">traverse</a> from one unique origin to another at the same time,
+  be somewhat nebulous. For example, two sibling <code id="the-history-interface:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> elements could both <a href="/breakup/specs/browsing/#traverse-the-history" id="the-history-interface:traverse-the-history">traverse</a> from one unique origin to another at the same time,
   so their precise order might not be well-defined; similarly, since they might only find out about
   each other later, they might disagree about the length of the <a href="/breakup/specs/browser-dom/#joint-session-history" id="the-history-interface:joint-session-history-7">joint session
   history</a>.</p>
@@ -2974,8 +2974,8 @@ State: &lt;OUTPUT NAME=I&gt;1&lt;/OUTPUT&gt; &lt;INPUT VALUE="Increment" TYPE=BU
   user agent must run the appropriate steps from the following list:</p>
 
   <dl class="switch"><dt>If the currently executing <a href="/breakup/specs/browser-dom/#concept-task" id="the-location-interface:concept-task">task</a> is the dispatch of a <code id="the-location-interface:event-resize"><a href="/breakup/specs/core-algorithms/#event-resize">resize</a></code> event in response to the user resizing the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-11">browsing
-   context</a></dt><dd><p>Repaint the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-12">browsing context</a> and abort these steps.</p></dd><dt>If the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-13">browsing context</a>'s <a href="/breakup/specs/browser-dom/#active-document" id="the-location-interface:active-document-3">active document</a> is <a href="#an-iframe-srcdoc-document" id="the-location-interface:an-iframe-srcdoc-document">an
-   <code>iframe</code> <code>srcdoc</code> document</a></dt><dd><p><a href="#process-the-iframe-attributes" id="the-location-interface:process-the-iframe-attributes">Reprocess the <code>iframe</code>
+   context</a></dt><dd><p>Repaint the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-12">browsing context</a> and abort these steps.</p></dd><dt>If the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-13">browsing context</a>'s <a href="/breakup/specs/browser-dom/#active-document" id="the-location-interface:active-document-3">active document</a> is <a href="/breakup/specs/html-embedding/#an-iframe-srcdoc-document" id="the-location-interface:an-iframe-srcdoc-document">an
+   <code>iframe</code> <code>srcdoc</code> document</a></dt><dd><p><a href="/breakup/specs/html-embedding/#process-the-iframe-attributes" id="the-location-interface:process-the-iframe-attributes">Reprocess the <code>iframe</code>
    attributes</a> of the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-14">browsing context</a>'s <a href="/breakup/specs/browser-dom/#browsing-context-container" id="the-location-interface:browsing-context-container">browsing context
    container</a>.</p></dd><dt>If the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-15">browsing context</a>'s <a href="/breakup/specs/browser-dom/#active-document" id="the-location-interface:active-document-4">active document</a> has its <a href="/breakup/specs/browser-dom/#reload-override-flag" id="the-location-interface:reload-override-flag">reload
    override flag</a> set</dt><dd><p>Perform <a href="/breakup/specs/browser-dom/#an-overridden-reload" id="the-location-interface:an-overridden-reload">an overridden reload</a>, with the <a href="/breakup/specs/browser-dom/#browsing-context" id="the-location-interface:browsing-context-16">browsing context</a> being
@@ -3121,7 +3121,7 @@ State: &lt;OUTPUT NAME=I&gt;1&lt;/OUTPUT&gt; &lt;INPUT VALUE="Increment" TYPE=BU
   <code id="history-notes:dom-history"><a href="/breakup/specs/browser-dom/#dom-history">history</a></code> object are derived from the actual session history as
   seen from the user's perspective.</p>
 
-  <p>Similarly, a page containing two <code id="history-notes:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>s has a <code id="history-notes:dom-history-2"><a href="/breakup/specs/browser-dom/#dom-history">history</a></code> object distinct from the <code id="history-notes:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code>s' <code id="history-notes:dom-history-3"><a href="/breakup/specs/browser-dom/#dom-history">history</a></code> objects, despite the fact that typical Web browsers present the
+  <p>Similarly, a page containing two <code id="history-notes:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>s has a <code id="history-notes:dom-history-2"><a href="/breakup/specs/browser-dom/#dom-history">history</a></code> object distinct from the <code id="history-notes:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>s' <code id="history-notes:dom-history-3"><a href="/breakup/specs/browser-dom/#dom-history">history</a></code> objects, despite the fact that typical Web browsers present the
   user with just one "Back" button, with a session history that interleaves the navigation of the
   two inner frames and the outer page.</p>
 
@@ -3439,7 +3439,7 @@ State: &lt;OUTPUT NAME=I&gt;1&lt;/OUTPUT&gt; &lt;INPUT VALUE="Increment" TYPE=BU
   <div class="example">
 
    <p>Consider the following two pages, with the first being loaded in a browser window and the
-   second being loaded in the <code id="calling-scripts:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> of the first:</p>
+   second being loaded in the <code id="calling-scripts:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> of the first:</p>
 
    <pre>&lt;!-- a/a.html --&gt;
 &lt;!DOCTYPE HTML&gt;
@@ -4338,13 +4338,13 @@ typedef <a href="/breakup/specs/browser-dom/#onbeforeunloadeventhandlernonnull" 
     </td></tr><tr><td><dfn id="handler-onautocomplete"><code>onautocomplete</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-autocomplete"><a href="/breakup/specs/html/#event-autocomplete">autocomplete</a></code> 
     </td></tr><tr><td><dfn id="handler-onautocompleteerror"><code>onautocompleteerror</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-autocompleteerror"><a href="/breakup/specs/html/#event-autocompleteerror">autocompleteerror</a></code> 
     </td></tr><tr><td><dfn id="handler-oncancel"><code>oncancel</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-cancel"><a href="/breakup/specs/html/#event-cancel">cancel</a></code>
-    </td></tr><tr><td><dfn id="handler-oncanplay"><code>oncanplay</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-canplay"><a href="#event-media-canplay">canplay</a></code>
-    </td></tr><tr><td><dfn id="handler-oncanplaythrough"><code>oncanplaythrough</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-canplaythrough"><a href="#event-media-canplaythrough">canplaythrough</a></code>
+    </td></tr><tr><td><dfn id="handler-oncanplay"><code>oncanplay</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-canplay"><a href="/breakup/specs/html-media/#event-media-canplay">canplay</a></code>
+    </td></tr><tr><td><dfn id="handler-oncanplaythrough"><code>oncanplaythrough</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-canplaythrough"><a href="/breakup/specs/html-media/#event-media-canplaythrough">canplaythrough</a></code>
     </td></tr><tr><td><dfn id="handler-onchange"><code>onchange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-change"><a href="/breakup/specs/html/#event-change">change</a></code> 
     </td></tr><tr><td><dfn id="handler-onclick"><code>onclick</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-click"><a href="/breakup/specs/core-algorithms/#event-click">click</a></code> 
     </td></tr><tr><td><dfn id="handler-onclose"><code>onclose</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-close"><a href="/breakup/specs/html/#event-close">close</a></code> 
     </td></tr><tr><td><dfn id="handler-oncontextmenu"><code>oncontextmenu</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-contextmenu"><a href="/breakup/specs/html/#event-contextmenu">contextmenu</a></code> 
-    </td></tr><tr><td><dfn id="handler-oncuechange"><code>oncuechange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-cuechange"><a href="#event-media-cuechange">cuechange</a></code>
+    </td></tr><tr><td><dfn id="handler-oncuechange"><code>oncuechange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-cuechange"><a href="/breakup/specs/html-media/#event-media-cuechange">cuechange</a></code>
     </td></tr><tr><td><dfn id="handler-ondblclick"><code>ondblclick</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-dblclick"><a href="/breakup/specs/core-algorithms/#event-dblclick">dblclick</a></code> 
     </td></tr><tr><td><dfn id="handler-ondrag"><code>ondrag</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-dnd-drag"><a href="/breakup/specs/dnd/#event-dnd-drag">drag</a></code>
     </td></tr><tr><td><dfn id="handler-ondragend"><code>ondragend</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-dnd-dragend"><a href="/breakup/specs/dnd/#event-dnd-dragend">dragend</a></code>
@@ -4354,17 +4354,17 @@ typedef <a href="/breakup/specs/browser-dom/#onbeforeunloadeventhandlernonnull" 
     </td></tr><tr><td><dfn id="handler-ondragover"><code>ondragover</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-dnd-dragover"><a href="/breakup/specs/dnd/#event-dnd-dragover">dragover</a></code>
     </td></tr><tr><td><dfn id="handler-ondragstart"><code>ondragstart</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-dnd-dragstart"><a href="/breakup/specs/dnd/#event-dnd-dragstart">dragstart</a></code> 
     </td></tr><tr><td><dfn id="handler-ondrop"><code>ondrop</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-dnd-drop"><a href="/breakup/specs/dnd/#event-dnd-drop">drop</a></code>
-    </td></tr><tr><td><dfn id="handler-ondurationchange"><code>ondurationchange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-durationchange"><a href="#event-media-durationchange">durationchange</a></code>
-    </td></tr><tr><td><dfn id="handler-onemptied"><code>onemptied</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-emptied"><a href="#event-media-emptied">emptied</a></code>
-    </td></tr><tr><td><dfn id="handler-onended"><code>onended</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-ended"><a href="#event-media-ended">ended</a></code>
+    </td></tr><tr><td><dfn id="handler-ondurationchange"><code>ondurationchange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-durationchange"><a href="/breakup/specs/html-media/#event-media-durationchange">durationchange</a></code>
+    </td></tr><tr><td><dfn id="handler-onemptied"><code>onemptied</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-emptied"><a href="/breakup/specs/html-media/#event-media-emptied">emptied</a></code>
+    </td></tr><tr><td><dfn id="handler-onended"><code>onended</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-ended"><a href="/breakup/specs/html-media/#event-media-ended">ended</a></code>
     </td></tr><tr><td><dfn id="handler-oninput"><code>oninput</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-input"><a href="/breakup/specs/html/#event-input">input</a></code>
     </td></tr><tr><td><dfn id="handler-oninvalid"><code>oninvalid</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-invalid"><a href="/breakup/specs/html/#event-invalid">invalid</a></code>
     </td></tr><tr><td><dfn id="handler-onkeydown"><code>onkeydown</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-keydown"><a href="/breakup/specs/core-algorithms/#event-keydown">keydown</a></code> 
     </td></tr><tr><td><dfn id="handler-onkeypress"><code>onkeypress</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-keypress"><a href="/breakup/specs/core-algorithms/#event-keypress">keypress</a></code> 
     </td></tr><tr><td><dfn id="handler-onkeyup"><code>onkeyup</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-keyup"><a href="/breakup/specs/core-algorithms/#event-keyup">keyup</a></code> 
-    </td></tr><tr><td><dfn id="handler-onloadeddata"><code>onloadeddata</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-loadeddata"><a href="#event-media-loadeddata">loadeddata</a></code>
-    </td></tr><tr><td><dfn id="handler-onloadedmetadata"><code>onloadedmetadata</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-loadedmetadata"><a href="#event-media-loadedmetadata">loadedmetadata</a></code>
-    </td></tr><tr><td><dfn id="handler-onloadstart"><code>onloadstart</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-loadstart"><a href="#event-media-loadstart">loadstart</a></code>
+    </td></tr><tr><td><dfn id="handler-onloadeddata"><code>onloadeddata</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-loadeddata"><a href="/breakup/specs/html-media/#event-media-loadeddata">loadeddata</a></code>
+    </td></tr><tr><td><dfn id="handler-onloadedmetadata"><code>onloadedmetadata</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-loadedmetadata"><a href="/breakup/specs/html-media/#event-media-loadedmetadata">loadedmetadata</a></code>
+    </td></tr><tr><td><dfn id="handler-onloadstart"><code>onloadstart</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-loadstart"><a href="/breakup/specs/html-media/#event-media-loadstart">loadstart</a></code>
     </td></tr><tr><td><dfn id="handler-onmousedown"><code>onmousedown</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-mousedown"><a href="/breakup/specs/core-algorithms/#event-mousedown">mousedown</a></code> 
     </td></tr><tr><td><dfn id="handler-onmouseenter"><code>onmouseenter</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-mouseenter"><a href="/breakup/specs/core-algorithms/#event-mouseenter">mouseenter</a></code> 
     </td></tr><tr><td><dfn id="handler-onmouseleave"><code>onmouseleave</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-mouseleave"><a href="/breakup/specs/core-algorithms/#event-mouseleave">mouseleave</a></code> 
@@ -4373,24 +4373,24 @@ typedef <a href="/breakup/specs/browser-dom/#onbeforeunloadeventhandlernonnull" 
     </td></tr><tr><td><dfn id="handler-onmouseover"><code>onmouseover</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-mouseover"><a href="/breakup/specs/core-algorithms/#event-mouseover">mouseover</a></code> 
     </td></tr><tr><td><dfn id="handler-onmouseup"><code>onmouseup</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-mouseup"><a href="/breakup/specs/core-algorithms/#event-mouseup">mouseup</a></code> 
     </td></tr><tr><td><dfn id="handler-onmousewheel"><code>onmousewheel</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-mousewheel"><a href="/breakup/specs/core-algorithms/#event-mousewheel">mousewheel</a></code> 
-    </td></tr><tr><td><dfn id="handler-onpause"><code>onpause</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-pause"><a href="#event-media-pause">pause</a></code>
-    </td></tr><tr><td><dfn id="handler-onplay"><code>onplay</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-play"><a href="#event-media-play">play</a></code>
-    </td></tr><tr><td><dfn id="handler-onplaying"><code>onplaying</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-playing"><a href="#event-media-playing">playing</a></code>
-    </td></tr><tr><td><dfn id="handler-onprogress"><code>onprogress</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-progress"><a href="#event-media-progress">progress</a></code>
-    </td></tr><tr><td><dfn id="handler-onratechange"><code>onratechange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-ratechange"><a href="#event-media-ratechange">ratechange</a></code>
+    </td></tr><tr><td><dfn id="handler-onpause"><code>onpause</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-pause"><a href="/breakup/specs/html-media/#event-media-pause">pause</a></code>
+    </td></tr><tr><td><dfn id="handler-onplay"><code>onplay</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-play"><a href="/breakup/specs/html-media/#event-media-play">play</a></code>
+    </td></tr><tr><td><dfn id="handler-onplaying"><code>onplaying</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-playing"><a href="/breakup/specs/html-media/#event-media-playing">playing</a></code>
+    </td></tr><tr><td><dfn id="handler-onprogress"><code>onprogress</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-progress"><a href="/breakup/specs/html-media/#event-media-progress">progress</a></code>
+    </td></tr><tr><td><dfn id="handler-onratechange"><code>onratechange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-ratechange"><a href="/breakup/specs/html-media/#event-media-ratechange">ratechange</a></code>
     </td></tr><tr><td><dfn id="handler-onreset"><code>onreset</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-reset"><a href="/breakup/specs/html/#event-reset">reset</a></code>
-    </td></tr><tr><td><dfn id="handler-onseeked"><code>onseeked</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-seeked"><a href="#event-media-seeked">seeked</a></code>
-    </td></tr><tr><td><dfn id="handler-onseeking"><code>onseeking</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-seeking"><a href="#event-media-seeking">seeking</a></code>
+    </td></tr><tr><td><dfn id="handler-onseeked"><code>onseeked</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-seeked"><a href="/breakup/specs/html-media/#event-media-seeked">seeked</a></code>
+    </td></tr><tr><td><dfn id="handler-onseeking"><code>onseeking</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-seeking"><a href="/breakup/specs/html-media/#event-media-seeking">seeking</a></code>
     </td></tr><tr><td><dfn id="handler-onselect"><code>onselect</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-select"><a href="/breakup/specs/html/#event-select">select</a></code>  
     </td></tr><tr><td><dfn id="handler-onshow"><code>onshow</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-show"><a href="/breakup/specs/html/#event-show">show</a></code>
     </td></tr><tr><td><dfn id="handler-onsort"><code>onsort</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-sort"><a href="/breakup/specs/html/#event-sort">sort</a></code>
-    </td></tr><tr><td><dfn id="handler-onstalled"><code>onstalled</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-stalled"><a href="#event-media-stalled">stalled</a></code>
+    </td></tr><tr><td><dfn id="handler-onstalled"><code>onstalled</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-stalled"><a href="/breakup/specs/html-media/#event-media-stalled">stalled</a></code>
     </td></tr><tr><td><dfn id="handler-onsubmit"><code>onsubmit</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-submit"><a href="/breakup/specs/html/#event-submit">submit</a></code> 
-    </td></tr><tr><td><dfn id="handler-onsuspend"><code>onsuspend</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-suspend"><a href="#event-media-suspend">suspend</a></code>
-    </td></tr><tr><td><dfn id="handler-ontimeupdate"><code>ontimeupdate</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-timeupdate"><a href="#event-media-timeupdate">timeupdate</a></code>
+    </td></tr><tr><td><dfn id="handler-onsuspend"><code>onsuspend</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-suspend"><a href="/breakup/specs/html-media/#event-media-suspend">suspend</a></code>
+    </td></tr><tr><td><dfn id="handler-ontimeupdate"><code>ontimeupdate</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-timeupdate"><a href="/breakup/specs/html-media/#event-media-timeupdate">timeupdate</a></code>
     </td></tr><tr><td><dfn id="handler-ontoggle"><code>ontoggle</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-toggle"><a href="/breakup/specs/html/#event-toggle">toggle</a></code>
-    </td></tr><tr><td><dfn id="handler-onvolumechange"><code>onvolumechange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-volumechange"><a href="#event-media-volumechange">volumechange</a></code>
-    </td></tr><tr><td><dfn id="handler-onwaiting"><code>onwaiting</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-waiting"><a href="#event-media-waiting">waiting</a></code>
+    </td></tr><tr><td><dfn id="handler-onvolumechange"><code>onvolumechange</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-volumechange"><a href="/breakup/specs/html-media/#event-media-volumechange">volumechange</a></code>
+    </td></tr><tr><td><dfn id="handler-onwaiting"><code>onwaiting</code></dfn> </td><td> <code id="event-handlers-on-elements,-document-objects,-and-window-objects:event-media-waiting"><a href="/breakup/specs/html-media/#event-media-waiting">waiting</a></code>
 
 
  
@@ -4861,8 +4861,8 @@ interface <dfn id="windowbase64">WindowBase64</dfn> {
    </li><li><p>Change the <a href="/breakup/specs/core-algorithms/#document's-character-encoding" id="opening-the-input-stream:document's-character-encoding">document's character encoding</a> to UTF-8.</p></li><li><p>If the <code id="opening-the-input-stream:document-27"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is <a href="/breakup/specs/html-syntax/#ready-for-post-load-tasks" id="opening-the-input-stream:ready-for-post-load-tasks">ready for post-load tasks</a>, then set the
    <code id="opening-the-input-stream:document-28"><a href="/breakup/specs/browser-dom/#document">Document</a></code> object's <a href="/breakup/specs/browser-dom/#reload-override-flag" id="opening-the-input-stream:reload-override-flag">reload override flag</a> and set the
    <code id="opening-the-input-stream:document-29"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/browser-dom/#reload-override-buffer" id="opening-the-input-stream:reload-override-buffer">reload override buffer</a> to the empty string.</p></li><li><p>Set the <code id="opening-the-input-stream:document-30"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <i id="opening-the-input-stream:concept-document-salvageable-2"><a href="/breakup/specs/browsing/#concept-document-salvageable">salvageable</a></i> state back to true.</p></li><li><p>Change <a id="opening-the-input-stream:the-document's-address" href="https://dom.spec.whatwg.org/#concept-document-url" data-x-internal="the-document's-address">the document's address</a> to the <a href="https://dom.spec.whatwg.org/#concept-document-url" id="opening-the-input-stream:the-document's-address-2" data-x-internal="the-document's-address">address</a> of the <a href="/breakup/specs/browser-dom/#responsible-document" id="opening-the-input-stream:responsible-document">responsible document</a> specified by the <a href="/breakup/specs/browser-dom/#entry-settings-object" id="opening-the-input-stream:entry-settings-object">entry
-   settings object</a>.</p></li><li><p>If the <code id="opening-the-input-stream:document-31"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="#iframe-load-in-progress" id="opening-the-input-stream:iframe-load-in-progress">iframe load in progress</a> flag is set, set the
-   <code id="opening-the-input-stream:document-32"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="#mute-iframe-load" id="opening-the-input-stream:mute-iframe-load">mute iframe load</a> flag.</p></li><li><p>Create a new <a href="/breakup/specs/html-syntax/#html-parser" id="opening-the-input-stream:html-parser">HTML parser</a> and associate it with the document. This is a
+   settings object</a>.</p></li><li><p>If the <code id="opening-the-input-stream:document-31"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/html-embedding/#iframe-load-in-progress" id="opening-the-input-stream:iframe-load-in-progress">iframe load in progress</a> flag is set, set the
+   <code id="opening-the-input-stream:document-32"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/html-embedding/#mute-iframe-load" id="opening-the-input-stream:mute-iframe-load">mute iframe load</a> flag.</p></li><li><p>Create a new <a href="/breakup/specs/html-syntax/#html-parser" id="opening-the-input-stream:html-parser">HTML parser</a> and associate it with the document. This is a
    <dfn id="script-created-parser">script-created parser</dfn> (meaning that it can be closed by the <code id="opening-the-input-stream:dom-document-open-8"><a href="/breakup/specs/browser-dom/#dom-document-open">document.open()</a></code> and <code id="opening-the-input-stream:dom-document-close"><a href="/breakup/specs/browser-dom/#dom-document-close">document.close()</a></code> methods, and that the tokenizer will wait for
    an explicit call to <code id="opening-the-input-stream:dom-document-close-2"><a href="/breakup/specs/browser-dom/#dom-document-close">document.close()</a></code> before emitting an
    end-of-file token). The encoding <a href="/breakup/specs/html-syntax/#concept-encoding-confidence" id="opening-the-input-stream:concept-encoding-confidence">confidence</a> is
@@ -5304,8 +5304,8 @@ scheduleWork(); // queues a task to do lots of work</pre>
 
    </dd></dl>
 
-  <p class="note">Logic that depends on <a href="/breakup/specs/browser-dom/#concept-task" id="simple-dialogs:concept-task">tasks</a> or <a href="/breakup/specs/browser-dom/#microtask" id="simple-dialogs:microtask">microtasks</a>, such as <a href="#media-element" id="simple-dialogs:media-element">media elements</a>
-  loading their <a href="#media-data" id="simple-dialogs:media-data">media data</a>, are stalled when these methods are invoked.</p>
+  <p class="note">Logic that depends on <a href="/breakup/specs/browser-dom/#concept-task" id="simple-dialogs:concept-task">tasks</a> or <a href="/breakup/specs/browser-dom/#microtask" id="simple-dialogs:microtask">microtasks</a>, such as <a href="/breakup/specs/html-media/#media-element" id="simple-dialogs:media-element">media elements</a>
+  loading their <a href="/breakup/specs/html-media/#media-data" id="simple-dialogs:media-data">media data</a>, are stalled when these methods are invoked.</p>
 
   
 
@@ -5845,7 +5845,7 @@ interface <dfn id="navigatorcontentutils">NavigatorContentUtils</dfn> {
     feedback.</p>
 
     <p class="note">This list excludes any schemes that could reasonably be expected to be supported
-    inline, e.g. in an <code id="custom-handlers:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>, such as <code>http</code> or (more
+    inline, e.g. in an <code id="custom-handlers:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, such as <code>http</code> or (more
     theoretically) <code>gopher</code>. If those were supported, they could potentially be
     used in man-in-the-middle attacks, by replacing pages that have frames with such content with
     content under the control of the protocol handler. If the user agent has native support for the
@@ -6710,7 +6710,7 @@ interface <dfn id="imagebitmap">ImageBitmap</dfn> {
 };
 
 typedef (<a href="/breakup/specs/html-images/#htmlimageelement" id="images:htmlimageelement">HTMLImageElement</a> or
-         <a href="#htmlvideoelement" id="images:htmlvideoelement">HTMLVideoElement</a> or
+         <a href="/breakup/specs/html-media/#htmlvideoelement" id="images:htmlvideoelement">HTMLVideoElement</a> or
          <a href="/breakup/specs/html-canvas/#htmlcanvaselement" id="images:htmlcanvaselement">HTMLCanvasElement</a> or
          <a href="/breakup/specs/core-algorithms/#blob" id="images:blob">Blob</a> or
          <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#imagedata" id="images:imagedata">ImageData</a> or
@@ -6736,7 +6736,7 @@ interface <dfn id="imagebitmapfactories">ImageBitmapFactories</dfn> {
   <dl class="domintro"><dt><var>promise</var> = <var>Window</var> . <code id="images:dom-createimagebitmap-3"><a href="/breakup/specs/browser-dom/#dom-createimagebitmap">createImageBitmap</a></code>(<var>image</var> [, <var>sx</var>, <var>sy</var>, <var>sw</var>, <var>sh</var> ] )</dt><dd>
 
     <p>Takes <var>image</var>, which can be an <code id="images:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element,
-    <code id="images:the-video-element"><a href="#the-video-element">video</a></code>, or <code id="images:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, a <code id="images:blob-2"><a href="/breakup/specs/core-algorithms/#blob">Blob</a></code> object, an
+    <code id="images:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>, or <code id="images:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, a <code id="images:blob-2"><a href="/breakup/specs/core-algorithms/#blob">Blob</a></code> object, an
     <code id="images:imagedata-2"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#imagedata">ImageData</a></code> object, a <code id="images:canvasrenderingcontext2d-2"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code> object, or another
     <code id="images:imagebitmap-3"><a href="/breakup/specs/browser-dom/#imagebitmap">ImageBitmap</a></code> object, and returns a <code id="images:promise-3"><a href="/breakup/specs/core-algorithms/#promise">Promise</a></code> that is resolved when a
     new <code id="images:imagebitmap-4"><a href="/breakup/specs/browser-dom/#imagebitmap">ImageBitmap</a></code> is created.</p>
@@ -6753,7 +6753,7 @@ interface <dfn id="imagebitmapfactories">ImageBitmapFactories</dfn> {
     <code id="images:canvasrenderingcontext2d-3"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code> object whose bitmap data has zero length along one or both
     dimensions, or an <code id="images:imagedata-3"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#imagedata">ImageData</a></code> object whose data is <code id="images:dom-imagedata-data"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#dom-imagedata-data">data</a></code> attribute has been <a href="/breakup/specs/core-algorithms/#concept-transferable-neutered" id="images:concept-transferable-neutered">neutered</a>). Rejects the promise with a <code id="images:securityerror"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code>
     exception if the script is not allowed to access the image data of the source image (e.g. a
-    <code id="images:the-video-element-2"><a href="#the-video-element">video</a></code> that is <a href="/breakup/specs/core-algorithms/#cors-cross-origin" id="images:cors-cross-origin">CORS-cross-origin</a>, or a <code id="images:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> being drawn
+    <code id="images:the-video-element-2"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> that is <a href="/breakup/specs/core-algorithms/#cors-cross-origin" id="images:cors-cross-origin">CORS-cross-origin</a>, or a <code id="images:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> being drawn
     on by a script in a worker from another <a href="/breakup/specs/browser-dom/#origin-2" id="images:origin-2">origin</a>).</p>
 
    </dd><dt><var>imageBitmap</var> . <code id="images:dom-imagebitmap-width-2"><a href="/breakup/specs/browser-dom/#dom-imagebitmap-width">width</a></code></dt><dd>
@@ -6797,17 +6797,17 @@ interface <dfn id="imagebitmapfactories">ImageBitmapFactories</dfn> {
      <a href="/breakup/specs/core-algorithms/#in-parallel" id="images:in-parallel">in parallel</a>.</p></li><li><p><a href="/breakup/specs/core-algorithms/#concept-resolver-fulfill" id="images:concept-resolver-fulfill">Resolve</a> the <code id="images:promise-5"><a href="/breakup/specs/core-algorithms/#promise">Promise</a></code> with the new
      <code id="images:imagebitmap-12"><a href="/breakup/specs/browser-dom/#imagebitmap">ImageBitmap</a></code> object as the value.</p></li></ol>
 
-   </dd><dt>If <var>image</var> is a <code id="images:the-video-element-3"><a href="#the-video-element">video</a></code> element
+   </dd><dt>If <var>image</var> is a <code id="images:the-video-element-3"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element
 
    </dt><dd>
 
     <ol><li><p>If either the <var>sw</var> or <var>sh</var> arguments are specified
-     but zero, return a promise rejected with an <code id="images:indexsizeerror-2"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception and abort these steps.</p></li><li><p>If the <code id="images:the-video-element-4"><a href="#the-video-element">video</a></code> element's <code id="images:dom-media-networkstate"><a href="#dom-media-networkstate">networkState</a></code> attribute is <code id="images:dom-media-network_empty"><a href="#dom-media-network_empty">NETWORK_EMPTY</a></code>, then return a promise rejected with an
-     <code id="images:invalidstateerror-4"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>If the <a href="/breakup/specs/browser-dom/#origin-2" id="images:origin-2-4">origin</a> of the <code id="images:the-video-element-5"><a href="#the-video-element">video</a></code> element is not the <a href="/breakup/specs/browser-dom/#same-origin" id="images:same-origin-2">same
+     but zero, return a promise rejected with an <code id="images:indexsizeerror-2"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception and abort these steps.</p></li><li><p>If the <code id="images:the-video-element-4"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element's <code id="images:dom-media-networkstate"><a href="/breakup/specs/html-media/#dom-media-networkstate">networkState</a></code> attribute is <code id="images:dom-media-network_empty"><a href="/breakup/specs/html-media/#dom-media-network_empty">NETWORK_EMPTY</a></code>, then return a promise rejected with an
+     <code id="images:invalidstateerror-4"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>If the <a href="/breakup/specs/browser-dom/#origin-2" id="images:origin-2-4">origin</a> of the <code id="images:the-video-element-5"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element is not the <a href="/breakup/specs/browser-dom/#same-origin" id="images:same-origin-2">same
      origin</a> as the <a href="/breakup/specs/browser-dom/#origin-2" id="images:origin-2-5">origin</a> specified by the <a href="/breakup/specs/browser-dom/#entry-settings-object" id="images:entry-settings-object-2">entry settings object</a>,
-     then return a promise rejected with a <code id="images:securityerror-3"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception and abort these steps.</p></li><li><p>If the <code id="images:the-video-element-6"><a href="#the-video-element">video</a></code> element's <code id="images:dom-media-readystate"><a href="#dom-media-readystate">readyState</a></code> attribute is either <code id="images:dom-media-have_nothing"><a href="#dom-media-have_nothing">HAVE_NOTHING</a></code> or <code id="images:dom-media-have_metadata"><a href="#dom-media-have_metadata">HAVE_METADATA</a></code>, then return a promise rejected with an
+     then return a promise rejected with a <code id="images:securityerror-3"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception and abort these steps.</p></li><li><p>If the <code id="images:the-video-element-6"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element's <code id="images:dom-media-readystate"><a href="/breakup/specs/html-media/#dom-media-readystate">readyState</a></code> attribute is either <code id="images:dom-media-have_nothing"><a href="/breakup/specs/html-media/#dom-media-have_nothing">HAVE_NOTHING</a></code> or <code id="images:dom-media-have_metadata"><a href="/breakup/specs/html-media/#dom-media-have_metadata">HAVE_METADATA</a></code>, then return a promise rejected with an
      <code id="images:invalidstateerror-5"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>Create a new <code id="images:imagebitmap-13"><a href="/breakup/specs/browser-dom/#imagebitmap">ImageBitmap</a></code> object.</p></li><li><p>Let the <code id="images:imagebitmap-14"><a href="/breakup/specs/browser-dom/#imagebitmap">ImageBitmap</a></code> object's bitmap data be a copy of the frame at the
-     <a href="#current-playback-position" id="images:current-playback-position">current playback position</a>, at the <a href="#media-resource" id="images:media-resource">media resource</a>'s <a href="#concept-video-intrinsic-width" id="images:concept-video-intrinsic-width">intrinsic width</a> and <a href="#concept-video-intrinsic-height" id="images:concept-video-intrinsic-height">intrinsic height</a> (i.e. after any aspect-ratio
+     <a href="/breakup/specs/html-media/#current-playback-position" id="images:current-playback-position">current playback position</a>, at the <a href="/breakup/specs/html-media/#media-resource" id="images:media-resource">media resource</a>'s <a href="/breakup/specs/html-media/#concept-video-intrinsic-width" id="images:concept-video-intrinsic-width">intrinsic width</a> and <a href="/breakup/specs/html-media/#concept-video-intrinsic-height" id="images:concept-video-intrinsic-height">intrinsic height</a> (i.e. after any aspect-ratio
      correction has been applied), <a href="/breakup/specs/browser-dom/#cropped-to-the-source-rectangle" id="images:cropped-to-the-source-rectangle-2">cropped to the source rectangle</a>.</p>
 
      </li><li><p>Return a new <code id="images:promise-6"><a href="/breakup/specs/core-algorithms/#promise">Promise</a></code>, but continue running these steps

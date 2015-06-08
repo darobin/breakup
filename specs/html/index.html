@@ -229,7 +229,7 @@ range U+0041 (LATIN CAPITAL LETTER A) through U+005A (LATIN CAPITAL LETTER Z) (i
 used as link types.
 </li><li><p>Authors can embed raw data using the <code id="extensibility:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">&lt;script type=""&gt;</a></code>
    mechanism with a custom type, for further handling by inline or server-side scripts.</p></li><li><p>Authors can create <a href="/breakup/specs/core-algorithms/#plugin" id="extensibility:plugin">plugins</a> and invoke them using the
-   <code id="extensibility:the-embed-element"><a href="#the-embed-element">embed</a></code> element. This is how Flash works.</p></li><li><p>Authors can extend APIs using the JavaScript prototyping mechanism. This is widely used by
+   <code id="extensibility:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> element. This is how Flash works.</p></li><li><p>Authors can extend APIs using the JavaScript prototyping mechanism. This is widely used by
    script libraries, for instance.</p></li><li><p>Authors can use the microdata feature (the <code id="extensibility:attr-itemscope"><a href="http://www.w3.org/TR/microdata/#attr-itemscope">itemscope=""</a></code> and <code id="extensibility:names:-the-itemprop-attribute"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop=""</a></code>
    attributes) to embed nested name-value pairs of data to be shared with other applications and
    sites.</p></li></ul></section></section><section><h2>HTML vs XHTML</h2>
@@ -443,7 +443,7 @@ used as link types.
   which two sites can communicate directly. At first glance, this might appear to open a new way by
   which the problems described above can occur. However, in practice, multiple mechanisms exist by
   which two sites can communicate that predate this API: a site embedding another can send data via
-  an <code id="fingerprint-postMessage:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> element's dimensions; a site can use a cross-site image request with a
+  an <code id="fingerprint-postMessage:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element's dimensions; a site can use a cross-site image request with a
   unique identifier known to the server to initiate a server-side data exchange; or indeed the
   fingerprinting techniques described above can be used by two sites to uniquely identify a visitor
   such that information can then be exchanged on the server side.</p>
@@ -677,7 +677,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     activating the interface.</p>
 
     <p>One way that a user could be so tricked is if a hostile site places the victim site in a
-    small <code id="writing-secure-applications-with-html:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> and then convinces the user to click, for instance by having the user
+    small <code id="writing-secure-applications-with-html:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> and then convinces the user to click, for instance by having the user
     play a reaction game. Once the user is playing the game, the hostile site can quickly position
     the iframe under the mouse cursor just as the user is about to click, thus tricking the user
     into clicking the victim site's interface.</p>
@@ -1214,7 +1214,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 <li>W3C HTML has a SHOULD on using headings for <a href="/breakup/specs/html-sectioning/#the-section-element">sections</a>.</li>
 <li>W3C HTML attributes different semantics to <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> inside <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>.</li>
 <li>W3C HTML has completely different <a href="/breakup/specs/html-images/#alt">advice for image alternative text</a>.</li>
-<li>W3C HTML has <code><a href="#datacue">DataCue</a></code> in text tracks.</li>
+<li>W3C HTML has <code><a href="/breakup/specs/html-media/#datacue">DataCue</a></code> in text tracks.</li>
 <li>W3C HTML warns against links in <a href="/breakup/specs/html-forms/#the-label-element">labels</a></li>
 <li>W3C HTML advises against using solely <code>title</code> to describe <code><a href="/breakup/specs/html-forms/#the-pattern-attribute">pattern</a></code>.</li>
 <li>W3C HTML warns more strongly about using <code><a href="/breakup/specs/html-forms/#the-placeholder-attribute">placeholder</a></code> for labelling.</li>
@@ -1262,20 +1262,20 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <code id="elements-3:attr-hyperlink-hreflang-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code>;
          <code id="elements-3:attr-hyperlink-type-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code></td><td><code id="elements-3:htmlareaelement"><a href="/breakup/specs/html-linking/#htmlareaelement">HTMLAreaElement</a></code></td></tr><tr><th><code id="elements-3:the-article-element-2"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code></th><td>Self-contained syndicatable or reusable composition</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-7">flow</a>;
          <a href="#sectioning-content-2" id="elements-3:sectioning-content-2">sectioning</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-8">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-9">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-5">globals</a></td><td><code id="elements-3:htmlelement-3"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-aside-element"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code></th><td>Sidebar for tangentially related content</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-10">flow</a>;
-         <a href="#sectioning-content-2" id="elements-3:sectioning-content-2-2">sectioning</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-11">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-12">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-6">globals</a></td><td><code id="elements-3:htmlelement-4"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-audio-element"><a href="#the-audio-element">audio</a></code></th><td>Audio player</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-13">flow</a>;
+         <a href="#sectioning-content-2" id="elements-3:sectioning-content-2-2">sectioning</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-11">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-12">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-6">globals</a></td><td><code id="elements-3:htmlelement-4"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code></th><td>Audio player</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-13">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-8">phrasing</a>;
          <a href="#embedded-content-category" id="elements-3:embedded-content-category">embedded</a>;
-         <a href="#interactive-content-2" id="elements-3:interactive-content-2-2">interactive</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-9">phrasing</a></td><td><code id="elements-3:the-source-element"><a href="#the-source-element">source</a></code>*;
-         <code id="elements-3:the-track-element"><a href="#the-track-element">track</a></code>*;
+         <a href="#interactive-content-2" id="elements-3:interactive-content-2-2">interactive</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-9">phrasing</a></td><td><code id="elements-3:the-source-element"><a href="/breakup/specs/html-media/#the-source-element">source</a></code>*;
+         <code id="elements-3:the-track-element"><a href="/breakup/specs/html-media/#the-track-element">track</a></code>*;
          <a href="#transparent" id="elements-3:transparent-2">transparent</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-7">globals</a>;
-         <code id="elements-3:attr-media-src"><a href="#attr-media-src">src</a></code>;
-         <code id="elements-3:attr-media-crossorigin"><a href="#attr-media-crossorigin">crossorigin</a></code>;
-         <code id="elements-3:attr-media-preload"><a href="#attr-media-preload">preload</a></code>;
-         <code id="elements-3:attr-media-autoplay"><a href="#attr-media-autoplay">autoplay</a></code>;
-         <code id="elements-3:attr-media-mediagroup"><a href="#attr-media-mediagroup">mediagroup</a></code>;
-         <code id="elements-3:attr-media-loop"><a href="#attr-media-loop">loop</a></code>;
-         <code id="elements-3:attr-media-muted"><a href="#attr-media-muted">muted</a></code>;
-         <code id="elements-3:attr-media-controls"><a href="#attr-media-controls">controls</a></code></td><td><code id="elements-3:htmlaudioelement"><a href="#htmlaudioelement">HTMLAudioElement</a></code></td></tr><tr><th><code id="elements-3:the-b-element"><a href="/breakup/specs/html-text/#the-b-element">b</a></code></th><td>Keywords</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-14">flow</a>;
+         <code id="elements-3:attr-media-src"><a href="/breakup/specs/html-media/#attr-media-src">src</a></code>;
+         <code id="elements-3:attr-media-crossorigin"><a href="/breakup/specs/html-media/#attr-media-crossorigin">crossorigin</a></code>;
+         <code id="elements-3:attr-media-preload"><a href="/breakup/specs/html-media/#attr-media-preload">preload</a></code>;
+         <code id="elements-3:attr-media-autoplay"><a href="/breakup/specs/html-media/#attr-media-autoplay">autoplay</a></code>;
+         <code id="elements-3:attr-media-mediagroup"><a href="/breakup/specs/html-media/#attr-media-mediagroup">mediagroup</a></code>;
+         <code id="elements-3:attr-media-loop"><a href="/breakup/specs/html-media/#attr-media-loop">loop</a></code>;
+         <code id="elements-3:attr-media-muted"><a href="/breakup/specs/html-media/#attr-media-muted">muted</a></code>;
+         <code id="elements-3:attr-media-controls"><a href="/breakup/specs/html-media/#attr-media-controls">controls</a></code></td><td><code id="elements-3:htmlaudioelement"><a href="/breakup/specs/html-media/#htmlaudioelement">HTMLAudioElement</a></code></td></tr><tr><th><code id="elements-3:the-b-element"><a href="/breakup/specs/html-text/#the-b-element">b</a></code></th><td>Keywords</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-14">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-10">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-11">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-12">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-8">globals</a></td><td><code id="elements-3:htmlelement-5"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-base-element"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code></th><td>Base URL and default target <a href="/breakup/specs/browser-dom/#browsing-context" id="elements-3:browsing-context">browsing context</a> for <a href="/breakup/specs/html-linking/#attr-hyperlink-target" id="elements-3:attr-hyperlink-target-3">hyperlinks</a> and <a href="/breakup/specs/html-forms/#attr-fs-target" id="elements-3:attr-fs-target">forms</a></td><td><a href="#metadata-content-2" id="elements-3:metadata-content-2">metadata</a></td><td><code id="elements-3:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code>;
          <code id="elements-3:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-9">globals</a>;
          <code id="elements-3:attr-base-href"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code>;
@@ -1337,26 +1337,26 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <code id="elements-3:the-template-element-6"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-29">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-24">globals</a></td><td><code id="elements-3:htmlelement-10"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-del-element"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code></th><td>A removal from the document</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-30">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-38">phrasing</a>*</td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-39">phrasing</a></td><td><a href="#transparent" id="elements-3:transparent-4">transparent</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-25">globals</a>;
          <code id="elements-3:attr-mod-cite"><a href="/breakup/specs/html-edits/#attr-mod-cite">cite</a></code>;
-         <code id="elements-3:attr-mod-datetime"><a href="/breakup/specs/html-edits/#attr-mod-datetime">datetime</a></code></td><td><code id="elements-3:htmlmodelement"><a href="/breakup/specs/html-edits/#htmlmodelement">HTMLModElement</a></code></td></tr><tr><th><code id="elements-3:the-details-element"><a href="#the-details-element">details</a></code></th><td>Disclosure control for hiding details</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-31">flow</a>;
+         <code id="elements-3:attr-mod-datetime"><a href="/breakup/specs/html-edits/#attr-mod-datetime">datetime</a></code></td><td><code id="elements-3:htmlmodelement"><a href="/breakup/specs/html-edits/#htmlmodelement">HTMLModElement</a></code></td></tr><tr><th><code id="elements-3:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code></th><td>Disclosure control for hiding details</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-31">flow</a>;
          <a href="/breakup/specs/html-sectioning/#sectioning-root" id="elements-3:sectioning-root-3">sectioning root</a>;
-         <a href="#interactive-content-2" id="elements-3:interactive-content-2-4">interactive</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-32">flow</a></td><td><code id="elements-3:the-summary-element"><a href="#the-summary-element">summary</a></code>*;
+         <a href="#interactive-content-2" id="elements-3:interactive-content-2-4">interactive</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-32">flow</a></td><td><code id="elements-3:the-summary-element"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code>*;
          <a href="#flow-content-2" id="elements-3:flow-content-2-33">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-26">globals</a>;
-         <code id="elements-3:attr-details-open"><a href="#attr-details-open">open</a></code></td><td><code id="elements-3:htmldetailselement"><a href="#htmldetailselement">HTMLDetailsElement</a></code></td></tr><tr><th><code id="elements-3:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code></th><td>Defining instance</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-34">flow</a>;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-40">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-41">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-42">phrasing</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-27">globals</a></td><td><code id="elements-3:htmlelement-11"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-dialog-element"><a href="#the-dialog-element">dialog</a></code></th><td>Dialog box or window</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-35">flow</a>;
+         <code id="elements-3:attr-details-open"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code></td><td><code id="elements-3:htmldetailselement"><a href="/breakup/specs/html-ui/#htmldetailselement">HTMLDetailsElement</a></code></td></tr><tr><th><code id="elements-3:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code></th><td>Defining instance</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-34">flow</a>;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-40">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-41">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-42">phrasing</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-27">globals</a></td><td><code id="elements-3:htmlelement-11"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-dialog-element"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code></th><td>Dialog box or window</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-35">flow</a>;
          <a href="/breakup/specs/html-sectioning/#sectioning-root" id="elements-3:sectioning-root-4">sectioning root</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-36">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-37">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-28">globals</a>;
-         <code id="elements-3:attr-dialog-open"><a href="#attr-dialog-open">open</a></code></td><td><code id="elements-3:htmldialogelement"><a href="#htmldialogelement">HTMLDialogElement</a></code></td></tr><tr><th><code id="elements-3:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code></th><td>Generic flow container</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-38">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-39">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-40">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-29">globals</a></td><td><code id="elements-3:htmldivelement"><a href="/breakup/specs/html-blocks/#htmldivelement">HTMLDivElement</a></code></td></tr><tr><th><code id="elements-3:the-dl-element-2"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code></th><td>Association list consisting of zero or more name-value groups</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-41">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-42">flow</a></td><td><code id="elements-3:the-dt-element-2"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code>*;
+         <code id="elements-3:attr-dialog-open"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code></td><td><code id="elements-3:htmldialogelement"><a href="/breakup/specs/html-ui/#htmldialogelement">HTMLDialogElement</a></code></td></tr><tr><th><code id="elements-3:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code></th><td>Generic flow container</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-38">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-39">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-40">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-29">globals</a></td><td><code id="elements-3:htmldivelement"><a href="/breakup/specs/html-blocks/#htmldivelement">HTMLDivElement</a></code></td></tr><tr><th><code id="elements-3:the-dl-element-2"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code></th><td>Association list consisting of zero or more name-value groups</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-41">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-42">flow</a></td><td><code id="elements-3:the-dt-element-2"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code>*;
          <code id="elements-3:the-dd-element-2"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code>*;
          <a href="#script-supporting-elements-2" id="elements-3:script-supporting-elements-2-2">script-supporting elements</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-30">globals</a></td><td><code id="elements-3:htmldlistelement"><a href="/breakup/specs/html-lists/#htmldlistelement">HTMLDListElement</a></code></td></tr><tr><th><code id="elements-3:the-dt-element-3"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code></th><td>Legend for corresponding <code id="elements-3:the-dd-element-3"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element(s)</td><td>none</td><td><code id="elements-3:the-dl-element-3"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code>;
          <code id="elements-3:the-template-element-7"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-43">flow</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-31">globals</a></td><td><code id="elements-3:htmlelement-12"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-em-element"><a href="/breakup/specs/html-text/#the-em-element">em</a></code></th><td>Stress emphasis</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-44">flow</a>;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-43">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-44">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-45">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-32">globals</a></td><td><code id="elements-3:htmlelement-13"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-embed-element"><a href="#the-embed-element">embed</a></code></th><td><a href="/breakup/specs/core-algorithms/#plugin" id="elements-3:plugin">Plugin</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-45">flow</a>;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-43">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-44">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-45">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-32">globals</a></td><td><code id="elements-3:htmlelement-13"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code></th><td><a href="/breakup/specs/core-algorithms/#plugin" id="elements-3:plugin">Plugin</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-45">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-46">phrasing</a>;
          <a href="#embedded-content-category" id="elements-3:embedded-content-category-3">embedded</a>;
          <a href="#interactive-content-2" id="elements-3:interactive-content-2-5">interactive</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-47">phrasing</a></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-33">globals</a>;
-         <code id="elements-3:attr-embed-src"><a href="#attr-embed-src">src</a></code>;
-         <code id="elements-3:attr-embed-type"><a href="#attr-embed-type">type</a></code>;
+         <code id="elements-3:attr-embed-src"><a href="/breakup/specs/html-embedding/#attr-embed-src">src</a></code>;
+         <code id="elements-3:attr-embed-type"><a href="/breakup/specs/html-embedding/#attr-embed-type">type</a></code>;
          <code id="elements-3:attr-dim-width"><a href="#attr-dim-width">width</a></code>;
          <code id="elements-3:attr-dim-height"><a href="#attr-dim-height">height</a></code>;
-         any*</td><td><code id="elements-3:htmlembedelement"><a href="#htmlembedelement">HTMLEmbedElement</a></code></td></tr><tr><th><code id="elements-3:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code></th><td>Group of form controls</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-46">flow</a>;
+         any*</td><td><code id="elements-3:htmlembedelement"><a href="/breakup/specs/html-embedding/#htmlembedelement">HTMLEmbedElement</a></code></td></tr><tr><th><code id="elements-3:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code></th><td>Group of form controls</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-46">flow</a>;
          <a href="/breakup/specs/html-sectioning/#sectioning-root" id="elements-3:sectioning-root-5">sectioning root</a>;
          <a href="/breakup/specs/html-forms/#category-listed" id="elements-3:category-listed-2">listed</a>;
          <a href="/breakup/specs/html-forms/#category-form-attr" id="elements-3:category-form-attr-2">reassociateable</a>;
@@ -1379,18 +1379,18 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <a href="#heading-content-2" id="elements-3:heading-content-2">heading</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-60">flow</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-48">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-39">globals</a></td><td><code id="elements-3:htmlheadingelement"><a href="/breakup/specs/html-sectioning/#htmlheadingelement">HTMLHeadingElement</a></code></td></tr><tr><th><code id="elements-3:the-head-element-2"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code></th><td>Container for document metadata</td><td>none</td><td><code id="elements-3:the-html-element-2"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code></td><td><a href="#metadata-content-2" id="elements-3:metadata-content-2-2">metadata content</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-40">globals</a></td><td><code id="elements-3:htmlheadelement"><a href="/breakup/specs/html-structure/#htmlheadelement">HTMLHeadElement</a></code></td></tr><tr><th><code id="elements-3:the-header-element"><a href="/breakup/specs/html-sectioning/#the-header-element">header</a></code></th><td>Introductory or navigational aids for a page or section</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-61">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-62">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-63">flow</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-41">globals</a></td><td><code id="elements-3:htmlelement-17"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-hr-element"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code></th><td>Thematic break</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-66">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-67">flow</a></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-43">globals</a></td><td><code id="elements-3:htmlhrelement"><a href="/breakup/specs/html-blocks/#htmlhrelement">HTMLHRElement</a></code></td></tr><tr><th><code id="elements-3:the-html-element-3"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code></th><td>Root element</td><td>none</td><td>none*</td><td><code id="elements-3:the-head-element-3"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code>*;
          <code id="elements-3:the-body-element-2"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-44">globals</a>;
          <code id="elements-3:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code></td><td><code id="elements-3:htmlhtmlelement"><a href="/breakup/specs/html-structure/#htmlhtmlelement">HTMLHtmlElement</a></code></td></tr><tr><th><code id="elements-3:the-i-element"><a href="/breakup/specs/html-text/#the-i-element">i</a></code></th><td>Alternate voice</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-68">flow</a>;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-49">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-50">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-51">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-45">globals</a></td><td><code id="elements-3:htmlelement-19"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-iframe-element"><a href="#the-iframe-element">iframe</a></code></th><td><a href="/breakup/specs/browser-dom/#nested-browsing-context" id="elements-3:nested-browsing-context">Nested browsing context</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-69">flow</a>;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-49">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-50">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-51">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-45">globals</a></td><td><code id="elements-3:htmlelement-19"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code></th><td><a href="/breakup/specs/browser-dom/#nested-browsing-context" id="elements-3:nested-browsing-context">Nested browsing context</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-69">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-52">phrasing</a>;
          <a href="#embedded-content-category" id="elements-3:embedded-content-category-4">embedded</a>;
          <a href="#interactive-content-2" id="elements-3:interactive-content-2-6">interactive</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-53">phrasing</a></td><td>text*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-46">globals</a>;
-         <code id="elements-3:attr-iframe-src"><a href="#attr-iframe-src">src</a></code>;
-         <code id="elements-3:attr-iframe-srcdoc"><a href="#attr-iframe-srcdoc">srcdoc</a></code>;
-         <code id="elements-3:attr-iframe-name"><a href="#attr-iframe-name">name</a></code>;
-         <code id="elements-3:attr-iframe-sandbox"><a href="#attr-iframe-sandbox">sandbox</a></code>;
-         <code id="elements-3:attr-iframe-seamless"><a href="#attr-iframe-seamless">seamless</a></code>;
-         <code id="elements-3:attr-iframe-allowfullscreen"><a href="#attr-iframe-allowfullscreen">allowfullscreen</a></code>;
+         <code id="elements-3:attr-iframe-src"><a href="/breakup/specs/html-embedding/#attr-iframe-src">src</a></code>;
+         <code id="elements-3:attr-iframe-srcdoc"><a href="/breakup/specs/html-embedding/#attr-iframe-srcdoc">srcdoc</a></code>;
+         <code id="elements-3:attr-iframe-name"><a href="/breakup/specs/html-embedding/#attr-iframe-name">name</a></code>;
+         <code id="elements-3:attr-iframe-sandbox"><a href="/breakup/specs/html-embedding/#attr-iframe-sandbox">sandbox</a></code>;
+         <code id="elements-3:attr-iframe-seamless"><a href="/breakup/specs/html-embedding/#attr-iframe-seamless">seamless</a></code>;
+         <code id="elements-3:attr-iframe-allowfullscreen"><a href="/breakup/specs/html-embedding/#attr-iframe-allowfullscreen">allowfullscreen</a></code>;
          <code id="elements-3:attr-dim-width-2"><a href="#attr-dim-width">width</a></code>;
-         <code id="elements-3:attr-dim-height-2"><a href="#attr-dim-height">height</a></code></td><td><code id="elements-3:htmliframeelement"><a href="#htmliframeelement">HTMLIFrameElement</a></code></td></tr><tr><th><code id="elements-3:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code></th><td>Image</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-70">flow</a>;
+         <code id="elements-3:attr-dim-height-2"><a href="#attr-dim-height">height</a></code></td><td><code id="elements-3:htmliframeelement"><a href="/breakup/specs/html-embedding/#htmliframeelement">HTMLIFrameElement</a></code></td></tr><tr><th><code id="elements-3:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code></th><td>Image</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-70">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-54">phrasing</a>;
          <a href="#embedded-content-category" id="elements-3:embedded-content-category-5">embedded</a>;
          <a href="#interactive-content-2" id="elements-3:interactive-content-2-7">interactive</a>*;
@@ -1469,7 +1469,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <code id="elements-3:attr-label-for"><a href="/breakup/specs/html-forms/#attr-label-for">for</a></code></td><td><code id="elements-3:htmllabelelement"><a href="/breakup/specs/html-forms/#htmllabelelement">HTMLLabelElement</a></code></td></tr><tr><th><code id="elements-3:the-legend-element-2"><a href="/breakup/specs/html-forms/#the-legend-element">legend</a></code></th><td>Caption for <code id="elements-3:the-fieldset-element-2"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code></td><td>none</td><td><code id="elements-3:the-fieldset-element-3"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code>;
          <code id="elements-3:the-template-element-10"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-68">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-53">globals</a></td><td><code id="elements-3:htmllegendelement"><a href="/breakup/specs/html-forms/#htmllegendelement">HTMLLegendElement</a></code></td></tr><tr><th><code id="elements-3:the-li-element"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code></th><td>List item</td><td>none</td><td><code id="elements-3:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>;
          <code id="elements-3:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code>;
-         <code id="elements-3:the-menu-element"><a href="#the-menu-element">menu</a></code>*;
+         <code id="elements-3:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>*;
          <code id="elements-3:the-template-element-11"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-76">flow</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-54">globals</a>;
          <code id="elements-3:attr-li-value"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code>*</td><td><code id="elements-3:htmllielement"><a href="/breakup/specs/html-lists/#htmllielement">HTMLLIElement</a></code></td></tr><tr><th><code id="elements-3:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code></th><td>Link metadata</td><td><a href="#metadata-content-2" id="elements-3:metadata-content-2-3">metadata</a>;
          <a href="#flow-content-2" id="elements-3:flow-content-2-77">flow</a>*;
@@ -1487,24 +1487,24 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-71">phrasing</a>*</td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-72">phrasing</a></td><td><a href="#transparent" id="elements-3:transparent-6">transparent</a>;
          <code id="elements-3:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-57">globals</a>;
          <code id="elements-3:attr-map-name"><a href="/breakup/specs/html-linking/#attr-map-name">name</a></code></td><td><code id="elements-3:htmlmapelement"><a href="/breakup/specs/html-linking/#htmlmapelement">HTMLMapElement</a></code></td></tr><tr><th><code id="elements-3:the-mark-element"><a href="/breakup/specs/html-text/#the-mark-element">mark</a></code></th><td>Highlight</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-82">flow</a>;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-73">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-74">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-75">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-58">globals</a></td><td><code id="elements-3:htmlelement-22"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-menu-element-2"><a href="#the-menu-element">menu</a></code></th><td>Menu of commands</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-83">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-84">flow</a>;
-         <code id="elements-3:the-menu-element-3"><a href="#the-menu-element">menu</a></code>*</td><td><code id="elements-3:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code>*;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-73">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-74">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-75">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-58">globals</a></td><td><code id="elements-3:htmlelement-22"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-menu-element-2"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code></th><td>Menu of commands</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-83">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-84">flow</a>;
+         <code id="elements-3:the-menu-element-3"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>*</td><td><code id="elements-3:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code>*;
          <a href="#flow-content-2" id="elements-3:flow-content-2-85">flow</a>*;
-         <code id="elements-3:the-menuitem-element"><a href="#the-menuitem-element">menuitem</a></code>*;
+         <code id="elements-3:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code>*;
          <code id="elements-3:the-hr-element-2"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code>*;
-         <code id="elements-3:the-menu-element-4"><a href="#the-menu-element">menu</a></code>*;
+         <code id="elements-3:the-menu-element-4"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>*;
          <a href="#script-supporting-elements-2" id="elements-3:script-supporting-elements-2-3">script-supporting elements</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-59">globals</a>;
-         <code id="elements-3:attr-menu-type"><a href="#attr-menu-type">type</a></code>;
-         <code id="elements-3:attr-menu-label"><a href="#attr-menu-label">label</a></code></td><td><code id="elements-3:htmlmenuelement"><a href="#htmlmenuelement">HTMLMenuElement</a></code></td></tr><tr><th><code id="elements-3:the-menuitem-element-2"><a href="#the-menuitem-element">menuitem</a></code></th><td>Menu command</td><td>none</td><td><code id="elements-3:the-menu-element-5"><a href="#the-menu-element">menu</a></code>;
+         <code id="elements-3:attr-menu-type"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code>;
+         <code id="elements-3:attr-menu-label"><a href="/breakup/specs/html-ui/#attr-menu-label">label</a></code></td><td><code id="elements-3:htmlmenuelement"><a href="/breakup/specs/html-ui/#htmlmenuelement">HTMLMenuElement</a></code></td></tr><tr><th><code id="elements-3:the-menuitem-element-2"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code></th><td>Menu command</td><td>none</td><td><code id="elements-3:the-menu-element-5"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>;
          <code id="elements-3:the-template-element-13"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-60">globals</a>;
-         <code id="elements-3:attr-menuitem-type"><a href="#attr-menuitem-type">type</a></code>;
-         <code id="elements-3:attr-menuitem-label"><a href="#attr-menuitem-label">label</a></code>;
-         <code id="elements-3:attr-menuitem-icon"><a href="#attr-menuitem-icon">icon</a></code>;
-         <code id="elements-3:attr-menuitem-disabled"><a href="#attr-menuitem-disabled">disabled</a></code>;
-         <code id="elements-3:attr-menuitem-checked"><a href="#attr-menuitem-checked">checked</a></code>;
-         <code id="elements-3:attr-menuitem-radiogroup"><a href="#attr-menuitem-radiogroup">radiogroup</a></code>;
-         <code id="elements-3:attr-menuitem-default"><a href="#attr-menuitem-default">default</a></code>;
-         <code id="elements-3:attr-menuitem-command"><a href="#attr-menuitem-command">command</a></code></td><td><code id="elements-3:htmlmenuitemelement"><a href="#htmlmenuitemelement">HTMLMenuItemElement</a></code></td></tr><tr><th><code id="elements-3:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code></th><td>Text metadata</td><td><a href="#metadata-content-2" id="elements-3:metadata-content-2-4">metadata</a>;
+         <code id="elements-3:attr-menuitem-type"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code>;
+         <code id="elements-3:attr-menuitem-label"><a href="/breakup/specs/html-ui/#attr-menuitem-label">label</a></code>;
+         <code id="elements-3:attr-menuitem-icon"><a href="/breakup/specs/html-ui/#attr-menuitem-icon">icon</a></code>;
+         <code id="elements-3:attr-menuitem-disabled"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code>;
+         <code id="elements-3:attr-menuitem-checked"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code>;
+         <code id="elements-3:attr-menuitem-radiogroup"><a href="/breakup/specs/html-ui/#attr-menuitem-radiogroup">radiogroup</a></code>;
+         <code id="elements-3:attr-menuitem-default"><a href="/breakup/specs/html-ui/#attr-menuitem-default">default</a></code>;
+         <code id="elements-3:attr-menuitem-command"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code></td><td><code id="elements-3:htmlmenuitemelement"><a href="/breakup/specs/html-ui/#htmlmenuitemelement">HTMLMenuItemElement</a></code></td></tr><tr><th><code id="elements-3:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code></th><td>Text metadata</td><td><a href="#metadata-content-2" id="elements-3:metadata-content-2-4">metadata</a>;
          <a href="#flow-content-2" id="elements-3:flow-content-2-86">flow</a>*;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-76">phrasing</a>*</td><td><code id="elements-3:the-head-element-5"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code>;
          <code id="elements-3:the-template-element-14"><a href="/breakup/specs/html-template/#the-template-element">template</a></code>;
@@ -1526,23 +1526,23 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <a href="#flow-content-2" id="elements-3:flow-content-2-91">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-81">phrasing</a></td><td><code id="elements-3:the-head-element-6"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code>*;
          <code id="elements-3:the-template-element-15"><a href="/breakup/specs/html-template/#the-template-element">template</a></code>*;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-82">phrasing</a>*</td><td>varies*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-64">globals</a></td><td><code id="elements-3:htmlelement-24"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-object-element"><a href="#the-object-element">object</a></code></th><td>Image, <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="elements-3:nested-browsing-context-2">nested browsing context</a>, or <a href="/breakup/specs/core-algorithms/#plugin" id="elements-3:plugin-2">plugin</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-92">flow</a>;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-82">phrasing</a>*</td><td>varies*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-64">globals</a></td><td><code id="elements-3:htmlelement-24"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code></th><td>Image, <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="elements-3:nested-browsing-context-2">nested browsing context</a>, or <a href="/breakup/specs/core-algorithms/#plugin" id="elements-3:plugin-2">plugin</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-92">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-83">phrasing</a>;
          <a href="#embedded-content-category" id="elements-3:embedded-content-category-6">embedded</a>;
          <a href="#interactive-content-2" id="elements-3:interactive-content-2-11">interactive</a>*;
          <a href="/breakup/specs/html-forms/#category-listed" id="elements-3:category-listed-5">listed</a>;
          <a href="/breakup/specs/html-forms/#category-submit" id="elements-3:category-submit-4">submittable</a>;
          <a href="/breakup/specs/html-forms/#category-form-attr" id="elements-3:category-form-attr-6">reassociateable</a>;
-         <a href="/breakup/specs/html-forms/#form-associated-element" id="elements-3:form-associated-element-7">form-associated</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-84">phrasing</a></td><td><code id="elements-3:the-param-element"><a href="#the-param-element">param</a></code>*;
+         <a href="/breakup/specs/html-forms/#form-associated-element" id="elements-3:form-associated-element-7">form-associated</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-84">phrasing</a></td><td><code id="elements-3:the-param-element"><a href="/breakup/specs/html-embedding/#the-param-element">param</a></code>*;
          <a href="#transparent" id="elements-3:transparent-7">transparent</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-65">globals</a>;
-         <code id="elements-3:attr-object-data"><a href="#attr-object-data">data</a></code>;
-         <code id="elements-3:attr-object-type"><a href="#attr-object-type">type</a></code>;
-         <code id="elements-3:attr-object-typemustmatch"><a href="#attr-object-typemustmatch">typemustmatch</a></code>;
-         <code id="elements-3:attr-object-name"><a href="#attr-object-name">name</a></code>;
+         <code id="elements-3:attr-object-data"><a href="/breakup/specs/html-embedding/#attr-object-data">data</a></code>;
+         <code id="elements-3:attr-object-type"><a href="/breakup/specs/html-embedding/#attr-object-type">type</a></code>;
+         <code id="elements-3:attr-object-typemustmatch"><a href="/breakup/specs/html-embedding/#attr-object-typemustmatch">typemustmatch</a></code>;
+         <code id="elements-3:attr-object-name"><a href="/breakup/specs/html-embedding/#attr-object-name">name</a></code>;
          <code id="elements-3:attr-hyperlink-usemap-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code>;
          <code id="elements-3:attr-fae-form-6"><a href="/breakup/specs/html-forms/#attr-fae-form">form</a></code>;
          <code id="elements-3:attr-dim-width-5"><a href="#attr-dim-width">width</a></code>;
-         <code id="elements-3:attr-dim-height-5"><a href="#attr-dim-height">height</a></code></td><td><code id="elements-3:htmlobjectelement"><a href="#htmlobjectelement">HTMLObjectElement</a></code></td></tr><tr><th><code id="elements-3:the-ol-element-2"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code></th><td>Ordered list</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-93">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-94">flow</a></td><td><code id="elements-3:the-li-element-3"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code>;
+         <code id="elements-3:attr-dim-height-5"><a href="#attr-dim-height">height</a></code></td><td><code id="elements-3:htmlobjectelement"><a href="/breakup/specs/html-embedding/#htmlobjectelement">HTMLObjectElement</a></code></td></tr><tr><th><code id="elements-3:the-ol-element-2"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code></th><td>Ordered list</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-93">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-94">flow</a></td><td><code id="elements-3:the-li-element-3"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code>;
          <a href="#script-supporting-elements-2" id="elements-3:script-supporting-elements-2-4">script-supporting elements</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-66">globals</a>;
          <code id="elements-3:attr-ol-reversed"><a href="/breakup/specs/html-lists/#attr-ol-reversed">reversed</a></code>;
          <code id="elements-3:attr-ol-start"><a href="/breakup/specs/html-lists/#attr-ol-start">start</a></code>;
@@ -1566,10 +1566,10 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <a href="/breakup/specs/html-forms/#form-associated-element" id="elements-3:form-associated-element-8">form-associated</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-86">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-87">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-69">globals</a>;
          <code id="elements-3:attr-output-for"><a href="/breakup/specs/html-forms/#attr-output-for">for</a></code>;
          <code id="elements-3:attr-fae-form-7"><a href="/breakup/specs/html-forms/#attr-fae-form">form</a></code>;
-         <code id="elements-3:attr-fe-name-5"><a href="/breakup/specs/html-forms/#attr-fe-name">name</a></code></td><td><code id="elements-3:htmloutputelement"><a href="/breakup/specs/html-forms/#htmloutputelement">HTMLOutputElement</a></code></td></tr><tr><th><code id="elements-3:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code></th><td>Paragraph</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-96">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-97">flow</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-88">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-70">globals</a></td><td><code id="elements-3:htmlparagraphelement"><a href="/breakup/specs/html-blocks/#htmlparagraphelement">HTMLParagraphElement</a></code></td></tr><tr><th><code id="elements-3:the-param-element-2"><a href="#the-param-element">param</a></code></th><td>Parameter for <code id="elements-3:the-object-element-2"><a href="#the-object-element">object</a></code></td><td>none</td><td><code id="elements-3:the-object-element-3"><a href="#the-object-element">object</a></code>;
+         <code id="elements-3:attr-fe-name-5"><a href="/breakup/specs/html-forms/#attr-fe-name">name</a></code></td><td><code id="elements-3:htmloutputelement"><a href="/breakup/specs/html-forms/#htmloutputelement">HTMLOutputElement</a></code></td></tr><tr><th><code id="elements-3:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code></th><td>Paragraph</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-96">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-97">flow</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-88">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-70">globals</a></td><td><code id="elements-3:htmlparagraphelement"><a href="/breakup/specs/html-blocks/#htmlparagraphelement">HTMLParagraphElement</a></code></td></tr><tr><th><code id="elements-3:the-param-element-2"><a href="/breakup/specs/html-embedding/#the-param-element">param</a></code></th><td>Parameter for <code id="elements-3:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code></td><td>none</td><td><code id="elements-3:the-object-element-3"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>;
          <code id="elements-3:the-template-element-18"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-71">globals</a>;
-         <code id="elements-3:attr-param-name"><a href="#attr-param-name">name</a></code>;
-         <code id="elements-3:attr-param-value"><a href="#attr-param-value">value</a></code></td><td><code id="elements-3:htmlparamelement"><a href="#htmlparamelement">HTMLParamElement</a></code></td></tr><tr><th><code id="elements-3:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code></th><td>Block of preformatted text</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-98">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-99">flow</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-89">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-72">globals</a></td><td><code id="elements-3:htmlpreelement"><a href="/breakup/specs/html-blocks/#htmlpreelement">HTMLPreElement</a></code></td></tr><tr><th><code id="elements-3:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code></th><td>Progress bar</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-100">flow</a>;
+         <code id="elements-3:attr-param-name"><a href="/breakup/specs/html-embedding/#attr-param-name">name</a></code>;
+         <code id="elements-3:attr-param-value"><a href="/breakup/specs/html-embedding/#attr-param-value">value</a></code></td><td><code id="elements-3:htmlparamelement"><a href="/breakup/specs/html-embedding/#htmlparamelement">HTMLParamElement</a></code></td></tr><tr><th><code id="elements-3:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code></th><td>Block of preformatted text</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-98">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-99">flow</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-89">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-72">globals</a></td><td><code id="elements-3:htmlpreelement"><a href="/breakup/specs/html-blocks/#htmlpreelement">HTMLPreElement</a></code></td></tr><tr><th><code id="elements-3:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code></th><td>Progress bar</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-100">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-90">phrasing</a>;
          <a href="/breakup/specs/html-forms/#category-label" id="elements-3:category-label-6">labelable</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-91">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-92">phrasing</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-73">globals</a>;
          <code id="elements-3:attr-progress-value"><a href="/breakup/specs/html-forms/#attr-progress-value">value</a></code>;
@@ -1624,11 +1624,11 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <code id="elements-3:attr-fe-name-6"><a href="/breakup/specs/html-forms/#attr-fe-name">name</a></code>;
          <code id="elements-3:attr-select-required"><a href="/breakup/specs/html-forms/#attr-select-required">required</a></code>;
          <code id="elements-3:attr-select-size"><a href="/breakup/specs/html-forms/#attr-select-size">size</a></code></td><td><code id="elements-3:htmlselectelement"><a href="/breakup/specs/html-forms/#htmlselectelement">HTMLSelectElement</a></code></td></tr><tr><th><code id="elements-3:the-small-element"><a href="/breakup/specs/html-text/#the-small-element">small</a></code></th><td>Side comment</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-110">flow</a>;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-111">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-112">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-113">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-83">globals</a></td><td><code id="elements-3:htmlelement-31"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-source-element-2"><a href="#the-source-element">source</a></code></th><td>Media source for <code id="elements-3:the-video-element"><a href="#the-video-element">video</a></code> or <code id="elements-3:the-audio-element-2"><a href="#the-audio-element">audio</a></code></td><td>none</td><td><code id="elements-3:the-video-element-2"><a href="#the-video-element">video</a></code>;
-         <code id="elements-3:the-audio-element-3"><a href="#the-audio-element">audio</a></code>;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-111">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-112">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-113">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-83">globals</a></td><td><code id="elements-3:htmlelement-31"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-source-element-2"><a href="/breakup/specs/html-media/#the-source-element">source</a></code></th><td>Media source for <code id="elements-3:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> or <code id="elements-3:the-audio-element-2"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code></td><td>none</td><td><code id="elements-3:the-video-element-2"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>;
+         <code id="elements-3:the-audio-element-3"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code>;
          <code id="elements-3:the-template-element-21"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-84">globals</a>;
-         <code id="elements-3:attr-source-src"><a href="#attr-source-src">src</a></code>;
-         <code id="elements-3:attr-source-type"><a href="#attr-source-type">type</a></code></td><td><code id="elements-3:htmlsourceelement"><a href="#htmlsourceelement">HTMLSourceElement</a></code></td></tr><tr><th><code id="elements-3:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code></th><td>Generic phrasing container</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-111">flow</a>;
+         <code id="elements-3:attr-source-src"><a href="/breakup/specs/html-media/#attr-source-src">src</a></code>;
+         <code id="elements-3:attr-source-type"><a href="/breakup/specs/html-media/#attr-source-type">type</a></code></td><td><code id="elements-3:htmlsourceelement"><a href="/breakup/specs/html-media/#htmlsourceelement">HTMLSourceElement</a></code></td></tr><tr><th><code id="elements-3:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code></th><td>Generic phrasing container</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-111">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-114">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-115">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-116">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-85">globals</a></td><td><code id="elements-3:htmlspanelement"><a href="/breakup/specs/html-text/#htmlspanelement">HTMLSpanElement</a></code></td></tr><tr><th><code id="elements-3:the-strong-element"><a href="/breakup/specs/html-text/#the-strong-element">strong</a></code></th><td>Importance</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-112">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-117">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-118">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-119">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-86">globals</a></td><td><code id="elements-3:htmlelement-32"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code></th><td>Embedded styling information</td><td><a href="#metadata-content-2" id="elements-3:metadata-content-2-7">metadata</a>;
          <a href="#flow-content-2" id="elements-3:flow-content-2-113">flow</a>*</td><td><code id="elements-3:the-head-element-8"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code>;
@@ -1637,7 +1637,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <code id="elements-3:attr-style-media"><a href="/breakup/specs/html-styling/#attr-style-media">media</a></code>;
          <code id="elements-3:attr-style-type"><a href="/breakup/specs/html-styling/#attr-style-type">type</a></code>;
          <code id="elements-3:attr-style-scoped"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code></td><td><code id="elements-3:htmlstyleelement"><a href="/breakup/specs/html-styling/#htmlstyleelement">HTMLStyleElement</a></code></td></tr><tr><th><code id="elements-3:the-sub-and-sup-elements"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sub</a></code></th><td>Subscript</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-115">flow</a>;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-120">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-121">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-122">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-88">globals</a></td><td><code id="elements-3:htmlelement-33"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-summary-element-2"><a href="#the-summary-element">summary</a></code></th><td>Caption for <code id="elements-3:the-details-element-2"><a href="#the-details-element">details</a></code></td><td>none</td><td><code id="elements-3:the-details-element-3"><a href="#the-details-element">details</a></code></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-123">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-89">globals</a></td><td><code id="elements-3:htmlelement-34"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-sub-and-sup-elements-2"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sup</a></code></th><td>Superscript</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-116">flow</a>;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-120">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-121">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-122">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-88">globals</a></td><td><code id="elements-3:htmlelement-33"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-summary-element-2"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code></th><td>Caption for <code id="elements-3:the-details-element-2"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code></td><td>none</td><td><code id="elements-3:the-details-element-3"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-123">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-89">globals</a></td><td><code id="elements-3:htmlelement-34"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-sub-and-sup-elements-2"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sup</a></code></th><td>Superscript</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-116">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-124">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-125">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-126">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-90">globals</a></td><td><code id="elements-3:htmlelement-35"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code></th><td>Table</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-117">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-118">flow</a></td><td><code id="elements-3:the-caption-element-2"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>*;
          <code id="elements-3:the-colgroup-element-3"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>*;
          <code id="elements-3:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>*;
@@ -1699,33 +1699,33 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
          <code id="elements-3:the-tfoot-element-3"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>;
          <code id="elements-3:the-template-element-29"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td><code id="elements-3:the-th-element-2"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code>*;
          <code id="elements-3:the-td-element-2"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code>;
-         <a href="#script-supporting-elements-2" id="elements-3:script-supporting-elements-2-15">script-supporting elements</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-101">globals</a></td><td><code id="elements-3:htmltablerowelement"><a href="/breakup/specs/html-tables/#htmltablerowelement">HTMLTableRowElement</a></code></td></tr><tr><th><code id="elements-3:the-track-element-2"><a href="#the-track-element">track</a></code></th><td>Timed text track</td><td>none</td><td><code id="elements-3:the-audio-element-4"><a href="#the-audio-element">audio</a></code>;
-         <code id="elements-3:the-video-element-3"><a href="#the-video-element">video</a></code>;
+         <a href="#script-supporting-elements-2" id="elements-3:script-supporting-elements-2-15">script-supporting elements</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-101">globals</a></td><td><code id="elements-3:htmltablerowelement"><a href="/breakup/specs/html-tables/#htmltablerowelement">HTMLTableRowElement</a></code></td></tr><tr><th><code id="elements-3:the-track-element-2"><a href="/breakup/specs/html-media/#the-track-element">track</a></code></th><td>Timed text track</td><td>none</td><td><code id="elements-3:the-audio-element-4"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code>;
+         <code id="elements-3:the-video-element-3"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>;
          <code id="elements-3:the-template-element-30"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-102">globals</a>;
-         <code id="elements-3:attr-track-default"><a href="#attr-track-default">default</a></code>;
-         <code id="elements-3:attr-track-kind"><a href="#attr-track-kind">kind</a></code>;
-         <code id="elements-3:attr-track-label"><a href="#attr-track-label">label</a></code>;
-         <code id="elements-3:attr-track-src"><a href="#attr-track-src">src</a></code>;
-         <code id="elements-3:attr-track-srclang"><a href="#attr-track-srclang">srclang</a></code></td><td><code id="elements-3:htmltrackelement"><a href="#htmltrackelement">HTMLTrackElement</a></code></td></tr><tr><th><code id="elements-3:the-u-element"><a href="/breakup/specs/html-text/#the-u-element">u</a></code></th><td>Keywords</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-124">flow</a>;
+         <code id="elements-3:attr-track-default"><a href="/breakup/specs/html-media/#attr-track-default">default</a></code>;
+         <code id="elements-3:attr-track-kind"><a href="/breakup/specs/html-media/#attr-track-kind">kind</a></code>;
+         <code id="elements-3:attr-track-label"><a href="/breakup/specs/html-media/#attr-track-label">label</a></code>;
+         <code id="elements-3:attr-track-src"><a href="/breakup/specs/html-media/#attr-track-src">src</a></code>;
+         <code id="elements-3:attr-track-srclang"><a href="/breakup/specs/html-media/#attr-track-srclang">srclang</a></code></td><td><code id="elements-3:htmltrackelement"><a href="/breakup/specs/html-media/#htmltrackelement">HTMLTrackElement</a></code></td></tr><tr><th><code id="elements-3:the-u-element"><a href="/breakup/specs/html-text/#the-u-element">u</a></code></th><td>Keywords</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-124">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-134">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-135">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-136">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-103">globals</a></td><td><code id="elements-3:htmlelement-36"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-ul-element-2"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code></th><td>List</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-125">flow</a></td><td><a href="#flow-content-2" id="elements-3:flow-content-2-126">flow</a></td><td><code id="elements-3:the-li-element-4"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code>;
          <a href="#script-supporting-elements-2" id="elements-3:script-supporting-elements-2-16">script-supporting elements</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-104">globals</a></td><td><code id="elements-3:htmlulistelement"><a href="/breakup/specs/html-lists/#htmlulistelement">HTMLUListElement</a></code></td></tr><tr><th><code id="elements-3:the-var-element"><a href="/breakup/specs/html-text/#the-var-element">var</a></code></th><td>Variable</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-127">flow</a>;
-         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-137">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-138">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-139">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-105">globals</a></td><td><code id="elements-3:htmlelement-37"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-video-element-4"><a href="#the-video-element">video</a></code></th><td>Video player</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-128">flow</a>;
+         <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-137">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-138">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-139">phrasing</a></td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-105">globals</a></td><td><code id="elements-3:htmlelement-37"><a href="#htmlelement">HTMLElement</a></code></td></tr><tr><th><code id="elements-3:the-video-element-4"><a href="/breakup/specs/html-media/#the-video-element">video</a></code></th><td>Video player</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-128">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-140">phrasing</a>;
          <a href="#embedded-content-category" id="elements-3:embedded-content-category-7">embedded</a>;
-         <a href="#interactive-content-2" id="elements-3:interactive-content-2-15">interactive</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-141">phrasing</a></td><td><code id="elements-3:the-source-element-3"><a href="#the-source-element">source</a></code>*;
-         <code id="elements-3:the-track-element-3"><a href="#the-track-element">track</a></code>*;
+         <a href="#interactive-content-2" id="elements-3:interactive-content-2-15">interactive</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-141">phrasing</a></td><td><code id="elements-3:the-source-element-3"><a href="/breakup/specs/html-media/#the-source-element">source</a></code>*;
+         <code id="elements-3:the-track-element-3"><a href="/breakup/specs/html-media/#the-track-element">track</a></code>*;
          <a href="#transparent" id="elements-3:transparent-8">transparent</a>*</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-106">globals</a>;
-         <code id="elements-3:attr-media-src-2"><a href="#attr-media-src">src</a></code>;
-         <code id="elements-3:attr-media-crossorigin-2"><a href="#attr-media-crossorigin">crossorigin</a></code>;
-         <code id="elements-3:attr-video-poster"><a href="#attr-video-poster">poster</a></code>;
-         <code id="elements-3:attr-media-preload-2"><a href="#attr-media-preload">preload</a></code>;
-         <code id="elements-3:attr-media-autoplay-2"><a href="#attr-media-autoplay">autoplay</a></code>;
-         <code id="elements-3:attr-media-mediagroup-2"><a href="#attr-media-mediagroup">mediagroup</a></code>;
-         <code id="elements-3:attr-media-loop-2"><a href="#attr-media-loop">loop</a></code>;
-         <code id="elements-3:attr-media-muted-2"><a href="#attr-media-muted">muted</a></code>;
-         <code id="elements-3:attr-media-controls-2"><a href="#attr-media-controls">controls</a></code>;
+         <code id="elements-3:attr-media-src-2"><a href="/breakup/specs/html-media/#attr-media-src">src</a></code>;
+         <code id="elements-3:attr-media-crossorigin-2"><a href="/breakup/specs/html-media/#attr-media-crossorigin">crossorigin</a></code>;
+         <code id="elements-3:attr-video-poster"><a href="/breakup/specs/html-media/#attr-video-poster">poster</a></code>;
+         <code id="elements-3:attr-media-preload-2"><a href="/breakup/specs/html-media/#attr-media-preload">preload</a></code>;
+         <code id="elements-3:attr-media-autoplay-2"><a href="/breakup/specs/html-media/#attr-media-autoplay">autoplay</a></code>;
+         <code id="elements-3:attr-media-mediagroup-2"><a href="/breakup/specs/html-media/#attr-media-mediagroup">mediagroup</a></code>;
+         <code id="elements-3:attr-media-loop-2"><a href="/breakup/specs/html-media/#attr-media-loop">loop</a></code>;
+         <code id="elements-3:attr-media-muted-2"><a href="/breakup/specs/html-media/#attr-media-muted">muted</a></code>;
+         <code id="elements-3:attr-media-controls-2"><a href="/breakup/specs/html-media/#attr-media-controls">controls</a></code>;
          <code id="elements-3:attr-dim-width-6"><a href="#attr-dim-width">width</a></code>;
-         <code id="elements-3:attr-dim-height-6"><a href="#attr-dim-height">height</a></code></td><td><code id="elements-3:htmlvideoelement"><a href="#htmlvideoelement">HTMLVideoElement</a></code></td></tr><tr><th><code id="elements-3:the-wbr-element"><a href="/breakup/specs/html-text/#the-wbr-element">wbr</a></code></th><td>Line breaking opportunity</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-129">flow</a>;
+         <code id="elements-3:attr-dim-height-6"><a href="#attr-dim-height">height</a></code></td><td><code id="elements-3:htmlvideoelement"><a href="/breakup/specs/html-media/#htmlvideoelement">HTMLVideoElement</a></code></td></tr><tr><th><code id="elements-3:the-wbr-element"><a href="/breakup/specs/html-text/#the-wbr-element">wbr</a></code></th><td>Line breaking opportunity</td><td><a href="#flow-content-2" id="elements-3:flow-content-2-129">flow</a>;
          <a href="#phrasing-content-2" id="elements-3:phrasing-content-2-142">phrasing</a></td><td><a href="#phrasing-content-2" id="elements-3:phrasing-content-2-143">phrasing</a></td><td>empty</td><td><a href="/breakup/specs/html-attributes/#global-attributes" id="elements-3:global-attributes-107">globals</a></td><td><code id="elements-3:htmlelement-38"><a href="#htmlelement">HTMLElement</a></code></td></tr></tbody></table>
 
   <p class="tablenote"><small>An asterisk (*) in a cell indicates that the actual rules are more
@@ -1765,8 +1765,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> <a href="/breakup/specs/core-algorithms/#url" id="attributes-3:url">URL</a> to use for <a href="/breakup/specs/html-forms/#form-submission-2" id="attributes-3:form-submission-2-2">form submission</a>
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="attributes-3:valid-non-empty-url-potentially-surrounded-by-spaces">Valid non-empty URL potentially surrounded by spaces</a>
     </td></tr><tr><th> <code>allowfullscreen</code>
-     </th><td> <code id="attributes-3:attr-iframe-allowfullscreen"><a href="#attr-iframe-allowfullscreen">iframe</a></code>
-     </td><td> Whether to allow the <code id="attributes-3:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>'s contents to use <code id="attributes-3:dom-element-requestfullscreen"><a href="/breakup/specs/core-algorithms/#dom-element-requestfullscreen">requestFullscreen()</a></code>
+     </th><td> <code id="attributes-3:attr-iframe-allowfullscreen"><a href="/breakup/specs/html-embedding/#attr-iframe-allowfullscreen">iframe</a></code>
+     </td><td> Whether to allow the <code id="attributes-3:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>'s contents to use <code id="attributes-3:dom-element-requestfullscreen"><a href="/breakup/specs/core-algorithms/#dom-element-requestfullscreen">requestFullscreen()</a></code>
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute">Boolean attribute</a>
     </td></tr><tr><th> <code>alt</code>
      </th><td> <code id="attributes-3:attr-area-alt"><a href="/breakup/specs/html-linking/#attr-area-alt">area</a></code>;
@@ -1797,9 +1797,9 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Automatically focus the form control when the page is loaded
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-3">Boolean attribute</a>
     </td></tr><tr><th> <code>autoplay</code>
-     </th><td> <code id="attributes-3:attr-media-autoplay"><a href="#attr-media-autoplay">audio</a></code>;
-          <code id="attributes-3:attr-media-autoplay-2"><a href="#attr-media-autoplay">video</a></code>
-     </td><td> Hint that the <a href="#media-resource" id="attributes-3:media-resource">media resource</a> can be started automatically when the page is loaded
+     </th><td> <code id="attributes-3:attr-media-autoplay"><a href="/breakup/specs/html-media/#attr-media-autoplay">audio</a></code>;
+          <code id="attributes-3:attr-media-autoplay-2"><a href="/breakup/specs/html-media/#attr-media-autoplay">video</a></code>
+     </td><td> Hint that the <a href="/breakup/specs/html-media/#media-resource" id="attributes-3:media-resource">media resource</a> can be started automatically when the page is loaded
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-4">Boolean attribute</a>
     </td></tr><tr><th> <code>challenge</code>
      </th><td> <code id="attributes-3:attr-keygen-challenge"><a href="/breakup/specs/html-forms/#attr-keygen-challenge">keygen</a></code>
@@ -1814,7 +1814,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Character encoding of the external script resource
      </td><td> <a href="/breakup/specs/core-algorithms/#encoding-label" id="attributes-3:encoding-label-3">Encoding label</a>*
     </td></tr><tr><th> <code>checked</code>
-     </th><td> <code id="attributes-3:attr-menuitem-checked"><a href="#attr-menuitem-checked">menuitem</a></code>;
+     </th><td> <code id="attributes-3:attr-menuitem-checked"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">menuitem</a></code>;
           <code id="attributes-3:attr-input-checked"><a href="/breakup/specs/html-forms/#attr-input-checked">input</a></code>
      </td><td> Whether the command or control is checked
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-5">Boolean attribute</a>
@@ -1839,7 +1839,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Number of columns that the cell is to span
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="attributes-3:valid-non-negative-integer-2">Valid non-negative integer</a> greater than zero
     </td></tr><tr><th> <code>command</code>
-     </th><td> <code id="attributes-3:attr-menuitem-command"><a href="#attr-menuitem-command">menuitem</a></code>
+     </th><td> <code id="attributes-3:attr-menuitem-command"><a href="/breakup/specs/html-ui/#attr-menuitem-command">menuitem</a></code>
      </td><td> Command definition
      </td><td> <a href="/breakup/specs/core-algorithms/#concept-id" id="attributes-3:concept-id">ID</a>*
     </td></tr><tr><th> <code>content</code>
@@ -1851,12 +1851,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Whether the element is editable
      </td><td> "<code>true</code>"; "<code>false</code>"
     </td></tr><tr><th> <code>contextmenu</code>
-     </th><td> <a href="#attr-contextmenu" id="attributes-3:attr-contextmenu">HTML elements</a>
+     </th><td> <a href="/breakup/specs/html-ui/#attr-contextmenu" id="attributes-3:attr-contextmenu">HTML elements</a>
      </td><td> The element's context menu
      </td><td> <a href="/breakup/specs/core-algorithms/#concept-id" id="attributes-3:concept-id-2">ID</a>*
     </td></tr><tr><th> <code>controls</code>
-     </th><td> <code id="attributes-3:attr-media-controls"><a href="#attr-media-controls">audio</a></code>;
-          <code id="attributes-3:attr-media-controls-2"><a href="#attr-media-controls">video</a></code>
+     </th><td> <code id="attributes-3:attr-media-controls"><a href="/breakup/specs/html-media/#attr-media-controls">audio</a></code>;
+          <code id="attributes-3:attr-media-controls-2"><a href="/breakup/specs/html-media/#attr-media-controls">video</a></code>
      </td><td> Show user agent controls
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-6">Boolean attribute</a>
     </td></tr><tr><th> <code>coords</code>
@@ -1864,15 +1864,15 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Coordinates for the shape to be created in an <a href="/breakup/specs/html-linking/#image-map" id="attributes-3:image-map">image map</a>
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-list-of-integers" id="attributes-3:valid-list-of-integers">Valid list of integers</a>*
     </td></tr><tr><th> <code>crossorigin</code>
-     </th><td> <code id="attributes-3:attr-media-crossorigin"><a href="#attr-media-crossorigin">audio</a></code>;
+     </th><td> <code id="attributes-3:attr-media-crossorigin"><a href="/breakup/specs/html-media/#attr-media-crossorigin">audio</a></code>;
           <code id="attributes-3:attr-img-crossorigin"><a href="/breakup/specs/html-images/#attr-img-crossorigin">img</a></code>;
           <code id="attributes-3:attr-link-crossorigin"><a href="/breakup/specs/html-metadata/#attr-link-crossorigin">link</a></code>;
           <code id="attributes-3:attr-script-crossorigin"><a href="/breakup/specs/html-scripting/#attr-script-crossorigin">script</a></code>;
-          <code id="attributes-3:attr-media-crossorigin-2"><a href="#attr-media-crossorigin">video</a></code>
+          <code id="attributes-3:attr-media-crossorigin-2"><a href="/breakup/specs/html-media/#attr-media-crossorigin">video</a></code>
      </td><td> How the element handles crossorigin requests
      </td><td> "<code id="attributes-3:attr-crossorigin-anonymous-keyword"><a href="/breakup/specs/core-algorithms/#attr-crossorigin-anonymous-keyword">anonymous</a></code>"; "<code id="attributes-3:attr-crossorigin-use-credentials-keyword"><a href="/breakup/specs/core-algorithms/#attr-crossorigin-use-credentials-keyword">use-credentials</a></code>"
     </td></tr><tr><th> <code>data</code>
-     </th><td> <code id="attributes-3:attr-object-data"><a href="#attr-object-data">object</a></code>
+     </th><td> <code id="attributes-3:attr-object-data"><a href="/breakup/specs/html-embedding/#attr-object-data">object</a></code>
      </td><td> Address of the resource
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="attributes-3:valid-non-empty-url-potentially-surrounded-by-spaces-2">Valid non-empty URL potentially surrounded by spaces</a>
     </td></tr><tr><th> <code>datetime</code>
@@ -1894,12 +1894,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
           <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="attributes-3:valid-non-negative-integer-3">valid non-negative integer</a>, or
           <a href="/breakup/specs/core-algorithms/#valid-duration-string" id="attributes-3:valid-duration-string">valid duration string</a>
     </td></tr><tr><th> <code>default</code>
-     </th><td> <code id="attributes-3:attr-menuitem-default"><a href="#attr-menuitem-default">menuitem</a></code>
+     </th><td> <code id="attributes-3:attr-menuitem-default"><a href="/breakup/specs/html-ui/#attr-menuitem-default">menuitem</a></code>
      </td><td> Mark the command as being a default command
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-7">Boolean attribute</a>
     </td></tr><tr><th> <code>default</code>
-     </th><td> <code id="attributes-3:attr-track-default"><a href="#attr-track-default">track</a></code>
-     </td><td> Enable the track if no other <a href="#text-track" id="attributes-3:text-track">text track</a> is more suitable
+     </th><td> <code id="attributes-3:attr-track-default"><a href="/breakup/specs/html-media/#attr-track-default">track</a></code>
+     </td><td> Enable the track if no other <a href="/breakup/specs/html-media/#text-track" id="attributes-3:text-track">text track</a> is more suitable
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-8">Boolean attribute</a>
     </td></tr><tr><th> <code>defer</code>
      </th><td> <code id="attributes-3:attr-script-defer"><a href="/breakup/specs/html-scripting/#attr-script-defer">script</a></code>
@@ -1920,7 +1920,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> <a href="#attribute-text">Text</a>*
     </td></tr><tr><th> <code>disabled</code>
      </th><td> <code id="attributes-3:attr-fe-disabled"><a href="/breakup/specs/html-forms/#attr-fe-disabled">button</a></code>;
-          <code id="attributes-3:attr-menuitem-disabled"><a href="#attr-menuitem-disabled">menuitem</a></code>;
+          <code id="attributes-3:attr-menuitem-disabled"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">menuitem</a></code>;
           <code id="attributes-3:attr-fieldset-disabled"><a href="/breakup/specs/html-forms/#attr-fieldset-disabled">fieldset</a></code>;
           <code id="attributes-3:attr-fe-disabled-2"><a href="/breakup/specs/html-forms/#attr-fe-disabled">input</a></code>;
           <code id="attributes-3:attr-fe-disabled-3"><a href="/breakup/specs/html-forms/#attr-fe-disabled">keygen</a></code>;
@@ -2039,7 +2039,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Pragma directive
      </td><td> <a href="#attribute-text">Text</a>*
     </td></tr><tr><th> <code>icon</code>
-     </th><td> <code id="attributes-3:attr-menuitem-icon"><a href="#attr-menuitem-icon">menuitem</a></code>
+     </th><td> <code id="attributes-3:attr-menuitem-icon"><a href="/breakup/specs/html-ui/#attr-menuitem-icon">menuitem</a></code>
      </td><td> Icon for the command
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="attributes-3:valid-non-empty-url-potentially-surrounded-by-spaces-5">Valid non-empty URL potentially surrounded by spaces</a>
     </td></tr><tr><th> <code>id</code>
@@ -2092,19 +2092,19 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> The type of cryptographic key to generate
      </td><td> <a href="#attribute-text">Text</a>*
     </td></tr><tr><th> <code>kind</code>
-     </th><td> <code id="attributes-3:attr-track-kind"><a href="#attr-track-kind">track</a></code>
+     </th><td> <code id="attributes-3:attr-track-kind"><a href="/breakup/specs/html-media/#attr-track-kind">track</a></code>
      </td><td> The type of text track
-     </td><td> "<code id="attributes-3:attr-track-kind-subtitles"><a href="#attr-track-kind-subtitles">subtitles</a></code>";
-          "<code id="attributes-3:attr-track-kind-captions"><a href="#attr-track-kind-captions">captions</a></code>";
-          "<code id="attributes-3:attr-track-kind-descriptions"><a href="#attr-track-kind-descriptions">descriptions</a></code>";
-          "<code id="attributes-3:attr-track-kind-chapters"><a href="#attr-track-kind-chapters">chapters</a></code>";
-          "<code id="attributes-3:attr-track-kind-metadata"><a href="#attr-track-kind-metadata">metadata</a></code>"
+     </td><td> "<code id="attributes-3:attr-track-kind-subtitles"><a href="/breakup/specs/html-media/#attr-track-kind-subtitles">subtitles</a></code>";
+          "<code id="attributes-3:attr-track-kind-captions"><a href="/breakup/specs/html-media/#attr-track-kind-captions">captions</a></code>";
+          "<code id="attributes-3:attr-track-kind-descriptions"><a href="/breakup/specs/html-media/#attr-track-kind-descriptions">descriptions</a></code>";
+          "<code id="attributes-3:attr-track-kind-chapters"><a href="/breakup/specs/html-media/#attr-track-kind-chapters">chapters</a></code>";
+          "<code id="attributes-3:attr-track-kind-metadata"><a href="/breakup/specs/html-media/#attr-track-kind-metadata">metadata</a></code>"
     </td></tr><tr><th> <code>label</code>
-     </th><td> <code id="attributes-3:attr-menuitem-label"><a href="#attr-menuitem-label">menuitem</a></code>;
-          <code id="attributes-3:attr-menu-label"><a href="#attr-menu-label">menu</a></code>;
+     </th><td> <code id="attributes-3:attr-menuitem-label"><a href="/breakup/specs/html-ui/#attr-menuitem-label">menuitem</a></code>;
+          <code id="attributes-3:attr-menu-label"><a href="/breakup/specs/html-ui/#attr-menu-label">menu</a></code>;
           <code id="attributes-3:attr-optgroup-label"><a href="/breakup/specs/html-forms/#attr-optgroup-label">optgroup</a></code>;
           <code id="attributes-3:attr-option-label"><a href="/breakup/specs/html-forms/#attr-option-label">option</a></code>;
-          <code id="attributes-3:attr-track-label"><a href="#attr-track-label">track</a></code>
+          <code id="attributes-3:attr-track-label"><a href="/breakup/specs/html-media/#attr-track-label">track</a></code>
      </td><td> User-visible label
      </td><td> <a href="#attribute-text">Text</a>
     </td></tr><tr><th> <code>lang</code>
@@ -2116,9 +2116,9 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> List of autocomplete options
      </td><td> <a href="/breakup/specs/core-algorithms/#concept-id" id="attributes-3:concept-id-6">ID</a>*
     </td></tr><tr><th> <code>loop</code>
-     </th><td> <code id="attributes-3:attr-media-loop"><a href="#attr-media-loop">audio</a></code>;
-          <code id="attributes-3:attr-media-loop-2"><a href="#attr-media-loop">video</a></code>
-     </td><td> Whether to loop the <a href="#media-resource" id="attributes-3:media-resource-2">media resource</a>
+     </th><td> <code id="attributes-3:attr-media-loop"><a href="/breakup/specs/html-media/#attr-media-loop">audio</a></code>;
+          <code id="attributes-3:attr-media-loop-2"><a href="/breakup/specs/html-media/#attr-media-loop">video</a></code>
+     </td><td> Whether to loop the <a href="/breakup/specs/html-media/#media-resource" id="attributes-3:media-resource-2">media resource</a>
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-15">Boolean attribute</a>
     </td></tr><tr><th> <code>low</code>
      </th><td> <code id="attributes-3:attr-meter-low"><a href="/breakup/specs/html-forms/#attr-meter-low">meter</a></code>
@@ -2148,9 +2148,9 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Applicable media
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-media-query-list" id="attributes-3:valid-media-query-list">Valid media query list</a>
     </td></tr><tr><th> <code>mediagroup</code>
-     </th><td> <code id="attributes-3:attr-media-mediagroup"><a href="#attr-media-mediagroup">audio</a></code>;
-          <code id="attributes-3:attr-media-mediagroup-2"><a href="#attr-media-mediagroup">video</a></code>
-     </td><td> Groups <a href="#media-element" id="attributes-3:media-element">media elements</a> together with an implicit <code id="attributes-3:mediacontroller"><a href="#mediacontroller">MediaController</a></code>
+     </th><td> <code id="attributes-3:attr-media-mediagroup"><a href="/breakup/specs/html-media/#attr-media-mediagroup">audio</a></code>;
+          <code id="attributes-3:attr-media-mediagroup-2"><a href="/breakup/specs/html-media/#attr-media-mediagroup">video</a></code>
+     </td><td> Groups <a href="/breakup/specs/html-media/#media-element" id="attributes-3:media-element">media elements</a> together with an implicit <code id="attributes-3:mediacontroller"><a href="/breakup/specs/html-media/#mediacontroller">MediaController</a></code>
      </td><td> <a href="#attribute-text">Text</a>
     </td></tr><tr><th> <code>menu</code>
      </th><td> <code id="attributes-3:attr-button-menu"><a href="/breakup/specs/html-forms/#attr-button-menu">button</a></code>
@@ -2181,9 +2181,9 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Whether to allow multiple values
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-16">Boolean attribute</a>
     </td></tr><tr><th> <code>muted</code>
-     </th><td> <code id="attributes-3:attr-media-muted"><a href="#attr-media-muted">audio</a></code>;
-          <code id="attributes-3:attr-media-muted-2"><a href="#attr-media-muted">video</a></code>
-     </td><td> Whether to mute the <a href="#media-resource" id="attributes-3:media-resource-3">media resource</a> by default
+     </th><td> <code id="attributes-3:attr-media-muted"><a href="/breakup/specs/html-media/#attr-media-muted">audio</a></code>;
+          <code id="attributes-3:attr-media-muted-2"><a href="/breakup/specs/html-media/#attr-media-muted">video</a></code>
+     </td><td> Whether to mute the <a href="/breakup/specs/html-media/#media-resource" id="attributes-3:media-resource-3">media resource</a> by default
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-17">Boolean attribute</a>
     </td></tr><tr><th> <code>name</code>
      </th><td> <code id="attributes-3:attr-fe-name"><a href="/breakup/specs/html-forms/#attr-fe-name">button</a></code>;
@@ -2200,8 +2200,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Name of form to use in the <code id="attributes-3:dom-document-forms"><a href="/breakup/specs/browser-dom/#dom-document-forms">document.forms</a></code> API
      </td><td> <a href="#attribute-text">Text</a>*
     </td></tr><tr><th> <code>name</code>
-     </th><td> <code id="attributes-3:attr-iframe-name"><a href="#attr-iframe-name">iframe</a></code>;
-          <code id="attributes-3:attr-object-name"><a href="#attr-object-name">object</a></code>
+     </th><td> <code id="attributes-3:attr-iframe-name"><a href="/breakup/specs/html-embedding/#attr-iframe-name">iframe</a></code>;
+          <code id="attributes-3:attr-object-name"><a href="/breakup/specs/html-embedding/#attr-object-name">object</a></code>
      </td><td> Name of <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="attributes-3:nested-browsing-context">nested browsing context</a>
      </td><td> <a href="/breakup/specs/browser-dom/#valid-browsing-context-name-or-keyword" id="attributes-3:valid-browsing-context-name-or-keyword-2">Valid browsing context name or keyword</a>
     </td></tr><tr><th> <code>name</code>
@@ -2213,7 +2213,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Metadata name
      </td><td> <a href="#attribute-text">Text</a>*
     </td></tr><tr><th> <code>name</code>
-     </th><td> <code id="attributes-3:attr-param-name"><a href="#attr-param-name">param</a></code>
+     </th><td> <code id="attributes-3:attr-param-name"><a href="/breakup/specs/html-embedding/#attr-param-name">param</a></code>
      </td><td> Name of parameter
      </td><td> <a href="#attribute-text">Text</a>
     </td></tr><tr><th> <code>novalidate</code>
@@ -2221,11 +2221,11 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Bypass form control validation for <a href="/breakup/specs/html-forms/#form-submission-2" id="attributes-3:form-submission-2-12">form submission</a>
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-18">Boolean attribute</a>
     </td></tr><tr><th> <code>open</code>
-     </th><td> <code id="attributes-3:attr-details-open"><a href="#attr-details-open">details</a></code>
+     </th><td> <code id="attributes-3:attr-details-open"><a href="/breakup/specs/html-ui/#attr-details-open">details</a></code>
      </td><td> Whether the details are visible
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-19">Boolean attribute</a>
     </td></tr><tr><th> <code>open</code>
-     </th><td> <code id="attributes-3:attr-dialog-open"><a href="#attr-dialog-open">dialog</a></code>
+     </th><td> <code id="attributes-3:attr-dialog-open"><a href="/breakup/specs/html-ui/#attr-dialog-open">dialog</a></code>
      </td><td> Whether the dialog box is showing
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-20">Boolean attribute</a>
     </td></tr><tr><th> <code>optimum</code>
@@ -2242,18 +2242,18 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> User-visible label to be placed within the form control
      </td><td> <a href="#attribute-text">Text</a>*
     </td></tr><tr><th> <code>poster</code>
-     </th><td> <code id="attributes-3:attr-video-poster"><a href="#attr-video-poster">video</a></code>
+     </th><td> <code id="attributes-3:attr-video-poster"><a href="/breakup/specs/html-media/#attr-video-poster">video</a></code>
      </td><td> Poster frame to show prior to video playback
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="attributes-3:valid-non-empty-url-potentially-surrounded-by-spaces-7">Valid non-empty URL potentially surrounded by spaces</a>
     </td></tr><tr><th> <code>preload</code>
-     </th><td> <code id="attributes-3:attr-media-preload"><a href="#attr-media-preload">audio</a></code>;
-          <code id="attributes-3:attr-media-preload-2"><a href="#attr-media-preload">video</a></code>
-     </td><td> Hints how much buffering the <a href="#media-resource" id="attributes-3:media-resource-4">media resource</a> will likely need
-     </td><td> "<code id="attributes-3:attr-media-preload-none"><a href="#attr-media-preload-none">none</a></code>";
-          "<code id="attributes-3:attr-media-preload-metadata"><a href="#attr-media-preload-metadata">metadata</a></code>";
-          "<code id="attributes-3:attr-media-preload-auto"><a href="#attr-media-preload-auto">auto</a></code>"
+     </th><td> <code id="attributes-3:attr-media-preload"><a href="/breakup/specs/html-media/#attr-media-preload">audio</a></code>;
+          <code id="attributes-3:attr-media-preload-2"><a href="/breakup/specs/html-media/#attr-media-preload">video</a></code>
+     </td><td> Hints how much buffering the <a href="/breakup/specs/html-media/#media-resource" id="attributes-3:media-resource-4">media resource</a> will likely need
+     </td><td> "<code id="attributes-3:attr-media-preload-none"><a href="/breakup/specs/html-media/#attr-media-preload-none">none</a></code>";
+          "<code id="attributes-3:attr-media-preload-metadata"><a href="/breakup/specs/html-media/#attr-media-preload-metadata">metadata</a></code>";
+          "<code id="attributes-3:attr-media-preload-auto"><a href="/breakup/specs/html-media/#attr-media-preload-auto">auto</a></code>"
     </td></tr><tr><th> <code>radiogroup</code>
-     </th><td> <code id="attributes-3:attr-menuitem-radiogroup"><a href="#attr-menuitem-radiogroup">menuitem</a></code>
+     </th><td> <code id="attributes-3:attr-menuitem-radiogroup"><a href="/breakup/specs/html-ui/#attr-menuitem-radiogroup">menuitem</a></code>
      </td><td> Name of group of commands to treat as a radio button group
      </td><td> <a href="#attribute-text">Text</a>
     </td></tr><tr><th> <code>readonly</code>
@@ -2287,7 +2287,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Number of rows that the cell is to span
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="attributes-3:valid-non-negative-integer-8">Valid non-negative integer</a>
     </td></tr><tr><th> <code>sandbox</code>
-     </th><td> <code id="attributes-3:attr-iframe-sandbox"><a href="#attr-iframe-sandbox">iframe</a></code>
+     </th><td> <code id="attributes-3:attr-iframe-sandbox"><a href="/breakup/specs/html-embedding/#attr-iframe-sandbox">iframe</a></code>
      </td><td> Security rules for nested content
      </td><td> <a href="/breakup/specs/core-algorithms/#unordered-set-of-unique-space-separated-tokens" id="attributes-3:unordered-set-of-unique-space-separated-tokens-7">Unordered set of unique space-separated tokens</a>, <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="attributes-3:ascii-case-insensitive-3">ASCII case-insensitive</a>, consisting of
           "<code id="attributes-3:attr-iframe-sandbox-allow-forms"><a href="/breakup/specs/browser-dom/#attr-iframe-sandbox-allow-forms">allow-forms</a></code>",
@@ -2312,7 +2312,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Whether the styles apply to the entire document or just the parent subtree
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-24">Boolean attribute</a>
     </td></tr><tr><th> <code>seamless</code>
-     </th><td> <code id="attributes-3:attr-iframe-seamless"><a href="#attr-iframe-seamless">iframe</a></code>
+     </th><td> <code id="attributes-3:attr-iframe-seamless"><a href="/breakup/specs/html-embedding/#attr-iframe-seamless">iframe</a></code>
      </td><td> Whether to apply the document's styles to the nested content
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-25">Boolean attribute</a>
     </td></tr><tr><th> <code>selected</code>
@@ -2349,23 +2349,23 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Number of columns spanned by the element
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="attributes-3:valid-non-negative-integer-11">Valid non-negative integer</a> greater than zero
     </td></tr><tr><th> <code>src</code>
-     </th><td> <code id="attributes-3:attr-media-src"><a href="#attr-media-src">audio</a></code>;
-          <code id="attributes-3:attr-embed-src"><a href="#attr-embed-src">embed</a></code>;
-          <code id="attributes-3:attr-iframe-src"><a href="#attr-iframe-src">iframe</a></code>;
+     </th><td> <code id="attributes-3:attr-media-src"><a href="/breakup/specs/html-media/#attr-media-src">audio</a></code>;
+          <code id="attributes-3:attr-embed-src"><a href="/breakup/specs/html-embedding/#attr-embed-src">embed</a></code>;
+          <code id="attributes-3:attr-iframe-src"><a href="/breakup/specs/html-embedding/#attr-iframe-src">iframe</a></code>;
           <code id="attributes-3:attr-img-src"><a href="/breakup/specs/html-images/#attr-img-src">img</a></code>;
           <code id="attributes-3:attr-input-src"><a href="/breakup/specs/html-forms/#attr-input-src">input</a></code>;
           <code id="attributes-3:attr-script-src"><a href="/breakup/specs/html-scripting/#attr-script-src">script</a></code>;
-          <code id="attributes-3:attr-source-src"><a href="#attr-source-src">source</a></code>;
-          <code id="attributes-3:attr-track-src"><a href="#attr-track-src">track</a></code>;
-          <code id="attributes-3:attr-media-src-2"><a href="#attr-media-src">video</a></code>
+          <code id="attributes-3:attr-source-src"><a href="/breakup/specs/html-media/#attr-source-src">source</a></code>;
+          <code id="attributes-3:attr-track-src"><a href="/breakup/specs/html-media/#attr-track-src">track</a></code>;
+          <code id="attributes-3:attr-media-src-2"><a href="/breakup/specs/html-media/#attr-media-src">video</a></code>
      </td><td> Address of the resource
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="attributes-3:valid-non-empty-url-potentially-surrounded-by-spaces-8">Valid non-empty URL potentially surrounded by spaces</a>
     </td></tr><tr><th> <code>srcdoc</code>
-     </th><td> <code id="attributes-3:attr-iframe-srcdoc"><a href="#attr-iframe-srcdoc">iframe</a></code>
-     </td><td> A document to render in the <code id="attributes-3:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code>
-     </td><td> The source of <a href="#an-iframe-srcdoc-document" id="attributes-3:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a>*
+     </th><td> <code id="attributes-3:attr-iframe-srcdoc"><a href="/breakup/specs/html-embedding/#attr-iframe-srcdoc">iframe</a></code>
+     </td><td> A document to render in the <code id="attributes-3:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>
+     </td><td> The source of <a href="/breakup/specs/html-embedding/#an-iframe-srcdoc-document" id="attributes-3:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a>*
     </td></tr><tr><th> <code>srclang</code>
-     </th><td> <code id="attributes-3:attr-track-srclang"><a href="#attr-track-srclang">track</a></code>
+     </th><td> <code id="attributes-3:attr-track-srclang"><a href="/breakup/specs/html-media/#attr-track-srclang">track</a></code>
      </td><td> Language of the text track
      </td><td> Valid BCP 47 language tag
     </td></tr><tr><th> <code>srcset</code>
@@ -2415,7 +2415,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Description of pattern (when used with <code id="attributes-3:attr-input-pattern-2"><a href="/breakup/specs/html-forms/#attr-input-pattern">pattern</a></code> attribute)
      </td><td> <a href="#attribute-text">Text</a>
     </td></tr><tr><th> <code>title</code>
-     </th><td> <code id="attributes-3:attr-menuitem-title"><a href="#attr-menuitem-title">menuitem</a></code>
+     </th><td> <code id="attributes-3:attr-menuitem-title"><a href="/breakup/specs/html-ui/#attr-menuitem-title">menuitem</a></code>
      </td><td> Hint describing the command
      </td><td> <a href="#attribute-text">Text</a>
     </td></tr><tr><th> <code>title</code>
@@ -2445,10 +2445,10 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
           "<code id="attributes-3:attr-button-type-button"><a href="/breakup/specs/html-forms/#attr-button-type-button">button</a></code>";
           "<code id="attributes-3:attr-button-type-menu"><a href="/breakup/specs/html-forms/#attr-button-type-menu">menu</a></code>"
     </td></tr><tr><th> <code>type</code>
-     </th><td> <code id="attributes-3:attr-embed-type"><a href="#attr-embed-type">embed</a></code>;
-          <code id="attributes-3:attr-object-type"><a href="#attr-object-type">object</a></code>;
+     </th><td> <code id="attributes-3:attr-embed-type"><a href="/breakup/specs/html-embedding/#attr-embed-type">embed</a></code>;
+          <code id="attributes-3:attr-object-type"><a href="/breakup/specs/html-embedding/#attr-object-type">object</a></code>;
           <code id="attributes-3:attr-script-type"><a href="/breakup/specs/html-scripting/#attr-script-type">script</a></code>;
-          <code id="attributes-3:attr-source-type"><a href="#attr-source-type">source</a></code>;
+          <code id="attributes-3:attr-source-type"><a href="/breakup/specs/html-media/#attr-source-type">source</a></code>;
           <code id="attributes-3:attr-style-type"><a href="/breakup/specs/html-styling/#attr-style-type">style</a></code>
      </td><td> Type of embedded resource
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-mime-type" id="attributes-3:valid-mime-type-3">Valid MIME type</a>
@@ -2457,15 +2457,15 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Type of form control
      </td><td> <a href="/breakup/specs/html-forms/#attr-input-type" id="attributes-3:attr-input-type-2"><code>input</code> type keyword</a>
     </td></tr><tr><th> <code>type</code>
-     </th><td> <code id="attributes-3:attr-menu-type"><a href="#attr-menu-type">menu</a></code>
+     </th><td> <code id="attributes-3:attr-menu-type"><a href="/breakup/specs/html-ui/#attr-menu-type">menu</a></code>
      </td><td> Type of menu
-     </td><td> "<code id="attributes-3:popup-menu-state"><a href="#popup-menu-state">popup</a></code>"; "<code id="attributes-3:toolbar-state"><a href="#toolbar-state">toolbar</a></code>"
+     </td><td> "<code id="attributes-3:popup-menu-state"><a href="/breakup/specs/html-ui/#popup-menu-state">popup</a></code>"; "<code id="attributes-3:toolbar-state"><a href="/breakup/specs/html-ui/#toolbar-state">toolbar</a></code>"
     </td></tr><tr><th> <code>type</code>
-     </th><td> <code id="attributes-3:attr-menuitem-type"><a href="#attr-menuitem-type">menuitem</a></code>
+     </th><td> <code id="attributes-3:attr-menuitem-type"><a href="/breakup/specs/html-ui/#attr-menuitem-type">menuitem</a></code>
      </td><td> Type of command
-     </td><td> "<code id="attributes-3:attr-menuitem-type-keyword-command"><a href="#attr-menuitem-type-keyword-command">command</a></code>";
-          "<code id="attributes-3:attr-menuitem-type-keyword-checkbox"><a href="#attr-menuitem-type-keyword-checkbox">checkbox</a></code>";
-          "<code id="attributes-3:attr-menuitem-type-keyword-radio"><a href="#attr-menuitem-type-keyword-radio">radio</a></code>"
+     </td><td> "<code id="attributes-3:attr-menuitem-type-keyword-command"><a href="/breakup/specs/html-ui/#attr-menuitem-type-keyword-command">command</a></code>";
+          "<code id="attributes-3:attr-menuitem-type-keyword-checkbox"><a href="/breakup/specs/html-ui/#attr-menuitem-type-keyword-checkbox">checkbox</a></code>";
+          "<code id="attributes-3:attr-menuitem-type-keyword-radio"><a href="/breakup/specs/html-ui/#attr-menuitem-type-keyword-radio">radio</a></code>"
     </td></tr><tr><th> <code>type</code>
      </th><td> <code id="attributes-3:attr-ol-type"><a href="/breakup/specs/html-lists/#attr-ol-type">ol</a></code>
      </td><td> Kind of list marker
@@ -2475,8 +2475,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
           "<code id="attributes-3:attr-ol-type-keyword-lower-roman"><a href="/breakup/specs/html-lists/#attr-ol-type-keyword-lower-roman">i</a></code>";
           "<code id="attributes-3:attr-ol-type-keyword-upper-roman"><a href="/breakup/specs/html-lists/#attr-ol-type-keyword-upper-roman">I</a></code>"
     </td></tr><tr><th> <code>typemustmatch</code>
-     </th><td> <code id="attributes-3:attr-object-typemustmatch"><a href="#attr-object-typemustmatch">object</a></code>
-     </td><td> Whether the <code id="attributes-3:attr-object-type-2"><a href="#attr-object-type">type</a></code> attribute and the <a href="/breakup/specs/core-algorithms/#content-type" id="attributes-3:content-type">Content-Type</a> value need to match for the resource to be used
+     </th><td> <code id="attributes-3:attr-object-typemustmatch"><a href="/breakup/specs/html-embedding/#attr-object-typemustmatch">object</a></code>
+     </td><td> Whether the <code id="attributes-3:attr-object-type-2"><a href="/breakup/specs/html-embedding/#attr-object-type">type</a></code> attribute and the <a href="/breakup/specs/core-algorithms/#content-type" id="attributes-3:content-type">Content-Type</a> value need to match for the resource to be used
      </td><td> <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="attributes-3:boolean-attribute-28">Boolean attribute</a>
     </td></tr><tr><th> <code>usemap</code>
      </th><td> <code id="attributes-3:attr-hyperlink-usemap-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">img</a></code>;
@@ -2506,7 +2506,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Current value of the element
      </td><td> <a href="/breakup/specs/core-algorithms/#valid-floating-point-number" id="attributes-3:valid-floating-point-number-7">Valid floating-point number</a>
     </td></tr><tr><th> <code>value</code>
-     </th><td> <code id="attributes-3:attr-param-value"><a href="#attr-param-value">param</a></code>
+     </th><td> <code id="attributes-3:attr-param-value"><a href="/breakup/specs/html-embedding/#attr-param-value">param</a></code>
      </td><td> Value of parameter
      </td><td> <a href="#attribute-text">Text</a>
     </td></tr><tr><th> <code>width</code>
@@ -2577,12 +2577,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-oncanplay"> <code>oncanplay</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-oncanplay" id="attributes-3:handler-oncanplay">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-canplay"><a href="#event-media-canplay">canplay</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-canplay"><a href="/breakup/specs/html-media/#event-media-canplay">canplay</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-9">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-oncanplaythrough"> <code>oncanplaythrough</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-oncanplaythrough" id="attributes-3:handler-oncanplaythrough">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-canplaythrough"><a href="#event-media-canplaythrough">canplaythrough</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-canplaythrough"><a href="/breakup/specs/html-media/#event-media-canplaythrough">canplaythrough</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-10">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onchange"> <code>onchange</code>
@@ -2607,7 +2607,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-oncuechange"> <code>oncuechange</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-oncuechange" id="attributes-3:handler-oncuechange">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-cuechange"><a href="#event-media-cuechange">cuechange</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-cuechange"><a href="/breakup/specs/html-media/#event-media-cuechange">cuechange</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-15">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-ondblclick"> <code>ondblclick</code>
@@ -2657,17 +2657,17 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-ondurationchange"> <code>ondurationchange</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-ondurationchange" id="attributes-3:handler-ondurationchange">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-durationchange"><a href="#event-media-durationchange">durationchange</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-durationchange"><a href="/breakup/specs/html-media/#event-media-durationchange">durationchange</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-25">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onemptied"> <code>onemptied</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onemptied" id="attributes-3:handler-onemptied">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-emptied"><a href="#event-media-emptied">emptied</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-emptied"><a href="/breakup/specs/html-media/#event-media-emptied">emptied</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-26">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onended"> <code>onended</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onended" id="attributes-3:handler-onended">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-ended"><a href="#event-media-ended">ended</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-ended"><a href="/breakup/specs/html-media/#event-media-ended">ended</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-27">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onerror"> <code>onerror</code>
@@ -2722,17 +2722,17 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-onloadeddata"> <code>onloadeddata</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onloadeddata" id="attributes-3:handler-onloadeddata">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-loadeddata"><a href="#event-media-loadeddata">loadeddata</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-loadeddata"><a href="/breakup/specs/html-media/#event-media-loadeddata">loadeddata</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-38">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onloadedmetadata"> <code>onloadedmetadata</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onloadedmetadata" id="attributes-3:handler-onloadedmetadata">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-loadedmetadata"><a href="#event-media-loadedmetadata">loadedmetadata</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-loadedmetadata"><a href="/breakup/specs/html-media/#event-media-loadedmetadata">loadedmetadata</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-39">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onloadstart"> <code>onloadstart</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onloadstart" id="attributes-3:handler-onloadstart">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-loadstart"><a href="#event-media-loadstart">loadstart</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-loadstart"><a href="/breakup/specs/html-media/#event-media-loadstart">loadstart</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-40">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-window-onmessage"> <code>onmessage</code>
@@ -2802,17 +2802,17 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-onpause"> <code>onpause</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onpause" id="attributes-3:handler-onpause">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-pause"><a href="#event-media-pause">pause</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-pause"><a href="/breakup/specs/html-media/#event-media-pause">pause</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-54">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onplay"> <code>onplay</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onplay" id="attributes-3:handler-onplay">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-play"><a href="#event-media-play">play</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-play"><a href="/breakup/specs/html-media/#event-media-play">play</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-55">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onplaying"> <code>onplaying</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onplaying" id="attributes-3:handler-onplaying">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-playing"><a href="#event-media-playing">playing</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-playing"><a href="/breakup/specs/html-media/#event-media-playing">playing</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-56">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-window-onpopstate"> <code>onpopstate</code>
@@ -2822,12 +2822,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-onprogress"> <code>onprogress</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onprogress" id="attributes-3:handler-onprogress">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-progress"><a href="#event-media-progress">progress</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-progress"><a href="/breakup/specs/html-media/#event-media-progress">progress</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-58">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onratechange"> <code>onratechange</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onratechange" id="attributes-3:handler-onratechange">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-ratechange"><a href="#event-media-ratechange">ratechange</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-ratechange"><a href="/breakup/specs/html-media/#event-media-ratechange">ratechange</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-59">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onreset"> <code>onreset</code>
@@ -2847,12 +2847,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-onseeked"> <code>onseeked</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onseeked" id="attributes-3:handler-onseeked">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-seeked"><a href="#event-media-seeked">seeked</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-seeked"><a href="/breakup/specs/html-media/#event-media-seeked">seeked</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-63">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onseeking"> <code>onseeking</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onseeking" id="attributes-3:handler-onseeking">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-seeking"><a href="#event-media-seeking">seeking</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-seeking"><a href="/breakup/specs/html-media/#event-media-seeking">seeking</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-64">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onselect"> <code>onselect</code>
@@ -2872,7 +2872,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-onstalled"> <code>onstalled</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onstalled" id="attributes-3:handler-onstalled">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-stalled"><a href="#event-media-stalled">stalled</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-stalled"><a href="/breakup/specs/html-media/#event-media-stalled">stalled</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-68">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-window-onstorage"> <code>onstorage</code>
@@ -2887,12 +2887,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-onsuspend"> <code>onsuspend</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onsuspend" id="attributes-3:handler-onsuspend">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-suspend"><a href="#event-media-suspend">suspend</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-suspend"><a href="/breakup/specs/html-media/#event-media-suspend">suspend</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-71">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-ontimeupdate"> <code>ontimeupdate</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-ontimeupdate" id="attributes-3:handler-ontimeupdate">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-timeupdate"><a href="#event-media-timeupdate">timeupdate</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-timeupdate"><a href="/breakup/specs/html-media/#event-media-timeupdate">timeupdate</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-72">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-ontoggle"> <code>ontoggle</code>
@@ -2907,12 +2907,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><th id="ix-handler-onvolumechange"> <code>onvolumechange</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onvolumechange" id="attributes-3:handler-onvolumechange">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-volumechange"><a href="#event-media-volumechange">volumechange</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-volumechange"><a href="/breakup/specs/html-media/#event-media-volumechange">volumechange</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-75">Event handler content attribute</a>
 
     </td></tr><tr><th id="ix-handler-onwaiting"> <code>onwaiting</code>
      </th><td> <a href="/breakup/specs/browser-dom/#handler-onwaiting" id="attributes-3:handler-onwaiting">HTML elements</a>
-     </td><td> <code id="attributes-3:event-media-waiting"><a href="#event-media-waiting">waiting</a></code> event handler
+     </td><td> <code id="attributes-3:event-media-waiting"><a href="/breakup/specs/html-media/#event-media-waiting">waiting</a></code> event handler
      </td><td> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="attributes-3:event-handler-content-attributes-76">Event handler content attribute</a>
 
   </td></tr></tbody></table></section><section><h2>Element Interfaces</h2>
@@ -2939,8 +2939,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-aside-element"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code>
      </td><td> <code id="element-interfaces:htmlelement-6"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-audio-element"><a href="#the-audio-element">audio</a></code>
-     </td><td> <code id="element-interfaces:htmlaudioelement"><a href="#htmlaudioelement">HTMLAudioElement</a></code> : <code id="element-interfaces:htmlmediaelement"><a href="#htmlmediaelement">HTMLMediaElement</a></code> : <code id="element-interfaces:htmlelement-7"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code>
+     </td><td> <code id="element-interfaces:htmlaudioelement"><a href="/breakup/specs/html-media/#htmlaudioelement">HTMLAudioElement</a></code> : <code id="element-interfaces:htmlmediaelement"><a href="/breakup/specs/html-media/#htmlmediaelement">HTMLMediaElement</a></code> : <code id="element-interfaces:htmlelement-7"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-b-element"><a href="/breakup/specs/html-text/#the-b-element">b</a></code>
      </td><td> <code id="element-interfaces:htmlelement-8"><a href="#htmlelement">HTMLElement</a></code>
@@ -2984,8 +2984,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>
      </td><td> <code id="element-interfaces:htmltablecolelement-2"><a href="/breakup/specs/html-tables/#htmltablecolelement">HTMLTableColElement</a></code> : <code id="element-interfaces:htmlelement-21"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-menuitem-element"><a href="#the-menuitem-element">menuitem</a></code>
-     </td><td> <code id="element-interfaces:htmlmenuitemelement"><a href="#htmlmenuitemelement">HTMLMenuItemElement</a></code> : <code id="element-interfaces:htmlelement-22"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code>
+     </td><td> <code id="element-interfaces:htmlmenuitemelement"><a href="/breakup/specs/html-ui/#htmlmenuitemelement">HTMLMenuItemElement</a></code> : <code id="element-interfaces:htmlelement-22"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-data-element"><a href="/breakup/specs/html-text/#the-data-element">data</a></code>
      </td><td> <code id="element-interfaces:htmldataelement"><a href="/breakup/specs/html-text/#htmldataelement">HTMLDataElement</a></code> : <code id="element-interfaces:htmlelement-23"><a href="#htmlelement">HTMLElement</a></code>
@@ -2999,14 +2999,14 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-del-element"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code>
      </td><td> <code id="element-interfaces:htmlmodelement"><a href="/breakup/specs/html-edits/#htmlmodelement">HTMLModElement</a></code> : <code id="element-interfaces:htmlelement-26"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-details-element"><a href="#the-details-element">details</a></code>
-     </td><td> <code id="element-interfaces:htmldetailselement"><a href="#htmldetailselement">HTMLDetailsElement</a></code> : <code id="element-interfaces:htmlelement-27"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code>
+     </td><td> <code id="element-interfaces:htmldetailselement"><a href="/breakup/specs/html-ui/#htmldetailselement">HTMLDetailsElement</a></code> : <code id="element-interfaces:htmlelement-27"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code>
      </td><td> <code id="element-interfaces:htmlelement-28"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-dialog-element"><a href="#the-dialog-element">dialog</a></code>
-     </td><td> <code id="element-interfaces:htmldialogelement"><a href="#htmldialogelement">HTMLDialogElement</a></code> : <code id="element-interfaces:htmlelement-29"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-dialog-element"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code>
+     </td><td> <code id="element-interfaces:htmldialogelement"><a href="/breakup/specs/html-ui/#htmldialogelement">HTMLDialogElement</a></code> : <code id="element-interfaces:htmlelement-29"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code>
      </td><td> <code id="element-interfaces:htmldivelement"><a href="/breakup/specs/html-blocks/#htmldivelement">HTMLDivElement</a></code> : <code id="element-interfaces:htmlelement-30"><a href="#htmlelement">HTMLElement</a></code>
@@ -3020,8 +3020,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-em-element"><a href="/breakup/specs/html-text/#the-em-element">em</a></code>
      </td><td> <code id="element-interfaces:htmlelement-33"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-embed-element"><a href="#the-embed-element">embed</a></code>
-     </td><td> <code id="element-interfaces:htmlembedelement"><a href="#htmlembedelement">HTMLEmbedElement</a></code> : <code id="element-interfaces:htmlelement-34"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>
+     </td><td> <code id="element-interfaces:htmlembedelement"><a href="/breakup/specs/html-embedding/#htmlembedelement">HTMLEmbedElement</a></code> : <code id="element-interfaces:htmlelement-34"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code>
      </td><td> <code id="element-interfaces:htmlfieldsetelement"><a href="/breakup/specs/html-forms/#htmlfieldsetelement">HTMLFieldSetElement</a></code> : <code id="element-interfaces:htmlelement-35"><a href="#htmlelement">HTMLElement</a></code>
@@ -3071,8 +3071,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-i-element"><a href="/breakup/specs/html-text/#the-i-element">i</a></code>
      </td><td> <code id="element-interfaces:htmlelement-51"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>
-     </td><td> <code id="element-interfaces:htmliframeelement"><a href="#htmliframeelement">HTMLIFrameElement</a></code> : <code id="element-interfaces:htmlelement-52"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>
+     </td><td> <code id="element-interfaces:htmliframeelement"><a href="/breakup/specs/html-embedding/#htmliframeelement">HTMLIFrameElement</a></code> : <code id="element-interfaces:htmlelement-52"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>
      </td><td> <code id="element-interfaces:htmlimageelement"><a href="/breakup/specs/html-images/#htmlimageelement">HTMLImageElement</a></code> : <code id="element-interfaces:htmlelement-53"><a href="#htmlelement">HTMLElement</a></code>
@@ -3110,8 +3110,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-mark-element"><a href="/breakup/specs/html-text/#the-mark-element">mark</a></code>
      </td><td> <code id="element-interfaces:htmlelement-64"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-menu-element"><a href="#the-menu-element">menu</a></code>
-     </td><td> <code id="element-interfaces:htmlmenuelement"><a href="#htmlmenuelement">HTMLMenuElement</a></code> : <code id="element-interfaces:htmlelement-65"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>
+     </td><td> <code id="element-interfaces:htmlmenuelement"><a href="/breakup/specs/html-ui/#htmlmenuelement">HTMLMenuElement</a></code> : <code id="element-interfaces:htmlelement-65"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code>
      </td><td> <code id="element-interfaces:htmlmetaelement"><a href="/breakup/specs/html-metadata/#htmlmetaelement">HTMLMetaElement</a></code> : <code id="element-interfaces:htmlelement-66"><a href="#htmlelement">HTMLElement</a></code>
@@ -3125,8 +3125,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-noscript-element"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code>
      </td><td> <code id="element-interfaces:htmlelement-69"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-object-element"><a href="#the-object-element">object</a></code>
-     </td><td> <code id="element-interfaces:htmlobjectelement"><a href="#htmlobjectelement">HTMLObjectElement</a></code> : <code id="element-interfaces:htmlelement-70"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
+     </td><td> <code id="element-interfaces:htmlobjectelement"><a href="/breakup/specs/html-embedding/#htmlobjectelement">HTMLObjectElement</a></code> : <code id="element-interfaces:htmlelement-70"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>
      </td><td> <code id="element-interfaces:htmlolistelement"><a href="/breakup/specs/html-lists/#htmlolistelement">HTMLOListElement</a></code> : <code id="element-interfaces:htmlelement-71"><a href="#htmlelement">HTMLElement</a></code>
@@ -3143,8 +3143,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code>
      </td><td> <code id="element-interfaces:htmlparagraphelement"><a href="/breakup/specs/html-blocks/#htmlparagraphelement">HTMLParagraphElement</a></code> : <code id="element-interfaces:htmlelement-75"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-param-element"><a href="#the-param-element">param</a></code>
-     </td><td> <code id="element-interfaces:htmlparamelement"><a href="#htmlparamelement">HTMLParamElement</a></code> : <code id="element-interfaces:htmlelement-76"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-param-element"><a href="/breakup/specs/html-embedding/#the-param-element">param</a></code>
+     </td><td> <code id="element-interfaces:htmlparamelement"><a href="/breakup/specs/html-embedding/#htmlparamelement">HTMLParamElement</a></code> : <code id="element-interfaces:htmlelement-76"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code>
      </td><td> <code id="element-interfaces:htmlpreelement"><a href="/breakup/specs/html-blocks/#htmlpreelement">HTMLPreElement</a></code> : <code id="element-interfaces:htmlelement-77"><a href="#htmlelement">HTMLElement</a></code>
@@ -3182,8 +3182,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-small-element"><a href="/breakup/specs/html-text/#the-small-element">small</a></code>
      </td><td> <code id="element-interfaces:htmlelement-88"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-source-element"><a href="#the-source-element">source</a></code>
-     </td><td> <code id="element-interfaces:htmlsourceelement"><a href="#htmlsourceelement">HTMLSourceElement</a></code> : <code id="element-interfaces:htmlelement-89"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-source-element"><a href="/breakup/specs/html-media/#the-source-element">source</a></code>
+     </td><td> <code id="element-interfaces:htmlsourceelement"><a href="/breakup/specs/html-media/#htmlsourceelement">HTMLSourceElement</a></code> : <code id="element-interfaces:htmlelement-89"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code>
      </td><td> <code id="element-interfaces:htmlspanelement"><a href="/breakup/specs/html-text/#htmlspanelement">HTMLSpanElement</a></code> : <code id="element-interfaces:htmlelement-90"><a href="#htmlelement">HTMLElement</a></code>
@@ -3197,7 +3197,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-sub-and-sup-elements"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sub</a></code>
      </td><td> <code id="element-interfaces:htmlelement-93"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-summary-element"><a href="#the-summary-element">summary</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-summary-element"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code>
      </td><td> <code id="element-interfaces:htmlelement-94"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-sub-and-sup-elements-2"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sup</a></code>
@@ -3236,8 +3236,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
      </td><td> <code id="element-interfaces:htmltablerowelement"><a href="/breakup/specs/html-tables/#htmltablerowelement">HTMLTableRowElement</a></code> : <code id="element-interfaces:htmlelement-106"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-track-element"><a href="#the-track-element">track</a></code>
-     </td><td> <code id="element-interfaces:htmltrackelement"><a href="#htmltrackelement">HTMLTrackElement</a></code> : <code id="element-interfaces:htmlelement-107"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-track-element"><a href="/breakup/specs/html-media/#the-track-element">track</a></code>
+     </td><td> <code id="element-interfaces:htmltrackelement"><a href="/breakup/specs/html-media/#htmltrackelement">HTMLTrackElement</a></code> : <code id="element-interfaces:htmlelement-107"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-u-element"><a href="/breakup/specs/html-text/#the-u-element">u</a></code>
      </td><td> <code id="element-interfaces:htmlelement-108"><a href="#htmlelement">HTMLElement</a></code>
@@ -3248,8 +3248,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <code id="element-interfaces:the-var-element"><a href="/breakup/specs/html-text/#the-var-element">var</a></code>
      </td><td> <code id="element-interfaces:htmlelement-110"><a href="#htmlelement">HTMLElement</a></code>
 
-    </td></tr><tr><td> <code id="element-interfaces:the-video-element"><a href="#the-video-element">video</a></code>
-     </td><td> <code id="element-interfaces:htmlvideoelement"><a href="#htmlvideoelement">HTMLVideoElement</a></code> : <code id="element-interfaces:htmlmediaelement-2"><a href="#htmlmediaelement">HTMLMediaElement</a></code> : <code id="element-interfaces:htmlelement-111"><a href="#htmlelement">HTMLElement</a></code>
+    </td></tr><tr><td> <code id="element-interfaces:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>
+     </td><td> <code id="element-interfaces:htmlvideoelement"><a href="/breakup/specs/html-media/#htmlvideoelement">HTMLVideoElement</a></code> : <code id="element-interfaces:htmlmediaelement-2"><a href="/breakup/specs/html-media/#htmlmediaelement">HTMLMediaElement</a></code> : <code id="element-interfaces:htmlelement-111"><a href="#htmlelement">HTMLElement</a></code>
 
     </td></tr><tr><td> <code id="element-interfaces:the-wbr-element"><a href="/breakup/specs/html-text/#the-wbr-element">wbr</a></code>
      </td><td> <code id="element-interfaces:htmlelement-112"><a href="#htmlelement">HTMLElement</a></code>
@@ -3261,8 +3261,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
   <ul class="brief">
    <li><code><a href="http://www.w3.org/TR/workers/#abstractworker">AbstractWorker</a></code>
    </li><li><code><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code>
-   </li><li><code><a href="#audiotrack">AudioTrack</a></code>
-   </li><li><code><a href="#audiotracklist">AudioTrackList</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#audiotrack">AudioTrack</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#audiotracklist">AudioTrackList</a></code>
    </li><li><code><a href="/breakup/specs/html-forms/#autocompleteerrorevent">AutocompleteErrorEvent</a></code>
    </li><li><code><a href="/breakup/specs/browser-dom/#barprop">BarProp</a></code>
    </li><li><code><a href="/breakup/specs/browsing/#beforeunloadevent">BeforeUnloadEvent</a></code>
@@ -3291,7 +3291,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
    </li><li><code><a href="/breakup/specs/html-linking/#htmlanchorelement">HTMLAnchorElement</a></code>, <a href="#HTMLAnchorElement-partial">partial</a>
    </li><li><code><a href="#htmlappletelement">HTMLAppletElement</a></code>
    </li><li><code><a href="/breakup/specs/html-linking/#htmlareaelement">HTMLAreaElement</a></code>, <a href="#HTMLAreaElement-partial">partial</a>
-   </li><li><code><a href="#htmlaudioelement">HTMLAudioElement</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#htmlaudioelement">HTMLAudioElement</a></code>
    </li><li><code><a href="/breakup/specs/html-text/#htmlbrelement">HTMLBRElement</a></code>, <a href="#HTMLBRElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-linking/#htmlbaseelement">HTMLBaseElement</a></code>
    </li><li><code><a href="/breakup/specs/html-structure/#htmlbodyelement">HTMLBodyElement</a></code>, <a href="#HTMLBodyElement-partial">partial</a>
@@ -3300,12 +3300,12 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
    </li><li><code><a href="/breakup/specs/html-lists/#htmldlistelement">HTMLDListElement</a></code>, <a href="#HTMLDListElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-text/#htmldataelement">HTMLDataElement</a></code>
    </li><li><code><a href="/breakup/specs/html-forms/#htmldatalistelement">HTMLDataListElement</a></code>
-   </li><li><code><a href="#htmldetailselement">HTMLDetailsElement</a></code>
-   </li><li><code><a href="#htmldialogelement">HTMLDialogElement</a></code>
+   </li><li><code><a href="/breakup/specs/html-ui/#htmldetailselement">HTMLDetailsElement</a></code>
+   </li><li><code><a href="/breakup/specs/html-ui/#htmldialogelement">HTMLDialogElement</a></code>
    </li><li><code><a href="#htmldirectoryelement">HTMLDirectoryElement</a></code>
    </li><li><code><a href="/breakup/specs/html-blocks/#htmldivelement">HTMLDivElement</a></code>, <a href="#HTMLDivElement-partial">partial</a>
    </li><li><code><a href="#htmlelement">HTMLElement</a></code>
-   </li><li><code><a href="#htmlembedelement">HTMLEmbedElement</a></code>, <a href="#HTMLEmbedElement-partial">partial</a>
+   </li><li><code><a href="/breakup/specs/html-embedding/#htmlembedelement">HTMLEmbedElement</a></code>, <a href="#HTMLEmbedElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-forms/#htmlfieldsetelement">HTMLFieldSetElement</a></code>
    </li><li><code><a href="#htmlfontelement">HTMLFontElement</a></code>
    </li><li><code><a href="/breakup/specs/core-algorithms/#htmlformcontrolscollection">HTMLFormControlsCollection</a></code>
@@ -3316,7 +3316,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
    </li><li><code><a href="/breakup/specs/html-structure/#htmlheadelement">HTMLHeadElement</a></code>
    </li><li><code><a href="/breakup/specs/html-sectioning/#htmlheadingelement">HTMLHeadingElement</a></code>, <a href="#HTMLHeadingElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-structure/#htmlhtmlelement">HTMLHtmlElement</a></code>, <a href="#HTMLHtmlElement-partial">partial</a>
-   </li><li><code><a href="#htmliframeelement">HTMLIFrameElement</a></code>, <a href="#HTMLIFrameElement-partial">partial</a>
+   </li><li><code><a href="/breakup/specs/html-embedding/#htmliframeelement">HTMLIFrameElement</a></code>, <a href="#HTMLIFrameElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-images/#htmlimageelement">HTMLImageElement</a></code>, <a href="#HTMLImageElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-forms/#htmlinputelement">HTMLInputElement</a></code>, <a href="#HTMLInputElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-forms/#htmlkeygenelement">HTMLKeygenElement</a></code>
@@ -3326,20 +3326,20 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
    </li><li><code><a href="/breakup/specs/html-metadata/#htmllinkelement">HTMLLinkElement</a></code>, <a href="#HTMLLinkElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-linking/#htmlmapelement">HTMLMapElement</a></code>
    </li><li><code><a href="#htmlmarqueeelement">HTMLMarqueeElement</a></code>
-   </li><li><code><a href="#htmlmediaelement">HTMLMediaElement</a></code>
-   </li><li><code><a href="#htmlmenuelement">HTMLMenuElement</a></code>, <a href="#HTMLMenuElement-partial">partial</a>
-   </li><li><code><a href="#htmlmenuitemelement">HTMLMenuItemElement</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#htmlmediaelement">HTMLMediaElement</a></code>
+   </li><li><code><a href="/breakup/specs/html-ui/#htmlmenuelement">HTMLMenuElement</a></code>, <a href="#HTMLMenuElement-partial">partial</a>
+   </li><li><code><a href="/breakup/specs/html-ui/#htmlmenuitemelement">HTMLMenuItemElement</a></code>
    </li><li><code><a href="/breakup/specs/html-metadata/#htmlmetaelement">HTMLMetaElement</a></code>, <a href="#HTMLMetaElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-forms/#htmlmeterelement">HTMLMeterElement</a></code>
    </li><li><code><a href="/breakup/specs/html-edits/#htmlmodelement">HTMLModElement</a></code>
    </li><li><code><a href="/breakup/specs/html-lists/#htmlolistelement">HTMLOListElement</a></code>, <a href="#HTMLOListElement-partial">partial</a>
-   </li><li><code><a href="#htmlobjectelement">HTMLObjectElement</a></code>, <a href="#HTMLObjectElement-partial">partial</a>
+   </li><li><code><a href="/breakup/specs/html-embedding/#htmlobjectelement">HTMLObjectElement</a></code>, <a href="#HTMLObjectElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-forms/#htmloptgroupelement">HTMLOptGroupElement</a></code>
    </li><li><code><a href="/breakup/specs/html-forms/#htmloptionelement">HTMLOptionElement</a></code>
    </li><li><code><a href="/breakup/specs/core-algorithms/#htmloptionscollection">HTMLOptionsCollection</a></code>
    </li><li><code><a href="/breakup/specs/html-forms/#htmloutputelement">HTMLOutputElement</a></code>
    </li><li><code><a href="/breakup/specs/html-blocks/#htmlparagraphelement">HTMLParagraphElement</a></code>, <a href="#HTMLParagraphElement-partial">partial</a>
-   </li><li><code><a href="#htmlparamelement">HTMLParamElement</a></code>, <a href="#HTMLParamElement-partial">partial</a>
+   </li><li><code><a href="/breakup/specs/html-embedding/#htmlparamelement">HTMLParamElement</a></code>, <a href="#HTMLParamElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-images/#htmlpictureelement">HTMLPictureElement</a></code>
    </li><li><code><a href="/breakup/specs/html-blocks/#htmlpreelement">HTMLPreElement</a></code>, <a href="#HTMLPreElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-forms/#htmlprogresselement">HTMLProgressElement</a></code>
@@ -3347,7 +3347,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
    </li><li><code><a href="/breakup/specs/html-blocks/#htmlquoteelement">HTMLQuoteElement</a></code>
    </li><li><code><a href="/breakup/specs/html-scripting/#htmlscriptelement">HTMLScriptElement</a></code>, <a href="#HTMLScriptElement-partial">partial</a>
    </li><li><code><a href="/breakup/specs/html-forms/#htmlselectelement">HTMLSelectElement</a></code>
-   </li><li><code><a href="#htmlsourceelement">HTMLSourceElement</a></code>, <a href="/breakup/specs/html-images/#the-source-element-when-used-with-the-picture-element:htmlsourceelement">partial</a>
+   </li><li><code><a href="/breakup/specs/html-media/#htmlsourceelement">HTMLSourceElement</a></code>, <a href="/breakup/specs/html-images/#the-source-element-when-used-with-the-picture-element:htmlsourceelement">partial</a>
    </li><li><code><a href="/breakup/specs/html-text/#htmlspanelement">HTMLSpanElement</a></code>
    </li><li><code><a href="/breakup/specs/html-styling/#htmlstyleelement">HTMLStyleElement</a></code>
    </li><li><code><a href="/breakup/specs/html-tables/#htmltablecaptionelement">HTMLTableCaptionElement</a></code>, <a href="#HTMLTableCaptionElement-partial">partial</a>
@@ -3362,18 +3362,18 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
    </li><li><code><a href="/breakup/specs/html-forms/#htmltextareaelement">HTMLTextAreaElement</a></code>
    </li><li><code><a href="/breakup/specs/html-text/#htmltimeelement">HTMLTimeElement</a></code>
    </li><li><code><a href="/breakup/specs/html-structure/#htmltitleelement">HTMLTitleElement</a></code>
-   </li><li><code><a href="#htmltrackelement">HTMLTrackElement</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#htmltrackelement">HTMLTrackElement</a></code>
    </li><li><code><a href="/breakup/specs/html-lists/#htmlulistelement">HTMLUListElement</a></code>, <a href="#HTMLUListElement-partial">partial</a>
    </li><li><code><a href="#htmlunknownelement">HTMLUnknownElement</a></code>
-   </li><li><code><a href="#htmlvideoelement">HTMLVideoElement</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#htmlvideoelement">HTMLVideoElement</a></code>
    </li><li><code><a href="/breakup/specs/browsing/#hashchangeevent">HashChangeEvent</a></code>
    </li><li><code><a href="/breakup/specs/browser-dom/#history-3">History</a></code>
    </li><li><code><a href="/breakup/specs/browser-dom/#imagebitmap">ImageBitmap</a></code>
    </li><li><code><a href="/breakup/specs/browser-dom/#imagebitmapfactories">ImageBitmapFactories</a></code>
    </li><li><code><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#imagedata">ImageData</a></code>
    </li><li><code><a href="/breakup/specs/browser-dom/#location">Location</a></code>
-   </li><li><code><a href="#mediacontroller">MediaController</a></code>
-   </li><li><code><a href="#mediaerror">MediaError</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#mediacontroller">MediaController</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#mediaerror">MediaError</a></code>
    </li><li><code><a href="http://www.w3.org/TR/webmessaging/#messagechannel">MessageChannel</a></code>
    </li><li><code><a href="http://www.w3.org/TR/webmessaging/#messageevent">MessageEvent</a></code>
    </li><li><code><a href="http://www.w3.org/TR/webmessaging/#messageport">MessagePort</a></code>
@@ -3395,22 +3395,22 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
    </li><li><code><a href="http://www.w3.org/TR/webmessaging/#portcollection">PortCollection</a></code>
    </li><li><code><a href="/breakup/specs/core-algorithms/#propertynodelist">PropertyNodeList</a></code>
    </li><li><code><a href="/breakup/specs/core-algorithms/#radionodelist">RadioNodeList</a></code>
-   </li><li><code><a href="#relatedevent">RelatedEvent</a></code>
+   </li><li><code><a href="/breakup/specs/html-ui/#relatedevent">RelatedEvent</a></code>
    </li><li><code><a href="http://www.w3.org/TR/workers/#sharedworker">SharedWorker</a></code>
    </li><li><code><a href="http://www.w3.org/TR/workers/#sharedworkerglobalscope">SharedWorkerGlobalScope</a></code>
    </li><li><code><a href="http://www.w3.org/TR/webstorage/#storage-2">Storage</a></code>
    </li><li><code><a href="http://www.w3.org/TR/webstorage/#storageevent">StorageEvent</a></code>
    </li><li><code><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#textmetrics">TextMetrics</a></code>
-   </li><li><code><a href="#texttrack">TextTrack</a></code>
-   </li><li><code><a href="#texttrackcue">TextTrackCue</a></code>
-   </li><li><code><a href="#texttrackcuelist">TextTrackCueList</a></code>
-   </li><li><code><a href="#texttracklist">TextTrackList</a></code>
-   </li><li><code><a href="#timeranges">TimeRanges</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#texttrack">TextTrack</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#texttrackcue">TextTrackCue</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#texttrackcuelist">TextTrackCueList</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#texttracklist">TextTrackList</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#timeranges">TimeRanges</a></code>
    </li><li><code>Touch</code>, <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#Touch-partial">partial</a>
-   </li><li><code><a href="#trackevent">TrackEvent</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#trackevent">TrackEvent</a></code>
    </li><li><code><a href="/breakup/specs/html-forms/#validitystate">ValidityState</a></code>
-   </li><li><code><a href="#videotrack">VideoTrack</a></code>
-   </li><li><code><a href="#videotracklist">VideoTrackList</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#videotrack">VideoTrack</a></code>
+   </li><li><code><a href="/breakup/specs/html-media/#videotracklist">VideoTrackList</a></code>
    </li><li><code><a href="http://www.w3.org/TR/websockets/#websocket">WebSocket</a></code>
    </li><li><code><a href="/breakup/specs/browser-dom/#window">Window</a></code>, <a href="#Window-partial">partial</a>
    </li><li><code><a href="/breakup/specs/browser-dom/#windowbase64">WindowBase64</a></code>
@@ -3484,8 +3484,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><td> <dfn id="event-cancel"><code>cancel</code></dfn>
      </td><td> <code id="events-2:event-10"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
-     </td><td> <code id="events-2:the-dialog-element"><a href="#the-dialog-element">dialog</a></code> elements
-     </td><td> Fired at <code id="events-2:the-dialog-element-2"><a href="#the-dialog-element">dialog</a></code> elements when they are canceled by the user (e.g. by pressing the Escape key)
+     </td><td> <code id="events-2:the-dialog-element"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements
+     </td><td> Fired at <code id="events-2:the-dialog-element-2"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements when they are canceled by the user (e.g. by pressing the Escape key)
 
     </td></tr><tr><td> <dfn id="event-change"><code>change</code></dfn>
      </td><td> <code id="events-2:event-11"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
@@ -3499,8 +3499,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><td> <dfn id="event-close"><code>close</code></dfn>
      </td><td> <code id="events-2:event-12"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
-     </td><td> <code id="events-2:the-dialog-element-3"><a href="#the-dialog-element">dialog</a></code> elements, <code id="events-2:websocket"><a href="http://www.w3.org/TR/websockets/#websocket">WebSocket</a></code>
-     </td><td> Fired at <code id="events-2:the-dialog-element-4"><a href="#the-dialog-element">dialog</a></code> elements when they are closed, and at <code id="events-2:websocket-2"><a href="http://www.w3.org/TR/websockets/#websocket">WebSocket</a></code> elements when the connection is terminated
+     </td><td> <code id="events-2:the-dialog-element-3"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements, <code id="events-2:websocket"><a href="http://www.w3.org/TR/websockets/#websocket">WebSocket</a></code>
+     </td><td> Fired at <code id="events-2:the-dialog-element-4"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements when they are closed, and at <code id="events-2:websocket-2"><a href="http://www.w3.org/TR/websockets/#websocket">WebSocket</a></code> elements when the connection is terminated
 
     </td></tr><tr><td> <dfn id="event-workerglobalscope-connect"><code>connect</code></dfn>
      </td><td> <code id="events-2:messageevent"><a href="http://www.w3.org/TR/webmessaging/#messageevent">MessageEvent</a></code>
@@ -3545,7 +3545,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <dfn id="event-load"><code>load</code></dfn>
      </td><td> <code id="events-2:event-19"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
      </td><td> <code id="events-2:window-13"><a href="/breakup/specs/browser-dom/#window">Window</a></code>, elements
-     </td><td> Fired at the <code id="events-2:window-14"><a href="/breakup/specs/browser-dom/#window">Window</a></code> when the document has finished loading; fired at an element containing a resource (e.g. <code id="events-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, <code id="events-2:the-embed-element"><a href="#the-embed-element">embed</a></code>) when its resource has finished loading
+     </td><td> Fired at the <code id="events-2:window-14"><a href="/breakup/specs/browser-dom/#window">Window</a></code> when the document has finished loading; fired at an element containing a resource (e.g. <code id="events-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, <code id="events-2:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>) when its resource has finished loading
 
     </td></tr><tr><td> <dfn id="event-loadend"><code>loadend</code></dfn>
      </td><td> <code id="events-2:event-20"><a href="/breakup/specs/core-algorithms/#event">Event</a></code> or <code id="events-2:progressevent"><a href="/breakup/specs/core-algorithms/#progressevent">ProgressEvent</a></code>
@@ -3555,7 +3555,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <dfn id="event-loadstart"><code>loadstart</code></dfn>
      </td><td> <code id="events-2:progressevent-2"><a href="/breakup/specs/core-algorithms/#progressevent">ProgressEvent</a></code>
      </td><td> <code id="events-2:the-img-element-4"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements
-     </td><td> Fired at <code id="events-2:the-img-element-5"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements when a load begins (see also <a href="#event-media-loadstart" id="events-2:event-media-loadstart">media element events</a>)
+     </td><td> Fired at <code id="events-2:the-img-element-5"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements when a load begins (see also <a href="/breakup/specs/html-media/#event-media-loadstart" id="events-2:event-media-loadstart">media element events</a>)
 
     </td></tr><tr><td> <dfn id="event-message"><code>message</code></dfn>
      </td><td> <code id="events-2:messageevent-2"><a href="http://www.w3.org/TR/webmessaging/#messageevent">MessageEvent</a></code>
@@ -3595,7 +3595,7 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
     </td></tr><tr><td> <dfn id="event-progress"><code>progress</code></dfn>
      </td><td> <code id="events-2:progressevent-3"><a href="/breakup/specs/core-algorithms/#progressevent">ProgressEvent</a></code>
      </td><td> <code id="events-2:the-img-element-6"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements
-     </td><td> Fired at <code id="events-2:the-img-element-7"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements during a <a href="/breakup/specs/core-algorithms/#cors-same-origin" id="events-2:cors-same-origin">CORS-same-origin</a> image load (see also <a href="#event-media-progress" id="events-2:event-media-progress">media element events</a>)
+     </td><td> Fired at <code id="events-2:the-img-element-7"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements during a <a href="/breakup/specs/core-algorithms/#cors-same-origin" id="events-2:cors-same-origin">CORS-same-origin</a> image load (see also <a href="/breakup/specs/html-media/#event-media-progress" id="events-2:event-media-progress">media element events</a>)
 
     </td></tr><tr><td> <dfn id="event-readystatechange"><code>readystatechange</code></dfn>
      </td><td> <code id="events-2:event-24"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
@@ -3613,9 +3613,9 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
      </td><td> Fired at form controls when their text selection is adjusted (whether by an API or by the user)
 
     </td></tr><tr><td> <dfn id="event-show"><code>show</code></dfn>
-     </td><td> <code id="events-2:relatedevent"><a href="#relatedevent">RelatedEvent</a></code>
-     </td><td> <code id="events-2:the-menu-element"><a href="#the-menu-element">menu</a></code> elements
-     </td><td> Fired at a <code id="events-2:the-menu-element-2"><a href="#the-menu-element">menu</a></code> element when it is shown as a context menu
+     </td><td> <code id="events-2:relatedevent"><a href="/breakup/specs/html-ui/#relatedevent">RelatedEvent</a></code>
+     </td><td> <code id="events-2:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> elements
+     </td><td> Fired at a <code id="events-2:the-menu-element-2"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element when it is shown as a context menu
 
     </td></tr><tr><td> <dfn id="event-sort"><code>sort</code></dfn>
      </td><td> <code id="events-2:event-27"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
@@ -3634,8 +3634,8 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
     </td></tr><tr><td> <dfn id="event-toggle"><code>toggle</code></dfn>
      </td><td> <code id="events-2:event-29"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
-     </td><td> <code id="events-2:the-details-element"><a href="#the-details-element">details</a></code> element
-     </td><td> Fired at <code id="events-2:the-details-element-2"><a href="#the-details-element">details</a></code> elements when they open or close
+     </td><td> <code id="events-2:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element
+     </td><td> Fired at <code id="events-2:the-details-element-2"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> elements when they open or close
 
     </td></tr><tr><td> <dfn id="event-unload"><code>unload</code></dfn>
      </td><td> <code id="events-2:event-30"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
@@ -3644,5 +3644,5 @@ a.setAttribute('href', 'http://example.com/'); // change the content attribute d
 
   </td></tr></tbody></table>
 
-  <p class="note">See also <a href="#mediaevents">media element events</a>, <a href="/breakup/specs/appcache/#appcacheevents">application cache events</a>, and <a href="/breakup/specs/dnd/#dndevents">drag-and-drop
+  <p class="note">See also <a href="/breakup/specs/html-media/#mediaevents">media element events</a>, <a href="/breakup/specs/appcache/#appcacheevents">application cache events</a>, and <a href="/breakup/specs/dnd/#dndevents">drag-and-drop
   events</a>.</p></section></body></html>

@@ -44,7 +44,7 @@
 
   <p class="note">A <i>resource</i> has a URL, but that might not be the only information necessary
   to identify it. For example, a form submission that uses HTTP POST would also have the HTTP method
-  and payload. Similarly, <a href="#an-iframe-srcdoc-document" id="navigating-across-documents:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a> needs to know the data it is to use.</p>
+  and payload. Similarly, <a href="/breakup/specs/html-embedding/#an-iframe-srcdoc-document" id="navigating-across-documents:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a> needs to know the data it is to use.</p>
 
   <p>Navigation always involves <dfn id="source-browsing-context">source browsing context</dfn>, which is the browsing context which
   was responsible for starting the navigation.</p>
@@ -73,10 +73,10 @@
     throw a <code id="navigating-across-documents:securityerror"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception.</p>
 
    </li><li id="seamlessLinks"><p>If the <a href="/breakup/specs/browsing/#source-browsing-context" id="navigating-across-documents:source-browsing-context-3">source browsing context</a> is the same as the
-   <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-3">browsing context</a> being navigated, and this browsing context has its <a href="#seamless-browsing-context-flag" id="navigating-across-documents:seamless-browsing-context-flag">seamless
+   <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-3">browsing context</a> being navigated, and this browsing context has its <a href="/breakup/specs/html-embedding/#seamless-browsing-context-flag" id="navigating-across-documents:seamless-browsing-context-flag">seamless
    browsing context flag</a> set, and the <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-4">browsing context</a> being navigated was not
    chosen using an <dfn id="explicit-self-navigation-override">explicit self-navigation override</dfn>, then find the nearest
-   <a href="/breakup/specs/browser-dom/#ancestor-browsing-context" id="navigating-across-documents:ancestor-browsing-context">ancestor browsing context</a> that does not have its <a href="#seamless-browsing-context-flag" id="navigating-across-documents:seamless-browsing-context-flag-2">seamless browsing context
+   <a href="/breakup/specs/browser-dom/#ancestor-browsing-context" id="navigating-across-documents:ancestor-browsing-context">ancestor browsing context</a> that does not have its <a href="/breakup/specs/html-embedding/#seamless-browsing-context-flag" id="navigating-across-documents:seamless-browsing-context-flag-2">seamless browsing context
    flag</a> set, and continue these steps as if <em>that</em> <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-5">browsing context</a> was
    the one that was going to be <a href="/breakup/specs/browsing/#navigate" id="navigating-across-documents:navigate-4">navigated</a> instead.</p></li><li><p>If there is a preexisting attempt to navigate the <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-6">browsing context</a>, and the
    <a href="/breakup/specs/browsing/#source-browsing-context" id="navigating-across-documents:source-browsing-context-4">source browsing context</a> is the same as the <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-7">browsing context</a> being
@@ -155,7 +155,7 @@
     appropriate substep:</p>
 
     <dl><dt>If the resource has already been obtained (e.g. because it is being used to populate an
-     <code id="navigating-across-documents:the-object-element"><a href="#the-object-element">object</a></code> element's new <a href="/breakup/specs/browser-dom/#child-browsing-context" id="navigating-across-documents:child-browsing-context">child browsing context</a>)</dt><dd><p>Skip this step. The data is already available.</p></dd><dt>If the new resource is a <a href="/breakup/specs/core-algorithms/#url" id="navigating-across-documents:url-3">URL</a> whose <a href="/breakup/specs/core-algorithms/#concept-url-scheme" id="navigating-across-documents:concept-url-scheme">scheme</a> is <code id="navigating-across-documents:javascript-protocol"><a href="/breakup/specs/browsing/#javascript-protocol">javascript</a></code></dt><dd>
+     <code id="navigating-across-documents:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element's new <a href="/breakup/specs/browser-dom/#child-browsing-context" id="navigating-across-documents:child-browsing-context">child browsing context</a>)</dt><dd><p>Skip this step. The data is already available.</p></dd><dt>If the new resource is a <a href="/breakup/specs/core-algorithms/#url" id="navigating-across-documents:url-3">URL</a> whose <a href="/breakup/specs/core-algorithms/#concept-url-scheme" id="navigating-across-documents:concept-url-scheme">scheme</a> is <code id="navigating-across-documents:javascript-protocol"><a href="/breakup/specs/browsing/#javascript-protocol">javascript</a></code></dt><dd>
 
       
 
@@ -209,9 +209,9 @@
 
        <p>So for example a <a href="/breakup/specs/browsing/#javascript-protocol" id="navigating-across-documents:javascript-protocol-2"><code>javascript:</code> URL</a> in
        an <code id="navigating-across-documents:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute of an <code id="navigating-across-documents:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element
-       would only be evaluated when the link was <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="navigating-across-documents:following-hyperlinks-2-2">followed</a>, while such a URL in the <code id="navigating-across-documents:attr-iframe-src"><a href="#attr-iframe-src">src</a></code> attribute of an <code id="navigating-across-documents:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> element would be
-       evaluated in the context of the <code id="navigating-across-documents:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code>'s own <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="navigating-across-documents:nested-browsing-context-3">nested browsing
-       context</a> when the <code id="navigating-across-documents:the-iframe-element-3"><a href="#the-iframe-element">iframe</a></code> is being set up; once evaluated, its return value
+       would only be evaluated when the link was <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="navigating-across-documents:following-hyperlinks-2-2">followed</a>, while such a URL in the <code id="navigating-across-documents:attr-iframe-src"><a href="/breakup/specs/html-embedding/#attr-iframe-src">src</a></code> attribute of an <code id="navigating-across-documents:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element would be
+       evaluated in the context of the <code id="navigating-across-documents:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>'s own <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="navigating-across-documents:nested-browsing-context-3">nested browsing
+       context</a> when the <code id="navigating-across-documents:the-iframe-element-3"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> is being set up; once evaluated, its return value
        (if it was not void) would replace that <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-19">browsing context</a>'s <code id="navigating-across-documents:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, thus also
        changing the <code id="navigating-across-documents:window-2"><a href="/breakup/specs/browser-dom/#window">Window</a></code> object of that <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-20">browsing context</a>.</p>
 
@@ -433,8 +433,8 @@
       flag</a> set, then skip this step.</p>
 
       <p>If the <code id="navigating-across-documents:document-15"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/browser-dom/#browsing-context" id="navigating-across-documents:browsing-context-29">browsing context</a> has a <a href="/breakup/specs/browser-dom/#browsing-context-container" id="navigating-across-documents:browsing-context-container-2">browsing context
-      container</a> and either it is not an <code id="navigating-across-documents:the-iframe-element-4"><a href="#the-iframe-element">iframe</a></code> element, or it does not have the
-      <code id="navigating-across-documents:attr-iframe-allowfullscreen"><a href="#attr-iframe-allowfullscreen">allowfullscreen</a></code> attribute specified, or its
+      container</a> and either it is not an <code id="navigating-across-documents:the-iframe-element-4"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element, or it does not have the
+      <code id="navigating-across-documents:attr-iframe-allowfullscreen"><a href="/breakup/specs/html-embedding/#attr-iframe-allowfullscreen">allowfullscreen</a></code> attribute specified, or its
       <code id="navigating-across-documents:document-16"><a href="/breakup/specs/browser-dom/#document">Document</a></code> does not have the <a href="/breakup/specs/core-algorithms/#fullscreen-enabled-flag" id="navigating-across-documents:fullscreen-enabled-flag">fullscreen enabled flag</a> set, then also
       skip this step.</p>
 
@@ -686,11 +686,11 @@
          </td><td> <code id="read-media:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>
          </td><td> <code id="read-media:attr-img-src"><a href="/breakup/specs/html-images/#attr-img-src">src</a></code>
     </td></tr><tr><td> Video
-         </td><td> <code id="read-media:the-video-element"><a href="#the-video-element">video</a></code>
-         </td><td> <code id="read-media:attr-media-src"><a href="#attr-media-src">src</a></code>
+         </td><td> <code id="read-media:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>
+         </td><td> <code id="read-media:attr-media-src"><a href="/breakup/specs/html-media/#attr-media-src">src</a></code>
     </td></tr><tr><td> Audio
-         </td><td> <code id="read-media:the-audio-element"><a href="#the-audio-element">audio</a></code>
-         </td><td> <code id="read-media:attr-media-src-2"><a href="#attr-media-src">src</a></code>
+         </td><td> <code id="read-media:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code>
+         </td><td> <code id="read-media:attr-media-src-2"><a href="/breakup/specs/html-media/#attr-media-src">src</a></code>
   </td></tr></thead></table>
 
   
@@ -707,7 +707,7 @@
   <p>User agents may add content to the <code id="read-media:the-head-element-2"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element of the <code id="read-media:document-6"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, or
   attributes to the element <var>host element</var>, e.g. to link to a style sheet or a
   binding, to provide a script, to give the document a <code id="read-media:the-title-element"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code>, to make the media
-  <a href="#attr-media-autoplay" id="read-media:attr-media-autoplay">autoplay</a>, etc.</p></section><section><h2><dfn>Page load processing model for content that uses plugins</dfn></h2>
+  <a href="/breakup/specs/html-media/#attr-media-autoplay" id="read-media:attr-media-autoplay">autoplay</a>, etc.</p></section><section><h2><dfn>Page load processing model for content that uses plugins</dfn></h2>
 
   <p>When a resource that requires an external resource to be rendered is to be loaded in a
   <a href="/breakup/specs/browser-dom/#browsing-context" id="read-plugin:browsing-context">browsing context</a>, the user agent should create a <code id="read-plugin:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> object, mark
@@ -716,12 +716,12 @@
   type</a> to the sniffed MIME type of the resource (<var>type</var> in the
   <a href="/breakup/specs/browsing/#navigate" id="read-plugin:navigate">navigate</a> algorithm), <a href="/breakup/specs/browsing/#initialise-the-document-object" id="read-plugin:initialise-the-document-object">initialise the <code>Document</code> object</a>, append
   an <code id="read-plugin:the-html-element"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element to the <code id="read-plugin:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, append a <code id="read-plugin:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element and
-  a <code id="read-plugin:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element to the <code id="read-plugin:the-html-element-2"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element, append an <code id="read-plugin:the-embed-element"><a href="#the-embed-element">embed</a></code> to the
-  <code id="read-plugin:the-body-element-2"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element, and set the <code id="read-plugin:attr-embed-src"><a href="#attr-embed-src">src</a></code> attribute of the
-  <code id="read-plugin:the-embed-element-2"><a href="#the-embed-element">embed</a></code> element to the address of the resource.</p>
+  a <code id="read-plugin:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element to the <code id="read-plugin:the-html-element-2"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element, append an <code id="read-plugin:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> to the
+  <code id="read-plugin:the-body-element-2"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element, and set the <code id="read-plugin:attr-embed-src"><a href="/breakup/specs/html-embedding/#attr-embed-src">src</a></code> attribute of the
+  <code id="read-plugin:the-embed-element-2"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> element to the address of the resource.</p>
 
   <p class="note">The term <a href="/breakup/specs/browsing/#plugin-document" id="read-plugin:plugin-document">plugin document</a> is used by the Content Security Policy
-  specification as part of the mechanism that ensures <code id="read-plugin:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>s can't be used to evade
+  specification as part of the mechanism that ensures <code id="read-plugin:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>s can't be used to evade
   <code>plugin-types</code> directives. [[CSP]]</p>
 
   
@@ -736,12 +736,12 @@
   fully loading, the user agent must <a href="/breakup/specs/browsing/#update-the-session-history-with-the-new-page" id="read-plugin:update-the-session-history-with-the-new-page">update the session history with the new page</a>.</p>
 
   <p>User agents may add content to the <code id="read-plugin:the-head-element-2"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element of the <code id="read-plugin:document-6"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, or
-  attributes to the <code id="read-plugin:the-embed-element-3"><a href="#the-embed-element">embed</a></code> element, e.g. to link to a style sheet or a binding, or
+  attributes to the <code id="read-plugin:the-embed-element-3"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> element, e.g. to link to a style sheet or a binding, or
   to give the document a <code id="read-plugin:the-title-element"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code>.</p>
 
   <p id="sandboxPluginNavigate" class="note">If the <code id="read-plugin:document-7"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/browser-dom/#active-sandboxing-flag-set" id="read-plugin:active-sandboxing-flag-set">active sandboxing
   flag set</a> has its <a href="/breakup/specs/browser-dom/#sandboxed-plugins-browsing-context-flag" id="read-plugin:sandboxed-plugins-browsing-context-flag">sandboxed plugins browsing context flag</a> set, the synthesized
-  <code id="read-plugin:the-embed-element-4"><a href="#the-embed-element">embed</a></code> element will <a href="#sandboxPluginEmbed">fail to render the content</a> if
+  <code id="read-plugin:the-embed-element-4"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> element will <a href="/breakup/specs/html-embedding/#sandboxPluginEmbed">fail to render the content</a> if
   the relevant <a href="/breakup/specs/core-algorithms/#plugin" id="read-plugin:plugin">plugin</a> cannot be <a href="/breakup/specs/core-algorithms/#concept-plugin-secure" id="read-plugin:concept-plugin-secure">secured</a>.</p></section><section><h2><dfn>Page load processing model for inline
   content that doesn't have a DOM</dfn></h2>
 
@@ -1071,7 +1071,7 @@ dictionary <dfn id="pagetransitioneventinit">PageTransitionEventInit</dfn> : <a 
     <ul class="brief"><li><code id="the-pagetransitionevent-interface:dom-document-open"><a href="/breakup/specs/browser-dom/#dom-document-open">document.open()</a></code>
      </li><li>Listening for <code id="the-pagetransitionevent-interface:event-beforeunload"><a href="/breakup/specs/html/#event-beforeunload">beforeunload</a></code> events
      </li><li>Listening for <code id="the-pagetransitionevent-interface:event-unload"><a href="/breakup/specs/html/#event-unload">unload</a></code> events
-     </li><li>Having <code id="the-pagetransitionevent-interface:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>s that are not salvageable
+     </li><li>Having <code id="the-pagetransitionevent-interface:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>s that are not salvageable
      </li><li>Active <code id="the-pagetransitionevent-interface:websocket"><a href="http://www.w3.org/TR/websockets/#websocket">WebSocket</a></code> objects
      </li><li><a href="/breakup/specs/browsing/#abort-a-document" id="the-pagetransitionevent-interface:abort-a-document">Aborting a <code>Document</code></a>
     </li></ul>

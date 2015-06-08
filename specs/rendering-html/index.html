@@ -139,7 +139,7 @@ html, body { display: block; }</pre>
   that exists <a href="/breakup/specs/rendering-html/#maps-to-the-pixel-length-property" id="the-page:maps-to-the-pixel-length-property">maps to the pixel length property</a> on the <code id="the-page:the-body-element-2"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element. If
   none of the attributes for a property are found, or if the value of the attribute that was found
   cannot be parsed successfully, then, if the <code id="the-page:the-body-element-3"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element's <a id="the-page:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s
-  <a href="/breakup/specs/browser-dom/#browsing-context" id="the-page:browsing-context">browsing context</a> does not have its <a href="#seamless-browsing-context-flag" id="the-page:seamless-browsing-context-flag">seamless browsing context flag</a> set, a
+  <a href="/breakup/specs/browser-dom/#browsing-context" id="the-page:browsing-context">browsing context</a> does not have its <a href="/breakup/specs/html-embedding/#seamless-browsing-context-flag" id="the-page:seamless-browsing-context-flag">seamless browsing context flag</a> set, a
   default value of 8px is expected to be used for that property instead.</p>
 
   <table><thead><tr><th>Property
@@ -164,12 +164,12 @@ html, body { display: block; }</pre>
 
   <p>If the <code id="the-page:the-body-element-16"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element's <a id="the-page:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="/breakup/specs/browser-dom/#browsing-context" id="the-page:browsing-context-2">browsing context</a> is a
   <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="the-page:nested-browsing-context">nested browsing context</a>, and the <a href="/breakup/specs/browser-dom/#browsing-context-container" id="the-page:browsing-context-container">browsing context container</a> of that
-  <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="the-page:nested-browsing-context-2">nested browsing context</a> is a <code id="the-page:frame"><a href="#frame">frame</a></code> or <code id="the-page:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> element, then
+  <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="the-page:nested-browsing-context-2">nested browsing context</a> is a <code id="the-page:frame"><a href="#frame">frame</a></code> or <code id="the-page:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element, then
   the <dfn id="container-frame-element">container frame element</dfn> of the <code id="the-page:the-body-element-17"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element is that <code id="the-page:frame-2"><a href="#frame">frame</a></code>
-  or <code id="the-page:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code> element. Otherwise, there is no <a href="/breakup/specs/rendering-html/#container-frame-element" id="the-page:container-frame-element-5">container frame element</a>.</p>
+  or <code id="the-page:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element. Otherwise, there is no <a href="/breakup/specs/rendering-html/#container-frame-element" id="the-page:container-frame-element-5">container frame element</a>.</p>
 
   <p class="warning">The above requirements imply that a page can change the margins of another page
-  (including one from another <a href="/breakup/specs/browser-dom/#origin-2" id="the-page:origin-2">origin</a>) using, for example, an <code id="the-page:the-iframe-element-3"><a href="#the-iframe-element">iframe</a></code>. This
+  (including one from another <a href="/breakup/specs/browser-dom/#origin-2" id="the-page:origin-2">origin</a>) using, for example, an <code id="the-page:the-iframe-element-3"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>. This
   is potentially a security risk, as it might in some cases allow an attack to contrive a situation
   in which a page is rendered not as the author intended, possibly for the purposes of phishing or
   otherwise misleading the user.</p>
@@ -183,7 +183,7 @@ html, body { display: block; }</pre>
 
   <p>If the <code id="the-page:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is in a <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="the-page:nested-browsing-context-4">nested browsing context</a>, and the
   <a href="/breakup/specs/browser-dom/#browsing-context-container" id="the-page:browsing-context-container-3">browsing context container</a> of that <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="the-page:nested-browsing-context-5">nested browsing context</a> is a
-  <code id="the-page:frame-3"><a href="#frame">frame</a></code> or <code id="the-page:the-iframe-element-4"><a href="#the-iframe-element">iframe</a></code> element, and that element has a <code>scrolling</code> attribute, and that attribute's value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="the-page:ascii-case-insensitive">ASCII
+  <code id="the-page:frame-3"><a href="#frame">frame</a></code> or <code id="the-page:the-iframe-element-4"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> element, and that element has a <code>scrolling</code> attribute, and that attribute's value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="the-page:ascii-case-insensitive">ASCII
   case-insensitive</a> match for the string "<code>off</code>", "<code>noscroll</code>", or "<code>no</code>", then the user agent is expected to
   prevent any scroll bars from being shown for the viewport of the <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="the-page:nested-browsing-context-6">nested browsing
   context</a>, regardless of the 'overflow' property that applies to that viewport.</p>
@@ -1142,7 +1142,7 @@ table {
   <p>The <dfn id="concept-rendering-elements-with-margins">elements with default margins</dfn>
   are the following elements: <code id="margin-collapsing-quirks:the-blockquote-element"><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>, <code id="margin-collapsing-quirks:dir"><a href="#dir">dir</a></code>, <code id="margin-collapsing-quirks:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code>,
   <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-2"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h2</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-3"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h3</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-4"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h4</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-5"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h5</a></code>,
-  <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code>, <code id="margin-collapsing-quirks:listing"><a href="#listing">listing</a></code>, <code id="margin-collapsing-quirks:the-menu-element"><a href="#the-menu-element">menu</a></code>, <code id="margin-collapsing-quirks:multicol"><a href="#multicol">multicol</a></code>, <code id="margin-collapsing-quirks:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>,
+  <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code>, <code id="margin-collapsing-quirks:listing"><a href="#listing">listing</a></code>, <code id="margin-collapsing-quirks:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>, <code id="margin-collapsing-quirks:multicol"><a href="#multicol">multicol</a></code>, <code id="margin-collapsing-quirks:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>,
   <code id="margin-collapsing-quirks:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code>, <code id="margin-collapsing-quirks:plaintext"><a href="#plaintext">plaintext</a></code>, <code id="margin-collapsing-quirks:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code>, <code id="margin-collapsing-quirks:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code>, <code id="margin-collapsing-quirks:xmp"><a href="#xmp">xmp</a></code></p>
 
   <p>In <a href="/breakup/specs/core-algorithms/#quirks-mode" id="margin-collapsing-quirks:quirks-mode">quirks mode</a>, any <a href="/breakup/specs/rendering-html/#concept-rendering-elements-with-margins" id="margin-collapsing-quirks:concept-rendering-elements-with-margins">element
@@ -1279,7 +1279,7 @@ legend {
 
   <section><h2>Embedded content</h2>
 
-  <p>The <code id="embedded-content-rendering-rules:the-embed-element"><a href="#the-embed-element">embed</a></code>, <code id="embedded-content-rendering-rules:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>, and <code id="embedded-content-rendering-rules:the-video-element"><a href="#the-video-element">video</a></code> elements are expected to be
+  <p>The <code id="embedded-content-rendering-rules:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="embedded-content-rendering-rules:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, and <code id="embedded-content-rendering-rules:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> elements are expected to be
   treated as replaced elements.</p>
 
   <p>A <code id="embedded-content-rendering-rules:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element that <a href="#represents" id="embedded-content-rendering-rules:represents">represents</a> <a href="#embedded-content-category" id="embedded-content-rendering-rules:embedded-content-category">embedded content</a> is
@@ -1288,41 +1288,41 @@ legend {
   element. Other <code id="embedded-content-rendering-rules:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements are expected to be treated as ordinary elements in the
   rendering model.</p>
 
-  <p>An <code id="embedded-content-rendering-rules:the-object-element"><a href="#the-object-element">object</a></code> element that <a href="#represents" id="embedded-content-rendering-rules:represents-2">represents</a> an image, plugin, or <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="embedded-content-rendering-rules:nested-browsing-context">nested
-  browsing context</a> is expected to be treated as a replaced element. Other <code id="embedded-content-rendering-rules:the-object-element-2"><a href="#the-object-element">object</a></code>
+  <p>An <code id="embedded-content-rendering-rules:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element that <a href="#represents" id="embedded-content-rendering-rules:represents-2">represents</a> an image, plugin, or <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="embedded-content-rendering-rules:nested-browsing-context">nested
+  browsing context</a> is expected to be treated as a replaced element. Other <code id="embedded-content-rendering-rules:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
   elements are expected to be treated as ordinary elements in the rendering model.</p>
 
   <p>An <code id="embedded-content-rendering-rules:the-applet-element"><a href="#the-applet-element">applet</a></code> element that <a href="#represents" id="embedded-content-rendering-rules:represents-3">represents</a> a <a href="/breakup/specs/core-algorithms/#plugin" id="embedded-content-rendering-rules:plugin">plugin</a> is expected
   to be treated as a replaced element. Other <code id="embedded-content-rendering-rules:the-applet-element-2"><a href="#the-applet-element">applet</a></code> elements are expected to be treated
   as ordinary elements in the rendering model.</p>
 
-  <p>The <code id="embedded-content-rendering-rules:the-audio-element"><a href="#the-audio-element">audio</a></code> element, when it is <a href="#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user">exposing a user interface</a>, is expected to be treated as a replaced element about one
+  <p>The <code id="embedded-content-rendering-rules:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code> element, when it is <a href="/breakup/specs/html-media/#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user">exposing a user interface</a>, is expected to be treated as a replaced element about one
   line high, as wide as is necessary to expose the user agent's user interface features. When an
-  <code id="embedded-content-rendering-rules:the-audio-element-2"><a href="#the-audio-element">audio</a></code> element is not <a href="#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user-2">exposing a
+  <code id="embedded-content-rendering-rules:the-audio-element-2"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code> element is not <a href="/breakup/specs/html-media/#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user-2">exposing a
   user interface</a>, the user agent is expected to force its 'display' property to compute to
   'none', irrespective of CSS rules.</p>
 
-  <p>Whether a <code id="embedded-content-rendering-rules:the-video-element-2"><a href="#the-video-element">video</a></code> element is <a href="#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user-3">exposing a user interface</a> is not expected to affect the size of the rendering;
+  <p>Whether a <code id="embedded-content-rendering-rules:the-video-element-2"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element is <a href="/breakup/specs/html-media/#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user-3">exposing a user interface</a> is not expected to affect the size of the rendering;
   controls are expected to be overlaid above the page content without causing any layout changes,
   and are expected to disappear when the user does not need them.</p>
 
-  <p>When a <code id="embedded-content-rendering-rules:the-video-element-3"><a href="#the-video-element">video</a></code> element represents a poster frame or frame of video, the poster frame
+  <p>When a <code id="embedded-content-rendering-rules:the-video-element-3"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element represents a poster frame or frame of video, the poster frame
   or frame of video is expected to be rendered at the largest size that maintains the aspect ratio
-  of that poster frame or frame of video without being taller or wider than the <code id="embedded-content-rendering-rules:the-video-element-4"><a href="#the-video-element">video</a></code>
-  element itself, and is expected to be centered in the <code id="embedded-content-rendering-rules:the-video-element-5"><a href="#the-video-element">video</a></code> element.</p>
+  of that poster frame or frame of video without being taller or wider than the <code id="embedded-content-rendering-rules:the-video-element-4"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>
+  element itself, and is expected to be centered in the <code id="embedded-content-rendering-rules:the-video-element-5"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element.</p>
 
   <p>Any subtitles or captions are expected to be overlayed directly on top of their
-  <code id="embedded-content-rendering-rules:the-video-element-6"><a href="#the-video-element">video</a></code> element, as defined by the relevant rendering rules; for WebVTT, those are the
+  <code id="embedded-content-rendering-rules:the-video-element-6"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element, as defined by the relevant rendering rules; for WebVTT, those are the
   <a href="/breakup/specs/core-algorithms/#rules-for-updating-the-display-of-webvtt-text-tracks" id="embedded-content-rendering-rules:rules-for-updating-the-display-of-webvtt-text-tracks">rules for updating the display of WebVTT text tracks</a>. [[!WEBVTT]]</p>
 
-  <p>When the user agent starts <a href="#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user-4">exposing a user
-  interface</a> for a <code id="embedded-content-rendering-rules:the-video-element-7"><a href="#the-video-element">video</a></code> element, the user agent should run the <a href="#rules-for-updating-the-text-track-rendering" id="embedded-content-rendering-rules:rules-for-updating-the-text-track-rendering">rules for
-  updating the text track rendering</a> of each of the <a href="#text-track" id="embedded-content-rendering-rules:text-track">text
-  tracks</a> in the <code id="embedded-content-rendering-rules:the-video-element-8"><a href="#the-video-element">video</a></code> element's <a href="#list-of-text-tracks" id="embedded-content-rendering-rules:list-of-text-tracks">list of text tracks</a> that are <a href="#text-track-showing" id="embedded-content-rendering-rules:text-track-showing">showing</a> and whose <a href="#text-track-kind" id="embedded-content-rendering-rules:text-track-kind">text track kind</a> is one of <code id="embedded-content-rendering-rules:dom-texttrack-kind-subtitles"><a href="#dom-texttrack-kind-subtitles">subtitles</a></code> or <code id="embedded-content-rendering-rules:dom-texttrack-kind-captions"><a href="#dom-texttrack-kind-captions">captions</a></code> (e.g., for <a href="#text-track" id="embedded-content-rendering-rules:text-track-2">text
+  <p>When the user agent starts <a href="/breakup/specs/html-media/#expose-a-user-interface-to-the-user" id="embedded-content-rendering-rules:expose-a-user-interface-to-the-user-4">exposing a user
+  interface</a> for a <code id="embedded-content-rendering-rules:the-video-element-7"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element, the user agent should run the <a href="/breakup/specs/html-media/#rules-for-updating-the-text-track-rendering" id="embedded-content-rendering-rules:rules-for-updating-the-text-track-rendering">rules for
+  updating the text track rendering</a> of each of the <a href="/breakup/specs/html-media/#text-track" id="embedded-content-rendering-rules:text-track">text
+  tracks</a> in the <code id="embedded-content-rendering-rules:the-video-element-8"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> element's <a href="/breakup/specs/html-media/#list-of-text-tracks" id="embedded-content-rendering-rules:list-of-text-tracks">list of text tracks</a> that are <a href="/breakup/specs/html-media/#text-track-showing" id="embedded-content-rendering-rules:text-track-showing">showing</a> and whose <a href="/breakup/specs/html-media/#text-track-kind" id="embedded-content-rendering-rules:text-track-kind">text track kind</a> is one of <code id="embedded-content-rendering-rules:dom-texttrack-kind-subtitles"><a href="/breakup/specs/html-media/#dom-texttrack-kind-subtitles">subtitles</a></code> or <code id="embedded-content-rendering-rules:dom-texttrack-kind-captions"><a href="/breakup/specs/html-media/#dom-texttrack-kind-captions">captions</a></code> (e.g., for <a href="/breakup/specs/html-media/#text-track" id="embedded-content-rendering-rules:text-track-2">text
   tracks</a> based on WebVTT, the <a href="/breakup/specs/core-algorithms/#rules-for-updating-the-display-of-webvtt-text-tracks" id="embedded-content-rendering-rules:rules-for-updating-the-display-of-webvtt-text-tracks-2">rules for updating the display of WebVTT text
   tracks</a>). [[!WEBVTT]]</p>
 
-  <p class="note">Resizing <code id="embedded-content-rendering-rules:the-video-element-9"><a href="#the-video-element">video</a></code> and <code id="embedded-content-rendering-rules:the-canvas-element-3"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements does not interrupt
+  <p class="note">Resizing <code id="embedded-content-rendering-rules:the-video-element-9"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> and <code id="embedded-content-rendering-rules:the-canvas-element-3"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements does not interrupt
   video playback or clear the canvas.</p>
 
   <hr>
@@ -1456,23 +1456,23 @@ object[align=bottom i] {
   vertical-align: bottom;
 }</pre>
 
-  <p>When an <code id="attributes-for-embedded-content-and-images:the-applet-element"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element"><a href="#the-embed-element">embed</a></code>, <code id="attributes-for-embedded-content-and-images:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or
-  <code id="attributes-for-embedded-content-and-images:the-object-element"><a href="#the-object-element">object</a></code> element, or an <code id="attributes-for-embedded-content-and-images:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="attributes-for-embedded-content-and-images:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="attributes-for-embedded-content-and-images:image-button-state-(type=image)">Image Button</a> state, has an <code>align</code>
+  <p>When an <code id="attributes-for-embedded-content-and-images:the-applet-element"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="attributes-for-embedded-content-and-images:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or
+  <code id="attributes-for-embedded-content-and-images:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element, or an <code id="attributes-for-embedded-content-and-images:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="attributes-for-embedded-content-and-images:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="attributes-for-embedded-content-and-images:image-button-state-(type=image)">Image Button</a> state, has an <code>align</code>
   attribute whose value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="attributes-for-embedded-content-and-images:ascii-case-insensitive">ASCII case-insensitive</a> match for the string "<code>center</code>" or the string "<code>middle</code>", the user agent is expected
   to act as if the element's 'vertical-align' property was set to a value that aligns the vertical
   middle of the element with the parent element's baseline.</p>
 
-  <p>The <code>hspace</code> attribute of <code id="attributes-for-embedded-content-and-images:the-applet-element-2"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element-2"><a href="#the-embed-element">embed</a></code>,
-  <code id="attributes-for-embedded-content-and-images:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="attributes-for-embedded-content-and-images:the-object-element-2"><a href="#the-object-element">object</a></code> elements, and <code id="attributes-for-embedded-content-and-images:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>
+  <p>The <code>hspace</code> attribute of <code id="attributes-for-embedded-content-and-images:the-applet-element-2"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element-2"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
+  <code id="attributes-for-embedded-content-and-images:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="attributes-for-embedded-content-and-images:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements, and <code id="attributes-for-embedded-content-and-images:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>
   elements with a <code id="attributes-for-embedded-content-and-images:attr-input-type-2"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute in the <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="attributes-for-embedded-content-and-images:image-button-state-(type=image)-2">Image Button</a> state, <a href="/breakup/specs/rendering-html/#maps-to-the-dimension-property" id="attributes-for-embedded-content-and-images:maps-to-the-dimension-property">maps to the dimension properties</a> 'margin-left' and 'margin-right' on the
   element.</p>
 
-  <p>The <code>vspace</code> attribute of <code id="attributes-for-embedded-content-and-images:the-applet-element-3"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element-3"><a href="#the-embed-element">embed</a></code>,
-  <code id="attributes-for-embedded-content-and-images:the-iframe-element-3"><a href="#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="attributes-for-embedded-content-and-images:the-object-element-3"><a href="#the-object-element">object</a></code> elements, and <code id="attributes-for-embedded-content-and-images:the-input-element-3"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>
+  <p>The <code>vspace</code> attribute of <code id="attributes-for-embedded-content-and-images:the-applet-element-3"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element-3"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
+  <code id="attributes-for-embedded-content-and-images:the-iframe-element-3"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="attributes-for-embedded-content-and-images:the-object-element-3"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements, and <code id="attributes-for-embedded-content-and-images:the-input-element-3"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>
   elements with a <code id="attributes-for-embedded-content-and-images:attr-input-type-3"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute in the <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="attributes-for-embedded-content-and-images:image-button-state-(type=image)-3">Image Button</a> state, <a href="/breakup/specs/rendering-html/#maps-to-the-dimension-property" id="attributes-for-embedded-content-and-images:maps-to-the-dimension-property-2">maps to the dimension properties</a> 'margin-top' and 'margin-bottom' on the
   element.</p>
 
-  <p>When an <code id="attributes-for-embedded-content-and-images:the-img-element-4"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element, <code id="attributes-for-embedded-content-and-images:the-object-element-4"><a href="#the-object-element">object</a></code> element, or <code id="attributes-for-embedded-content-and-images:the-input-element-4"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element
+  <p>When an <code id="attributes-for-embedded-content-and-images:the-img-element-4"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element, <code id="attributes-for-embedded-content-and-images:the-object-element-4"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element, or <code id="attributes-for-embedded-content-and-images:the-input-element-4"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element
   with a <code id="attributes-for-embedded-content-and-images:attr-input-type-4"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute in the <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="attributes-for-embedded-content-and-images:image-button-state-(type=image)-4">Image Button</a> state has a <code>border</code> attribute whose value, when parsed using the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="attributes-for-embedded-content-and-images:rules-for-parsing-non-negative-integers">rules for
   parsing non-negative integers</a>, is found to be a number greater than zero, the user agent is
   expected to use the parsed value for eight <a href="/breakup/specs/rendering-html/#presentational-hints" id="attributes-for-embedded-content-and-images:presentational-hints-2">presentational hints</a>: four setting the
@@ -1481,8 +1481,8 @@ object[align=bottom i] {
   'border-top-style', 'border-right-style', 'border-bottom-style', and 'border-left-style'
   properties to the value 'solid'.</p>
 
-  <p id="dimRendering">The <code id="attributes-for-embedded-content-and-images:attr-dim-width"><a href="#attr-dim-width">width</a></code> and <code id="attributes-for-embedded-content-and-images:attr-dim-height"><a href="#attr-dim-height">height</a></code> attributes on <code id="attributes-for-embedded-content-and-images:the-applet-element-4"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element-4"><a href="#the-embed-element">embed</a></code>,
-  <code id="attributes-for-embedded-content-and-images:the-iframe-element-4"><a href="#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element-5"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, <code id="attributes-for-embedded-content-and-images:the-object-element-5"><a href="#the-object-element">object</a></code> or <code id="attributes-for-embedded-content-and-images:the-video-element"><a href="#the-video-element">video</a></code> elements, and
+  <p id="dimRendering">The <code id="attributes-for-embedded-content-and-images:attr-dim-width"><a href="#attr-dim-width">width</a></code> and <code id="attributes-for-embedded-content-and-images:attr-dim-height"><a href="#attr-dim-height">height</a></code> attributes on <code id="attributes-for-embedded-content-and-images:the-applet-element-4"><a href="#the-applet-element">applet</a></code>, <code id="attributes-for-embedded-content-and-images:the-embed-element-4"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
+  <code id="attributes-for-embedded-content-and-images:the-iframe-element-4"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, <code id="attributes-for-embedded-content-and-images:the-img-element-5"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, <code id="attributes-for-embedded-content-and-images:the-object-element-5"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> or <code id="attributes-for-embedded-content-and-images:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> elements, and
   <code id="attributes-for-embedded-content-and-images:the-input-element-5"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements with a <code id="attributes-for-embedded-content-and-images:attr-input-type-5"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute in the
   <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="attributes-for-embedded-content-and-images:image-button-state-(type=image)-5">Image Button</a> state and that either represents an image
   or that the user expects will eventually represent an image, <a href="/breakup/specs/rendering-html/#maps-to-the-dimension-property" id="attributes-for-embedded-content-and-images:maps-to-the-dimension-property-3">map to the dimension properties</a> 'width' and 'height' on the element
@@ -1497,7 +1497,7 @@ object[align=bottom i] {
 
   <p>Shapes on an <a href="/breakup/specs/html-linking/#image-map" id="image-maps-2:image-map">image map</a> are expected to act, for the purpose of the CSS cascade, as
   elements independent of the original <code id="image-maps-2:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element that happen to match the same style
-  rules but inherit from the <code id="image-maps-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> or <code id="image-maps-2:the-object-element"><a href="#the-object-element">object</a></code> element.</p>
+  rules but inherit from the <code id="image-maps-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> or <code id="image-maps-2:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element.</p>
 
   <p>For the purposes of the rendering, only the 'cursor' property is expected to have any effect on
   the shape.</p>
@@ -1507,7 +1507,7 @@ object[align=bottom i] {
 
   <p class="example">Similarly, if an <code id="image-maps-2:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element had a CSS rule that set its 'cursor'
   property to 'inherit' (or if no rule setting the 'cursor' property matched the element at all),
-  the shape's cursor would be inherited from the <code id="image-maps-2:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> or <code id="image-maps-2:the-object-element-2"><a href="#the-object-element">object</a></code> element of
+  the shape's cursor would be inherited from the <code id="image-maps-2:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> or <code id="image-maps-2:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element of
   the <a href="/breakup/specs/html-linking/#image-map" id="image-maps-2:image-map-2">image map</a>, not from the parent of the <code id="image-maps-2:the-area-element-4"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element.</p></section></section><section><h2>Bindings</h2> 
 
   <section><h2>Introduction</h2>
@@ -1549,27 +1549,27 @@ button { binding: <i>button</i>; }</pre>
 
   
 
-  <section><h2>The <code id="the-details-element-2:the-details-element"><a href="#the-details-element">details</a></code> element</h2>
+  <section><h2>The <code id="the-details-element-2:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element</h2>
 
   <pre class="css">@namespace url(http://www.w3.org/1999/xhtml);
 
 details { binding: <i>details</i>; }</pre>
 
-  <p>When the <i>details</i> binding applies to a <code id="the-details-element-2:the-details-element-2"><a href="#the-details-element">details</a></code> element, the element
+  <p>When the <i>details</i> binding applies to a <code id="the-details-element-2:the-details-element-2"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element, the element
   is expected to render as a 'block' box with its 'padding-left' property set to '40px' for
   left-to-right elements (<a href="/breakup/specs/rendering-html/#ltr-specific" id="the-details-element-2:ltr-specific">LTR-specific</a>) and with its 'padding-right' property set to
   '40px' for right-to-left elements. The element's shadow tree is expected to take the element's
-  first child <code id="the-details-element-2:the-summary-element"><a href="#the-summary-element">summary</a></code> element, if any, and place it in a first 'block' box container,
+  first child <code id="the-details-element-2:the-summary-element"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code> element, if any, and place it in a first 'block' box container,
   and then take the element's remaining descendants, if any, and place them in a second 'block' box
   container.</p>
 
   <p>The first container is expected to contain at least one line box, and that line box is expected
   to contain a disclosure widget (typically a triangle), horizontally positioned within the left
-  padding of the <code id="the-details-element-2:the-details-element-3"><a href="#the-details-element">details</a></code> element. That widget is expected to allow the user to request
+  padding of the <code id="the-details-element-2:the-details-element-3"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element. That widget is expected to allow the user to request
   that the details be shown or hidden.</p>
 
   <p>The second container is expected to have its 'overflow' property set to 'hidden'. When the
-  <code id="the-details-element-2:the-details-element-4"><a href="#the-details-element">details</a></code> element does not have an <code id="the-details-element-2:attr-details-open"><a href="#attr-details-open">open</a></code>
+  <code id="the-details-element-2:the-details-element-4"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element does not have an <code id="the-details-element-2:attr-details-open"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code>
   attribute, this second container is expected to be removed from the rendering.</p></section>
 
   

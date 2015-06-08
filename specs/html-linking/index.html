@@ -317,7 +317,7 @@
 
    </dd><dt><var>map</var> . <code id="the-map-element:dom-map-images-2"><a href="/breakup/specs/html-linking/#dom-map-images">images</a></code></dt><dd>
 
-    <p>Returns an <code id="the-map-element:htmlcollection-4"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-map-element:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="the-map-element:the-object-element"><a href="#the-object-element">object</a></code>
+    <p>Returns an <code id="the-map-element:htmlcollection-4"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-map-element:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="the-map-element:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
     elements that use the <code id="the-map-element:the-map-element-4"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>.</p>
 
    </dd></dl>
@@ -330,7 +330,7 @@
 
   <p>The <dfn id="dom-map-images"><code>images</code></dfn> attribute must return an
   <code id="the-map-element:htmlcollection-6"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the <code id="the-map-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> node, whose filter matches only
-  <code id="the-map-element:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="the-map-element:the-object-element-2"><a href="#the-object-element">object</a></code> elements that are associated with this <code id="the-map-element:the-map-element-6"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>
+  <code id="the-map-element:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="the-map-element:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that are associated with this <code id="the-map-element:the-map-element-6"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>
   element according to the <a href="/breakup/specs/html-linking/#image-map" id="the-map-element:image-map-3">image map</a> processing model.</p>
 
   <p>The IDL attribute <dfn id="dom-map-name"><code>name</code></dfn> must <a href="/breakup/specs/core-algorithms/#reflect" id="the-map-element:reflect">reflect</a>
@@ -554,10 +554,10 @@
 
   <p>An <dfn id="image-map">image map</dfn> allows geometric areas on an image to be associated with <a href="/breakup/specs/html-linking/#hyperlink" id="authoring:hyperlink">hyperlinks</a>.</p>
 
-  <p>An image, in the form of an <code id="authoring:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element or an <code id="authoring:the-object-element"><a href="#the-object-element">object</a></code> element
+  <p>An image, in the form of an <code id="authoring:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element or an <code id="authoring:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element
   representing an image, may be associated with an image map (in the form of a <code id="authoring:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>
   element) by specifying a <dfn id="attr-hyperlink-usemap"><code>usemap</code></dfn> attribute on
-  the <code id="authoring:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> or <code id="authoring:the-object-element-2"><a href="#the-object-element">object</a></code> element. The <code id="authoring:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute, if specified, must be a <a href="/breakup/specs/core-algorithms/#valid-hash-name-reference" id="authoring:valid-hash-name-reference">valid
+  the <code id="authoring:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> or <code id="authoring:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element. The <code id="authoring:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute, if specified, must be a <a href="/breakup/specs/core-algorithms/#valid-hash-name-reference" id="authoring:valid-hash-name-reference">valid
   hash-name reference</a> to a <code id="authoring:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element.</p>
 
   <div class="example">
@@ -588,7 +588,7 @@
 
   <section><h2>Processing model</h2>
 
-  <p>If an <code id="processing-model-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element or an <code id="processing-model-2:the-object-element"><a href="#the-object-element">object</a></code> element representing an image has a
+  <p>If an <code id="processing-model-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element or an <code id="processing-model-2:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element representing an image has a
   <code id="processing-model-2:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute specified, user agents must process it
   as follows:</p>
 
@@ -604,7 +604,7 @@
   it must use the following steps.</p>
 
   <p class="note">In user agents that do not support images, or that have images disabled,
-  <code id="processing-model-2:the-object-element-2"><a href="#the-object-element">object</a></code> elements cannot represent images, and thus this section never applies (the
+  <code id="processing-model-2:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements cannot represent images, and thus this section never applies (the
   <a href="#fallback-content" id="processing-model-2:fallback-content">fallback content</a> is shown instead). The following steps therefore only apply to
   <code id="processing-model-2:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements.</p>
 
@@ -717,7 +717,7 @@
   and activated (e.g. using a keyboard).</p>
 
   <p class="note">Because a <code id="processing-model-2:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element (and its <code id="processing-model-2:the-area-element-13"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements) can be
-  associated with multiple <code id="processing-model-2:the-img-element-6"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="processing-model-2:the-object-element-3"><a href="#the-object-element">object</a></code> elements, it is possible for an
+  associated with multiple <code id="processing-model-2:the-img-element-6"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="processing-model-2:the-object-element-3"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements, it is possible for an
   <code id="processing-model-2:the-area-element-14"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element to correspond to multiple <i id="processing-model-2:focusable-area"><a href="/breakup/specs/html-interacton-attr/#focusable-area">focusable areas</a></i>
   of the document.</p>
 

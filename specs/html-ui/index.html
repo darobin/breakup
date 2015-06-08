@@ -1,0 +1,1568 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML User Interfaces</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-ui"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        UI Elements.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>details</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-details-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-details-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html-sectioning/#sectioning-root" id="the-details-element:sectioning-root">Sectioning root</a>.</dd><dd><a href="#interactive-content-2" id="the-details-element:interactive-content-2">Interactive content</a>.</dd><dd><a href="#palpable-content-2" id="the-details-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-details-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-details-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-details-element:concept-element-content-model">Content model</a>:</dt><dd>One <code id="the-details-element:the-summary-element"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code> element followed by <a href="#flow-content-2" id="the-details-element:flow-content-2-3">flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-details-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-details-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-details-element:global-attributes">Global attributes</a></dd><dd><code id="the-details-element:attr-details-open"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code> — Whether the details are visible</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role</a> that supports 
+   <code title="">aria-expanded</code>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-details-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmldetailselement">HTMLDetailsElement</dfn> : <a href="#htmlelement" id="the-details-element:htmlelement">HTMLElement</a> {
+  attribute boolean <a href="/breakup/specs/html-ui/#dom-details-open" id="the-details-element:dom-details-open">open</a>;
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-details-element:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element <a href="#represents" id="the-details-element:represents">represents</a> a disclosure widget from which the
+  user can obtain additional information or controls.</p>
+
+  <p class="note">The <code id="the-details-element:the-details-element-2"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element is not appropriate for footnotes. Please see <a href="#footnotes">the section on footnotes</a> for details on how to mark up footnotes.</p>
+
+  <p>The first <code id="the-details-element:the-summary-element-2"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code> element child of the element, if any,
+  <a href="#represents" id="the-details-element:represents-2">represents</a> the summary or legend of the details. If there is no
+  child <code id="the-details-element:the-summary-element-3"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code> element, the user agent should provide its own legend (e.g.
+  "Details").</p>
+
+  <p>The rest of the element's contents <a href="#represents" id="the-details-element:represents-3">represents</a> the additional information or
+  controls.</p>
+
+  <p>The <dfn id="attr-details-open"><code>open</code></dfn> content attribute is a <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-details-element:boolean-attribute">boolean
+  attribute</a>. If present, it indicates that both the summary and the additional information is
+  to be shown to the user. If the attribute is absent, only the summary is to be shown.</p>
+
+  
+
+  <p>When the element is created, if the attribute is absent, the additional information should be
+  hidden; if the attribute is present, that information should be shown. Subsequently, if the
+  attribute is removed, then the information should be hidden; if the attribute is added, the
+  information should be shown.</p>
+
+  <p>The user agent should allow the user to request that the additional information be shown or
+  hidden. To honor a request for the details to be shown, the user agent must set the <code id="the-details-element:attr-details-open-2"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code> attribute on the element to the value <code>open</code>. To honor a request for the information to be hidden, the user agent must
+  remove the <code id="the-details-element:attr-details-open-3"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code> attribute from the element.</p>
+
+  <p>Whenever the <code id="the-details-element:attr-details-open-4"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code> attribute is added to or removed from
+  a <code id="the-details-element:the-details-element-3"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element, the user agent must <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-details-element:queue-a-task">queue a task</a> that runs the
+  following steps, which are known as the <dfn id="details-notification-task-steps">details notification task steps</dfn>, for this
+  <code id="the-details-element:the-details-element-4"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element:</p>
+
+  <ol><li>
+
+    <p>If another <a href="/breakup/specs/browser-dom/#concept-task" id="the-details-element:concept-task">task</a> has been <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-details-element:queue-a-task-2">queued</a> to run the <a href="/breakup/specs/html-ui/#details-notification-task-steps" id="the-details-element:details-notification-task-steps">details notification task steps</a> for this
+    <code id="the-details-element:the-details-element-5"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element, then abort these steps.</p>
+
+    <p class="note">When the <code id="the-details-element:attr-details-open-5"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code> attribute is toggled
+    several times in succession, these steps essentially get coalesced so that only one event is
+    fired.</p>
+
+   </li><li><p><a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-details-element:fire-a-simple-event">Fire a simple event</a> named <code id="the-details-element:event-toggle"><a href="/breakup/specs/html/#event-toggle">toggle</a></code> at the
+   <code id="the-details-element:the-details-element-6"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element.</p></li></ol>
+
+  <p>The <a href="/breakup/specs/browser-dom/#task-source" id="the-details-element:task-source">task source</a> for this task must be the <a href="/breakup/specs/browser-dom/#dom-manipulation-task-source" id="the-details-element:dom-manipulation-task-source">DOM manipulation task
+  source</a>.</p>
+
+  <p>The <dfn id="dom-details-open"><code>open</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-details-element:reflect">reflect</a> the <code id="the-details-element:attr-details-open-6"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code> content attribute.</p>
+
+  
+
+  <div class="example">
+
+   <p>The following example shows the <code id="the-details-element:the-details-element-7"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element being used to hide technical
+   details in a progress report.</p>
+
+   <pre>&lt;section class="progress window"&gt;
+ &lt;h1&gt;Copying "Really Achieving Your Childhood Dreams"&lt;/h1&gt;
+ &lt;details&gt;
+  &lt;summary&gt;Copying... &lt;progress max="375505392" value="97543282"&gt;&lt;/progress&gt; 25%&lt;/summary&gt;
+  &lt;dl&gt;
+   &lt;dt&gt;Transfer rate:&lt;/dt&gt; &lt;dd&gt;452KB/s&lt;/dd&gt;
+   &lt;dt&gt;Local filename:&lt;/dt&gt; &lt;dd&gt;/home/rpausch/raycd.m4v&lt;/dd&gt;
+   &lt;dt&gt;Remote filename:&lt;/dt&gt; &lt;dd&gt;/var/www/lectures/raycd.m4v&lt;/dd&gt;
+   &lt;dt&gt;Duration:&lt;/dt&gt; &lt;dd&gt;01:16:27&lt;/dd&gt;
+   &lt;dt&gt;Colour profile:&lt;/dt&gt; &lt;dd&gt;SD (6-1-6)&lt;/dd&gt;
+   &lt;dt&gt;Dimensions:&lt;/dt&gt; &lt;dd&gt;320×240&lt;/dd&gt;
+  &lt;/dl&gt;
+ &lt;/details&gt;
+&lt;/section&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>The following shows how a <code id="the-details-element:the-details-element-8"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element can be used to hide some controls by
+   default:</p>
+
+   <pre>&lt;details&gt;
+ &lt;summary&gt;&lt;label for=fn&gt;Name &amp; Extension:&lt;/label&gt;&lt;/summary&gt;
+ &lt;p&gt;&lt;input type=text id=fn name=fn value="Pillar Magazine.pdf"&gt;
+ &lt;p&gt;&lt;label&gt;&lt;input type=checkbox name=ext checked&gt; Hide extension&lt;/label&gt;
+&lt;/details&gt;</pre>
+
+   <p>One could use this in conjunction with other <code id="the-details-element:the-details-element-9"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> in a list to allow the user
+   to collapse a set of fields down to a small set of headings, with the ability to open each
+   one.</p>
+
+   <p class="details-example"><img src="img/sample-details-1.png" width="345" alt="" height="611"><img src="img/sample-details-2.png" width="345" alt="" height="666"></p>
+
+   <p>In these examples, the summary really just summarises what the controls can change, and not
+   the actual values, which is less than ideal.</p>
+
+  </div>
+
+  <div class="example">
+
+   <p>Because the <code id="the-details-element:attr-details-open-7"><a href="/breakup/specs/html-ui/#attr-details-open">open</a></code> attribute is added and removed
+   automatically as the user interacts with the control, it can be used in CSS to style the element
+   differently based on its state. Here, a stylesheet is used to animate the colour of the summary
+   when the element is opened or closed:</p>
+
+   <pre>&lt;style&gt;
+ details &gt; summary { transition: color 1s; color: black; }
+ details[open] &gt; summary { color: red; }
+&lt;/style&gt;
+&lt;details&gt;
+ &lt;summary&gt;Automated Status: Operational&lt;/summary&gt;
+ &lt;p&gt;Velocity: 12m/s&lt;/p&gt;
+ &lt;p&gt;Direction: North&lt;/p&gt;
+&lt;/details&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>summary</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-summary-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-summary-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As the first child of a <code id="the-summary-element:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-summary-element:concept-element-content-model">Content model</a>:</dt><dd>Either: <a href="#phrasing-content-2" id="the-summary-element:phrasing-content-2">phrasing content</a>.</dd><dd>Or: one element of <a href="#heading-content-2" id="the-summary-element:heading-content-2">heading content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-summary-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-summary-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-summary-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-button"><code title="">button</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-summary-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-summary-element:htmlelement"><a href="#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-summary-element:the-summary-element"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code> element <a href="#represents" id="the-summary-element:represents">represents</a> a summary, caption, or legend for the
+  rest of the contents of the <code id="the-summary-element:the-summary-element-2"><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code> element's parent <code id="the-summary-element:the-details-element-2"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code>
+  element, if any.</p></section><section><h2>The <dfn id="menus"><code>menu</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-menu-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-menu-element:flow-content-2">Flow content</a>.</dd><dd>If the element's <code id="the-menu-element:attr-menu-type"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#toolbar-state" id="the-menu-element:toolbar-state">toolbar</a> state: <a href="#palpable-content-2" id="the-menu-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-menu-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-menu-element:flow-content-2-2">flow content</a> is expected.</dd><dd>If the element's <code id="the-menu-element:attr-menu-type-2"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state">popup menu</a> state: as the child of a <code id="the-menu-element:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element whose <code id="the-menu-element:attr-menu-type-3"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state-2">popup menu</a> state.</dd><dt><a href="#concept-element-content-model" id="the-menu-element:concept-element-content-model">Content model</a>:</dt><dd>If the element's <code id="the-menu-element:attr-menu-type-4"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#toolbar-state" id="the-menu-element:toolbar-state-2">toolbar</a> state: either zero or more <code id="the-menu-element:the-li-element"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> and <a href="#script-supporting-elements-2" id="the-menu-element:script-supporting-elements-2">script-supporting</a> elements, or, <a href="#flow-content-2" id="the-menu-element:flow-content-2-3">flow content</a>.</dd><dd>If the element's <code id="the-menu-element:attr-menu-type-5"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state-3">popup menu</a> state: in any order, zero or more <code id="the-menu-element:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> elements, zero or more <code id="the-menu-element:the-hr-element"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> elements, zero or more <code id="the-menu-element:the-menu-element-2"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> elements whose <code id="the-menu-element:attr-menu-type-6"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attributes are in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state-4">popup menu</a> state, and zero or more <a href="#script-supporting-elements-2" id="the-menu-element:script-supporting-elements-2-2">script-supporting</a> elements.</dd><dt><a href="#concept-element-tag-omission" id="the-menu-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-menu-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-menu-element:global-attributes">Global attributes</a></dd><dd><code id="the-menu-element:attr-menu-type-7"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> — Type of menu</dd><dd><code id="the-menu-element:attr-menu-label"><a href="/breakup/specs/html-ui/#attr-menu-label">label</a></code> — User-visible label</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-menu"><code title="">menu</code></a> 
+   (default - <a href="#aria-usage-note"><em>do not set</em></a>), 
+   <a href="#index-aria-directory"><code title="">directory</code></a>, 
+   <a href="#index-aria-list"><code title="">list</code></a>, 
+   <a href="#index-aria-listbox"><code title="">listbox</code></a>, 
+   <a href="#index-aria-menubar"><code title="">menubar</code></a>, 
+   <a href="#index-aria-tablist"><code title="">tablist</code></a>,
+   <a href="#index-aria-tabpanel"><code title="">tabpanel</code></a>   
+   or <a href="#index-aria-tree"><code title="">tree</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-menu-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlmenuelement">HTMLMenuElement</dfn> : <a href="#htmlelement" id="the-menu-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-ui/#dom-menu-type" id="the-menu-element:dom-menu-type">type</a>;
+  attribute DOMString <a href="/breakup/specs/html-ui/#dom-menu-label" id="the-menu-element:dom-menu-label">label</a>;
+
+  // <a href="#HTMLMenuElement-partial">also has obsolete members</a>
+};</pre>
+  </dd></dl>
+
+  <p>The <code id="the-menu-element:the-menu-element-3"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element represents a list of commands.</p>
+
+  
+
+  <p>The <dfn id="attr-menu-type"><code>type</code></dfn> attribute is an <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="the-menu-element:enumerated-attribute">enumerated
+  attribute</a> indicating the kind of menu being declared. The attribute has two states. The
+  "<dfn id="attr-menu-type-popup"><code>popup</code></dfn>" keyword maps to the <dfn id="popup-menu-state">popup menu</dfn> state, in which the element is declaring a context menu
+  or the menu for a <a href="/breakup/specs/html-forms/#attr-button-type-menu-state" id="the-menu-element:attr-button-type-menu-state">menu button</a>. The "<dfn id="attr-menu-type-toolbar"><code>toolbar</code></dfn>" keyword maps to the <dfn id="toolbar-state">toolbar</dfn> state, in which the element is declaring a toolbar. The attribute may also be
+  omitted. The <i id="the-menu-element:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i> is the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state-5">popup menu</a>
+  state if the parent element is a <code id="the-menu-element:the-menu-element-4"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element whose <code id="the-menu-element:attr-menu-type-8"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state-6">popup
+  menu</a> state; otherwise, it is the <a href="/breakup/specs/html-ui/#toolbar-state" id="the-menu-element:toolbar-state-3">toolbar</a> state.</p>
+
+  <p>If a <code id="the-menu-element:the-menu-element-5"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element's <code id="the-menu-element:attr-menu-type-9"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the
+  <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state-7">popup menu</a> state, then the element <a href="#represents" id="the-menu-element:represents">represents</a>
+  the commands of a popup menu, and the user can only examine and interact with the commands if that
+  popup menu is activated through some other element, either via the <code id="the-menu-element:attr-contextmenu"><a href="/breakup/specs/html-ui/#attr-contextmenu">contextmenu</a></code> attribute or the <code id="the-menu-element:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> element's <code id="the-menu-element:attr-button-menu"><a href="/breakup/specs/html-forms/#attr-button-menu">menu</a></code> attribute.</p>
+
+  <p>If a <code id="the-menu-element:the-menu-element-6"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element's <code id="the-menu-element:attr-menu-type-10"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the
+  <a href="/breakup/specs/html-ui/#toolbar-state" id="the-menu-element:toolbar-state-4">toolbar</a> state, then the element <a href="#represents" id="the-menu-element:represents-2">represents</a> a
+  toolbar consisting of its contents, in the form of either an unordered list of items (represented
+  by <code id="the-menu-element:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> elements), each of which represents a command that the user can perform or
+  activate, or, if the element has no <code id="the-menu-element:the-li-element-3"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element children, <a href="#flow-content-2" id="the-menu-element:flow-content-2-4">flow content</a>
+  describing available commands.</p>
+
+  <p>The <dfn id="attr-menu-label"><code>label</code></dfn> attribute gives the label of the
+  menu. It is used by user agents to display nested menus in the UI: a context menu containing
+  another menu would use the nested menu's <code id="the-menu-element:attr-menu-label-2"><a href="/breakup/specs/html-ui/#attr-menu-label">label</a></code> attribute for
+  the submenu's menu label. The <code id="the-menu-element:attr-menu-label-3"><a href="/breakup/specs/html-ui/#attr-menu-label">label</a></code> attribute must only be
+  specified on <code id="the-menu-element:the-menu-element-7"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> elements whose parent element is a <code id="the-menu-element:the-menu-element-8"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element whose
+  <code id="the-menu-element:attr-menu-type-11"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menu-element:popup-menu-state-8">popup
+  menu</a> state.</p>
+
+  
+
+  <hr>
+
+  <p>A <code id="the-menu-element:the-menu-element-9"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> is a <dfn id="currently-relevant-menu-element">currently relevant <code>menu</code> element</dfn> if it is the
+  child of a <a href="/breakup/specs/html-ui/#currently-relevant-menu-element" id="the-menu-element:currently-relevant-menu-element">currently relevant <code>menu</code> element</a>, or if it is the
+  <a href="/breakup/specs/html-forms/#designated-pop-up-menu" id="the-menu-element:designated-pop-up-menu">designated pop-up menu</a> of a <code id="the-menu-element:the-button-element-2"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> element that is not
+  <a href="/breakup/specs/html-interacton-attr/#inert" id="the-menu-element:inert">inert</a>, does not have a <code id="the-menu-element:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute, and is not
+  the descendant of an element with a <code id="the-menu-element:the-hidden-attribute-2"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute.</p>
+
+  <hr>
+
+  <p>A <dfn id="menu-construct">menu construct</dfn> consists of an ordered list of zero or more <dfn id="menu-item-construct">menu item constructs</dfn>, which can be any of:</p>
+
+  <ul class="brief"><li><a href="/breakup/specs/html-ui/#concept-command" id="the-menu-element:concept-command">Commands</a>, which can be marked as <dfn id="default-command">default commands</dfn> (<code id="the-menu-element:the-menuitem-element-2"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code>)</li><li><dfn id="concept-separator">Separators</dfn> (<code id="the-menu-element:the-hr-element-2"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code>)</li><li>Other <a href="/breakup/specs/html-ui/#menu-construct" id="the-menu-element:menu-construct">menu constructs</a>, each with an associated <dfn id="submenu-label">submenu label</dfn>, which allows the list to be nested (<code id="the-menu-element:the-menu-element-10"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>)</li></ul>
+
+  <p>To <dfn id="build-and-show-a-menu">build and show a menu</dfn> for a particular <code id="the-menu-element:the-menu-element-11"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element
+  <var>source</var> and with a particular element <var>subject</var> as a subject, the user agent
+  must run the following steps:</p>
+
+  <ol><li><p>Let <var>pop-up menu</var> be the <a href="/breakup/specs/html-ui/#menu-construct" id="the-menu-element:menu-construct-2">menu construct</a> created by the <a href="/breakup/specs/html-ui/#build-a-menu-construct" id="the-menu-element:build-a-menu-construct">build a
+   menu construct</a> algorithm when passed the <var>source</var> element.</p>
+
+   </li><li>
+
+    <p>Display <var>pop-up menu</var> to the user, and let the algorithm that invoked this one continue.</p>
+
+    <p>If the user selects a <a href="/breakup/specs/html-ui/#menu-item-construct" id="the-menu-element:menu-item-construct">menu item construct</a> that corresponds to an element that still represents a <a href="/breakup/specs/html-ui/#concept-command" id="the-menu-element:concept-command-2">command</a> when the user selects it, then the UA must invoke that
+    command's <a href="/breakup/specs/html-ui/#command-facet-action" id="the-menu-element:command-facet-action">Action</a>. If the command's <a href="/breakup/specs/html-ui/#command-facet-action" id="the-menu-element:command-facet-action-2">Action</a> is defined as <a href="/breakup/specs/browser-dom/#fire-a-click-event" id="the-menu-element:fire-a-click-event">firing
+    a <code>click</code> event</a>, either directly or via the <a href="/breakup/specs/html-interacton-attr/#run-synthetic-click-activation-steps" id="the-menu-element:run-synthetic-click-activation-steps">run
+    synthetic click activation steps</a> algorithm, then the <code id="the-menu-element:dom-mouseevent-relatedtarget"><a href="/breakup/specs/core-algorithms/#dom-mouseevent-relatedtarget">relatedTarget</a></code> attribute of that <code id="the-menu-element:event-click"><a href="/breakup/specs/core-algorithms/#event-click">click</a></code> event must be initialised to <var>subject</var>.</p>
+
+    <p>Pop-up menus must not, while being shown, reflect changes in the DOM. The menu is constructed
+    from the DOM before being shown, and is then immutable.</p>
+
+   </li></ol>
+
+  <p>To <dfn id="build-a-menu-construct">build a menu construct</dfn> for an element <var>source</var>, the user agent must run
+  the following steps, which return a <a href="/breakup/specs/html-ui/#menu-construct" id="the-menu-element:menu-construct-3">menu construct</a>:</p>
+
+  <ol><li><p>Let <var>generated menu</var> be an empty <a href="/breakup/specs/html-ui/#menu-construct" id="the-menu-element:menu-construct-4">menu construct</a>.</p></li><li>
+
+    <p>Run the <a href="/breakup/specs/html-ui/#menu-item-generator" id="the-menu-element:menu-item-generator">menu item generator</a> steps for the <code id="the-menu-element:the-menu-element-12"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element using <var>generated menu</var>
+    as the output.</p>
+
+    <p>The <dfn id="menu-item-generator">menu item generator</dfn> steps for a <code id="the-menu-element:the-menu-element-13"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element using a specific <a href="/breakup/specs/html-ui/#menu-construct" id="the-menu-element:menu-construct-5">menu construct</a> <var>output</var> as
+    output are as follows: For each child node of the <code id="the-menu-element:the-menu-element-14"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-menu-element:tree-order">tree order</a>,
+    run the appropriate steps from the following list:</p>
+
+    <dl class="switch"><dt>If the child is a <code id="the-menu-element:the-menuitem-element-3"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element that <a href="/breakup/specs/html-ui/#concept-command" id="the-menu-element:concept-command-3">defines
+     a command</a></dt><dd>Append the <a href="/breakup/specs/html-ui/#concept-command" id="the-menu-element:concept-command-4">command</a> to <var>output</var>, respecting the command's <a href="/breakup/specs/html-ui/#concept-facet" id="the-menu-element:concept-facet">facets</a>. If the <code id="the-menu-element:the-menuitem-element-4"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element has a <code id="the-menu-element:attr-menuitem-default"><a href="/breakup/specs/html-ui/#attr-menuitem-default">default</a></code> attribute, mark the <span>command</span> as being a <a href="/breakup/specs/html-ui/#default-command" id="the-menu-element:default-command">default
+     command</a>.</dd><dt>If the child is an <code id="the-menu-element:the-hr-element-3"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element</dt><dd>Append a <a href="/breakup/specs/html-ui/#concept-separator" id="the-menu-element:concept-separator">separator</a> to <var>output</var>.</dd><dt>If the child is a <code id="the-menu-element:the-menu-element-15"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element with no <code id="the-menu-element:attr-menu-label-4"><a href="/breakup/specs/html-ui/#attr-menu-label">label</a></code> attribute</dt><dd>Append a <a href="/breakup/specs/html-ui/#concept-separator" id="the-menu-element:concept-separator-2">separator</a> to <var>output</var>, then run
+     the <a href="/breakup/specs/html-ui/#menu-item-generator" id="the-menu-element:menu-item-generator-2">menu item generator</a> steps for this child <code id="the-menu-element:the-menu-element-16"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element, using
+     <var>output</var> as the output, then append another <a href="/breakup/specs/html-ui/#concept-separator" id="the-menu-element:concept-separator-3">separator</a> to <var>output</var>.</dd><dt>If the child is a <code id="the-menu-element:the-menu-element-17"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element with a <code id="the-menu-element:attr-menu-label-5"><a href="/breakup/specs/html-ui/#attr-menu-label">label</a></code> attribute</dt><dd>Let <var>submenu</var> be the result of running the <a href="/breakup/specs/html-ui/#build-a-menu-construct" id="the-menu-element:build-a-menu-construct-2">build a menu construct</a> steps for the child <code id="the-menu-element:the-menu-element-18"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element. Then, append <var>submenu</var> to <var>output</var>, using the value of the child
+     <code id="the-menu-element:the-menu-element-19"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element's <code id="the-menu-element:attr-menu-label-6"><a href="/breakup/specs/html-ui/#attr-menu-label">label</a></code> attribute as the <a href="/breakup/specs/html-ui/#submenu-label" id="the-menu-element:submenu-label">submenu label</a>.</dd><dt>Otherwise</dt><dd><a href="/breakup/specs/core-algorithms/#ignore" id="the-menu-element:ignore">Ignore</a> the child node.</dd></dl>
+
+   </li><li><p>Remove from <var>output</var> any <a href="/breakup/specs/html-ui/#menu-construct" id="the-menu-element:menu-construct-6">menu construct</a> whose <a href="/breakup/specs/html-ui/#submenu-label" id="the-menu-element:submenu-label-2">submenu
+   label</a> is the empty string.</p></li><li><p>Remove from <var>output</var> any <a href="/breakup/specs/html-ui/#menu-item-construct" id="the-menu-element:menu-item-construct-2">menu item construct</a> representing a <a href="/breakup/specs/html-ui/#concept-command" id="the-menu-element:concept-command-5">command</a> whose <a href="/breakup/specs/html-ui/#command-facet-label" id="the-menu-element:command-facet-label">Label</a> is
+   the empty string.</p></li><li><p>Collapse all sequences of two or more adjacent <a href="/breakup/specs/html-ui/#concept-separator" id="the-menu-element:concept-separator-4">separators</a> in <var>output</var> to a single <a href="/breakup/specs/html-ui/#concept-separator" id="the-menu-element:concept-separator-5">separator</a>.</p></li><li><p>If the first <a href="/breakup/specs/html-ui/#menu-item-construct" id="the-menu-element:menu-item-construct-3">menu item construct</a> in <var>output</var> is a <a href="/breakup/specs/html-ui/#concept-separator" id="the-menu-element:concept-separator-6">separator</a>, then remove it.</p></li><li><p>If the last <a href="/breakup/specs/html-ui/#menu-item-construct" id="the-menu-element:menu-item-construct-4">menu item construct</a> in <var>output</var> is a <a href="/breakup/specs/html-ui/#concept-separator" id="the-menu-element:concept-separator-7">separator</a>, then remove it.</p></li><li><p>Return <var>output</var>.</p></li></ol>
+
+  <hr>
+
+  <p>The <dfn id="dom-menu-type"><code>type</code></dfn> IDL attribute must <a href="/breakup/specs/core-algorithms/#reflect" id="the-menu-element:reflect">reflect</a>
+  the content attribute of the same name, <a href="/breakup/specs/core-algorithms/#limited-to-only-known-values" id="the-menu-element:limited-to-only-known-values">limited to only known values</a>.</p>
+
+  <p>The <dfn id="dom-menu-label"><code>label</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-menu-element:reflect-2">reflect</a> the content attribute of the same name.</p>
+
+  
+
+  <div class="example">
+
+   <p>In this example, the <code id="the-menu-element:the-menu-element-20"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element is used to describe a toolbar with three menu
+   buttons on it, each of which has a dropdown menu with a series of options:</p>
+
+  <pre>&lt;menu&gt; 
+ &lt;li&gt;
+  &lt;button type=menu value="File" menu="filemenu"&gt;
+  &lt;menu id="filemenu" type="popup"&gt;
+   &lt;menuitem onclick="fnew()" label="New..."&gt;
+   &lt;menuitem onclick="fopen()" label="Open..."&gt;
+   &lt;menuitem onclick="fsave()" label="Save"&gt;
+   &lt;menuitem onclick="fsaveas()" label="Save as..."&gt;
+  &lt;/menu&gt;
+ &lt;/li&gt;
+ &lt;li&gt;
+  &lt;button type=menu value="Edit" menu="editmenu"&gt;
+  &lt;menu id="editmenu" type="popup"&gt;
+   &lt;menuitem onclick="ecopy()" label="Copy"&gt;
+   &lt;menuitem onclick="ecut()" label="Cut"&gt;
+   &lt;menuitem onclick="epaste()" label="Paste"&gt;
+  &lt;/menu&gt;
+ &lt;/li&gt;
+ &lt;li&gt;
+  &lt;button type=menu value="Help" menu="helpmenu"&gt;
+  &lt;menu id="helpmenu" type="popup"&gt;
+   &lt;menuitem onclick="location='help.html'" label="Help"&gt;
+   &lt;menuitem onclick="location='about.html'" label="About"&gt;
+  &lt;/menu&gt;
+ &lt;/li&gt;
+&lt;/menu&gt;</pre>
+
+   <p>In a supporting user agent, this might look like this (assuming the user has just activated the
+   second button):</p>
+
+   <p><img src="img/sample-toolbar-1.png" width="303" alt="A toolbar with three buttons, labeled 'File', 'Edit', and 'Help'; where if you select the 'Edit' button you get a drop-down menu with three more options, 'Copy', 'Cut', and 'Paste'." height="101"></p>
+
+  </div></section><section><h2>The <dfn><code>menuitem</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-menuitem-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-menuitem-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-menuitem-element:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element whose <code id="the-menuitem-element:attr-menu-type"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="the-menuitem-element:popup-menu-state">popup menu</a> state.</dd><dt><a href="#concept-element-content-model" id="the-menuitem-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#concept-content-nothing" id="the-menuitem-element:concept-content-nothing">Nothing</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-menuitem-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>No <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-menuitem-element:syntax-end-tag">end tag</a>.</dd><dt><a href="#concept-element-attributes" id="the-menuitem-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-menuitem-element:global-attributes">Global attributes</a></dd><dd><code id="the-menuitem-element:attr-menuitem-type"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> — Type of command</dd><dd><code id="the-menuitem-element:attr-menuitem-label"><a href="/breakup/specs/html-ui/#attr-menuitem-label">label</a></code> — User-visible label</dd><dd><code id="the-menuitem-element:attr-menuitem-icon"><a href="/breakup/specs/html-ui/#attr-menuitem-icon">icon</a></code> — Icon for the command</dd><dd><code id="the-menuitem-element:attr-menuitem-disabled"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code> — Whether the form control is disabled</dd><dd><code id="the-menuitem-element:attr-menuitem-checked"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> — Whether the command or control is checked</dd><dd><code id="the-menuitem-element:attr-menuitem-radiogroup"><a href="/breakup/specs/html-ui/#attr-menuitem-radiogroup">radiogroup</a></code> — Name of group of commands to treat as a radio button group</dd><dd><code id="the-menuitem-element:attr-menuitem-default"><a href="/breakup/specs/html-ui/#attr-menuitem-default">default</a></code> — Mark the command as being a default command</dd><dd><code id="the-menuitem-element:attr-menuitem-command"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code> — Command definition</dd><dd>Also, the <code id="the-menuitem-element:attr-menuitem-title"><a href="/breakup/specs/html-ui/#attr-menuitem-title">title</a></code> attribute <a href="/breakup/specs/html-ui/#attr-menuitem-title" id="the-menuitem-element:attr-menuitem-title-2">has special semantics</a> on this element: Hint describing the command.</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-menuitem"><code title="">menuitem</code></a> 
+   (default - <a href="#aria-usage-note"><em>do not set</em></a>).</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-menuitem-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlmenuitemelement">HTMLMenuItemElement</dfn> : <a href="#htmlelement" id="the-menuitem-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-ui/#dom-menuitem-type" id="the-menuitem-element:dom-menuitem-type">type</a>;
+  attribute DOMString <a href="/breakup/specs/html-ui/#dom-menuitem-label" id="the-menuitem-element:dom-menuitem-label">label</a>;
+  attribute DOMString <a href="/breakup/specs/html-ui/#dom-menuitem-icon" id="the-menuitem-element:dom-menuitem-icon">icon</a>;
+  attribute boolean <a href="/breakup/specs/html-ui/#dom-menuitem-disabled" id="the-menuitem-element:dom-menuitem-disabled">disabled</a>;
+  attribute boolean <a href="/breakup/specs/html-ui/#dom-menuitem-checked" id="the-menuitem-element:dom-menuitem-checked">checked</a>;
+  attribute DOMString <a href="/breakup/specs/html-ui/#dom-menuitem-radiogroup" id="the-menuitem-element:dom-menuitem-radiogroup">radiogroup</a>;
+  attribute boolean <a href="/breakup/specs/html-ui/#dom-menuitem-default" id="the-menuitem-element:dom-menuitem-default">default</a>;
+  readonly attribute <a href="#htmlelement" id="the-menuitem-element:htmlelement-2">HTMLElement</a>? <a href="/breakup/specs/html-ui/#dom-menuitem-command" id="the-menuitem-element:dom-menuitem-command">command</a>;
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-menuitem-element:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element represents a command that the user can invoke from a popup
+  menu (either a <a href="/breakup/specs/html-ui/#attr-contextmenu" id="the-menuitem-element:attr-contextmenu">context menu</a> or the menu of a <a href="/breakup/specs/html-forms/#attr-button-type-menu-state" id="the-menuitem-element:attr-button-type-menu-state">menu button</a>).</p>
+
+  <p>A <code id="the-menuitem-element:the-menuitem-element-2"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element that uses one or more of the
+   <code id="the-menuitem-element:attr-menuitem-type-2"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-label-2"><a href="/breakup/specs/html-ui/#attr-menuitem-label">label</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-icon-2"><a href="/breakup/specs/html-ui/#attr-menuitem-icon">icon</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-disabled-2"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-checked-2"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code>, and
+   <code id="the-menuitem-element:attr-menuitem-radiogroup-2"><a href="/breakup/specs/html-ui/#attr-menuitem-radiogroup">radiogroup</a></code>
+  attributes defines a new command.</p>
+
+  <p>A <code id="the-menuitem-element:the-menuitem-element-3"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element that uses the <code id="the-menuitem-element:attr-menuitem-command-2"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code> attribute defines a command by reference to another
+  one. This allows authors to define a command once, and set its state (e.g. whether it is active or
+  disabled) in one place, and have all references to that command in the user interface change at
+  the same time.</p>
+
+  <p>If the <code id="the-menuitem-element:attr-menuitem-command-3"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code> attribute is specified, the element
+  is in the <dfn id="indirect-command">indirect command</dfn> mode. If it is not specified, it is in the <dfn id="explicit-command">explicit
+  command</dfn> mode. When the element is in the <a href="/breakup/specs/html-ui/#indirect-command" id="the-menuitem-element:indirect-command">indirect command</a> mode, the element
+  must not have any of the following attributes specified:
+   <code id="the-menuitem-element:attr-menuitem-type-3"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-label-3"><a href="/breakup/specs/html-ui/#attr-menuitem-label">label</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-icon-3"><a href="/breakup/specs/html-ui/#attr-menuitem-icon">icon</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-disabled-3"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-checked-3"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code>,
+   <code id="the-menuitem-element:attr-menuitem-radiogroup-3"><a href="/breakup/specs/html-ui/#attr-menuitem-radiogroup">radiogroup</a></code>.
+  </p>
+
+  <hr>
+
+  <p>The <dfn id="attr-menuitem-type"><code>type</code></dfn> attribute indicates the kind of
+  command: either a normal command with an associated action, or a state or option that can be
+  toggled, or a selection of one item from a list of items.</p>
+
+  <p>The attribute is an <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="the-menuitem-element:enumerated-attribute">enumerated attribute</a> with three keywords and states. The
+  "<dfn id="attr-menuitem-type-keyword-command"><code>command</code></dfn>" keyword maps to the
+  <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-command" id="the-menuitem-element:attr-menuitem-type-state-command">Command</a> state, the "<dfn id="attr-menuitem-type-keyword-checkbox"><code>checkbox</code></dfn>" keyword maps to the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-checkbox" id="the-menuitem-element:attr-menuitem-type-state-checkbox">Checkbox</a> state, and the "<dfn id="attr-menuitem-type-keyword-radio"><code>radio</code></dfn>" keyword maps to the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-radio" id="the-menuitem-element:attr-menuitem-type-state-radio">Radio</a> state. The <i id="the-menuitem-element:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i> is the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-command" id="the-menuitem-element:attr-menuitem-type-state-command-2">Command</a> state.</p>
+
+  <dl><dt>The <dfn id="attr-menuitem-type-state-command">Command</dfn> state</dt><dd><p>The element <a href="#represents" id="the-menuitem-element:represents">represents</a> a normal command with an associated action.</p></dd><dt>The <dfn id="attr-menuitem-type-state-checkbox">Checkbox</dfn> state</dt><dd><p>The element <a href="#represents" id="the-menuitem-element:represents-2">represents</a> a state or option that can be toggled.</p></dd><dt>The <dfn id="attr-menuitem-type-state-radio">Radio</dfn> state</dt><dd><p>The element <a href="#represents" id="the-menuitem-element:represents-3">represents</a> a selection of one item from a list of items.</p></dd></dl>
+
+  <p>The <dfn id="attr-menuitem-label"><code>label</code></dfn> attribute gives the name of the
+  command, as shown to the user. The <code id="the-menuitem-element:attr-menuitem-label-4"><a href="/breakup/specs/html-ui/#attr-menuitem-label">label</a></code> attribute must
+  be specified if the element is in the <a href="/breakup/specs/html-ui/#explicit-command" id="the-menuitem-element:explicit-command">explicit command</a> mode. If the attribute is
+  specified, it must have a value that is not the empty string.</p>
+
+  <p>The <dfn id="attr-menuitem-icon"><code>icon</code></dfn> attribute gives a picture that
+  represents the command. If the attribute is specified, the attribute's value must contain a
+  <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="the-menuitem-element:valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by spaces</a>. To obtain
+  the <a href="/breakup/specs/core-algorithms/#absolute-url" id="the-menuitem-element:absolute-url">absolute URL</a> of the icon when the attribute's value is not the empty string, the
+  attribute's value must be <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="the-menuitem-element:resolve-a-url">resolved</a> relative to the element.
+  When the attribute is absent, or its value is the empty string, or <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="the-menuitem-element:resolve-a-url-2">resolving</a> its value fails, there is no icon.</p> 
+
+  <p>The <dfn id="attr-menuitem-disabled"><code>disabled</code></dfn> attribute is a
+  <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-menuitem-element:boolean-attribute">boolean attribute</a> that, if present, indicates that the command is not available in
+  the current state.</p>
+
+  <p class="note">The distinction between <code id="the-menuitem-element:attr-menuitem-disabled-4"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code> and
+  <code id="the-menuitem-element:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> is subtle. A command would be disabled if, in the same
+  context, it could be enabled if only certain aspects of the situation were changed. A command
+  would be marked as hidden if, in that situation, the command will never be enabled. For example,
+  in the context menu for a water faucet, the command "open" might be disabled if the faucet is
+  already open, but the command "eat" would be marked hidden since the faucet could never be
+  eaten.</p>
+
+  <p>The <dfn id="attr-menuitem-checked"><code>checked</code></dfn> attribute is a <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-menuitem-element:boolean-attribute-2">boolean
+  attribute</a> that, if present, indicates that the command is selected. The attribute must be
+  omitted unless the <code id="the-menuitem-element:attr-menuitem-type-4"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute is in either the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-checkbox" id="the-menuitem-element:attr-menuitem-type-state-checkbox-2">Checkbox</a> state or the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-radio" id="the-menuitem-element:attr-menuitem-type-state-radio-2">Radio</a> state.</p>
+
+  <p>The <dfn id="attr-menuitem-radiogroup"><code>radiogroup</code></dfn> attribute gives the
+  name of the group of commands that will be toggled when the command itself is toggled, for
+  commands whose <code id="the-menuitem-element:attr-menuitem-type-5"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute has the value "<code>radio</code>". The scope of the name is the child list of the parent element. The
+  attribute must be omitted unless the <code id="the-menuitem-element:attr-menuitem-type-6"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute is in
+  the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-radio" id="the-menuitem-element:attr-menuitem-type-state-radio-3">Radio</a> state. When specified, the
+  attribute's value must be a non-empty string.</p>
+
+  <hr>
+
+  <p>If a <code id="the-menuitem-element:the-menuitem-element-4"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element <var>slave</var> has a <dfn id="attr-menuitem-command"><code>command</code></dfn> attribute, and there is an element in
+  <var>slave</var>'s <a href="/breakup/specs/core-algorithms/#home-subtree" id="the-menuitem-element:home-subtree">home subtree</a> whose <a href="/breakup/specs/core-algorithms/#concept-id" id="the-menuitem-element:concept-id">ID</a> has
+  a value equal to the value of <var>slave</var>'s <code id="the-menuitem-element:attr-menuitem-command-4"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code> attribute, and the first such element in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-menuitem-element:tree-order">tree
+  order</a>, hereafter <var>master</var>, itself <a href="/breakup/specs/html-ui/#concept-command" id="the-menuitem-element:concept-command">defines a
+  command</a> and either is not a <code id="the-menuitem-element:the-menuitem-element-5"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element or does not itself have a <code id="the-menuitem-element:attr-menuitem-command-5"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code> attribute, then the <dfn id="master-command">master command</dfn> of <var>slave</var> is <var>master</var>.</p>
+
+  <p>A <code id="the-menuitem-element:the-menuitem-element-6"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element with a <code id="the-menuitem-element:attr-menuitem-command-6"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code>
+  attribute must have a <a href="/breakup/specs/html-ui/#master-command" id="the-menuitem-element:master-command">master command</a>.</p>
+
+  <p class="note">This effectively defines the syntax of the attribute's value as being the ID of
+  another element that <a href="/breakup/specs/html-ui/#concept-command" id="the-menuitem-element:concept-command-2">defines a command</a>.</p>
+
+  <hr>
+
+  <p>The <dfn id="attr-menuitem-title"><code>title</code></dfn> attribute gives a hint describing
+  the command, which might be shown to the user to help him.</p>
+
+  <p>The <dfn id="attr-menuitem-default"><code>default</code></dfn> attribute indicates, if
+  present, that the command is the one that would have been invoked if the user had directly
+  activated the menu's subject instead of using the menu. The <code id="the-menuitem-element:attr-menuitem-default-2"><a href="/breakup/specs/html-ui/#attr-menuitem-default">default</a></code> attribute is a <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-menuitem-element:boolean-attribute-3">boolean attribute</a>.</p>
+
+  <div class="example">
+
+   <p>In this trivial example, a submit button is given a context menu that has two options, one to
+   reset the form, and one to submit the form. The submit command is marked as being the default.</p>
+
+   <pre>&lt;form action="dosearch.pl"&gt;
+ &lt;p&gt;&lt;label&gt;Enter search terms: &lt;input type="text" name="terms"&gt;&lt;/label&gt;&lt;/p&gt;
+ &lt;p&gt;&lt;input type=submit contextmenu=formmenu id="submitbutton"&gt;&lt;/p&gt;
+ &lt;p hidden&gt;&lt;input type=reset id="resetbutton"&gt;&lt;/p&gt;
+ &lt;menu type=popup id=formmenu&gt;
+  &lt;menuitem command="submitbutton" default&gt;
+  &lt;menuitem command="resetbutton"&gt;
+ &lt;/menu&gt;
+&lt;/form&gt;</pre>
+
+  </div>
+
+  
+
+  <hr>
+
+  <p>The <dfn id="dom-menuitem-type"><code>type</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-menuitem-element:reflect">reflect</a> the content attribute of the same name, <a href="/breakup/specs/core-algorithms/#limited-to-only-known-values" id="the-menuitem-element:limited-to-only-known-values">limited to only known
+  values</a>.</p>
+
+  <p>The <dfn id="dom-menuitem-label"><code>label</code></dfn>, <dfn id="dom-menuitem-icon"><code>icon</code></dfn>, <dfn id="dom-menuitem-disabled"><code>disabled</code></dfn>, <dfn id="dom-menuitem-checked"><code>checked</code></dfn>, and <dfn id="dom-menuitem-radiogroup"><code>radiogroup</code></dfn>, and <dfn id="dom-menuitem-default"><code>default</code></dfn> IDL attributes must <a href="/breakup/specs/core-algorithms/#reflect" id="the-menuitem-element:reflect-2">reflect</a>
+  the respective content attributes of the same name.</p>
+
+  <p>The <dfn id="dom-menuitem-command"><code>command</code></dfn> IDL attribute must return the
+  <a href="/breakup/specs/html-ui/#master-command" id="the-menuitem-element:master-command-2">master command</a>, if any, or null otherwise.</p>
+
+  <hr>
+
+  <p>If the element's <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="the-menuitem-element:command-facet-disabledstate">Disabled State</a> is false
+  (enabled) then the element's <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="the-menuitem-element:activation-behaviour">activation behaviour</a> depends on the element's <code id="the-menuitem-element:attr-menuitem-type-7"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> and <code id="the-menuitem-element:attr-menuitem-command-7"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code>
+  attributes, as follows:</p>
+
+  <dl class="switch"><dt>If the element has a <a href="/breakup/specs/html-ui/#master-command" id="the-menuitem-element:master-command-3">master command</a> set by its <code id="the-menuitem-element:attr-menuitem-command-8"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code> attribute</dt><dd><p>The user agent must <a href="/breakup/specs/html-interacton-attr/#run-synthetic-click-activation-steps" id="the-menuitem-element:run-synthetic-click-activation-steps">run synthetic click activation steps</a> on the element's
+   <a href="/breakup/specs/html-ui/#master-command" id="the-menuitem-element:master-command-4">master command</a>.</p></dd><dt>If the <code id="the-menuitem-element:attr-menuitem-type-8"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-checkbox" id="the-menuitem-element:attr-menuitem-type-state-checkbox-3">Checkbox</a> state</dt><dd><p>If the element has a <code id="the-menuitem-element:attr-menuitem-checked-4"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> attribute, the UA
+   must remove that attribute. Otherwise, the UA must add a <code id="the-menuitem-element:attr-menuitem-checked-5"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> attribute, with the literal value "<code>checked</code>".</p></dd><dt>If the <code id="the-menuitem-element:attr-menuitem-type-9"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#attr-menuitem-type-state-radio" id="the-menuitem-element:attr-menuitem-type-state-radio-4">Radio</a> state</dt><dd><p>If the element has a parent, then the UA must walk the list of child nodes of that parent
+   element, and for each node that is a <code id="the-menuitem-element:the-menuitem-element-7"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element, if that element has a <code id="the-menuitem-element:attr-menuitem-radiogroup-4"><a href="/breakup/specs/html-ui/#attr-menuitem-radiogroup">radiogroup</a></code> attribute whose value exactly matches the
+   current element's (treating missing <code id="the-menuitem-element:attr-menuitem-radiogroup-5"><a href="/breakup/specs/html-ui/#attr-menuitem-radiogroup">radiogroup</a></code>
+   attributes as if they were the empty string), and has a <code id="the-menuitem-element:attr-menuitem-checked-6"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> attribute, must remove that attribute.</p>
+
+   <p>Then, the element's <code id="the-menuitem-element:attr-menuitem-checked-7"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> attribute must be set
+   to the literal value "<code>checked</code>".</p></dd><dt>Otherwise</dt><dd><p>The element's <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="the-menuitem-element:activation-behaviour-2">activation behaviour</a> is to do nothing.</p></dd></dl>
+
+  <p class="note">Firing a synthetic <code id="the-menuitem-element:event-click"><a href="/breakup/specs/core-algorithms/#event-click">click</a></code> event at the element
+  does not cause any of the actions described above to happen.</p>
+
+  
+
+  <p>If the element's <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="the-menuitem-element:command-facet-disabledstate-2">Disabled State</a> is true
+  (disabled) then the element has no <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="the-menuitem-element:activation-behaviour-3">activation behaviour</a>.</p>
+
+  
+
+  <p class="note">The <code id="the-menuitem-element:the-menuitem-element-8"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element is not rendered except as <a href="/breakup/specs/html-ui/#the-menu-element" id="the-menuitem-element:the-menu-element-2">part of a popup menu</a>.</p>
+
+  <div class="example">
+
+   <p>Here is an example of a pop-up menu button with three options that let the user toggle between
+   left, center, and right alignment. One could imagine such a toolbar as part of a text editor. The
+   menu also has a separator followed by another menu item labeled "Publish", though that menu item
+   is disabled.</p>
+
+   <pre>&lt;button type=menu menu=editmenu&gt;Commands...&lt;/button&gt;
+&lt;menu type="popup" id="editmenu"&gt;
+ &lt;menuitem type="radio" radiogroup="alignment" checked="checked"
+          label="Left" icon="icons/alL.png" onclick="setAlign('left')"&gt;
+ &lt;menuitem type="radio" radiogroup="alignment"
+          label="Center" icon="icons/alC.png" onclick="setAlign('center')"&gt;
+ &lt;menuitem type="radio" radiogroup="alignment"
+          label="Right" icon="icons/alR.png" onclick="setAlign('right')"&gt;
+ &lt;hr&gt;
+ &lt;menuitem type="command" disabled
+          label="Publish" icon="icons/pub.png" onclick="publish()"&gt;
+&lt;/menu&gt;</pre>
+
+  </div></section><section><h2>Context menus</h2>
+
+  <section><h2>Declaring a context menu</h2>
+
+  <p>The <dfn id="attr-contextmenu"><code>contextmenu</code></dfn> attribute gives the element's
+  context menu. The value must be the <a href="/breakup/specs/core-algorithms/#concept-id" id="declaring-a-context-menu:concept-id">ID</a> of a <code id="declaring-a-context-menu:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>
+  element in the same <a href="/breakup/specs/core-algorithms/#home-subtree" id="declaring-a-context-menu:home-subtree">home subtree</a> whose <code id="declaring-a-context-menu:attr-menu-type"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code>
+  attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="declaring-a-context-menu:popup-menu-state">popup menu</a> state.</p>
+
+  <p class="note">When a user right-clicks on an element with a <code id="declaring-a-context-menu:attr-contextmenu"><a href="/breakup/specs/html-ui/#attr-contextmenu">contextmenu</a></code> attribute, the user agent will first fire a <code id="declaring-a-context-menu:event-contextmenu"><a href="/breakup/specs/html/#event-contextmenu">contextmenu</a></code> event at the element, and then, if that event is not
+  canceled, a <code id="declaring-a-context-menu:event-show"><a href="/breakup/specs/html/#event-show">show</a></code> event at the <code id="declaring-a-context-menu:the-menu-element-2"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element.</p>
+
+  <div class="example">
+
+   <p>Here is an example of a context menu for an input control:</p>
+
+   <pre>&lt;form name="npc"&gt;
+ &lt;label&gt;Character name: &lt;input name=char type=text contextmenu=namemenu required&gt;&lt;/label&gt;
+ &lt;menu type=popup id=namemenu&gt;
+  &lt;menuitem label="Pick random name" onclick="document.forms.npc.elements.char.value = getRandomName()"&gt;
+  &lt;menuitem label="Prefill other fields based on name" onclick="prefillFields(document.forms.npc.elements.char.value)"&gt;
+ &lt;/menu&gt;
+&lt;/form&gt;</pre>
+
+   <p>This adds two items to the control's context menu, one called "Pick random name", and one
+   called "Prefill other fields based on name". They invoke scripts that are not shown in the
+   example above.</p>
+
+  </div></section>
+
+
+
+  
+
+  <section><h2>Processing model</h2>
+
+  <p>Each element has an <dfn id="assigned-context-menu">assigned context menu</dfn>, which can be null. If an element <var>A</var> has a <code id="processing-model-5:attr-contextmenu"><a href="/breakup/specs/html-ui/#attr-contextmenu">contextmenu</a></code> attribute, and there is
+  an element with the ID given by <var>A</var>'s <code id="processing-model-5:attr-contextmenu-2"><a href="/breakup/specs/html-ui/#attr-contextmenu">contextmenu</a></code> attribute's value in <var>A</var>'s
+  <a href="/breakup/specs/core-algorithms/#home-subtree" id="processing-model-5:home-subtree">home subtree</a>, and the first such element in <a href="/breakup/specs/core-algorithms/#tree-order" id="processing-model-5:tree-order">tree order</a> is a
+  <code id="processing-model-5:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element whose <code id="processing-model-5:attr-menu-type"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#popup-menu-state" id="processing-model-5:popup-menu-state">popup menu</a> state, then <var>A</var>'s <a href="/breakup/specs/html-ui/#assigned-context-menu" id="processing-model-5:assigned-context-menu">assigned
+  context menu</a> is that element. Otherwise, if <var>A</var> has a parent element,
+  then <var>A</var>'s <a href="/breakup/specs/html-ui/#assigned-context-menu" id="processing-model-5:assigned-context-menu-2">assigned context menu</a> is the <a href="/breakup/specs/html-ui/#assigned-context-menu" id="processing-model-5:assigned-context-menu-3">assigned context
+  menu</a> of its parent element. Otherwise, <var>A</var>'s <a href="/breakup/specs/html-ui/#assigned-context-menu" id="processing-model-5:assigned-context-menu-4">assigned context
+  menu</a> is null.</p>
+
+  <p>When an element's context menu is requested (e.g. by the user right-clicking the element, or
+  pressing a context menu key), the user agent must apply the appropriate rules from the following
+  list:</p>
+
+  <dl class="switch"><dt>If the user requested a context menu using a pointing device</dt><dd><p>The user agent must <a href="/breakup/specs/core-algorithms/#concept-event-fire" id="processing-model-5:concept-event-fire">fire</a> a <a href="/breakup/specs/core-algorithms/#concept-events-trusted" id="processing-model-5:concept-events-trusted">trusted</a> event with the name <code id="processing-model-5:event-contextmenu"><a href="/breakup/specs/html/#event-contextmenu">contextmenu</a></code>, that bubbles and is cancelable, and that uses the
+   <code id="processing-model-5:mouseevent"><a href="/breakup/specs/core-algorithms/#mouseevent">MouseEvent</a></code> interface, at the element for which the menu was requested. The context
+   information of the event must be initialised to the same values as the last
+   <code id="processing-model-5:mouseevent-2"><a href="/breakup/specs/core-algorithms/#mouseevent">MouseEvent</a></code> user interaction event that was fired as part of the gesture that was
+   interpreted as a request for the context menu.</p></dd><dt>Otherwise</dt><dd><p>The user agent must <a href="/breakup/specs/browser-dom/#fire-a-synthetic-mouse-event" id="processing-model-5:fire-a-synthetic-mouse-event">fire a synthetic mouse
+   event named <code>contextmenu</code></a> that bubbles and is
+   cancelable at the element for which the menu was requested.</p></dd></dl>
+
+  <p class="note">Typically, therefore, the firing of the <code id="processing-model-5:event-contextmenu-2"><a href="/breakup/specs/html/#event-contextmenu">contextmenu</a></code> event will be the default action of a <code id="processing-model-5:event-mouseup"><a href="/breakup/specs/core-algorithms/#event-mouseup">mouseup</a></code> or <code id="processing-model-5:event-keyup"><a href="/breakup/specs/core-algorithms/#event-keyup">keyup</a></code> event. The exact
+  sequence of events is UA-dependent, as it will vary based on platform conventions.</p>
+
+  <p>The default action of the <code id="processing-model-5:event-contextmenu-3"><a href="/breakup/specs/html/#event-contextmenu">contextmenu</a></code> event depends on
+  whether or not the element for which the menu was requested has a non-null <a href="/breakup/specs/html-ui/#assigned-context-menu" id="processing-model-5:assigned-context-menu-5">assigned context
+  menu</a> when the event dispatch has completed, as follows.</p>
+
+  <p>If the <a href="/breakup/specs/html-ui/#assigned-context-menu" id="processing-model-5:assigned-context-menu-6">assigned context menu</a> of the element for which the menu was requested is
+  null, the default action must be for the user agent to show its default context menu, if it has
+  one.</p>
+
+  <p>Otherwise, let <var>subject</var> be the element for which the menu was requested, and let
+  <var>menu</var> be the <a href="/breakup/specs/html-ui/#assigned-context-menu" id="processing-model-5:assigned-context-menu-7">assigned context menu</a> of <var>target</var> immediately after
+  the <code id="processing-model-5:event-contextmenu-4"><a href="/breakup/specs/html/#event-contextmenu">contextmenu</a></code> event's dispatch has completed. The user
+  agent must <a href="/breakup/specs/core-algorithms/#concept-event-fire" id="processing-model-5:concept-event-fire-2">fire</a> a <a href="/breakup/specs/core-algorithms/#concept-events-trusted" id="processing-model-5:concept-events-trusted-2">trusted</a> event with the name <code id="processing-model-5:event-show"><a href="/breakup/specs/html/#event-show">show</a></code> at <var>menu</var>, using the <code id="processing-model-5:relatedevent"><a href="/breakup/specs/html-ui/#relatedevent">RelatedEvent</a></code> interface,
+  with the <code id="processing-model-5:dom-relatedevent-relatedtarget"><a href="/breakup/specs/html-ui/#dom-relatedevent-relatedtarget">relatedTarget</a></code> attribute initialised
+  to <var>subject</var>. The event must be cancelable. </p>
+
+  <p>If <em>this</em> event (the <code id="processing-model-5:event-show-2"><a href="/breakup/specs/html/#event-show">show</a></code> event) is not canceled, then
+  the user agent must <a href="/breakup/specs/html-ui/#build-and-show-a-menu" id="processing-model-5:build-and-show-a-menu">build and show</a> the menu for
+  <var>menu</var> with <var>subject</var> as the subject.</p>
+
+  <p>The user agent may also provide access to its default context menu, if any, with the context
+  menu shown. For example, it could merge the menu items from the two menus together, or provide the
+  page's context menu as a submenu of the default menu. In general, user agents are encouraged to
+  de-emphasise their own contextual menu items, so as to give the author's context menu the
+  appearance of legitimacy — to allow documents to feel like "applications" rather than "mere
+  Web pages".</p>
+
+  <p>User agents may provide means for bypassing the context menu processing model, ensuring that
+  the user can always access the UA's default context menus. For example, the user agent could
+  handle right-clicks that have the Shift key depressed in such a way that it does not fire the
+  <code id="processing-model-5:event-contextmenu-5"><a href="/breakup/specs/html/#event-contextmenu">contextmenu</a></code> event and instead always shows the default
+  context menu.</p>
+
+  <hr>
+
+  <p>The <dfn id="dom-contextmenu"><code>contextMenu</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="processing-model-5:reflect">reflect</a> the <code id="processing-model-5:attr-contextmenu-3"><a href="/breakup/specs/html-ui/#attr-contextmenu">contextmenu</a></code> content attribute.</p>
+
+  
+
+  <div class="example">
+
+   <p>In this example, an image of cats is given a context menu with four possible commands:</p>
+
+   <pre>&lt;img src="cats.jpeg" alt="Cats" contextmenu=catsmenu&gt;
+&lt;menu type="popup" id="catsmenu"&gt;
+ &lt;menuitem label="Pet the kittens" onclick="kittens.pet()"&gt;
+ &lt;menuitem label="Cuddle with the kittens" onclick="kittens.cuddle()"&gt;
+ &lt;menu label="Feed the kittens"&gt;
+  &lt;menuitem label="Fish" onclick="kittens.feed(fish)"&gt;
+  &lt;menuitem label="Chicken" onclick="kittens.feed(chicken)"&gt;
+ &lt;/menu&gt;
+&lt;/menu&gt;</pre>
+
+   <p>When a user of a mouse-operated visual Web browser right-clicks on the image, the browser
+   might pop up a context menu like this:</p>
+
+   <p><img src="img/contextmenu-collapsed.png" alt="A context menu, shown over a picture of cats, with four lines: the first two offering the menu items described in the markup above ('Pet the kittens' and 'Cuddle with the kittens'), the third giving a submenu labeled 'Feed the kittens', and the fourth, after a horizontal splitter, consisting of only a downwards-pointing disclosure triangle.">
+
+   </p><p>When the user clicks the disclosure triangle, such a user agent would expand the context menu
+   in place, to show the browser's own commands:</p>
+
+   <p><img src="img/contextmenu-expanded.png" alt="This would result in the same basic interface, but with a longer menu; the disclosure triangle having been replaced by items such as 'View Image', 'Copy Image', 'Copy Image Location', and so forth.">
+
+  </p></div></section>
+
+
+  <section><h2>The <code id="the-relatedevent-interfaces:relatedevent"><a href="/breakup/specs/html-ui/#relatedevent">RelatedEvent</a></code> interfaces</h2>
+
+  <pre class="idl">[Constructor(DOMString type, optional <a href="/breakup/specs/html-ui/#relatedeventinit" id="the-relatedevent-interfaces:relatedeventinit">RelatedEventInit</a> eventInitDict)]
+interface <dfn id="relatedevent">RelatedEvent</dfn> : <a href="/breakup/specs/core-algorithms/#event" id="the-relatedevent-interfaces:event">Event</a> {
+  readonly attribute <a href="/breakup/specs/core-algorithms/#eventtarget" id="the-relatedevent-interfaces:eventtarget">EventTarget</a>? <a href="/breakup/specs/html-ui/#dom-relatedevent-relatedtarget" id="the-relatedevent-interfaces:dom-relatedevent-relatedtarget">relatedTarget</a>;
+};
+
+dictionary <dfn id="relatedeventinit">RelatedEventInit</dfn> : <a href="/breakup/specs/core-algorithms/#eventinit" id="the-relatedevent-interfaces:eventinit">EventInit</a> {
+  <a href="/breakup/specs/core-algorithms/#eventtarget" id="the-relatedevent-interfaces:eventtarget-2">EventTarget</a>? relatedTarget;
+};</pre>
+
+  <dl class="domintro"><dt><var>event</var> . <code id="the-relatedevent-interfaces:dom-relatedevent-relatedtarget-2"><a href="/breakup/specs/html-ui/#dom-relatedevent-relatedtarget">relatedTarget</a></code></dt><dd>
+
+    <p>Returns the other event target involved in this event. For example, when a <code id="the-relatedevent-interfaces:event-show"><a href="/breakup/specs/html/#event-show">show</a></code> event fires on a <code id="the-relatedevent-interfaces:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> element, the other event
+    target involved in the event would be the element for which the menu is being shown.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-relatedevent-relatedtarget"><code>relatedTarget</code></dfn> attribute must
+  return the value it was initialised to. When the object is created, this attribute must be
+  initialised to null. It represents the other event target that is related to the event.</p></section></section><section><h2>Commands</h2>
+
+  <section><h2>Facets</h2>
+
+  <p>A <dfn id="concept-command">command</dfn> is the abstraction behind menu items, buttons, and
+  links. Once a command is defined, other parts of the interface can refer to the same command,
+  allowing many access points to a single feature to share facets such as the <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="facets-2:command-facet-disabledstate">Disabled State</a>.</p>
+
+  <p id="facets">Commands are defined to have the following <dfn id="concept-facet">facets</dfn>:</p>
+
+  <dl><dt><dfn id="command-facet-type">Type</dfn></dt><dd>The kind of command: "command", meaning it is a normal command; "radio", meaning that
+   triggering the command will, amongst other things, set the <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="facets-2:command-facet-checkedstate">Checked State</a> to true (and probably uncheck some other
+   commands); or "checkbox", meaning that triggering the command will, amongst other things, toggle
+   the value of the <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="facets-2:command-facet-checkedstate-2">Checked State</a>.</dd><dt><dfn id="command-facet-id">ID</dfn></dt><dd>The name of the command, for referring to the command from the markup or from script. If a
+   command has no ID, it is an <dfn id="anonymous-command">anonymous command</dfn>.</dd><dt><dfn id="command-facet-label">Label</dfn></dt><dd>The name of the command as seen by the user.</dd><dt><dfn id="command-facet-hint">Hint</dfn></dt><dd>A helpful or descriptive string that can be shown to the user.</dd><dt><dfn id="command-facet-icon">Icon</dfn></dt><dd>An <a href="/breakup/specs/core-algorithms/#absolute-url" id="facets-2:absolute-url">absolute URL</a> identifying a graphical image that represents the action. A
+   command might not have an Icon.</dd><dt><dfn id="command-facet-accesskey">Access Key</dfn></dt><dd>A key combination selected by the user agent that triggers the command. A command might not
+   have an Access Key.</dd><dt><dfn id="command-facet-hiddenstate">Hidden State</dfn></dt><dd>Whether the command is hidden or not (basically, whether it should be shown in menus).</dd><dt><dfn id="command-facet-disabledstate">Disabled State</dfn></dt><dd>Whether the command is relevant and can be triggered or not.</dd><dt><dfn id="command-facet-checkedstate">Checked State</dfn></dt><dd>Whether the command is checked or not.</dd><dt><dfn id="command-facet-action">Action</dfn></dt><dd>The actual effect that triggering the command will have. This could be a scripted event
+   handler, a <a href="/breakup/specs/core-algorithms/#url" id="facets-2:url">URL</a> to which to <a href="/breakup/specs/browsing/#navigate" id="facets-2:navigate">navigate</a>, or a form submission.</dd></dl>
+
+
+  <p>These facets are exposed on elements using the <dfn id="command-api">command API</dfn>:</p>
+
+  <dl class="domintro"><dt><var>element</var> . <code id="facets-2:dom-command-ro-commandtype"><a href="/breakup/specs/html-ui/#dom-command-ro-commandtype">commandType</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-type" id="facets-2:command-facet-type">Type</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-element-id"><a href="/breakup/specs/core-algorithms/#dom-element-id">id</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-id" id="facets-2:command-facet-id">ID</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-command-ro-commandlabel"><a href="/breakup/specs/html-ui/#dom-command-ro-commandlabel">commandLabel</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-label" id="facets-2:command-facet-label">Label</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-title"><a href="/breakup/specs/html-attributes/#dom-title">title</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-hint" id="facets-2:command-facet-hint">Hint</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-command-ro-commandicon"><a href="/breakup/specs/html-ui/#dom-command-ro-commandicon">commandIcon</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-icon" id="facets-2:command-facet-icon">Icon</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-accesskeylabel"><a href="/breakup/specs/html-interacton-attr/#dom-accesskeylabel">accessKeyLabel</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="facets-2:command-facet-accesskey">Access Key</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-command-ro-commandhidden"><a href="/breakup/specs/html-ui/#dom-command-ro-commandhidden">commandHidden</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="facets-2:command-facet-hiddenstate">Hidden State</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-command-ro-commanddisabled"><a href="/breakup/specs/html-ui/#dom-command-ro-commanddisabled">commandDisabled</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="facets-2:command-facet-disabledstate-2">Disabled State</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-command-ro-commandchecked"><a href="/breakup/specs/html-ui/#dom-command-ro-commandchecked">commandChecked</a></code></dt><dd>
+
+    <p>Exposes the <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="facets-2:command-facet-checkedstate-3">Checked State</a> facet of the command.</p>
+
+   </dd><dt><var>element</var> . <code id="facets-2:dom-click"><a href="/breakup/specs/html-interacton-attr/#dom-click">click</a></code>()</dt><dd>
+
+    <p>Triggers the <a href="/breakup/specs/html-ui/#command-facet-action" id="facets-2:command-facet-action">Action</a> of the command.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-command-ro-commandtype"><code>commandType</code></dfn> attribute must
+  return a string whose value is either "<code>command</code>", "<code>radio</code>", or "<code>checkbox</code>", depending on whether the <a href="/breakup/specs/html-ui/#command-facet-type" id="facets-2:command-facet-type-2">Type</a> of the command defined by the element is "command",
+  "radio", or "checkbox" respectively. If the element does not define a command, it must return
+  null.</p>
+
+  <p>The <dfn id="dom-command-ro-commandlabel"><code>commandLabel</code></dfn> attribute must
+  return the command's <a href="/breakup/specs/html-ui/#command-facet-label" id="facets-2:command-facet-label-2">Label</a>, or null if the element does
+  not define a command or does not specify a <a href="/breakup/specs/html-ui/#command-facet-label" id="facets-2:command-facet-label-3">Label</a>.</p>
+
+  <p>The <dfn id="dom-command-ro-commandicon"><code>commandIcon</code></dfn> attribute must
+  return the <a href="/breakup/specs/core-algorithms/#absolute-url" id="facets-2:absolute-url-2">absolute URL</a> of the command's <a href="/breakup/specs/html-ui/#command-facet-icon" id="facets-2:command-facet-icon-2">Icon</a>. If the element does not specify an icon, or if the element
+  does not define a command, then the attribute must return null.</p>
+
+  <p>The <dfn id="dom-command-ro-commandhidden"><code>commandHidden</code></dfn> attribute must
+  return true if the command's <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="facets-2:command-facet-hiddenstate-2">Hidden State</a> is that
+  the command is hidden, and false if the command is not hidden. If the element does not define a
+  command, the attribute must return null.</p>
+
+  <p>The <dfn id="dom-command-ro-commanddisabled"><code>commandDisabled</code></dfn> attribute
+  must return true if the command's <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="facets-2:command-facet-disabledstate-3">Disabled State</a>
+  is that the command is disabled, and false if the command is not disabled. This attribute is not
+  affected by the command's <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="facets-2:command-facet-hiddenstate-3">Hidden State</a>. If the
+  element does not define a command, the attribute must return null.</p>
+
+  <p>The <dfn id="dom-command-ro-commandchecked"><code>commandChecked</code></dfn> attribute must
+  return true if the command's <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="facets-2:command-facet-checkedstate-4">Checked State</a> is that
+  the command is checked, and false if it is that the command is not checked. If the element does
+  not define a command, the attribute must return null.</p>
+
+
+
+  <p class="note">The <a href="/breakup/specs/html-ui/#command-facet-id" id="facets-2:command-facet-id-2">ID</a> facet is exposed by the <code id="facets-2:dom-element-id-2"><a href="/breakup/specs/core-algorithms/#dom-element-id">id</a></code> IDL attribute, the <a href="/breakup/specs/html-ui/#command-facet-hint" id="facets-2:command-facet-hint-2">Hint</a>
+  facet is exposed by the <code id="facets-2:dom-title-2"><a href="/breakup/specs/html-attributes/#dom-title">title</a></code> IDL attribute, and the <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="facets-2:command-facet-accesskey-2">AccessKey</a> facet is exposed by the <code id="facets-2:dom-accesskeylabel-2"><a href="/breakup/specs/html-interacton-attr/#dom-accesskeylabel">accessKeyLabel</a></code> IDL attribute.</p>
+
+  
+
+  <hr>
+
+  <dl class="domintro"><dt><var>document</var> . <code id="facets-2:dom-document-commands"><a href="/breakup/specs/html-ui/#dom-document-commands">commands</a></code></dt><dd>
+    <p>Returns an <code id="facets-2:htmlcollection"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the elements in the <code id="facets-2:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that
+    define commands and have IDs.</p>
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-document-commands"><code>commands</code></dfn> attribute of the document's
+  <code id="facets-2:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> interface must return an <code id="facets-2:htmlcollection-2"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the
+  <code id="facets-2:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code> node, whose filter matches only elements that <a href="/breakup/specs/html-ui/#concept-command" id="facets-2:concept-command">define commands</a> and have <a href="/breakup/specs/html-ui/#command-facet-id" id="facets-2:command-facet-id-3">IDs</a>.</p>
+
+  
+
+
+  <hr>
+
+  <p id="expose-commands-in-ui">User agents may expose the <a href="/breakup/specs/html-ui/#concept-command" id="facets-2:concept-command-2">commands</a> that match the following criteria:</p>
+
+  <ul class="brief"><li>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="facets-2:command-facet-hiddenstate-4">Hidden State</a> facet is false (visible)</li><li>The element is <a href="/breakup/specs/core-algorithms/#in-a-document" id="facets-2:in-a-document">in a <code>Document</code></a> that has an associated <a href="/breakup/specs/browser-dom/#browsing-context" id="facets-2:browsing-context">browsing
+   context</a>.</li><li>Neither the element nor any of its ancestors has a <code id="facets-2:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code>
+   attribute specified.</li><li>The element is not a <code id="facets-2:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element, or it is a child of a <a href="/breakup/specs/html-ui/#currently-relevant-menu-element" id="facets-2:currently-relevant-menu-element">currently
+   relevant <code>menu</code> element</a>, or it has an <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="facets-2:command-facet-accesskey-3">Access Key</a>.</li></ul>
+
+  <p>User agents are encouraged to do this especially for commands that have <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="facets-2:command-facet-accesskey-4">Access Keys</a>, as a way to advertise those keys to the
+  user.</p>
+
+  <p class="example">For example, such commands could be listed in the user agent's menu bar.</p></section>
+
+
+  
+
+  <section><h2><dfn>Using the <code>a</code> element to define a command</dfn></h2>
+
+  <p>An <code id="using-the-a-element-to-define-a-command:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element with an <code id="using-the-a-element-to-define-a-command:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute <a href="/breakup/specs/html-ui/#concept-command" id="using-the-a-element-to-define-a-command:concept-command">defines a command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-a-element-to-define-a-command:command-facet-type">Type</a> of the command is "command".</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-a-element-to-define-a-command:command-facet-id">ID</a> of the command is the value of the <code id="using-the-a-element-to-define-a-command:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-a-element-to-define-a-command:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-a-element-to-define-a-command:command-facet-label">Label</a> of the command is the string given by the
+  element's <code id="using-the-a-element-to-define-a-command:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-a-element-to-define-a-command:command-facet-hint">Hint</a> of the command is the value of the <code id="using-the-a-element-to-define-a-command:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute of the element. If the attribute is not present, the
+  <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-a-element-to-define-a-command:command-facet-hint-2">Hint</a> is the empty string.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-a-element-to-define-a-command:command-facet-icon">Icon</a> of the command is the <a href="/breakup/specs/core-algorithms/#absolute-url" id="using-the-a-element-to-define-a-command:absolute-url">absolute
+  URL</a> obtained from <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="using-the-a-element-to-define-a-command:resolve-a-url">resolving</a> the value of the <code id="using-the-a-element-to-define-a-command:attr-img-src"><a href="/breakup/specs/html-images/#attr-img-src">src</a></code> attribute of the first <code id="using-the-a-element-to-define-a-command:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element descendant of the
+  element in <a href="/breakup/specs/core-algorithms/#tree-order" id="using-the-a-element-to-define-a-command:tree-order">tree order</a>, relative to that element, if there is such an element and
+  resolving its attribute is successful. Otherwise, there is no <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-a-element-to-define-a-command:command-facet-icon-2">Icon</a> for the command.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-a-element-to-define-a-command:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-a-element-to-define-a-command:assigned-access-key">assigned access key</a>, if any.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-a-element-to-define-a-command:command-facet-hiddenstate">Hidden State</a> of the command is true (hidden)
+  if the element has a <code id="using-the-a-element-to-define-a-command:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-a-element-to-define-a-command:command-facet-disabledstate">Disabled State</a> facet of the command is
+  true if the element or one of its ancestors is <a href="/breakup/specs/html-interacton-attr/#inert" id="using-the-a-element-to-define-a-command:inert">inert</a>, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-a-element-to-define-a-command:command-facet-checkedstate">Checked State</a> of the command is always
+  false. (The command is never checked.)</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-a-element-to-define-a-command:command-facet-action">Action</a> of the command, if the element has a
+  defined <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="using-the-a-element-to-define-a-command:activation-behaviour">activation behaviour</a>, is to <a href="/breakup/specs/html-interacton-attr/#run-synthetic-click-activation-steps" id="using-the-a-element-to-define-a-command:run-synthetic-click-activation-steps">run synthetic click activation steps</a>
+  on the element. Otherwise, it is just to <a href="/breakup/specs/browser-dom/#fire-a-click-event" id="using-the-a-element-to-define-a-command:fire-a-click-event">fire a <code>click</code>
+  event</a> at the element.</p></section>
+
+
+  <section><h2><dfn>Using the <code>button</code> element to define a command</dfn></h2>
+
+  <p>A <code id="using-the-button-element-to-define-a-command:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> element always <a href="/breakup/specs/html-ui/#concept-command" id="using-the-button-element-to-define-a-command:concept-command">defines a
+  command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-button-element-to-define-a-command:command-facet-type">Type</a>, <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-button-element-to-define-a-command:command-facet-id">ID</a>,
+  <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-button-element-to-define-a-command:command-facet-label">Label</a>, <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-button-element-to-define-a-command:command-facet-hint">Hint</a>,
+  <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-button-element-to-define-a-command:command-facet-icon">Icon</a>, <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-button-element-to-define-a-command:command-facet-accesskey">Access
+  Key</a>, <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-button-element-to-define-a-command:command-facet-hiddenstate">Hidden State</a>, <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-button-element-to-define-a-command:command-facet-checkedstate">Checked State</a>, and <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-button-element-to-define-a-command:command-facet-action">Action</a> facets of the command are determined <a href="/breakup/specs/html-ui/#using-the-a-element-to-define-a-command" id="using-the-button-element-to-define-a-command:using-the-a-element-to-define-a-command">as for <code>a</code> elements</a> (see the previous section).</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-button-element-to-define-a-command:command-facet-disabledstate">Disabled State</a> of the command is true if
+  the element or one of its ancestors is <a href="/breakup/specs/html-interacton-attr/#inert" id="using-the-button-element-to-define-a-command:inert">inert</a>, or if the element's <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="using-the-button-element-to-define-a-command:concept-fe-disabled">disabled</a> state is set, and false otherwise.</p></section>
+
+
+  <section><h2><dfn>Using the <code>input</code> element to define a command</dfn></h2>
+
+  <p>An <code id="using-the-input-element-to-define-a-command:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="using-the-input-element-to-define-a-command:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in
+  one of the <a href="/breakup/specs/html-forms/#submit-button-state-(type=submit)" id="using-the-input-element-to-define-a-command:submit-button-state-(type=submit)">Submit Button</a>, <a href="/breakup/specs/html-forms/#reset-button-state-(type=reset)" id="using-the-input-element-to-define-a-command:reset-button-state-(type=reset)">Reset Button</a>, <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="using-the-input-element-to-define-a-command:image-button-state-(type=image)">Image
+  Button</a>, <a href="/breakup/specs/html-forms/#button-state-(type=button)" id="using-the-input-element-to-define-a-command:button-state-(type=button)">Button</a>, <a href="/breakup/specs/html-forms/#radio-button-state-(type=radio)" id="using-the-input-element-to-define-a-command:radio-button-state-(type=radio)">Radio Button</a>, or <a href="/breakup/specs/html-forms/#checkbox-state-(type=checkbox)" id="using-the-input-element-to-define-a-command:checkbox-state-(type=checkbox)">Checkbox</a> states <a href="/breakup/specs/html-ui/#concept-command" id="using-the-input-element-to-define-a-command:concept-command">defines a
+  command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-input-element-to-define-a-command:command-facet-type">Type</a> of the command is "radio" if the <code id="using-the-input-element-to-define-a-command:attr-input-type-2"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#radio-button-state-(type=radio)" id="using-the-input-element-to-define-a-command:radio-button-state-(type=radio)-2">Radio
+  Button</a> state, "checkbox" if the <code id="using-the-input-element-to-define-a-command:attr-input-type-3"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in
+  the <a href="/breakup/specs/html-forms/#checkbox-state-(type=checkbox)" id="using-the-input-element-to-define-a-command:checkbox-state-(type=checkbox)-2">Checkbox</a> state, and "command" otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-input-element-to-define-a-command:command-facet-id">ID</a> of the command is the value of the <code id="using-the-input-element-to-define-a-command:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-input-element-to-define-a-command:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-input-element-to-define-a-command:command-facet-label">Label</a> of the command depends on the Type of the
+  command:</p>
+
+  <p>If the <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-input-element-to-define-a-command:command-facet-type-2">Type</a> is "command", then it is the string given
+  by the <code id="using-the-input-element-to-define-a-command:attr-input-value"><a href="/breakup/specs/html-forms/#attr-input-value">value</a></code> attribute, if any, and a UA-dependent,
+  locale-dependent value that the UA uses to label the button itself if the attribute is absent.</p>
+
+  <p>Otherwise, the <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-input-element-to-define-a-command:command-facet-type-3">Type</a> is "radio" or "checkbox". If the
+  element is a <a href="/breakup/specs/html-forms/#labeled-control" id="using-the-input-element-to-define-a-command:labeled-control">labeled control</a>, the <code id="using-the-input-element-to-define-a-command:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> of the first
+  <code id="using-the-input-element-to-define-a-command:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element in <a href="/breakup/specs/core-algorithms/#tree-order" id="using-the-input-element-to-define-a-command:tree-order">tree order</a> whose <a href="/breakup/specs/html-forms/#labeled-control" id="using-the-input-element-to-define-a-command:labeled-control-2">labeled control</a> is the
+  element in question is the <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-input-element-to-define-a-command:command-facet-label-2">Label</a> (in DOM terms, this is
+  the string given by <code><var>element</var>.labels[0].textContent</code>). Otherwise,
+  the value of the <code id="using-the-input-element-to-define-a-command:attr-input-value-2"><a href="/breakup/specs/html-forms/#attr-input-value">value</a></code> attribute, if present, is the <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-input-element-to-define-a-command:command-facet-label-3">Label</a>. Otherwise, the <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-input-element-to-define-a-command:command-facet-label-4">Label</a> is the empty string.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-input-element-to-define-a-command:command-facet-hint">Hint</a> of the command is the value of the <code id="using-the-input-element-to-define-a-command:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute of the <code id="using-the-input-element-to-define-a-command:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element. If the attribute is
+  not present, the <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-input-element-to-define-a-command:command-facet-hint-2">Hint</a> is the empty string.</p>
+
+  <p>If the element's <code id="using-the-input-element-to-define-a-command:attr-input-type-4"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#image-button-state-(type=image)" id="using-the-input-element-to-define-a-command:image-button-state-(type=image)-2">Image Button</a> state, and the element has a <code id="using-the-input-element-to-define-a-command:attr-img-src"><a href="/breakup/specs/html-images/#attr-img-src">src</a></code> attribute, and that attribute's value can be successfully <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="using-the-input-element-to-define-a-command:resolve-a-url">resolved</a> relative to the element, then the <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-input-element-to-define-a-command:command-facet-icon">Icon</a> of the command is the <a href="/breakup/specs/core-algorithms/#absolute-url" id="using-the-input-element-to-define-a-command:absolute-url">absolute URL</a> obtained
+  from resolving that attribute that way. Otherwise, there is no <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-input-element-to-define-a-command:command-facet-icon-2">Icon</a> for the command.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-input-element-to-define-a-command:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-input-element-to-define-a-command:assigned-access-key">assigned access key</a>, if any.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-input-element-to-define-a-command:command-facet-hiddenstate">Hidden State</a> of the command is true (hidden)
+  if the element has a <code id="using-the-input-element-to-define-a-command:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-input-element-to-define-a-command:command-facet-disabledstate">Disabled State</a> of the command is true if
+  the element or one of its ancestors is <a href="/breakup/specs/html-interacton-attr/#inert" id="using-the-input-element-to-define-a-command:inert">inert</a>, or if the element's <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="using-the-input-element-to-define-a-command:concept-fe-disabled">disabled</a> state is set, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-input-element-to-define-a-command:command-facet-checkedstate">Checked State</a> of the command is true if the
+  command is of <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-input-element-to-define-a-command:command-facet-type-4">Type</a> "radio" or "checkbox" and the element
+  is <a href="/breakup/specs/html-forms/#concept-fe-checked" id="using-the-input-element-to-define-a-command:concept-fe-checked">checked</a> attribute, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-input-element-to-define-a-command:command-facet-action">Action</a> of the command, if the element has a
+  defined <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="using-the-input-element-to-define-a-command:activation-behaviour">activation behaviour</a>, is to <a href="/breakup/specs/html-interacton-attr/#run-synthetic-click-activation-steps" id="using-the-input-element-to-define-a-command:run-synthetic-click-activation-steps">run synthetic click activation steps</a>
+  on the element. Otherwise, it is just to <a href="/breakup/specs/browser-dom/#fire-a-click-event" id="using-the-input-element-to-define-a-command:fire-a-click-event">fire a <code>click</code>
+  event</a> at the element.</p></section>
+
+
+  <section><h2><dfn>Using the <code>option</code> element to define a command</dfn></h2>
+
+  <p>An <code id="using-the-option-element-to-define-a-command:the-option-element"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> element with an ancestor <code id="using-the-option-element-to-define-a-command:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> element and either no <code id="using-the-option-element-to-define-a-command:attr-option-value"><a href="/breakup/specs/html-forms/#attr-option-value">value</a></code> attribute or a <code id="using-the-option-element-to-define-a-command:attr-option-value-2"><a href="/breakup/specs/html-forms/#attr-option-value">value</a></code>
+  attribute that is not the empty string <a href="/breakup/specs/html-ui/#concept-command" id="using-the-option-element-to-define-a-command:concept-command">defines a command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-option-element-to-define-a-command:command-facet-type">Type</a> of the command is "radio" if the
+  <code id="using-the-option-element-to-define-a-command:the-option-element-2"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code>'s nearest ancestor <code id="using-the-option-element-to-define-a-command:the-select-element-2"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> element has no <code id="using-the-option-element-to-define-a-command:attr-select-multiple"><a href="/breakup/specs/html-forms/#attr-select-multiple">multiple</a></code> attribute, and "checkbox" if it does.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-option-element-to-define-a-command:command-facet-id">ID</a> of the command is the value of the <code id="using-the-option-element-to-define-a-command:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-option-element-to-define-a-command:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-option-element-to-define-a-command:command-facet-label">Label</a> of the command is the value of the
+  <code id="using-the-option-element-to-define-a-command:the-option-element-3"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> element's <code id="using-the-option-element-to-define-a-command:attr-option-label"><a href="/breakup/specs/html-forms/#attr-option-label">label</a></code> attribute, if there is
+  one, or else the value of <code id="using-the-option-element-to-define-a-command:the-option-element-4"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> element's <code id="using-the-option-element-to-define-a-command:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute,
+  with <a href="/breakup/specs/core-algorithms/#strip-leading-and-trailing-whitespace" id="using-the-option-element-to-define-a-command:strip-leading-and-trailing-whitespace">leading and trailing whitespace
+  stripped</a>, and with any sequences of two or more <a href="/breakup/specs/core-algorithms/#space-character" id="using-the-option-element-to-define-a-command:space-character">space
+  characters</a> replaced by a single U+0020 SPACE character.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-option-element-to-define-a-command:command-facet-hint">Hint</a> of the command is the string given by the
+  element's <code id="using-the-option-element-to-define-a-command:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute, if any, and the empty string if the
+  attribute is absent.</p>
+
+  <p>There is no <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-option-element-to-define-a-command:command-facet-icon">Icon</a> for the command.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-option-element-to-define-a-command:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-option-element-to-define-a-command:assigned-access-key">assigned access key</a>, if any.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-option-element-to-define-a-command:command-facet-hiddenstate">Hidden State</a> of the command is true (hidden)
+  if the element has a <code id="using-the-option-element-to-define-a-command:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-option-element-to-define-a-command:command-facet-disabledstate">Disabled State</a> of the command is true if
+  the element is <a href="/breakup/specs/html-forms/#concept-option-disabled" id="using-the-option-element-to-define-a-command:concept-option-disabled">disabled</a>, or if its nearest ancestor
+  <code id="using-the-option-element-to-define-a-command:the-select-element-3"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> element is <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="using-the-option-element-to-define-a-command:concept-fe-disabled">disabled</a>, or if it or one
+  of its ancestors is <a href="/breakup/specs/html-interacton-attr/#inert" id="using-the-option-element-to-define-a-command:inert">inert</a>, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-option-element-to-define-a-command:command-facet-checkedstate">Checked State</a> of the command is true
+  (checked) if the element's <a href="/breakup/specs/html-forms/#concept-option-selectedness" id="using-the-option-element-to-define-a-command:concept-option-selectedness">selectedness</a> is true,
+  and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-option-element-to-define-a-command:command-facet-action">Action</a> of the command depends on its <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-option-element-to-define-a-command:command-facet-type-2">Type</a>. If the command is of <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-option-element-to-define-a-command:command-facet-type-3">Type</a> "radio" then it must <a href="/breakup/specs/html-forms/#concept-select-pick" id="using-the-option-element-to-define-a-command:concept-select-pick">pick</a> the <code id="using-the-option-element-to-define-a-command:the-option-element-5"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> element. Otherwise, it must <a href="/breakup/specs/html-forms/#concept-select-toggle" id="using-the-option-element-to-define-a-command:concept-select-toggle">toggle</a> the <code id="using-the-option-element-to-define-a-command:the-option-element-6"><a href="/breakup/specs/html-forms/#the-option-element">option</a></code> element.</p></section>
+
+
+
+  <section><h2>Using the <dfn><code>menuitem</code></dfn> element to define a
+  command</h2>
+
+  <p>A <code id="using-the-menuitem-element-to-define-a-command:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element that does not have a <code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-command"><a href="/breakup/specs/html-ui/#attr-menuitem-command">command</a></code> attribute <a href="/breakup/specs/html-ui/#concept-command" id="using-the-menuitem-element-to-define-a-command:concept-command">defines a
+  command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-menuitem-element-to-define-a-command:command-facet-type">Type</a> of the command is "radio" if the
+  <code id="using-the-menuitem-element-to-define-a-command:the-menuitem-element-2"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code>'s <code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-type"><a href="/breakup/specs/html-ui/#attr-menuitem-type">type</a></code> attribute is "<code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-type-keyword-radio"><a href="/breakup/specs/html-ui/#attr-menuitem-type-keyword-radio">radio</a></code>", "checkbox" if the attribute's value is
+  "<code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-type-keyword-checkbox"><a href="/breakup/specs/html-ui/#attr-menuitem-type-keyword-checkbox">checkbox</a></code>", and "command" otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-menuitem-element-to-define-a-command:command-facet-id">ID</a> of the command is the value of the <code id="using-the-menuitem-element-to-define-a-command:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-menuitem-element-to-define-a-command:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-menuitem-element-to-define-a-command:command-facet-label">Label</a> of the command is the value of the element's
+  <code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-label"><a href="/breakup/specs/html-ui/#attr-menuitem-label">label</a></code> attribute, if there is one, or the empty string if
+  it doesn't.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-menuitem-element-to-define-a-command:command-facet-hint">Hint</a> of the command is the string given by the
+  element's <code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-title"><a href="/breakup/specs/html-ui/#attr-menuitem-title">title</a></code> attribute, if any, and the empty string
+  if the attribute is absent.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-menuitem-element-to-define-a-command:command-facet-icon">Icon</a> for the command is the <a href="/breakup/specs/core-algorithms/#absolute-url" id="using-the-menuitem-element-to-define-a-command:absolute-url">absolute
+  URL</a> obtained from <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="using-the-menuitem-element-to-define-a-command:resolve-a-url">resolving</a> the value of the element's
+  <code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-icon"><a href="/breakup/specs/html-ui/#attr-menuitem-icon">icon</a></code> attribute, relative to the element, if it has such an
+  attribute and resolving it is successful. Otherwise, there is no <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-menuitem-element-to-define-a-command:command-facet-icon-2">Icon</a> for the command.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-menuitem-element-to-define-a-command:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-menuitem-element-to-define-a-command:assigned-access-key">assigned access key</a>, if any.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-menuitem-element-to-define-a-command:command-facet-hiddenstate">Hidden State</a> of the command is true (hidden)
+  if the element has a <code id="using-the-menuitem-element-to-define-a-command:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-menuitem-element-to-define-a-command:command-facet-disabledstate">Disabled State</a> of the command is true if
+  the element or one of its ancestors is <a href="/breakup/specs/html-interacton-attr/#inert" id="using-the-menuitem-element-to-define-a-command:inert">inert</a>, or if the element has a <code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-disabled"><a href="/breakup/specs/html-ui/#attr-menuitem-disabled">disabled</a></code> attribute, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-menuitem-element-to-define-a-command:command-facet-checkedstate">Checked State</a> of the command is true
+  (checked) if the element has a <code id="using-the-menuitem-element-to-define-a-command:attr-menuitem-checked"><a href="/breakup/specs/html-ui/#attr-menuitem-checked">checked</a></code> attribute, and
+  false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-menuitem-element-to-define-a-command:command-facet-action">Action</a> of the command, if the element has a
+  defined <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="using-the-menuitem-element-to-define-a-command:activation-behaviour">activation behaviour</a>, is to
+  <a href="/breakup/specs/html-interacton-attr/#run-synthetic-click-activation-steps" id="using-the-menuitem-element-to-define-a-command:run-synthetic-click-activation-steps">run synthetic click activation steps</a> on the element. Otherwise, it is just to
+  <a href="/breakup/specs/browser-dom/#fire-a-click-event" id="using-the-menuitem-element-to-define-a-command:fire-a-click-event">fire a <code>click</code> event</a> at the element.</p></section>
+
+
+
+  <section><h2><dfn>Using the <code>command</code> attribute on <code>menuitem</code> elements to define
+  a command indirectly</dfn></h2>
+
+  <p>A <code id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:the-menuitem-element"><a href="/breakup/specs/html-ui/#the-menuitem-element">menuitem</a></code> element with a <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command">master command</a> <a href="/breakup/specs/html-ui/#concept-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:concept-command">defines a command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-type">Type</a> of the command is the <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-type-2">Type</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-2">master command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-id">ID</a> of the command is the value of the <code id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-label">Label</a> of the command is the <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-label-2">Label</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-3">master command</a>.</p>
+
+  <p>If the element has a <code id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute, then the <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-hint">Hint</a> of the command is the value of that <code id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:attr-title-2"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute. Otherwise, the <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-hint-2">Hint</a> of the command is the <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-hint-3">Hint</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-4">master command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-icon">Icon</a> of the command is the <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-icon-2">Icon</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-5">master command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:assigned-access-key">assigned access key</a>, if any.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-hiddenstate">Hidden State</a> of the command is the <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-hiddenstate-2">Hidden State</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-6">master command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-disabledstate">Disabled State</a> of the command is the <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-disabledstate-2">Disabled State</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-7">master command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-checkedstate">Checked State</a> of the command is the <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-checkedstate-2">Checked State</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-8">master command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-action">Action</a> of the command is to invoke the <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:command-facet-action-2">Action</a> of the <a href="/breakup/specs/html-ui/#master-command" id="using-the-command-attribute-on-menuitem-elements-to-define-a-command-indirectly:master-command-9">master command</a>.</p></section>
+
+
+
+  <section><h2><dfn>Using the <code>accesskey</code> attribute
+  on a <code>label</code> element to define a command</dfn></h2>
+
+  <p>A <code id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element that has an <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:assigned-access-key">assigned access key</a> and a <a href="/breakup/specs/html-forms/#labeled-control" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:labeled-control">labeled
+  control</a> and whose <a href="/breakup/specs/html-forms/#labeled-control" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:labeled-control-2">labeled control</a> <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:concept-command">defines a
+  command</a>, itself <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:concept-command-2">defines a command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-type">Type</a> of the command is "command".</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-id">ID</a> of the command is the value of the <code id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-label">Label</a> of the command is the string given by the
+  element's <code id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-hint">Hint</a> of the command is the value of the <code id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute of the element.</p>
+
+  <p>There is no <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-icon">Icon</a> for the command.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:assigned-access-key-2">assigned access key</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-hiddenstate">Hidden State</a>, <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-disabledstate">Disabled State</a>, and <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-action">Action</a> facets of the command are the same as the respective
+  facets of the element's <a href="/breakup/specs/html-forms/#labeled-control" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:labeled-control-3">labeled control</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-accesskey-attribute-on-a-label-element-to-define-a-command:command-facet-checkedstate">Checked State</a> of the command is always
+  false. (The command is never checked.)</p></section>
+
+
+
+  <section><h2><dfn>Using the <code>accesskey</code> attribute
+  on a <code>legend</code> element to define a command</dfn></h2>
+
+  <p>A <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-legend-element"><a href="/breakup/specs/html-forms/#the-legend-element">legend</a></code> element that has an <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:assigned-access-key">assigned access key</a> and is a child of a
+  <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code> element that has a descendant that is not a descendant of the
+  <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-legend-element-2"><a href="/breakup/specs/html-forms/#the-legend-element">legend</a></code> element and is neither a <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element nor a <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-legend-element-3"><a href="/breakup/specs/html-forms/#the-legend-element">legend</a></code>
+  element but that <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:concept-command">defines a command</a>, itself <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:concept-command-2">defines a command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-type">Type</a> of the command is "command".</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-id">ID</a> of the command is the value of the <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-label">Label</a> of the command is the string given by the
+  element's <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-hint">Hint</a> of the command is the value of the <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute of the element.</p>
+
+  <p>There is no <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-icon">Icon</a> for the command.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:assigned-access-key-2">assigned access key</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-hiddenstate">Hidden State</a>, <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-disabledstate">Disabled State</a>, and <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-action">Action</a> facets of the command are the same as the respective
+  facets of the first element in <a href="/breakup/specs/core-algorithms/#tree-order" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:tree-order">tree order</a> that is a descendant of the parent of the
+  <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-legend-element-4"><a href="/breakup/specs/html-forms/#the-legend-element">legend</a></code> element that <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:concept-command-3">defines a command</a> but is not
+  a descendant of the <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-legend-element-5"><a href="/breakup/specs/html-forms/#the-legend-element">legend</a></code> element and is neither a <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-label-element-2"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> nor a
+  <code id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:the-legend-element-6"><a href="/breakup/specs/html-forms/#the-legend-element">legend</a></code> element.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-accesskey-attribute-on-a-legend-element-to-define-a-command:command-facet-checkedstate">Checked State</a> of the command is always
+  false. (The command is never checked.)</p></section>
+
+
+
+  <section><h2><dfn>Using the <code>accesskey</code>
+  attribute to define a command on other elements</dfn></h2>
+
+  <p>An element that has an <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:assigned-access-key">assigned access key</a> <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:concept-command">defines a
+  command</a>.</p>
+
+  <p>If one of the earlier sections that define elements that <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:concept-command-2">define
+  commands</a> define that this element <a href="/breakup/specs/html-ui/#concept-command" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:concept-command-3">defines a command</a>,
+  then that section applies to this element, and this section does not. Otherwise, this section
+  applies to that element.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-type" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-type">Type</a> of the command is "command".</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-id" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-id">ID</a> of the command is the value of the <code id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute of the element, if the attribute is present and not empty.
+  Otherwise the command is an <a href="/breakup/specs/html-ui/#anonymous-command" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:anonymous-command">anonymous command</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-label">Label</a> of the command depends on the element. If
+  the element is a <a href="/breakup/specs/html-forms/#labeled-control" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:labeled-control">labeled control</a>, the <code id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> of the first
+  <code id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code> element in <a href="/breakup/specs/core-algorithms/#tree-order" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:tree-order">tree order</a> whose <a href="/breakup/specs/html-forms/#labeled-control" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:labeled-control-2">labeled control</a> is the
+  element in question is the <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-label-2">Label</a> (in DOM terms, this is
+  the string given by <code><var>element</var>.labels[0].textContent</code>). Otherwise,
+  the <a href="/breakup/specs/html-ui/#command-facet-label" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-label-3">Label</a> is the <code id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:textcontent-2"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> of the element
+  itself.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-hint">Hint</a> of the command is the value of the <code id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute of the element. If the attribute is not present, the
+  <a href="/breakup/specs/html-ui/#command-facet-hint" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-hint-2">Hint</a> is the empty string.</p>
+
+  <p>There is no <a href="/breakup/specs/html-ui/#command-facet-icon" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-icon">Icon</a> for the command.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-accesskey" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-accesskey">AccessKey</a> of the command is the element's
+  <a href="/breakup/specs/html-interacton-attr/#assigned-access-key" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:assigned-access-key-2">assigned access key</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-hiddenstate" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-hiddenstate">Hidden State</a> of the command is true (hidden)
+  if the element has a <code id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-disabledstate" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-disabledstate">Disabled State</a> of the command is true if
+  the element or one of its ancestors is <a href="/breakup/specs/html-interacton-attr/#inert" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:inert">inert</a>, and false otherwise.</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-checkedstate" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-checkedstate">Checked State</a> of the command is always
+  false. (The command is never checked.)</p>
+
+  <p>The <a href="/breakup/specs/html-ui/#command-facet-action" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:command-facet-action">Action</a> of the command is to run the following
+  steps:</p>
+
+  <ol><li>Run the <a href="/breakup/specs/html-interacton-attr/#focusing-steps" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:focusing-steps">focusing steps</a> for the element.</li><li>If the element has a defined <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:activation-behaviour">activation behaviour</a>, <a href="/breakup/specs/html-interacton-attr/#run-synthetic-click-activation-steps" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:run-synthetic-click-activation-steps">run synthetic click
+   activation steps</a> on the element.</li><li>Otherwise, if the element does not have a defined <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:activation-behaviour-2">activation behaviour</a>,
+   <a href="/breakup/specs/browser-dom/#fire-a-click-event" id="using-the-accesskey-attribute-to-define-a-command-on-other-elements:fire-a-click-event">fire a <code>click</code> event</a> at the element.</li></ol></section></section><section><h2>The <dfn><code>dialog</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-dialog-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-dialog-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html-sectioning/#sectioning-root" id="the-dialog-element:sectioning-root">Sectioning root</a>.</dd><dt><a href="#concept-element-contexts" id="the-dialog-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-dialog-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-dialog-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-dialog-element:flow-content-2-3">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-dialog-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-dialog-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-dialog-element:global-attributes">Global attributes</a></dd><dd><code id="the-dialog-element:attr-dialog-open"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code> — Whether the dialog box is showing</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-dialog"><code title="">dialog</code></a> 
+   (default - <a href="#aria-usage-note"><em>do not set</em></a>), 
+   <a href="#index-aria-alert"><code title="">alert</code></a>, 
+   <a href="#index-aria-alertdialog"><code title="">alertdialog</code></a>, 
+   <a href="#index-aria-application"><code title="">application</code></a>,  
+   <a href="#index-aria-log"><code title="">log</code></a>, 
+   <a href="#index-aria-marquee"><code title="">marquee</code></a>    
+   or <a href="#index-aria-status"><code title="">status</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-dialog-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmldialogelement">HTMLDialogElement</dfn> : <a href="#htmlelement" id="the-dialog-element:htmlelement">HTMLElement</a> {
+  attribute boolean <a href="/breakup/specs/html-ui/#dom-dialog-open" id="the-dialog-element:dom-dialog-open">open</a>;
+  attribute DOMString <a href="/breakup/specs/html-ui/#dom-dialog-returnvalue" id="the-dialog-element:dom-dialog-returnvalue">returnValue</a>;
+  void <a href="/breakup/specs/html-ui/#dom-dialog-show" id="the-dialog-element:dom-dialog-show">show</a>(optional (<a href="/breakup/specs/core-algorithms/#mouseevent" id="the-dialog-element:mouseevent">MouseEvent</a> or <a href="/breakup/specs/core-algorithms/#element" id="the-dialog-element:element">Element</a>) anchor);
+  void <a href="/breakup/specs/html-ui/#dom-dialog-showmodal" id="the-dialog-element:dom-dialog-showmodal">showModal</a>(optional (<a href="/breakup/specs/core-algorithms/#mouseevent" id="the-dialog-element:mouseevent-2">MouseEvent</a> or <a href="/breakup/specs/core-algorithms/#element" id="the-dialog-element:element-2">Element</a>) anchor);
+  void <a href="/breakup/specs/html-ui/#dom-dialog-close" id="the-dialog-element:dom-dialog-close">close</a>(optional DOMString returnValue);
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-dialog-element:the-dialog-element"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element represents a part of an application that a user interacts with
+  to perform a task, for example a dialog box, inspector, or window.</p>
+
+  <p>The <dfn id="attr-dialog-open"><code>open</code></dfn> attribute is a <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-dialog-element:boolean-attribute">boolean
+  attribute</a>. When specified, it indicates that the <code id="the-dialog-element:the-dialog-element-2"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element is active and
+  that the user can interact with it.</p>
+
+  
+
+  <p>A <code id="the-dialog-element:the-dialog-element-3"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element without an <code id="the-dialog-element:attr-dialog-open-2"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code> attribute
+  specified should not be shown to the user. This requirement may be implemented indirectly through
+  the style layer. For example, user agents that <a href="/breakup/specs/core-algorithms/#renderingUA">support the suggested
+  default rendering</a> implement this requirement using the CSS rules described in the <a href="#rendering">rendering section</a>.</p>
+
+  
+
+  <p>The <code id="the-dialog-element:attr-tabindex"><a href="/breakup/specs/html-interacton-attr/#attr-tabindex">tabindex</a></code> attribute must not be specified on
+  <code id="the-dialog-element:the-dialog-element-4"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements.</p>
+
+
+
+  <dl class="domintro"><dt><var>dialog</var> . <code id="the-dialog-element:dom-dialog-show-2"><a href="/breakup/specs/html-ui/#dom-dialog-show">show</a></code>( [ <var>anchor</var> ] )</dt><dd>
+
+    <p>Displays the <code id="the-dialog-element:the-dialog-element-5"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element.</p>
+
+    <p>The argument, if provided, provides an anchor point to which the element will be fixed.</p>
+
+   </dd><dt><var>dialog</var> . <code id="the-dialog-element:dom-dialog-showmodal-2"><a href="/breakup/specs/html-ui/#dom-dialog-showmodal">showModal</a></code>( [ <var>anchor</var> ] )</dt><dd>
+
+    <p>Displays the <code id="the-dialog-element:the-dialog-element-6"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element and makes it the top-most modal dialog.</p>
+
+    <p>The argument, if provided, provides an anchor point to which the element will be fixed.</p>
+
+    <p>This method honors the <code id="the-dialog-element:attr-fe-autofocus"><a href="/breakup/specs/html-forms/#attr-fe-autofocus">autofocus</a></code> attribute.</p>
+
+   </dd><dt><var>dialog</var> . <code id="the-dialog-element:dom-dialog-close-2"><a href="/breakup/specs/html-ui/#dom-dialog-close">close</a></code>( [ <var>result</var> ] )</dt><dd>
+
+    <p>Closes the <code id="the-dialog-element:the-dialog-element-7"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element.</p>
+
+    <p>The argument, if provided, provides a return value.</p>
+
+   </dd><dt><var>dialog</var> . <code id="the-dialog-element:dom-dialog-returnvalue-2"><a href="/breakup/specs/html-ui/#dom-dialog-returnvalue">returnValue</a></code> [ = <var>result</var> ]</dt><dd>
+
+    <p>Returns the <code id="the-dialog-element:the-dialog-element-8"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code>'s return value.</p>
+
+    <p>Can be set, to update the return value.</p>
+
+   </dd></dl>
+
+
+
+  
+
+  <p>When the <dfn id="dom-dialog-show"><code>show()</code></dfn> method is invoked, the user
+  agent must run the following steps:</p>
+
+  <ol><li><p>If the element already has an <code id="the-dialog-element:attr-dialog-open-3"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code> attribute, then
+   abort these steps.</p></li><li><p>Add an <code id="the-dialog-element:attr-dialog-open-4"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code> attribute to the <code id="the-dialog-element:the-dialog-element-9"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code>
+   element, whose value is the empty string.</p></li><li><p>If the <code id="the-dialog-element:dom-dialog-show-3"><a href="/breakup/specs/html-ui/#dom-dialog-show">show()</a></code> method was invoked with an argument,
+   <a href="/breakup/specs/html-ui/#set-up-the-position" id="the-dialog-element:set-up-the-position">set up the position</a> of the <code id="the-dialog-element:the-dialog-element-10"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element, using that argument as the
+   anchor. Otherwise, set the <code id="the-dialog-element:the-dialog-element-11"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> to the <a href="/breakup/specs/html-ui/#normal-alignment" id="the-dialog-element:normal-alignment">normal alignment</a> mode.</p></li><li><p>Run the <a href="/breakup/specs/html-ui/#dialog-focusing-steps" id="the-dialog-element:dialog-focusing-steps">dialog focusing steps</a> for the <code id="the-dialog-element:the-dialog-element-12"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element.</p></li></ol>
+
+  <hr>
+
+  <p>Each <code id="the-dialog-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> has a stack of <code id="the-dialog-element:the-dialog-element-13"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements known as the
+  <dfn id="pending-dialog-stack">pending dialog stack</dfn>. When a <code id="the-dialog-element:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is created, this stack must be
+  initialised to be empty.</p>
+
+  <p>When an element is added to the <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack">pending dialog stack</a>, it must also be added to the
+  <a href="/breakup/specs/core-algorithms/#top-layer" id="the-dialog-element:top-layer">top layer</a> layer. When an element is removed from the <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-2">pending dialog
+  stack</a>, it must be removed from the <a href="/breakup/specs/core-algorithms/#top-layer" id="the-dialog-element:top-layer-2">top layer</a>. [[!FULLSCREEN]]</p>
+
+  <p>When the <dfn id="dom-dialog-showmodal"><code>showModal()</code></dfn> method is invoked,
+  the user agent must run the following steps:</p>
+
+  <ol><li><p>Let <var>subject</var> be the <code id="the-dialog-element:the-dialog-element-14"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element on which the method was
+   invoked.</p></li><li><p>If <var>subject</var> already has an <code id="the-dialog-element:attr-dialog-open-5"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code>
+   attribute, then throw an <code id="the-dialog-element:invalidstateerror"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>If <var>subject</var> is not <a href="/breakup/specs/core-algorithms/#in-a-document" id="the-dialog-element:in-a-document">in a <code>Document</code></a>, then throw
+   an <code id="the-dialog-element:invalidstateerror-2"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>Add an <code id="the-dialog-element:attr-dialog-open-6"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code> attribute to <var>subject</var>, whose value is the empty string.</p></li><li><p>If the <code id="the-dialog-element:dom-dialog-showmodal-3"><a href="/breakup/specs/html-ui/#dom-dialog-showmodal">showModal()</a></code> method was invoked with an
+   argument, <a href="/breakup/specs/html-ui/#set-up-the-position" id="the-dialog-element:set-up-the-position-2">set up the position</a> of <var>subject</var>, using that argument
+   as the anchor. Otherwise, set the <code id="the-dialog-element:the-dialog-element-15"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> to the <a href="/breakup/specs/html-ui/#centered-alignment" id="the-dialog-element:centered-alignment">centered alignment</a>
+   mode.</p></li><li><p>Let <var>subject</var>'s <a id="the-dialog-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> be <a href="/breakup/specs/html-interacton-attr/#blocked-by-a-modal-dialog" id="the-dialog-element:blocked-by-a-modal-dialog">blocked by the modal dialog</a> <var>subject</var>.</p></li><li><p>Push <var>subject</var> onto <var>subject</var>'s
+   <a id="the-dialog-element:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-3">pending dialog stack</a>.</p></li><li><p>Run the <a href="/breakup/specs/html-ui/#dialog-focusing-steps" id="the-dialog-element:dialog-focusing-steps-2">dialog focusing steps</a> for <var>subject</var>.</p></li></ol>
+
+  <p>The <dfn id="dialog-focusing-steps">dialog focusing steps</dfn> for a <code id="the-dialog-element:the-dialog-element-16"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element <var>subject</var> are as follows:</p>
+
+  <ol><li><p>If for some reason <var>subject</var> is not a <a href="/breakup/specs/html-interacton-attr/#control-group-owner" id="the-dialog-element:control-group-owner">control group owner</a>
+   at this point, or if it is <a href="/breakup/specs/html-interacton-attr/#inert" id="the-dialog-element:inert">inert</a>, abort these steps.</p></li><li>
+
+    <p>Let <var>control</var> be the first non-<a href="/breakup/specs/html-interacton-attr/#inert" id="the-dialog-element:inert-2">inert</a> <a href="/breakup/specs/html-interacton-attr/#focusable-area" id="the-dialog-element:focusable-area">focusable area</a> in
+    <var>subject</var>'s <a href="/breakup/specs/html-interacton-attr/#control-group" id="the-dialog-element:control-group">control group</a> whose <a href="/breakup/specs/html-interacton-attr/#dom-anchor" id="the-dialog-element:dom-anchor">DOM anchor</a> has an <code id="the-dialog-element:attr-fe-autofocus-2"><a href="/breakup/specs/html-forms/#attr-fe-autofocus">autofocus</a></code> attribute specified.</p>
+
+    <p>If there isn't one, then let <var>control</var> be the first non-<a href="/breakup/specs/html-interacton-attr/#inert" id="the-dialog-element:inert-3">inert</a>
+    <a href="/breakup/specs/html-interacton-attr/#focusable-area" id="the-dialog-element:focusable-area-2">focusable area</a> in <var>subject</var>'s <a href="/breakup/specs/html-interacton-attr/#control-group" id="the-dialog-element:control-group-2">control group</a>.</p>
+
+    <p>If there isn't one of those either, then let <var>control</var> be <var>subject</var>.</p>
+
+   </li><li><p>Run the <a href="/breakup/specs/html-interacton-attr/#focusing-steps" id="the-dialog-element:focusing-steps">focusing steps</a> for <var>control</var>.</p></li></ol>
+
+  <p>If at any time a <code id="the-dialog-element:the-dialog-element-17"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element is <a href="/breakup/specs/core-algorithms/#remove-an-element-from-a-document" id="the-dialog-element:remove-an-element-from-a-document">removed from a <code>Document</code></a>, then if that <code id="the-dialog-element:the-dialog-element-18"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> is in that
+  <code id="the-dialog-element:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-4">pending dialog stack</a>, the following steps must be run:</p>
+
+  <ol><li><p>Let <var>subject</var> be that <code id="the-dialog-element:the-dialog-element-19"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element and <var>document</var> be the <code id="the-dialog-element:document-4"><a href="/breakup/specs/browser-dom/#document">Document</a></code> from which it is being removed.</p></li><li><p>Remove <var>subject</var> from <var>document</var>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-5">pending
+   dialog stack</a>.</p></li><li><p>If <var>document</var>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-6">pending dialog stack</a> is not empty, then let
+   <var>document</var> be <a href="/breakup/specs/html-interacton-attr/#blocked-by-a-modal-dialog" id="the-dialog-element:blocked-by-a-modal-dialog-2">blocked by the modal
+   dialog</a> that is at the top of <var>document</var>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-7">pending dialog
+   stack</a>. Otherwise, let <var>document</var> be no longer <a href="/breakup/specs/html-interacton-attr/#blocked-by-a-modal-dialog" id="the-dialog-element:blocked-by-a-modal-dialog-3">blocked by a modal
+   dialog</a> at all.</p></li></ol>
+
+  <p>When the <dfn id="dom-dialog-close"><code>close()</code></dfn> method is invoked, the user
+  agent must <a href="/breakup/specs/html-ui/#close-the-dialog" id="the-dialog-element:close-the-dialog">close the dialog</a> that the method was invoked on. If the method was invoked
+  with an argument, that argument must be used as the return value; otherwise, there is no return
+  value.</p>
+
+
+
+  <p>When a <code id="the-dialog-element:the-dialog-element-20"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element <var>subject</var> is to be <dfn id="close-the-dialog">closed</dfn>, optionally with a return value <var>result</var>, the user agent
+  must run the following steps:</p>
+
+  <ol><li><p>If <var>subject</var> does not have an <code id="the-dialog-element:attr-dialog-open-7"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code>
+   attribute, then abort these steps.</p></li><li><p>Remove <var>subject</var>'s <code id="the-dialog-element:attr-dialog-open-8"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code>
+   attribute.</p></li><li><p>If the argument <var>result</var> was provided, then set the <code id="the-dialog-element:dom-dialog-returnvalue-3"><a href="/breakup/specs/html-ui/#dom-dialog-returnvalue">returnValue</a></code> attribute to the value of <var>result</var>.</p></li><li>
+
+    <p>If <var>subject</var> is in its <code id="the-dialog-element:document-5"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-8">pending dialog
+    stack</a>, then run these substeps:</p>
+
+    <ol><li><p>Remove <var>subject</var> from that <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-9">pending dialog stack</a>.</p></li><li><p>If that <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-10">pending dialog stack</a> is not empty, then let <var>subject</var>'s <a id="the-dialog-element:node-document-3" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> be <a href="/breakup/specs/html-interacton-attr/#blocked-by-a-modal-dialog" id="the-dialog-element:blocked-by-a-modal-dialog-4">blocked by the modal dialog</a> that is at the top of the <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-11">pending dialog
+     stack</a>. Otherwise, let <var>document</var> be no longer <a href="/breakup/specs/html-interacton-attr/#blocked-by-a-modal-dialog" id="the-dialog-element:blocked-by-a-modal-dialog-5">blocked by a modal
+     dialog</a> at all.</p></li></ol>
+
+   </li><li><p><a href="/breakup/specs/browser-dom/#queue-a-task" id="the-dialog-element:queue-a-task">Queue a task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-dialog-element:fire-a-simple-event">fire a simple event</a> named <code id="the-dialog-element:event-close"><a href="/breakup/specs/html/#event-close">close</a></code> at <var>subject</var>.</p></li></ol>
+
+
+  <p>The <dfn id="dom-dialog-returnvalue"><code>returnValue</code></dfn> IDL attribute, on
+  getting, must return the last value to which it was set. On setting, it must be set to the new
+  value. When the element is created, it must be set to the empty string.</p>
+
+
+  <hr>
+
+  <p><strong>Canceling dialogs</strong>: When a <code id="the-dialog-element:document-6"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-12">pending dialog
+  stack</a> is not empty, user agents may provide a user interface that, upon activation, <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-dialog-element:queue-a-task-2">queues a task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-dialog-element:fire-a-simple-event-2">fire a simple event</a> named <code id="the-dialog-element:event-cancel"><a href="/breakup/specs/html/#event-cancel">cancel</a></code> that is cancelable at the top <code id="the-dialog-element:the-dialog-element-21"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element on
+  the <code id="the-dialog-element:document-7"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-13">pending dialog stack</a>. The default action of this event
+  must be to check if that element has an <code id="the-dialog-element:attr-dialog-open-9"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code> attribute, and
+  if it does, <a href="/breakup/specs/html-ui/#close-the-dialog" id="the-dialog-element:close-the-dialog-2">close the dialog</a> with no return value.</p>
+
+  <p class="note">An example of such a UI mechanism would be the user pressing the "Escape" key.</p>
+
+  <hr>
+
+  <p>All <code id="the-dialog-element:the-dialog-element-22"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements are always in one of three modes: <dfn id="normal-alignment">normal alignment</dfn>,
+  <dfn id="centered-alignment">centered alignment</dfn>, and <dfn id="magic-alignment">magic alignment</dfn>. When a <code id="the-dialog-element:the-dialog-element-23"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element
+  is created, it must be placed in the <a href="/breakup/specs/html-ui/#normal-alignment" id="the-dialog-element:normal-alignment-2">normal alignment</a> mode. In this mode, normal CSS
+  requirements apply to the element. The <a href="/breakup/specs/html-ui/#centered-alignment" id="the-dialog-element:centered-alignment-2">centered alignment</a> mode is only used for
+  <code id="the-dialog-element:the-dialog-element-24"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements that are in the <a href="/breakup/specs/core-algorithms/#top-layer" id="the-dialog-element:top-layer-3">top layer</a>. [[!FULLSCREEN]] [[!CSS]]</p>
+
+  <p>When an element <var>subject</var> is placed in <a href="/breakup/specs/html-ui/#centered-alignment" id="the-dialog-element:centered-alignment-3">centered alignment</a> mode,
+  and when it is in that mode and has new rendering boxes created, the user agent must set up the
+  element such that its top static position, for the purposes of calculating the used value of the
+  'top' property, is the value that would place the element's top margin edge as far from the top of
+  the viewport as the element's bottom margin edge from the bottom of the viewport, if the element's
+  height is less than the height of the viewport, and otherwise is the value that would place the
+  element's top margin edge at the top of the viewport.</p>
+
+  <p>If there is a <code id="the-dialog-element:the-dialog-element-25"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element with <a href="/breakup/specs/html-ui/#centered-alignment" id="the-dialog-element:centered-alignment-4">centered alignment</a> and that is
+  <a href="/breakup/specs/rendering-html/#being-rendered" id="the-dialog-element:being-rendered">being rendered</a> when its <a href="/breakup/specs/browser-dom/#browsing-context" id="the-dialog-element:browsing-context">browsing context</a> changes viewport width (as
+  measured in CSS pixels), then the user agent must recreate the element's boxes, recalculating its
+  top static position as in the previous paragraph.</p>
+
+  <p>This top static position of a <code id="the-dialog-element:the-dialog-element-26"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element with <a href="/breakup/specs/html-ui/#centered-alignment" id="the-dialog-element:centered-alignment-5">centered alignment</a>
+  must remain the element's top static position until its boxes are recreated. (The element's static
+  position is only used in calculating the used value of the 'top' property in certain situations;
+  it's not used, for instance, to position the element if its 'position' property is set to
+  'static'.)</p>
+
+  <p>When a user agent is to <dfn id="set-up-the-position">set up the position</dfn> of an element <var>subject</var> using an anchor <var>anchor</var>, it must run the following
+  steps:</p>
+
+  <ol><li>
+
+    <p>If <var>anchor</var> is a <code id="the-dialog-element:mouseevent-3"><a href="/breakup/specs/core-algorithms/#mouseevent">MouseEvent</a></code> object, then run these
+    substeps:</p>
+
+    <ol><li><p>If <var>anchor</var>'s target element does not have a rendered box, or is in a
+     different document than <var>subject</var>, then let <var>subject</var> be
+     in the <a href="/breakup/specs/html-ui/#centered-alignment" id="the-dialog-element:centered-alignment-6">centered alignment</a> mode, and abort the <a href="/breakup/specs/html-ui/#set-up-the-position" id="the-dialog-element:set-up-the-position-3">set up the position</a>
+     steps.</p></li><li><p>Let <var>anchor element</var> be an anonymous element rendered as a box with
+     zero height and width (so its margin and border boxes both just form a point), positioned so
+     that its top and left are at the coordinate identified by the event, and whose properties all
+     compute to their initial values.</p></li></ol>
+
+    <p>Otherwise, let <var>anchor element</var> be <var>anchor</var>.</p>
+
+   </li><li><p>Put <var>subject</var> in the <a href="/breakup/specs/html-ui/#magic-alignment" id="the-dialog-element:magic-alignment">magic alignment</a> mode, aligned to <var>anchor element</var>.</p></li></ol>
+
+  <p>While an element <var>A</var> has <a href="/breakup/specs/html-ui/#magic-alignment" id="the-dialog-element:magic-alignment-2">magic alignment</a>, aligned to an element
+  <var>B</var>, the following requirements apply:</p>
+
+  <ul><li>
+
+    <p>If at any time either <var>A</var> or <var>B</var> cease having rendered
+    boxes, <var>A</var> and <var>B</var> cease being in the same
+    <code id="the-dialog-element:document-8"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, or <var>B</var> ceases being earlier than <var>A</var> in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-dialog-element:tree-order">tree order</a>, then, if <var>subject</var> is in the
+    <a href="/breakup/specs/html-ui/#pending-dialog-stack" id="the-dialog-element:pending-dialog-stack-14">pending dialog stack</a>, let <var>subject</var>'s mode become <a href="/breakup/specs/html-ui/#centered-alignment" id="the-dialog-element:centered-alignment-7">centered
+    alignment</a>, otherwise, let <var>subject</var>'s mode become <a href="/breakup/specs/html-ui/#normal-alignment" id="the-dialog-element:normal-alignment-3">normal
+    alignment</a>.</p>
+
+   </li><li>
+
+    <p><var>A</var>'s 'position' property must compute to the keyword '<a href="/breakup/specs/html-ui/#css-position-absolute-anchored" id="the-dialog-element:css-position-absolute-anchored">absolute-anchored</a>' rather than whatever it would
+    otherwise compute to (i.e. the 'position' property's specified value is ignored).</p>
+
+    <p class="note">The '<a href="/breakup/specs/html-ui/#css-position-absolute-anchored" id="the-dialog-element:css-position-absolute-anchored-2">absolute-anchored</a>'
+    keyword's requirements are described below.</p>
+
+   </li><li>
+
+    <p>The anchor points for <var>A</var> and <var>B</var> are defined as per the
+    appropriate entry in the following list:</p>
+
+    <dl class="switch"><dt>If the computed value of 'anchor-point' is 'none' on both <var>A</var> and <var>B</var>
+
+     </dt><dd>
+      <p>The anchor points of <var>A</var> and <var>B</var> are the center points
+      of their respective first boxes' border boxes.
+
+
+     </p></dd><dt>If the computed value of 'anchor-point' is 'none' on <var>A</var> and a specific
+     point on <var>B</var>
+
+     </dt><dd>
+      <p>The anchor point of <var>B</var> is the point given by its 'anchor-point'
+      property.
+
+      </p><p>If the anchor point of <var>B</var> is the center point of <var>B</var>'s
+      first box's border box, then <var>A</var>'s anchor point is the center point of its
+      first box's margin box.
+
+      </p><p>Otherwise, <var>A</var>'s anchor point is on one of its margin edges. Consider
+      four hypothetical half-infinite lines L1, L2, L3, and L4 that each start in the center of <var>B</var>'s first box's border box, and that extend respectively through the top left
+      corner, top right corner, bottom right corner, and bottom left corner of <var>B</var>'s first box's border box. <var>A</var>'s anchor point is determined
+      by the location of <var>B</var>'s anchor point relative to these four hypothetical
+      lines, as follows:
+
+      </p><p>If the anchor point of <var>B</var> lies on L1 or L2, or inside the area bounded
+      by L1 and L2 that also contains the points above <var>B</var>'s first box's border
+      box, then let <var>A</var>'s anchor point be the horizontal center of <var>A</var>'s bottom margin edge.</p>
+
+      <p>Otherwise, if the anchor point of <var>B</var> lies on L3 or L4, or inside the
+      area bounded by L4 and L4 that also contains the points below <var>B</var>'s first
+      box's border box, then let <var>A</var>'s anchor point be the horizontal center of
+      <var>A</var>'s top margin edge.</p>
+
+      <p>Otherwise, if the anchor point of <var>B</var> lies inside the area bounded by L4
+      and L1 that also contains the points to the left of <var>B</var>'s first box's border
+      box, then let <var>A</var>'s anchor point be the vertical center of <var>A</var>'s right margin edge.</p>
+
+      <p>Otherwise, the anchor point of <var>B</var> lies inside the area bounded by L2 and
+      L3 that also contains the points to the right of <var>B</var>'s first box's border
+      box; let <var>A</var>'s anchor point be the vertical center of <var>A</var>'s left margin edge.</p>
+
+
+     </dd><dt>If the computed value of 'anchor-point' is a specific point on <var>A</var> and
+     'none' on <var>B</var>
+
+     </dt><dd>
+      <p>The anchor point of <var>A</var> is the point given by its 'anchor-point'
+      property.
+
+      </p><p>If the anchor point of <var>A</var> is the center point of <var>A</var>'s
+      first box's margin box, then <var>B</var>'s anchor point is the center point of its
+      first box's border box.
+
+      </p><p>Otherwise, <var>B</var>'s anchor point is on one of its border edges. Consider
+      four hypothetical half-infinite lines L1, L2, L3, and L4 that each start in the center of <var>A</var>'s first box's margin box, and that extend respectively through the top left
+      corner, top right corner, bottom right corner, and bottom left corner of <var>A</var>'s first box's margin box. <var>B</var>'s anchor point is determined
+      by the location of <var>A</var>'s anchor point relative to these four hypothetical
+      lines, as follows:
+
+      </p><p>If the anchor point of <var>A</var> lies on L1 or L2, or inside the area bounded
+      by L1 and L2 that also contains the points above <var>A</var>'s first box's margin
+      box, then let <var>B</var>'s anchor point be the horizontal center of <var>B</var>'s bottom border edge.</p>
+
+      <p>Otherwise, if the anchor point of <var>A</var> lies on L3 or L4, or inside the
+      area bounded by L4 and L4 that also contains the points below <var>A</var>'s first
+      box's margin box, then let <var>B</var>'s anchor point be the horizontal center of
+      <var>B</var>'s top border edge.</p>
+
+      <p>Otherwise, if the anchor point of <var>A</var> lies inside the area bounded by L4
+      and L1 that also contains the points to the left of <var>A</var>'s first box's margin
+      box, then let <var>B</var>'s anchor point be the vertical center of <var>B</var>'s right border edge.</p>
+
+      <p>Otherwise, the anchor point of <var>A</var> lies inside the area bounded by L2 and
+      L3 that also contains the points to the right of <var>A</var>'s first box's margin
+      box; let <var>B</var>'s anchor point be the vertical center of <var>B</var>'s left border edge.</p>
+
+
+     </dd><dt>If the computed value of 'anchor-point' is a specific point on both <var>A</var>
+     and <var>B</var>
+
+     </dt><dd>
+      <p>The anchor points of <var>A</var> and <var>B</var> are the points given
+      by their respective 'anchor-point' properties.
+
+    </p></dd></dl>
+
+    <p class="note">The rules above generally use <var>A</var>'s <em>margin</em> box, but
+    <var>B</var>'s <em>border</em> box. This is because while <var>A</var> always
+    has a margin box, and using the margin box allows for the dialog to be positioned offset from
+    the box it is annotating, <var>B</var> sometimes does not have a margin box (e.g. if it
+    is a table-cell), or has a margin box whose position may be not entirely clear (e.g. in the face
+    of margin collapsing and 'clear' handling of in-flow blocks).</p>
+
+    <p>In cases where <var>B</var> does not have a border box but its border box is used by
+    the algorithm above, user agents must use its first box's content area instead. (This is in
+    particular an issue with boxes in tables that have 'border-collapse' set to 'collapse'.)</p>
+
+   </li><li>
+
+    <p>When an element's 'position' property computes to '<dfn id="css-position-absolute-anchored">absolute-anchored</dfn>', the 'float' property does not
+    apply and must compute to 'none', the 'display' property must compute to a value as described by
+    the table in <a href="http://www.w3.org/TR/CSS21/visuren.html#dis-pos-flo">the section of CSS
+    2.1 describing the <cite>relationships between 'display', 'position', and 'float'</cite></a>,
+    and the element's box must be positioned using the rules for absolute positioning but with its
+    static position set such that if the box is positioned in its static position, its anchor point
+    is exactly aligned over the anchor point of the element to which it is <a href="/breakup/specs/html-ui/#magic-alignment" id="the-dialog-element:magic-alignment-3">magically aligned</a>. Elements aligned in this way are <i>absolutely
+    positioned</i>. For the purposes of determining the containing block of other elements, the
+    '<a href="/breakup/specs/html-ui/#css-position-absolute-anchored" id="the-dialog-element:css-position-absolute-anchored-3">absolute-anchored</a>' keyword must be treated
+    like the 'absolute' keyword.</p>
+
+   </li></ul>
+
+  <p class="note">The trivial example of an element that does not have a rendered box is one whose
+  'display' property computes to 'none'. However, there are many other cases; e.g. table columns do
+  not have boxes (their properties merely affect other boxes).</p>
+
+  <p class="note">If an element to which another element is anchored changes rendering, the anchored
+  element will be be repositioned accordingly. (In other words, the requirements above are live,
+  they are not just calculated once per anchored element.)</p>
+
+  <p class="note">The '<a href="/breakup/specs/html-ui/#css-position-absolute-anchored" id="the-dialog-element:css-position-absolute-anchored-4">absolute-anchored</a>'
+  keyword is not a keyword that can be specified in CSS; the 'position' property can only compute to
+  this value if the <code id="the-dialog-element:the-dialog-element-27"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element is positioned via the APIs described above.</p>
+
+  <p>User agents in visual interactive media should allow the user to pan the viewport to access all
+  parts of a <code id="the-dialog-element:the-dialog-element-28"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> element's border box, even if the element is larger than the
+  viewport and the viewport would otherwise not have a scroll mechanism (e.g. because the viewport's
+  'overflow' property is set to 'hidden').</p>
+
+  <hr>
+
+
+  <p>The <dfn id="dom-dialog-open"><code>open</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-dialog-element:reflect">reflect</a> the <code id="the-dialog-element:attr-dialog-open-10"><a href="/breakup/specs/html-ui/#attr-dialog-open">open</a></code> content attribute.</p>
+
+
+  
+
+  <div class="example">
+
+   <p>This dialog box has some small print. The <code id="the-dialog-element:the-main-element"><a href="/breakup/specs/html-sectioning/#the-main-element">main</a></code> element is used to draw the user's
+   attention to the more important parts.</p>
+
+   <pre>&lt;dialog&gt;
+ &lt;h1&gt;Add to Wallet&lt;/h1&gt;
+ &lt;main&gt;
+  &lt;p&gt;How many gold coins do you want to add to your wallet?&lt;/p&gt;
+  &lt;p&gt;&lt;input name=amt type=number min=0 step=0.01 value=100&gt;&lt;/p&gt;
+ &lt;/main&gt;
+ &lt;p&gt;&lt;small&gt;You add coins at your own risk.&lt;/small&gt;&lt;/p&gt;
+ &lt;p&gt;&lt;label&gt;&lt;input name=round type=checkbox&gt; Only add perfectly round coins &lt;/label&gt;
+ &lt;p&gt;&lt;input type=button onclick="submit()" value="Add Coins"&gt;&lt;/p&gt;
+&lt;/dialog&gt;</pre>
+
+  </div>
+
+
+
+  <section><h2>Anchor points</h2>
+
+  <p class="critical">This section will eventually be moved to a CSS specification; it is specified
+  here only on an interim basis until an editor can be found to own this.</p>
+
+  <table class="css-property"><caption>'anchor-point'</caption><tbody><tr><th>Value:
+    </th><td> none | &lt;position&gt;
+   </td></tr><tr><th>Initial:
+    </th><td> none
+   </td></tr><tr><th>Applies to:
+    </th><td> all elements
+   </td></tr><tr><th>Inherited:
+    </th><td> no
+   </td></tr><tr><th>Percentages:
+    </th><td> refer to width or height of box; see prose
+   </td></tr><tr><th>Media:
+    </th><td> visual
+   </td></tr><tr><th>Computed value:
+    </th><td> The specified value, but with any lengths replaced by their corresponding absolute length
+   </td></tr><tr><th>Animatable:
+    </th><td> no
+   </td></tr><tr><th>Canonical order:
+    </th><td> per grammar
+  </td></tr></tbody></table>
+
+  <p>The 'anchor-point' property specifies a point to which dialog boxes are to be aligned.</p>
+
+  <p>If the value is a &lt;position&gt;, the anchor point is the point given by the value, which
+  must be interpreted relative to the element's first rendered box's margin box. Percentages must be
+  calculated relative to the element's first rendered box's margin box (specifically, its width for
+  the horizontal position and its height for the vertical position). [[!CSSVALUES]] [[!CSS]]</p>
+
+  <p>If the value is the keyword 'none', then no explicit anchor point is defined. The user agent
+  will pick an anchor point automatically if necessary (as described in the definition of the
+  <code id="anchor-points:dom-dialog-open"><a href="/breakup/specs/html-ui/#dom-dialog-open">open()</a></code> method above).</p></section></section></body></html>

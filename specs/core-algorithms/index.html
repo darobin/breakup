@@ -253,10 +253,10 @@
   support plugins at all. [[NPAPI]]</p>
 
   <p>A plugin can be <dfn id="concept-plugin-secure">secured</dfn> if it honors the semantics of
-  the <code id="plugins:attr-iframe-sandbox"><a href="#attr-iframe-sandbox">sandbox</a></code> attribute.</p>
+  the <code id="plugins:attr-iframe-sandbox"><a href="/breakup/specs/html-embedding/#attr-iframe-sandbox">sandbox</a></code> attribute.</p>
 
   <p class="example">For example, a secured plugin would prevent its contents from creating pop-up
-  windows when the plugin is instantiated inside a sandboxed <code id="plugins:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>.</p>
+  windows when the plugin is instantiated inside a sandboxed <code id="plugins:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>.</p>
 
   
 
@@ -861,7 +861,7 @@
     specification. [[!EDITING]]  </p>
 
     <p>The following parts of the Fullscreen specification are referenced from this specification,
-    in part to define the rendering of <code id="dependencies:the-dialog-element"><a href="#the-dialog-element">dialog</a></code> elements, and also to define how the
+    in part to define the rendering of <code id="dependencies:the-dialog-element"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code> elements, and also to define how the
     Fullscreen API interacts with the sandboxing features in HTML: [[!FULLSCREEN]]</p>
 
     <ul class="brief"><li>The <dfn id="top-layer">top layer</dfn> concept</li><li><dfn id="dom-element-requestfullscreen"><code>requestFullscreen()</code></dfn>
@@ -2788,12 +2788,12 @@
 
   <p>This specification defines the URL <dfn id="about:srcdoc"><code>about:srcdoc</code></dfn> as a reserved, though
   unresolvable, <code id="terminology-2:about-protocol-2"><a data-x-internal="about-protocol" href="http://tools.ietf.org/html/rfc6694#section-2">about:</a></code> URL, that is used as <a id="terminology-2:the-document's-address" href="https://dom.spec.whatwg.org/#concept-document-url" data-x-internal="the-document's-address">the
-  document's address</a> of <a href="#an-iframe-srcdoc-document" id="terminology-2:an-iframe-srcdoc-document"><code>iframe</code> <code>srcdoc</code> documents</a>. [[!ABOUT]]</p>
+  document's address</a> of <a href="/breakup/specs/html-embedding/#an-iframe-srcdoc-document" id="terminology-2:an-iframe-srcdoc-document"><code>iframe</code> <code>srcdoc</code> documents</a>. [[!ABOUT]]</p>
 
   <p>The <dfn id="fallback-base-url">fallback base URL</dfn> of a <code id="terminology-2:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> object is the <a href="/breakup/specs/core-algorithms/#absolute-url" id="terminology-2:absolute-url">absolute
   URL</a> obtained by running these substeps:</p>
 
-  <ol><li><p>If the <code id="terminology-2:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is <a href="#an-iframe-srcdoc-document" id="terminology-2:an-iframe-srcdoc-document-2">an <code>iframe</code> <code>srcdoc</code> document</a>, then return the <a href="/breakup/specs/core-algorithms/#document-base-url" id="terminology-2:document-base-url">document base
+  <ol><li><p>If the <code id="terminology-2:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is <a href="/breakup/specs/html-embedding/#an-iframe-srcdoc-document" id="terminology-2:an-iframe-srcdoc-document-2">an <code>iframe</code> <code>srcdoc</code> document</a>, then return the <a href="/breakup/specs/core-algorithms/#document-base-url" id="terminology-2:document-base-url">document base
    URL</a> of the <code id="terminology-2:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/browser-dom/#browsing-context" id="terminology-2:browsing-context">browsing context</a>'s <a href="/breakup/specs/browser-dom/#browsing-context-container" id="terminology-2:browsing-context-container">browsing context
    container</a>'s <a id="terminology-2:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> and abort these steps.</p></li><li>
 
@@ -2952,7 +2952,7 @@
 
    </li><li>
 
-    <p>While <var>document</var> is <a href="#an-iframe-srcdoc-document" id="processing-model:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a>, let <var>document</var> be
+    <p>While <var>document</var> is <a href="/breakup/specs/html-embedding/#an-iframe-srcdoc-document" id="processing-model:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a>, let <var>document</var> be
     <var>document</var>'s <a href="/breakup/specs/browser-dom/#browsing-context" id="processing-model:browsing-context">browsing context</a>'s <a href="/breakup/specs/browser-dom/#browsing-context-container" id="processing-model:browsing-context-container">browsing context
     container</a>'s <a id="processing-model:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> instead.</p>
 
@@ -3501,8 +3501,8 @@
     <p>Returns the item with <a href="/breakup/specs/core-algorithms/#concept-id" id="the-htmlallcollection-interface:concept-id">ID</a> or name <var>name</var> from the collection.</p>
     <p>If there are multiple matching items, then an <code id="the-htmlallcollection-interface:htmlcollection-6"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> object containing all those elements is returned.</p>
     
-    <p>Only <code id="the-htmlallcollection-interface:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code>, <code id="the-htmlallcollection-interface:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>, <code id="the-htmlallcollection-interface:the-iframe-element"><a href="#the-iframe-element">iframe</a></code>,
-    <code id="the-htmlallcollection-interface:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>, <code id="the-htmlallcollection-interface:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>, <code id="the-htmlallcollection-interface:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code>, <code id="the-htmlallcollection-interface:the-object-element"><a href="#the-object-element">object</a></code>,
+    <p>Only <code id="the-htmlallcollection-interface:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code>, <code id="the-htmlallcollection-interface:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>, <code id="the-htmlallcollection-interface:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>,
+    <code id="the-htmlallcollection-interface:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>, <code id="the-htmlallcollection-interface:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>, <code id="the-htmlallcollection-interface:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code>, <code id="the-htmlallcollection-interface:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>,
     <code id="the-htmlallcollection-interface:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code>, and <code id="the-htmlallcollection-interface:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements can have a name for the purpose of this
     method; their name is given by the value of their <code>name</code> attribute.</p>
    </dd></dl>
@@ -3521,17 +3521,17 @@
    <code id="the-htmlallcollection-interface:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, 
    <code id="the-htmlallcollection-interface:the-applet-element"><a href="#the-applet-element">applet</a></code>,
    <code id="the-htmlallcollection-interface:the-button-element-2"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code>, 
-   <code id="the-htmlallcollection-interface:the-embed-element"><a href="#the-embed-element">embed</a></code>,
+   <code id="the-htmlallcollection-interface:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
    <code id="the-htmlallcollection-interface:the-form-element-2"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
    <code id="the-htmlallcollection-interface:frame"><a href="#frame">frame</a></code>,
    <code id="the-htmlallcollection-interface:frameset"><a href="#frameset">frameset</a></code>,
-   <code id="the-htmlallcollection-interface:the-iframe-element-2"><a href="#the-iframe-element">iframe</a></code>, 
+   <code id="the-htmlallcollection-interface:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, 
    <code id="the-htmlallcollection-interface:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>,
    <code id="the-htmlallcollection-interface:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>,
    
    <code id="the-htmlallcollection-interface:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>, 
    <code id="the-htmlallcollection-interface:the-meta-element-2"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code>, 
-   <code id="the-htmlallcollection-interface:the-object-element-2"><a href="#the-object-element">object</a></code>,
+   <code id="the-htmlallcollection-interface:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>,
    <code id="the-htmlallcollection-interface:the-select-element-2"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code>, and
    <code id="the-htmlallcollection-interface:the-textarea-element-2"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> 
   </p>
