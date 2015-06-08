@@ -2,6 +2,7 @@
 var fs = require("fs-extra")
 ,   pth = require("path")
 ,   jn = pth.join
+,   jqLocation = jn(__dirname, "node_modules/jquery/dist/jquery.min.js")
 ,   jsdom = require("node-jsdom")
 ,   async = require("async")
 ,   nopt = require("nopt")
@@ -26,8 +27,8 @@ function tmpl (name, data) {
 }
 
 function makeDoc (data, cb) {
-    jsdom.env(tmpl("spec", data), function (err, win) {
-        cb(err, win.document);
+    jsdom.env(tmpl("spec", data), [jqLocation], function (err, win) {
+        cb(err, win);
     });
 }
 
@@ -36,6 +37,18 @@ function moveOver ($el, doc) {
     ,   el = doc.importNode($newEl.get(0), true);
     doc.body.appendChild(el);
     $el.remove();
+}
+
+function allTextNodes (startNode) {
+    var textNodes = [];
+    function getTextNodes (node) {
+        if (node.nodeType === 3) textNodes.push(node);
+        else {
+            for (var i = 0, len = node.childNodes.length; i < len; ++i) getTextNodes(node.childNodes[i]);
+        }
+    }
+    getTextNodes(startNode);
+    return textNodes;
 }
 
 // load split definition
@@ -48,7 +61,7 @@ if (!fs.existsSync(options.out)) fs.mkdirpSync(options.out);
 console.log("Loading source...");
 jsdom.env(
     jn(__dirname, "source/single-page.html")
-,   [jn(__dirname, "node_modules/jquery/dist/jquery.min.js")]
+,   [jqLocation]
 ,   function (err, win) {
         if (err) return console.error(err);
         console.log("Source loaded!");
@@ -89,7 +102,9 @@ jsdom.env(
             ,   function (data, spec, cb) {
                     data.shortName = spec;
                     console.log("Processing " + spec);
-                    makeDoc(data, function (err, doc) {
+                    // convert it to ReSpec
+                    makeDoc(data, function (err, win) {
+                        var doc = win.document;
                         if (err) return console.error(err);
                         config[spec].content.forEach(function (id) {
                             
@@ -104,16 +119,47 @@ jsdom.env(
                                 console.error("Unknown processing for id", id);
                             }
                         });
+                        var $doc = win.$;
+
                         // XXX
-                        // convert it to ReSpec
+                        //      escape things that look like references (typically in WebIDL)
+                        allTextNodes($doc("body").get(0))
+                            .forEach(function (txt) {
+                                if (/\[\[(?!\\)/.test(txt.data)) txt.data = txt.data.replace(/\[\[(?!\\)/g, "[[\\");
+                            })
+                        ;
+                        
                         //      premap references to know which are normative
                         //      replace them
-                        //      use a template for the whole doc
-                        //      remove hN numbers
-                        //      make all hN h2
-                        //      escape things that look like references (typically in WebIDL)
+
+                        // remove hN numbers
+                        // make all hN h2
+                        console.log("\t- Fixing hN numbers and making all h2");
+                        $doc.find("h2, h3, h4, h5, h6")
+                            .each(function () {
+                                var $h = $doc(this)
+                                ,   html = $h.html().replace(/^[\d\.]+\s+/, "")
+                                ;
+                                $h.replaceWith($doc("<h2></h2>").html(html));
+                            })
+                        ;
+
+                        // XXX
                         //      make WebIDL work
+
                         //      move ID to <section>
+                        console.log("\t- Moving ID to section");
+                        $doc("h2[id]").each(function () {
+                            var $h = $doc(this)
+                            ,   id = $h.attr("id")
+                            ;
+                            $h.removeAttr("id")
+                                .parent("section")
+                                    .attr("id", id)
+                            ;
+                        });
+
+
                         // copy over the dependencies
 
                         // save it
