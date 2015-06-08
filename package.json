@@ -4,8 +4,9 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "async": "^1.2.1",
     "fs-extra": "latest",
-    "jsdom": "latest",
+    "node-jsdom": "latest",
     "nopt": "^3.0.2"
   }
 }

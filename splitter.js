@@ -1,8 +1,9 @@
 
 var fs = require("fs-extra")
-,   pth = require("path").join
+,   pth = require("path")
 ,   jn = pth.join
-,   jsdom = require("jsdom")
+,   jsdom = require("node-jsdom")
+,   async = require("async")
 ,   nopt = require("nopt")
 ,   knownOpts = {
         config:     pth
@@ -13,6 +14,7 @@ var fs = require("fs-extra")
     ,   o:      ["--out"]
     }
 ,   options = nopt(knownOpts, shortHands, process.argv, 2)
+,   baseURL = "/breakup/specs/"
 ;
 
 // helpers
@@ -23,9 +25,23 @@ function tmpl (name, data) {
     });
 }
 
+function makeDoc (data, cb) {
+    jsdom.env(tmpl("spec", data), function (err, win) {
+        cb(err, win.document);
+    });
+}
+
+function moveOver ($el, doc) {
+    $el = $el.clone();
+    var el = doc.importNode($el.get(0), true);
+    doc.body.appendChild(el);
+    $el.remove();
+}
+
 // load split definition
+if (!options.config) options.config = jn(__dirname, "split.json");
 var config = fs.readJsonSync(options.config);
-if (!options.out) options.out = jn(process.cwd(), "split");
+if (!options.out) options.out = jn(process.cwd(), "specs");
 if (!fs.existsSync(options.out)) fs.mkdirpSync(options.out);
 
 // load document
@@ -37,30 +53,84 @@ jsdom.env(
         if (err) return console.error(err);
         console.log("Source loaded!");
         
-        // process each split in turn
-        var splits = [];
+        // create a mapping of all IDs and links based on which document they end up in
+        var splits = []
+        ,   $ = win.$
+        ,   section = function (id) { return $(id).parent(); }
+        ,   idMap = {}
+        ;
         for (var spec in config) {
             splits.push({ title: spec, abstract: config[spec].abstract });
+            config[spec].content.forEach(function (id) {
+                // this assumes that all non-strings are instructions to unwrap, may be true, might not
+                var $secs = (typeof id === "string") ? section(id) : section(id).find("> section");
+                $secs.each(function () {
+                    var $s = $(this);
+                    $s.find("[id]")
+                        .each(function () {
+                            var id = $(this).attr("id");
+                            idMap["#" + id] = baseURL + spec + "/#" + id;
+                        });
+                });
+            });
         }
         
-        
-        // save the remaining document as leftovers.html with the stuff that hasn't been processed
-        
+        // rewrite all links using a given base URL and split
+        $("a[href^='#']").each(function () {
+            var $a = $(this);
+            if (idMap[$a.attr("href")]) $a.attr("href", idMap[$a.attr("href")]);
+        });
+
+        // actually extract each bit
+        async.forEachOfSeries(
+                config
+            ,   function (data, spec, cb) {
+                    data.shortName = spec;
+                    makeDoc(data, function (err, doc) {
+                        if (err) return console.error(err);
+                        config[spec].content.forEach(function (id) {
+                            if (typeof id === "string") moveOver(section(id), doc);
+                            else if (id.unwrap) {
+                                section(id).find("> section")
+                                            .each(function () {
+                                                moveOver($(this), doc);
+                                            });
+                            }
+                            else {
+                                console.error("Unknown processing for id", id);
+                            }
+                        });
+                        // XXX
+                        // convert it to ReSpec
+                        //      premap references to know which are normative
+                        //      replace them
+                        //      use a template for the whole doc
+                        // copy over the dependencies
+
+                        // save it
+                        var dir = jn(options.out, spec);
+                        fs.mkdirpSync(dir);
+                        fs.writeFileSync(jn(dir, "index.html"), jsdom.serializeDocument(doc), { encoding: "utf8" });
+                        cb();
+                    });
+                }
+            ,   function (err) {
+                    if (err) return console.error(err);
+                    // save the remaining document as leftovers.html with the stuff that hasn't been processed
+                    fs.mkdirpSync(jn(options.out, "leftovers"));
+                    fs.writeFileSync(jn(options.out, "leftovers/index.html"), jsdom.serializeDocument(win.document), { encoding: "utf8" });
+                    // this is the end!
+                    console.log("Ok!");
+                }
+            )
+        ;
         
         // save an index pointing to all of the above
         var specList = splits.map(function (s) {
             return "<dt>" + s.title + "</dt>\n<dd>" + s.abstract + "</dd>";
         }).join("\n");
-        fs.writeFileSync(jn(config.out, "index.html"), tmpl("index", { specs: specList }));
+        fs.writeFileSync(jn(options.out, "index.html"), tmpl("index", { specs: specList }), { encoding: "utf8" });
     }
 );
-
-
-// create a mapping of all IDs and links based on which document they end up in
-// rewrite all links using a given base URL and split
-// actually extract each bit
-// convert it to ReSpec
-// copy over the dependencies
-// save it
 
 

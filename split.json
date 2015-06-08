@@ -2,13 +2,42 @@
     "html": {
         "title":    "HTML"
     ,   "abstract": "This document introduces HTML and provides a map of the HTML specifications family."
+    ,   "content":  [
+            {
+                "id":       "#introduction"
+            ,   "unwrap":   true
+            }
+        ,   "#elements-3"
+        ,   "#attributes-3"
+        ,   "#element-interfaces"
+        ,   "#all-interfaces"
+        ,   "#events-2"
+        ]
     }
 ,   "core-algorithms": {
         "title":    "Core Algorithms"
     ,   "abstract": "This document is a reference for a number of basic algorithms that are reused across the platform."
+    ,   "content":  [
+            {
+                "id":       "#infrastructure"
+            ,   "unwrap":   true
+            }
+        ]
     }
 ,   "browser-dom":  {
         "title":    "The Browser DOM"
     ,   "abstract": "Some DOM interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>."
+    ,   "content":  [
+            "#documents"
+        ,   "#windows"
+        ,   "#the-window-object"
+        ,   "#origin"
+        ,   "#sandboxing"
+        ,   "#history"
+        ,   {
+                "id":       "#webappapis"
+            ,   "unwrap":   true
+            }
+        ]
     }
 }
