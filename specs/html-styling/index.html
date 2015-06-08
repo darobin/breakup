@@ -1,0 +1,365 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Styling HTML</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-styling"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Putting style in HTML.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>style</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-style-element:concept-element-categories">Categories</a>:</dt><dd><a href="#metadata-content-2" id="the-style-element:metadata-content-2">Metadata content</a>.</dd><dd>If the <code id="the-style-element:attr-style-scoped"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute is present: <a href="#flow-content-2" id="the-style-element:flow-content-2">flow content</a>.</dd><dt><a href="#concept-element-contexts" id="the-style-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>If the <code id="the-style-element:attr-style-scoped-2"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute is absent: where <a href="#metadata-content-2" id="the-style-element:metadata-content-2-2">metadata content</a> is expected.</dd><dd>If the <code id="the-style-element:attr-style-scoped-3"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute is absent: in a <code id="the-style-element:the-noscript-element"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element that is a child of a <code id="the-style-element:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element.</dd><dd>If the <code id="the-style-element:attr-style-scoped-4"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute is present: where <a href="#flow-content-2" id="the-style-element:flow-content-2-2">flow content</a> is expected, but before any other <a href="#flow-content-2" id="the-style-element:flow-content-2-3">flow content</a> other than <a href="#inter-element-whitespace" id="the-style-element:inter-element-whitespace">inter-element whitespace</a> and <code id="the-style-element:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> elements, and not as the child of an element whose content model is <a href="#transparent" id="the-style-element:transparent">transparent</a>.</dd><dt><a href="#concept-element-content-model" id="the-style-element:concept-element-content-model">Content model</a>:</dt><dd>Depends on the value of the <code id="the-style-element:attr-style-type"><a href="/breakup/specs/html-styling/#attr-style-type">type</a></code> attribute, but must match requirements described in prose below.</dd><dt><a href="#concept-element-tag-omission" id="the-style-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-style-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-style-element:global-attributes">Global attributes</a></dd><dd><code id="the-style-element:attr-style-media"><a href="/breakup/specs/html-styling/#attr-style-media">media</a></code> — Applicable media</dd><dd><code id="the-style-element:attr-style-type-2"><a href="/breakup/specs/html-styling/#attr-style-type">type</a></code> — Type of embedded resource</dd><dd><code id="the-style-element:attr-style-scoped-5"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> — Whether the styles apply to the entire document or just the parent subtree</dd><dd>Also, the <code id="the-style-element:attr-style-title"><a href="/breakup/specs/html-styling/#attr-style-title">title</a></code> attribute <a href="/breakup/specs/html-styling/#attr-style-title" id="the-style-element:attr-style-title-2">has special semantics</a> on this element: Alternative style sheet set name.</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-style-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlstyleelement">HTMLStyleElement</dfn> : <a href="#htmlelement" id="the-style-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-styling/#dom-style-media" id="the-style-element:dom-style-media">media</a>;
+  attribute DOMString <a href="/breakup/specs/html-styling/#dom-style-type" id="the-style-element:dom-style-type">type</a>;
+  attribute boolean <a href="/breakup/specs/html-styling/#dom-style-scoped" id="the-style-element:dom-style-scoped">scoped</a>;
+};
+<a href="/breakup/specs/html-styling/#htmlstyleelement" id="the-style-element:htmlstyleelement">HTMLStyleElement</a> implements <a href="/breakup/specs/core-algorithms/#linkstyle" id="the-style-element:linkstyle">LinkStyle</a>;</pre>
+   </dd></dl>
+
+  <p>The <code id="the-style-element:the-style-element-2"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element allows authors to embed style information in their documents.
+  The <code id="the-style-element:the-style-element-3"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element is one of several inputs to the styling processing
+  model. The element does not <a href="#represents" id="the-style-element:represents">represent</a> content for the
+  user.</p>
+
+  <p>The <dfn id="attr-style-type"><code>type</code></dfn> attribute gives the styling language.
+  If the attribute is present, its value must be a <a href="/breakup/specs/core-algorithms/#valid-mime-type" id="the-style-element:valid-mime-type">valid MIME type</a> that designates a
+  styling language. The <code>charset</code> parameter must not be specified. The default
+  value for the <code id="the-style-element:attr-style-type-3"><a href="/breakup/specs/html-styling/#attr-style-type">type</a></code> attribute, which is used if the attribute
+  is absent, is "<code>text/css</code>". [[!RFC2318]]</p>
+
+  
+
+   <p>When examining types
+  to determine if they support the language, user agents must not ignore unknown MIME parameters
+  — types with unknown parameters must be assumed to be unsupported. The <code>charset</code> parameter must be treated as an unknown parameter for the purpose of
+  comparing <a href="/breakup/specs/core-algorithms/#mime-type" id="the-style-element:mime-type">MIME types</a> here.</p>
+
+  
+
+  <p>The <dfn id="attr-style-media"><code>media</code></dfn> attribute says which media the
+  styles apply to. The value must be a <a href="/breakup/specs/core-algorithms/#valid-media-query-list" id="the-style-element:valid-media-query-list">valid media query list</a>. The user
+  agent must apply the styles when the <code id="the-style-element:attr-style-media-2"><a href="/breakup/specs/html-styling/#attr-style-media">media</a></code> attribute's
+  value <a href="/breakup/specs/core-algorithms/#matches-the-environment" id="the-style-element:matches-the-environment">matches the environment</a> and the other relevant conditions apply, and must not
+  apply them otherwise.</p>
+
+  
+
+  <p class="note">The styles might be further limited in scope, e.g. in CSS with the use of <code>@media</code> blocks. This specification does not override such further restrictions or
+  requirements.</p>
+
+  
+
+  <p id="style-default-media">The default, if the <code id="the-style-element:attr-style-media-3"><a href="/breakup/specs/html-styling/#attr-style-media">media</a></code>
+  attribute is omitted, is "<code>all</code>", meaning that by default styles apply to all
+  media.</p>
+
+  <p>The <dfn id="attr-style-scoped"><code>scoped</code></dfn> attribute is a <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-style-element:boolean-attribute">boolean
+  attribute</a>. If present, it indicates that the styles are intended just for the subtree
+  rooted at the <code id="the-style-element:the-style-element-4"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element's parent element, as opposed to the whole
+  <code id="the-style-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
+
+  <p>If the <code id="the-style-element:attr-style-scoped-6"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute is present and the element has a
+  parent element, then the <code id="the-style-element:the-style-element-5"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element must precede any <a href="#flow-content-2" id="the-style-element:flow-content-2-4">flow content</a> in
+  its parent element other than <a href="#inter-element-whitespace" id="the-style-element:inter-element-whitespace-2">inter-element whitespace</a> and other <code id="the-style-element:the-style-element-6"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code>
+  elements, and the parent element's content model must not have a <a href="#transparent" id="the-style-element:transparent-2">transparent</a>
+  component.</p>
+
+  <p class="note">This implies that scoped <code id="the-style-element:the-style-element-7"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> elements cannot be children of, e.g.,
+  <code id="the-style-element:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> or <code id="the-style-element:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> elements, even when those are used as <a href="#flow-content-2" id="the-style-element:flow-content-2-5">flow content</a>
+  containers.</p>
+
+  <p class="note">A <code id="the-style-element:the-style-element-8"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element <em>without</em> a <code id="the-style-element:attr-style-scoped-7"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute is restricted to appearing in the
+  <code id="the-style-element:the-head-element-2"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> of the document.</p>
+
+  <p>A style sheet declared by a <code id="the-style-element:the-style-element-9"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element that has a <code id="the-style-element:attr-style-scoped-8"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute and has a parent node that is an element is
+  <i>scoped</i>, with the <i>scoping root</i> being the <code id="the-style-element:the-style-element-10"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element's parent
+  element. [[!CSSSCOPED]]</p>
+
+  
+
+  <p id="title-on-style">The <dfn id="attr-style-title"><code>title</code></dfn> attribute on
+  <code id="the-style-element:the-style-element-11"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> elements defines <a href="/breakup/specs/core-algorithms/#alternative-style-sheet-sets" id="the-style-element:alternative-style-sheet-sets">alternative style sheet sets</a>. If the
+  <code id="the-style-element:the-style-element-12"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element has no <code id="the-style-element:attr-style-title-3"><a href="/breakup/specs/html-styling/#attr-style-title">title</a></code> attribute, then it
+  has no title; the <code id="the-style-element:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute of ancestors does not apply to
+  the <code id="the-style-element:the-style-element-13"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element. [[!CSSOM]]</p>
+
+  <p class="note">The <code id="the-style-element:attr-style-title-4"><a href="/breakup/specs/html-styling/#attr-style-title">title</a></code> attribute on <code id="the-style-element:the-style-element-14"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code>
+  elements, like the <code id="the-style-element:attr-link-title"><a href="/breakup/specs/html-metadata/#attr-link-title">title</a></code> attribute on <code id="the-style-element:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>
+  elements, differs from the global <code id="the-style-element:attr-title-2"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute in that a
+  <code id="the-style-element:the-style-element-15"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> block without a title does not inherit the title of the parent element: it
+  merely has no title.</p>
+
+  <p>The <code id="the-style-element:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> of a <code id="the-style-element:the-style-element-16"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element must match the <code>style</code> production in the following ABNF, the character set for which is Unicode. [[!ABNF]]</p>
+
+  <pre>style         = no-c-start *( c-start no-c-end c-end no-c-start )
+no-c-start    = &lt; any string that doesn't contain a substring that matches c-start &gt;
+c-start       = "&lt;!--"
+no-c-end      = &lt; any string that doesn't contain a substring that matches c-end &gt;
+c-end         = "--&gt;"</pre>
+
+  
+
+  <hr>
+
+  
+
+
+  <p>Whenever one of the following conditions occur for an element whose <code id="the-style-element:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is in
+  a <a href="/breakup/specs/browser-dom/#browsing-context" id="the-style-element:browsing-context">browsing context</a>:</p>
+
+  <ul><li>the element is popped off the <a href="/breakup/specs/html-syntax/#stack-of-open-elements" id="the-style-element:stack-of-open-elements">stack of open elements</a> of an <a href="/breakup/specs/html-syntax/#html-parser" id="the-style-element:html-parser">HTML
+   parser</a> or <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="the-style-element:xml-parser">XML parser</a>,
+
+   </li><li>the element is not on the <a href="/breakup/specs/html-syntax/#stack-of-open-elements" id="the-style-element:stack-of-open-elements-2">stack of open elements</a> of an <a href="/breakup/specs/html-syntax/#html-parser" id="the-style-element:html-parser-2">HTML parser</a>
+   or <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="the-style-element:xml-parser-2">XML parser</a>, and it is <a href="/breakup/specs/core-algorithms/#insert-an-element-into-a-document" id="the-style-element:insert-an-element-into-a-document">inserted into a document</a> or <a href="/breakup/specs/core-algorithms/#remove-an-element-from-a-document" id="the-style-element:remove-an-element-from-a-document">removed from a document</a>,
+
+   </li><li>the element is not on the <a href="/breakup/specs/html-syntax/#stack-of-open-elements" id="the-style-element:stack-of-open-elements-3">stack of open elements</a> of an <a href="/breakup/specs/html-syntax/#html-parser" id="the-style-element:html-parser-3">HTML parser</a>
+   or <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="the-style-element:xml-parser-3">XML parser</a>, and one of its child nodes is modified by a script,
+
+  </li></ul>
+
+  <p>...the user agent must run the <dfn id="update-a-style-block">update a <code>style</code>
+  block</dfn> algorithm that applies for the style sheet language specified by the element's <code id="the-style-element:attr-style-type-4"><a href="/breakup/specs/html-styling/#attr-style-type">type</a></code> attribute, passing it the element's <dfn id="style-data">style
+  data</dfn>.</p>
+
+  <p>For styling languages that consist of pure text (as opposed to XML), a <code id="the-style-element:the-style-element-17"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code>
+  element's <a href="/breakup/specs/html-styling/#style-data" id="the-style-element:style-data">style data</a> is the concatenation of the contents of all the
+  <code id="the-style-element:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes that are children of the <code id="the-style-element:the-style-element-18"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element (not any other nodes
+  such as comments or elements), in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-style-element:tree-order">tree order</a>. For XML-based styling languages, the
+  <a href="/breakup/specs/html-styling/#style-data" id="the-style-element:style-data-2">style data</a> consists of all the child nodes of the <code id="the-style-element:the-style-element-19"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element.</p>
+
+  <p>The <a href="/breakup/specs/html-styling/#update-a-style-block" id="the-style-element:update-a-style-block">update a <code>style</code> block</a> algorithm for CSS (<code id="the-style-element:text/css"><a href="#text/css">text/css</a></code>) is
+  as follows:</p>
+
+  <ol><li><p>Let <var>element</var> be the <code id="the-style-element:the-style-element-20"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element.</p></li><li><p>If <var>element</var> has an <a href="/breakup/specs/core-algorithms/#associated-css-style-sheet" id="the-style-element:associated-css-style-sheet">associated CSS style sheet</a>, <a href="/breakup/specs/core-algorithms/#remove-a-css-style-sheet" id="the-style-element:remove-a-css-style-sheet">remove the CSS style sheet</a> in question.</p></li><li><p>If <var>element</var> is not <a href="/breakup/specs/core-algorithms/#in-a-document" id="the-style-element:in-a-document">in a <code>Document</code></a>, then abort
+   these steps.</p></li><li>
+
+    <p><a href="/breakup/specs/core-algorithms/#create-a-css-style-sheet" id="the-style-element:create-a-css-style-sheet">Create a CSS style sheet</a> with the following properties:</p>
+
+    <dl><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-type" id="the-style-element:concept-css-style-sheet-type">type</a></dt><dd><p><code>text/css</code></p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-owner-node" id="the-style-element:concept-css-style-sheet-owner-node">owner node</a></dt><dd><p><var>element</var></p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-media" id="the-style-element:concept-css-style-sheet-media">media</a></dt><dd>
+
+      <p>The <code id="the-style-element:attr-style-media-4"><a href="/breakup/specs/html-styling/#attr-style-media">media</a></code> attribute of <var>element</var>.</p>
+
+      <p class="note">This is a reference to the (possibly absent at this time) attribute, rather
+      than a copy of the attribute's current value. The CSSOM specification defines what happens
+      when the attribute is dynamically set, changed, or removed.</p>
+
+     </dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-title" id="the-style-element:concept-css-style-sheet-title">title</a></dt><dd>
+
+      <p>The <code id="the-style-element:attr-style-title-5"><a href="/breakup/specs/html-styling/#attr-style-title">title</a></code> attribute of <var>element</var>.</p>
+
+      <p class="note">Again, this is a <em>reference</em> to the attribute.</p>
+
+     </dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-alternate-flag" id="the-style-element:concept-css-style-sheet-alternate-flag">alternate flag</a></dt><dd><p>Unset.</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-origin-clean-flag" id="the-style-element:concept-css-style-sheet-origin-clean-flag">origin-clean flag</a></dt><dd><p>Set.</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-location" id="the-style-element:concept-css-style-sheet-location">location</a></dt><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-parent-css-style-sheet" id="the-style-element:concept-css-style-sheet-parent-css-style-sheet">parent CSS style sheet</a></dt><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-owner-css-rule" id="the-style-element:concept-css-style-sheet-owner-css-rule">owner CSS rule</a></dt><dd><p>null</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-disabeld-flag" id="the-style-element:concept-css-style-sheet-disabeld-flag">disabled flag</a></dt><dd><p>Left at its default value.</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-css-rules" id="the-style-element:concept-css-style-sheet-css-rules">CSS rules</a></dt><dd><p>Left uninitialised.</p></dd></dl>
+
+    
+
+   </li></ol>
+
+  <p>This specification does not define any other styling language's <i id="the-style-element:update-a-style-block-2"><a href="/breakup/specs/html-styling/#update-a-style-block">update a <code>style</code> block</a></i> algorithm.</p>
+
+  
+  <p>Once the attempts to obtain the style sheet's <a href="/breakup/specs/core-algorithms/#critical-subresources" id="the-style-element:critical-subresources">critical subresources</a>, if any, are
+  complete, or, if the style sheet has no <a href="/breakup/specs/core-algorithms/#critical-subresources" id="the-style-element:critical-subresources-2">critical subresources</a>, once the style sheet
+  has been parsed and processed, the user agent must, if the loads were successful or there were
+  none, <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-style-element:queue-a-task">queue a task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-style-element:fire-a-simple-event">fire a simple event</a> named <code id="the-style-element:event-load"><a href="/breakup/specs/html/#event-load">load</a></code> at the <code id="the-style-element:the-style-element-21"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element, or, if one of the style sheet's
+  <a href="/breakup/specs/core-algorithms/#critical-subresources" id="the-style-element:critical-subresources-3">critical subresources</a> failed to completely load for any reason (e.g. DNS error, HTTP
+  404 response, a connection being prematurely closed, unsupported Content-Type), <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-style-element:queue-a-task-2">queue a
+  task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-style-element:fire-a-simple-event-2">fire a simple event</a> named <code id="the-style-element:event-error"><a href="/breakup/specs/html/#event-error">error</a></code> at
+  the <code id="the-style-element:the-style-element-22"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element. Non-network errors in processing the style sheet or its
+  subresources (e.g. CSS parse errors, PNG decoding errors) are not failures for the purposes of
+  this paragraph.</p>
+
+  <p>The <a href="/breakup/specs/browser-dom/#task-source" id="the-style-element:task-source">task source</a> for these <a href="/breakup/specs/browser-dom/#concept-task" id="the-style-element:concept-task">tasks</a> is the <a href="/breakup/specs/browser-dom/#dom-manipulation-task-source" id="the-style-element:dom-manipulation-task-source">DOM
+  manipulation task source</a>.</p>
+
+  <p>The element must <a href="/breakup/specs/html-syntax/#delay-the-load-event" id="the-style-element:delay-the-load-event">delay the load event</a> of the element's <a id="the-style-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> until all the
+  attempts to obtain the style sheet's <a href="/breakup/specs/core-algorithms/#critical-subresources" id="the-style-element:critical-subresources-4">critical subresources</a>, if any, are complete.</p>
+
+  
+
+  <p class="note">This specification does not specify a style system, but CSS is expected to be
+  supported by most Web browsers. [[!CSS]]</p>
+
+  
+
+  <p>The <dfn id="dom-style-media"><code>media</code></dfn>, <dfn id="dom-style-type"><code>type</code></dfn> and <dfn id="dom-style-scoped"><code>scoped</code></dfn> IDL attributes must <a href="/breakup/specs/core-algorithms/#reflect" id="the-style-element:reflect">reflect</a> the
+  respective content attributes of the same name.</p>
+
+  
+
+  <p>The <code id="the-style-element:linkstyle-2"><a href="/breakup/specs/core-algorithms/#linkstyle">LinkStyle</a></code> interface is also implemented by this element. [[!CSSOM]]</p>
+
+  <div class="example">
+
+   <p>The following document has its stress emphasis styled as bright red text rather than italics
+   text, while leaving titles of works and Latin words in their default italics. It shows how using
+   appropriate elements enables easier restyling of documents.</p>
+
+   <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en-US"&gt;
+ &lt;head&gt;
+  &lt;title&gt;My favorite book&lt;/title&gt;
+  &lt;style&gt;
+   body { color: black; background: white; }
+   em { font-style: normal; color: red; }
+  &lt;/style&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;p&gt;My &lt;em&gt;favorite&lt;/em&gt; book of all time has &lt;em&gt;got&lt;/em&gt; to be
+  &lt;cite&gt;A Cat's Life&lt;/cite&gt;. It is a book by P. Rahmel that talks
+  about the &lt;i lang="la"&gt;Felis Catus&lt;/i&gt; in modern human society.&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div></section><section><h2>Interactions of styling and scripting</h2>
+
+  <p>Style sheets, whether added by a <code id="interactions-of-styling-and-scripting:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element, a <code id="interactions-of-styling-and-scripting:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element, an
+  <code id="interactions-of-styling-and-scripting:xml-stylesheet"><a data-x-internal="xml-stylesheet" href="http://www.w3.org/TR/xml-stylesheet/#the-xml-stylesheet-processing-instruction">&lt;?xml-stylesheet?&gt;</a></code> PI, an HTTP <code id="interactions-of-styling-and-scripting:http-link"><a href="/breakup/specs/core-algorithms/#http-link">Link:</a></code> header, or
+  some other mechanism, have a <dfn id="style-sheet-ready">style sheet ready</dfn> flag, which is initially unset.</p>
+
+  <p>When a style sheet is ready to be applied, its <a href="/breakup/specs/html-styling/#style-sheet-ready" id="interactions-of-styling-and-scripting:style-sheet-ready">style sheet ready</a> flag must be set.
+  If the style sheet referenced no other resources (e.g. it was an internal style sheet given by a
+  <code id="interactions-of-styling-and-scripting:the-style-element-2"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element with no <code>@import</code> rules), then the style rules must
+  be <a href="/breakup/specs/core-algorithms/#immediately" id="interactions-of-styling-and-scripting:immediately">immediately</a> made available to script; otherwise, the style rules must only be made available
+  to script once the <a href="/breakup/specs/browser-dom/#event-loop" id="interactions-of-styling-and-scripting:event-loop">event loop</a> reaches its <i>update the rendering</i> step.</p>
+
+  <p>A style sheet in the context of the <code id="interactions-of-styling-and-scripting:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> of an <a href="/breakup/specs/html-syntax/#html-parser" id="interactions-of-styling-and-scripting:html-parser">HTML parser</a> or
+  <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="interactions-of-styling-and-scripting:xml-parser">XML parser</a> is said to be <dfn id="a-style-sheet-that-is-blocking-scripts">a style sheet that is blocking scripts</dfn> if the
+  element was created by that <code id="interactions-of-styling-and-scripting:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s parser, and the element is either a
+  <code id="interactions-of-styling-and-scripting:the-style-element-3"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element or a <code id="interactions-of-styling-and-scripting:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element that was an <a href="/breakup/specs/html-linking/#link-type-stylesheet" id="interactions-of-styling-and-scripting:link-type-stylesheet">external resource link that contributes to the styling processing
+  model</a> when the element was created by the parser, and the element's style sheet was enabled
+  when the element was created by the parser, and the element's <a href="/breakup/specs/html-styling/#style-sheet-ready" id="interactions-of-styling-and-scripting:style-sheet-ready-2">style sheet ready</a> flag
+  is not yet set, and, the last time the <a href="/breakup/specs/browser-dom/#event-loop" id="interactions-of-styling-and-scripting:event-loop-2">event loop</a> reached <a href="/breakup/specs/browser-dom/#step1">step 1</a>, the element was
+  <a href="/breakup/specs/core-algorithms/#in-a-document" id="interactions-of-styling-and-scripting:in-a-document">in that <code>Document</code></a>, and the user agent hasn't given
+  up on that particular style sheet yet. A user agent may give up on a style sheet at any time.</p>
+
+  <p class="note">Giving up on a style sheet before the style sheet loads, if the style sheet
+  eventually does still load, means that the script might end up operating with incorrect
+  information. For example, if a style sheet sets the colour of an element to green, but a script
+  that inspects the resulting style is executed before the sheet is loaded, the script will find
+  that the element is black (or whatever the default colour is), and might thus make poor choices
+  (e.g. deciding to use black as the colour elsewhere on the page, instead of green). Implementors
+  have to balance the likelihood of a script using incorrect information with the performance impact
+  of doing nothing while waiting for a slow network request to finish.</p>
+
+  <p>A <code id="interactions-of-styling-and-scripting:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code> <dfn id="has-a-style-sheet-that-is-blocking-scripts">has a style sheet that is blocking scripts</dfn> if there is
+  either <a href="/breakup/specs/html-styling/#a-style-sheet-that-is-blocking-scripts" id="interactions-of-styling-and-scripting:a-style-sheet-that-is-blocking-scripts">a style sheet that is blocking scripts</a> in the context of that
+  <code id="interactions-of-styling-and-scripting:document-4"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, or if that <code id="interactions-of-styling-and-scripting:document-5"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is in a <a href="/breakup/specs/browser-dom/#browsing-context" id="interactions-of-styling-and-scripting:browsing-context">browsing context</a> that
+  has a <a href="/breakup/specs/browser-dom/#parent-browsing-context" id="interactions-of-styling-and-scripting:parent-browsing-context">parent browsing context</a>, and the <a href="/breakup/specs/browser-dom/#active-document" id="interactions-of-styling-and-scripting:active-document">active document</a> of that
+  <a href="/breakup/specs/browser-dom/#parent-browsing-context" id="interactions-of-styling-and-scripting:parent-browsing-context-2">parent browsing context</a> itself <a href="/breakup/specs/html-styling/#has-a-style-sheet-that-is-blocking-scripts" id="interactions-of-styling-and-scripting:has-a-style-sheet-that-is-blocking-scripts">has a style sheet that is blocking
+  scripts</a>.</p>
+
+  <p>A <code id="interactions-of-styling-and-scripting:document-6"><a href="/breakup/specs/browser-dom/#document">Document</a></code> <dfn id="has-no-style-sheet-that-is-blocking-scripts">has no style sheet that is blocking scripts</dfn> if it does not
+  <a href="/breakup/specs/html-styling/#has-a-style-sheet-that-is-blocking-scripts" id="interactions-of-styling-and-scripting:has-a-style-sheet-that-is-blocking-scripts-2">have a style sheet that is blocking
+  scripts</a> as defined in the previous paragraph.</p></section><section><h2>Link type "<dfn><code>stylesheet</code></dfn>"</h2>
+
+  <p>The <code id="link-type-stylesheet:link-type-stylesheet"><a href="/breakup/specs/html-linking/#link-type-stylesheet">stylesheet</a></code> keyword may be used with <code id="link-type-stylesheet:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>
+  elements. This keyword creates an <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link">external resource
+  link</a> that contributes to the styling processing model.</p>
+
+  <p>The specified resource is a resource that describes how to present the document. Exactly how
+  the resource is to be processed depends on the actual type of the resource.</p>
+
+  <p>If the <code id="link-type-stylesheet:rel-alternate"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword is also specified on the
+  <code id="link-type-stylesheet:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element, then <dfn id="the-link-is-an-alternative-stylesheet">the link is an alternative stylesheet</dfn>; in this case,
+  the <code id="link-type-stylesheet:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute must be specified on the <code id="link-type-stylesheet:the-link-element-3"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>
+  element, with a non-empty value.</p>
+
+  <p>The default type for resources given by the <code id="link-type-stylesheet:link-type-stylesheet-2"><a href="/breakup/specs/html-linking/#link-type-stylesheet">stylesheet</a></code>
+  keyword is <code>text/css</code>.</p>
+
+  
+
+  <p>The appropriate times to <a href="/breakup/specs/html-metadata/#concept-link-obtain" id="link-type-stylesheet:concept-link-obtain">obtain</a> the resource are:
+
+  </p><ul><li><p>When the <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-2">external resource link</a> is created on a <code id="link-type-stylesheet:the-link-element-4"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element
+   that is already <a href="/breakup/specs/core-algorithms/#in-a-document" id="link-type-stylesheet:in-a-document">in a <code>Document</code></a>.</p></li><li><p>When the <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-3">external resource link</a>'s <code id="link-type-stylesheet:the-link-element-5"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element is <a href="/breakup/specs/core-algorithms/#insert-an-element-into-a-document" id="link-type-stylesheet:insert-an-element-into-a-document">inserted into a document</a>.</p></li><li><p>When the <code id="link-type-stylesheet:attr-link-href"><a href="/breakup/specs/html-metadata/#attr-link-href">href</a></code> attribute of the <code id="link-type-stylesheet:the-link-element-6"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>
+   element of an <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-4">external resource link</a> that is already <a href="/breakup/specs/core-algorithms/#in-a-document" id="link-type-stylesheet:in-a-document-2">in a
+   <code>Document</code></a> is changed.</p></li><li><p>When the <code id="link-type-stylesheet:attr-link-crossorigin"><a href="/breakup/specs/html-metadata/#attr-link-crossorigin">crossorigin</a></code> attribute of the
+   <code id="link-type-stylesheet:the-link-element-7"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element of an <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-5">external resource
+   link</a> that is already <a href="/breakup/specs/core-algorithms/#in-a-document" id="link-type-stylesheet:in-a-document-3">in a <code>Document</code></a> is set, changed, or
+   removed.</p></li><li><p>When the <code id="link-type-stylesheet:attr-link-type"><a href="/breakup/specs/html-metadata/#attr-link-type">type</a></code> attribute of the <code id="link-type-stylesheet:the-link-element-8"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>
+   element of an <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-6">external resource link</a> that is already <a href="/breakup/specs/core-algorithms/#in-a-document" id="link-type-stylesheet:in-a-document-4">in a
+   <code>Document</code></a> is set or changed to a value that does not or no longer matches the
+   <a href="/breakup/specs/core-algorithms/#content-type" id="link-type-stylesheet:content-type">Content-Type metadata</a> of the previous obtained external
+   resource, if any.</p></li><li><p>When the <code id="link-type-stylesheet:attr-link-type-2"><a href="/breakup/specs/html-metadata/#attr-link-type">type</a></code> attribute of the <code id="link-type-stylesheet:the-link-element-9"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>
+   element of an <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-7">external resource link</a> that is already <a href="/breakup/specs/core-algorithms/#in-a-document" id="link-type-stylesheet:in-a-document-5">in a
+   <code>Document</code></a> but was previously not obtained due to the <code id="link-type-stylesheet:attr-link-type-3"><a href="/breakup/specs/html-metadata/#attr-link-type">type</a></code> attribute specifying an unsupported type is set, removed, or
+   changed.</p></li><li><p>When the <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-8">external resource link</a> changes from being <a href="/breakup/specs/html-linking/#the-link-is-an-alternative-stylesheet" id="link-type-stylesheet:the-link-is-an-alternative-stylesheet">an alternative stylesheet</a> to not being one, or vice
+   versa.</p></li></ul>
+
+  <p><strong>Quirk</strong>: If the document has been set to <a href="/breakup/specs/core-algorithms/#quirks-mode" id="link-type-stylesheet:quirks-mode">quirks mode</a>, has the
+  <a href="/breakup/specs/browser-dom/#same-origin" id="link-type-stylesheet:same-origin">same origin</a> as the <a href="/breakup/specs/core-algorithms/#url" id="link-type-stylesheet:url">URL</a> of the external resource,
+  and the <a href="/breakup/specs/core-algorithms/#content-type" id="link-type-stylesheet:content-type-2">Content-Type metadata</a> of the external resource is not a
+  supported style sheet type, the user agent must instead assume it to be <code>text/css</code>.</p>
+
+  <p>Once a resource has been <a href="/breakup/specs/html-metadata/#concept-link-obtain" id="link-type-stylesheet:concept-link-obtain-2">obtained</a>, if its <a href="/breakup/specs/core-algorithms/#content-type" id="link-type-stylesheet:content-type-3">Content-Type metadata</a> is <code>text/css</code>, the user
+  agent must run these steps:</p>
+
+  
+  
+
+  <ol><li><p>Let <var>element</var> be the <code id="link-type-stylesheet:the-link-element-10"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element that created the
+   <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-9">external resource link</a>.</p></li><li><p>If <var>element</var> has an <a href="/breakup/specs/core-algorithms/#associated-css-style-sheet" id="link-type-stylesheet:associated-css-style-sheet">associated CSS style sheet</a>, <a href="/breakup/specs/core-algorithms/#remove-a-css-style-sheet" id="link-type-stylesheet:remove-a-css-style-sheet">remove the CSS style sheet</a> in question.</p></li><li><p>If <var>element</var> no longer creates an <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-stylesheet:external-resource-link-10">external resource link</a>
+   that contributes to the styling processing model, or if, since the resource in question was <a href="/breakup/specs/html-metadata/#concept-link-obtain" id="link-type-stylesheet:concept-link-obtain-3">obtained</a>, it has become appropriate to <a href="/breakup/specs/html-metadata/#concept-link-obtain" id="link-type-stylesheet:concept-link-obtain-4">obtain</a> it again (meaning this algorithm is about to be
+   invoked again for a newly obtained resource), then abort these steps.</p></li><li>
+
+    <p><a href="/breakup/specs/core-algorithms/#create-a-css-style-sheet" id="link-type-stylesheet:create-a-css-style-sheet">Create a CSS style sheet</a> with the following properties:</p>
+
+    <dl><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-type" id="link-type-stylesheet:concept-css-style-sheet-type">type</a></dt><dd><p><code>text/css</code></p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-location" id="link-type-stylesheet:concept-css-style-sheet-location">location</a></dt><dd>
+
+      <p>The <a href="/breakup/specs/core-algorithms/#resulting-absolute-url" id="link-type-stylesheet:resulting-absolute-url">resulting absolute URL</a> determined during the <a href="/breakup/specs/html-metadata/#concept-link-obtain" id="link-type-stylesheet:concept-link-obtain-5">obtain</a> algorithm.</p>
+
+      <p class="note">This is before any redirects get applied.</p>
+
+     </dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-owner-node" id="link-type-stylesheet:concept-css-style-sheet-owner-node">owner node</a></dt><dd><p><var>element</var></p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-media" id="link-type-stylesheet:concept-css-style-sheet-media">media</a></dt><dd>
+
+      <p>The <code id="link-type-stylesheet:attr-link-media"><a href="/breakup/specs/html-metadata/#attr-link-media">media</a></code> attribute of <var>element</var>.</p>
+
+      <p class="note">This is a reference to the (possibly absent at this time) attribute, rather
+      than a copy of the attribute's current value. The CSSOM specification defines what happens
+      when the attribute is dynamically set, changed, or removed.</p>
+
+     </dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-title" id="link-type-stylesheet:concept-css-style-sheet-title">title</a></dt><dd>
+
+      <p>The <code id="link-type-stylesheet:attr-link-title"><a href="/breakup/specs/html-metadata/#attr-link-title">title</a></code> attribute of <var>element</var>.</p>
+
+      <p class="note">This is similarly a reference to the attribute, rather than a copy of the
+      attribute's current value.</p>
+
+     </dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-alternate-flag" id="link-type-stylesheet:concept-css-style-sheet-alternate-flag">alternate flag</a></dt><dd><p>Set if <a href="/breakup/specs/html-linking/#the-link-is-an-alternative-stylesheet" id="link-type-stylesheet:the-link-is-an-alternative-stylesheet-2">the link is an alternative stylesheet</a>; unset otherwise.</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-origin-clean-flag" id="link-type-stylesheet:concept-css-style-sheet-origin-clean-flag">origin-clean flag</a></dt><dd><p>Set if the resource is <a href="/breakup/specs/core-algorithms/#cors-same-origin" id="link-type-stylesheet:cors-same-origin">CORS-same-origin</a>; unset otherwise.</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-parent-css-style-sheet" id="link-type-stylesheet:concept-css-style-sheet-parent-css-style-sheet">parent CSS style sheet</a></dt><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-owner-css-rule" id="link-type-stylesheet:concept-css-style-sheet-owner-css-rule">owner CSS rule</a></dt><dd><p>null</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-disabeld-flag" id="link-type-stylesheet:concept-css-style-sheet-disabeld-flag">disabled flag</a></dt><dd><p>Left at its default value.</p></dd><dt><a href="/breakup/specs/core-algorithms/#concept-css-style-sheet-css-rules" id="link-type-stylesheet:concept-css-style-sheet-css-rules">CSS rules</a></dt><dd><p>Left uninitialised.</p></dd></dl>
+
+    <p>The CSS <a href="/breakup/specs/core-algorithms/#environment-encoding" id="link-type-stylesheet:environment-encoding">environment encoding</a> is the result of running the following steps: [[!CSSSYNTAX]]</p>
+
+    <ol><li><p>If the element has a <code id="link-type-stylesheet:attr-link-charset"><a href="#attr-link-charset">charset</a></code> attribute, <a href="https://encoding.spec.whatwg.org/#concept-encoding-get" id="link-type-stylesheet:getting-an-encoding" data-x-internal="getting-an-encoding">get an encoding</a> from that attribute's value. If that
+     succeeds, return the resulting encoding and abort these steps. [[!ENCODING]]</p></li><li><p>Otherwise, return the <a href="/breakup/specs/core-algorithms/#document's-character-encoding" id="link-type-stylesheet:document's-character-encoding">document's character encoding</a>. [[!DOM]]</p></li></ol>
+
+   </li></ol></section></body></html>

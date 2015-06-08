@@ -1,0 +1,1895 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Tables</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-tables"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Tables, your secret layout friend!
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>table</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-table-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-table-element:flow-content-2">Flow content</a>.</dd><dd><a href="#palpable-content-2" id="the-table-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-table-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-table-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-table-element:concept-element-content-model">Content model</a>:</dt><dd>In this order: optionally a <code id="the-table-element:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element,
+   followed by zero or more <code id="the-table-element:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> elements, followed
+   optionally by a <code id="the-table-element:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, followed optionally by
+   a <code id="the-table-element:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, followed by either zero or more
+   <code id="the-table-element:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> elements or one or more <code id="the-table-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+   elements, followed optionally by a <code id="the-table-element:the-tfoot-element-2"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element (but
+   there can only be one <code id="the-table-element:the-tfoot-element-3"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element child in
+   total), optionally intermixed with one or more <a href="#script-supporting-elements-2" id="the-table-element:script-supporting-elements-2">script-supporting elements</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-table-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-table-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-table-element:global-attributes">Global attributes</a></dd><dd><code><a href="/breakup/specs/html-tables/#attr-table-border">border</a></code></dd><dd><code id="the-table-element:attr-table-sortable"><a href="/breakup/specs/sortable-tables/#attr-table-sortable">sortable</a></code> — Enables a sorting interface for the table</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-table-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmltableelement">HTMLTableElement</dfn> : <a href="#htmlelement" id="the-table-element:htmlelement">HTMLElement</a> {
+  attribute <a href="/breakup/specs/html-tables/#htmltablecaptionelement" id="the-table-element:htmltablecaptionelement">HTMLTableCaptionElement</a>? <a href="/breakup/specs/html-tables/#dom-table-caption" id="the-table-element:dom-table-caption">caption</a>;
+  <a href="#htmlelement" id="the-table-element:htmlelement-2">HTMLElement</a> <a href="/breakup/specs/html-tables/#dom-table-createcaption" id="the-table-element:dom-table-createcaption">createCaption</a>();
+  void <a href="/breakup/specs/html-tables/#dom-table-deletecaption" id="the-table-element:dom-table-deletecaption">deleteCaption</a>();
+  attribute <a href="/breakup/specs/html-tables/#htmltablesectionelement" id="the-table-element:htmltablesectionelement">HTMLTableSectionElement</a>? <a href="/breakup/specs/html-tables/#dom-table-thead" id="the-table-element:dom-table-thead">tHead</a>;
+  <a href="#htmlelement" id="the-table-element:htmlelement-3">HTMLElement</a> <a href="/breakup/specs/html-tables/#dom-table-createthead" id="the-table-element:dom-table-createthead">createTHead</a>();
+  void <a href="/breakup/specs/html-tables/#dom-table-deletethead" id="the-table-element:dom-table-deletethead">deleteTHead</a>();
+  attribute <a href="/breakup/specs/html-tables/#htmltablesectionelement" id="the-table-element:htmltablesectionelement-2">HTMLTableSectionElement</a>? <a href="/breakup/specs/html-tables/#dom-table-tfoot" id="the-table-element:dom-table-tfoot">tFoot</a>;
+  <a href="#htmlelement" id="the-table-element:htmlelement-4">HTMLElement</a> <a href="/breakup/specs/html-tables/#dom-table-createtfoot" id="the-table-element:dom-table-createtfoot">createTFoot</a>();
+  void <a href="/breakup/specs/html-tables/#dom-table-deletetfoot" id="the-table-element:dom-table-deletetfoot">deleteTFoot</a>();
+  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-table-element:htmlcollection">HTMLCollection</a> <a href="/breakup/specs/html-tables/#dom-table-tbodies" id="the-table-element:dom-table-tbodies">tBodies</a>;
+  <a href="#htmlelement" id="the-table-element:htmlelement-5">HTMLElement</a> <a href="/breakup/specs/html-tables/#dom-table-createtbody" id="the-table-element:dom-table-createtbody">createTBody</a>();
+  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-table-element:htmlcollection-2">HTMLCollection</a> <a href="/breakup/specs/html-tables/#dom-table-rows" id="the-table-element:dom-table-rows">rows</a>;
+  <a href="#htmlelement" id="the-table-element:htmlelement-6">HTMLElement</a> <a href="/breakup/specs/html-tables/#dom-table-insertrow" id="the-table-element:dom-table-insertrow">insertRow</a>(optional long index = -1);
+  void <a href="/breakup/specs/html-tables/#dom-table-deleterow" id="the-table-element:dom-table-deleterow">deleteRow</a>(long index);
+  attribute boolean <a href="/breakup/specs/html-tables/#dom-table-sortable" id="the-table-element:dom-table-sortable">sortable</a>;
+  void <a href="/breakup/specs/sortable-tables/#dom-table-stopsorting" id="the-table-element:dom-table-stopsorting">stopSorting</a>();
+
+  // <a href="#HTMLTableElement-partial">also has obsolete members</a>
+           attribute DOMString <a href="#dom-table-border">border</a>;
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-table-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element <a href="#represents" id="the-table-element:represents">represents</a> data with more than one dimension, in
+  the form of a <a href="/breakup/specs/html-tables/#concept-table" id="the-table-element:concept-table">table</a>.</p>
+
+  <p>The <code id="the-table-element:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element takes part in the <a href="/breakup/specs/html-tables/#table-model" id="the-table-element:table-model">table
+  model</a>. Tables have rows, columns, and cells given by their descendants. The rows and
+  columns form a grid; a table's cells must completely cover that grid without overlap.</p>
+
+  
+
+  <p class="note">Precise rules for determining whether this conformance requirement is met are
+  described in the description of the <a href="/breakup/specs/html-tables/#table-model" id="the-table-element:table-model-2">table model</a>.</p>
+
+  
+
+  <p>Authors are encouraged to provide information describing how to interpret complex tables.
+  Guidance on how to <a href="/breakup/specs/html-tables/#table-descriptions-techniques">provide such information</a> is given
+  below.</p>
+
+  <p>Tables should not be used as layout aids. Historically, some Web authors have misused tables in
+  HTML as a way to control their page layout. This usage is non-conforming, because tools attempting
+  to extract tabular data from such documents would obtain very confusing results. In particular,
+  users of accessibility tools like screen readers are likely to find it very difficult to navigate
+  pages with tables used for layout.</p>
+
+  <p class="note">There are a variety of alternatives to using HTML tables for layout, primarily
+  using CSS positioning and the CSS table model. [[!CSS]]</p><p>The <dfn id="attr-table-border"><code>border</code></dfn> attribute may be specified on a 
+<code><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element to explicitly indicate that the 
+<code><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element is not being used for layout 
+purposes. If specified, the attribute\'s value must either be the empty string or the value 
+"<code>1</code>". The attribute is used by certain user agents as an indication that borders 
+should be drawn around cells of the table.</p>
+
+
+  
+
+  <hr>
+
+  <p>Tables can be complicated to understand and navigate. To help users with this, user agents
+  should clearly delineate cells in a table from each other, unless the user agent has classified
+  the table as a (non-conforming) layout table.</p>
+
+  
+
+  <p class="note">Authors and implementors are encouraged to consider
+  using some of the <a href="/breakup/specs/html-tables/#table-layout-techniques">table design techniques</a> described below
+  to make tables easier to navigate for users.</p>
+
+  
+
+  <p>User agents, especially those that do table analysis on arbitrary content, are encouraged to
+  find heuristics to determine which tables actually contain data and which are merely being used
+  for layout. This specification does not define a precise heuristic, but the following are
+  suggested as possible indicators:</p>
+
+  <table><thead><tr><th>Feature
+     </th><th>Indication
+   </th></tr></thead><tbody><tr><td>The use of the <code id="the-table-element:attr-aria-role"><a href="/breakup/specs/core-algorithms/#attr-aria-role">role</a></code> attribute with the value <code id="the-table-element:attr-aria-role-presentation"><a data-x-internal="attr-aria-role-presentation" href="http://www.w3.org/TR/wai-aria/roles#presentation">presentation</a></code>
+     </td><td>Probably a layout table
+    </td></tr><tr><td>The use of the  <code id="the-table-element:attr-table-border"><a href="/breakup/specs/html-tables/#attr-table-border">border</a></code> attribute with the non-conforming value 0
+     </td><td>Probably a layout table
+    </td></tr><tr><td>The use of the non-conforming <code id="the-table-element:attr-table-cellspacing"><a href="#attr-table-cellspacing">cellspacing</a></code> and
+     <code id="the-table-element:attr-table-cellpadding"><a href="#attr-table-cellpadding">cellpadding</a></code> attributes with the value 0
+     </td><td>Probably a layout table
+   </td></tr></tbody><tbody><tr><td>The use of <code id="the-table-element:the-caption-element-2"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>, <code id="the-table-element:the-thead-element-2"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, or <code id="the-table-element:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements
+     </td><td>Probably a non-layout table
+    </td></tr><tr><td>The use of the <code id="the-table-element:attr-tdth-headers"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> and <code id="the-table-element:attr-th-scope"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attributes
+     </td><td>Probably a non-layout table
+    </td></tr><tr><td>The use of the  <code id="the-table-element:attr-table-border-2"><a href="/breakup/specs/html-tables/#attr-table-border">border</a></code> attribute with a value other than 0
+     </td><td>Probably a non-layout table
+    </td></tr><tr><td>Explicit visible borders set using CSS
+     </td><td>Probably a non-layout table
+   </td></tr></tbody><tbody><tr><td>The use of the <code id="the-table-element:attr-table-summary"><a href="#attr-table-summary">summary</a></code> attribute
+     </td><td>Not a good indicator (both layout and non-layout tables have historically been given this attribute)
+  </td></tr></tbody></table>
+
+  <p class="note">It is quite possible that the above suggestions are wrong. Implementors are urged
+  to provide feedback elaborating on their experiences with trying to create a layout table
+  detection heuristic.</p>
+
+  <p>If a <code id="the-table-element:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element has a (non-conforming) <code id="the-table-element:attr-table-summary-2"><a href="#attr-table-summary">summary</a></code> attribute, and the user agent has not classified the
+  table as a layout table, the user agent may report the contents of that attribute to the user.</p>
+
+  
+
+  <hr>
+
+  <p>The <code id="the-table-element:attr-table-sortable-2"><a href="/breakup/specs/sortable-tables/#attr-table-sortable">sortable</a></code> attribute is used in the <a href="/breakup/specs/sortable-tables/#table-sorting-model" id="the-table-element:table-sorting-model">table
+  sorting model</a>.</p>
+
+  <hr>
+
+
+  <dl class="domintro"><dt><var>table</var> . <code id="the-table-element:dom-table-caption-2"><a href="/breakup/specs/html-tables/#dom-table-caption">caption</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns the table's <code id="the-table-element:the-caption-element-3"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element.</p>
+
+    <p>Can be set, to replace the <code id="the-table-element:the-caption-element-4"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element.</p>
+
+   </dd><dt><var>caption</var> = <var>table</var> . <code id="the-table-element:dom-table-createcaption-2"><a href="/breakup/specs/html-tables/#dom-table-createcaption">createCaption</a></code>()</dt><dd>
+
+    <p>Ensures the table has a <code id="the-table-element:the-caption-element-5"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element, and returns it.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-deletecaption-2"><a href="/breakup/specs/html-tables/#dom-table-deletecaption">deleteCaption</a></code>()</dt><dd>
+
+    <p>Ensures the table does not have a <code id="the-table-element:the-caption-element-6"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-thead-2"><a href="/breakup/specs/html-tables/#dom-table-thead">tHead</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns the table's <code id="the-table-element:the-thead-element-3"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element.</p>
+
+    <p>Can be set, to replace the <code id="the-table-element:the-thead-element-4"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element. If the new value is not a
+    <code id="the-table-element:the-thead-element-5"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, throws a <code id="the-table-element:hierarchyrequesterror"><a href="/breakup/specs/core-algorithms/#hierarchyrequesterror">HierarchyRequestError</a></code> exception.</p>
+
+   </dd><dt><var>thead</var> = <var>table</var> . <code id="the-table-element:dom-table-createthead-2"><a href="/breakup/specs/html-tables/#dom-table-createthead">createTHead</a></code>()</dt><dd>
+
+    <p>Ensures the table has a <code id="the-table-element:the-thead-element-6"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, and returns it.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-deletethead-2"><a href="/breakup/specs/html-tables/#dom-table-deletethead">deleteTHead</a></code>()</dt><dd>
+
+    <p>Ensures the table does not have a <code id="the-table-element:the-thead-element-7"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-tfoot-2"><a href="/breakup/specs/html-tables/#dom-table-tfoot">tFoot</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns the table's <code id="the-table-element:the-tfoot-element-4"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element.</p>
+
+    <p>Can be set, to replace the <code id="the-table-element:the-tfoot-element-5"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element. If the new value is not a
+    <code id="the-table-element:the-tfoot-element-6"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, throws a <code id="the-table-element:hierarchyrequesterror-2"><a href="/breakup/specs/core-algorithms/#hierarchyrequesterror">HierarchyRequestError</a></code> exception.</p>
+
+   </dd><dt><var>tfoot</var> = <var>table</var> . <code id="the-table-element:dom-table-createtfoot-2"><a href="/breakup/specs/html-tables/#dom-table-createtfoot">createTFoot</a></code>()</dt><dd>
+
+    <p>Ensures the table has a <code id="the-table-element:the-tfoot-element-7"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, and returns it.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-deletetfoot-2"><a href="/breakup/specs/html-tables/#dom-table-deletetfoot">deleteTFoot</a></code>()</dt><dd>
+
+    <p>Ensures the table does not have a <code id="the-table-element:the-tfoot-element-8"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-tbodies-2"><a href="/breakup/specs/html-tables/#dom-table-tbodies">tBodies</a></code></dt><dd>
+
+    <p>Returns an <code id="the-table-element:htmlcollection-3"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-table-element:the-tbody-element-2"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> elements of the table.</p>
+
+   </dd><dt><var>tbody</var> = <var>table</var> . <code id="the-table-element:dom-table-createtbody-2"><a href="/breakup/specs/html-tables/#dom-table-createtbody">createTBody</a></code>()</dt><dd>
+
+    <p>Creates a <code id="the-table-element:the-tbody-element-3"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element, inserts it into the table, and returns it.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-rows-2"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code></dt><dd>
+
+    <p>Returns an <code id="the-table-element:htmlcollection-4"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-table-element:the-tr-element-2"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements of the table.</p>
+
+   </dd><dt><var>tr</var> = <var>table</var> . <code id="the-table-element:dom-table-insertrow-2"><a href="/breakup/specs/html-tables/#dom-table-insertrow">insertRow</a></code>( [ <var>index</var> ] )</dt><dd>
+
+    <p>Creates a <code id="the-table-element:the-tr-element-3"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, along with a <code id="the-table-element:the-tbody-element-4"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> if required, inserts them
+    into the table at the position given by the argument, and returns the <code id="the-table-element:the-tr-element-4"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>.</p>
+
+    <p>The position is relative to the rows in the table. The index −1, which is the default
+    if the argument is omitted, is equivalent to inserting at the end of the table.</p>
+
+    <p>If the given position is less than −1 or greater than the number of rows, throws an
+    <code id="the-table-element:indexsizeerror"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+   </dd><dt><var>table</var> . <code id="the-table-element:dom-table-deleterow-2"><a href="/breakup/specs/html-tables/#dom-table-deleterow">deleteRow</a></code>(<var>index</var>)</dt><dd>
+
+    <p>Removes the <code id="the-table-element:the-tr-element-5"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element with the given position in the table.</p>
+
+    <p>The position is relative to the rows in the table. The index −1 is equivalent to
+    deleting the last row of the table.</p>
+
+    <p>If the given position is less than −1 or greater than the index of the last row, or if
+    there are no rows, throws an <code id="the-table-element:indexsizeerror-2"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-table-caption"><code>caption</code></dfn> IDL attribute must return, on
+  getting, the first <code id="the-table-element:the-caption-element-7"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element child of the <code id="the-table-element:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any,
+  or null otherwise. On setting, the first <code id="the-table-element:the-caption-element-8"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element child of the
+  <code id="the-table-element:the-table-element-5"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any, must be removed, and the new value, if not null, must be
+  inserted as the first node of the <code id="the-table-element:the-table-element-6"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</p>
+
+  <p>The <dfn id="dom-table-createcaption"><code>createCaption()</code></dfn> method must return
+  the first <code id="the-table-element:the-caption-element-9"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element child of the <code id="the-table-element:the-table-element-7"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any; otherwise
+  a new <code id="the-table-element:the-caption-element-10"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element must be created, inserted as the first node of the
+  <code id="the-table-element:the-table-element-8"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, and then returned.</p>
+
+  <p>The <dfn id="dom-table-deletecaption"><code>deleteCaption()</code></dfn> method must remove
+  the first <code id="the-table-element:the-caption-element-11"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element child of the <code id="the-table-element:the-table-element-9"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any.</p>
+
+  <p>The <dfn id="dom-table-thead"><code>tHead</code></dfn> IDL attribute must return, on
+  getting, the first <code id="the-table-element:the-thead-element-8"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element child of the <code id="the-table-element:the-table-element-10"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any, or
+  null otherwise. On setting, if the new value is null or a <code id="the-table-element:the-thead-element-9"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, the first
+  <code id="the-table-element:the-thead-element-10"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element child of the <code id="the-table-element:the-table-element-11"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any, must be removed, and
+  the new value, if not null, must be inserted immediately before the first element in the
+  <code id="the-table-element:the-table-element-12"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element that is neither a <code id="the-table-element:the-caption-element-12"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element nor a
+  <code id="the-table-element:the-colgroup-element-2"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element, if any, or at the end of the table if there are no such elements.
+  If the new value is neither null nor a <code id="the-table-element:the-thead-element-11"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, then a
+  <code id="the-table-element:hierarchyrequesterror-3"><a href="/breakup/specs/core-algorithms/#hierarchyrequesterror">HierarchyRequestError</a></code> DOM exception must be thrown instead.</p>
+
+  <p>The <dfn id="dom-table-createthead"><code>createTHead()</code></dfn> method must return the
+  first <code id="the-table-element:the-thead-element-12"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element child of the <code id="the-table-element:the-table-element-13"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any; otherwise a new
+  <code id="the-table-element:the-thead-element-13"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element must be created and inserted immediately before the first element in
+  the <code id="the-table-element:the-table-element-14"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element that is neither a <code id="the-table-element:the-caption-element-13"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element nor a
+  <code id="the-table-element:the-colgroup-element-3"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element, if any, or at the end of the table if there are no such elements,
+  and then that new element must be returned.</p>
+
+  <p>The <dfn id="dom-table-deletethead"><code>deleteTHead()</code></dfn> method must remove the
+  first <code id="the-table-element:the-thead-element-14"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element child of the <code id="the-table-element:the-table-element-15"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any.</p>
+
+  <p>The <dfn id="dom-table-tfoot"><code>tFoot</code></dfn> IDL attribute must return, on
+  getting, the first <code id="the-table-element:the-tfoot-element-9"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element child of the <code id="the-table-element:the-table-element-16"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any, or
+  null otherwise. On setting, if the new value is null or a <code id="the-table-element:the-tfoot-element-10"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, the first
+  <code id="the-table-element:the-tfoot-element-11"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element child of the <code id="the-table-element:the-table-element-17"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any, must be removed, and
+  the new value, if not null, must be inserted immediately before the first element in the
+  <code id="the-table-element:the-table-element-18"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element that is neither a <code id="the-table-element:the-caption-element-14"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element, a <code id="the-table-element:the-colgroup-element-4"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>
+  element, nor a <code id="the-table-element:the-thead-element-15"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, if any, or at the end of the table if there are no such
+  elements. If the new value is neither null nor a <code id="the-table-element:the-tfoot-element-12"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, then a
+  <code id="the-table-element:hierarchyrequesterror-4"><a href="/breakup/specs/core-algorithms/#hierarchyrequesterror">HierarchyRequestError</a></code> DOM exception must be thrown instead.</p>
+
+  <p>The <dfn id="dom-table-createtfoot"><code>createTFoot()</code></dfn> method must return the
+  first <code id="the-table-element:the-tfoot-element-13"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element child of the <code id="the-table-element:the-table-element-19"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any; otherwise a new
+  <code id="the-table-element:the-tfoot-element-14"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element must be created and inserted immediately before the first element in
+  the <code id="the-table-element:the-table-element-20"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element that is neither a <code id="the-table-element:the-caption-element-15"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element, a
+  <code id="the-table-element:the-colgroup-element-5"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element, nor a <code id="the-table-element:the-thead-element-16"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, if any, or at the end of the
+  table if there are no such elements, and then that new element must be returned.</p>
+
+  <p>The <dfn id="dom-table-deletetfoot"><code>deleteTFoot()</code></dfn> method must remove the
+  first <code id="the-table-element:the-tfoot-element-15"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element child of the <code id="the-table-element:the-table-element-21"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any.</p>
+
+  <p>The <dfn id="dom-table-tbodies"><code>tBodies</code></dfn> attribute must return an
+  <code id="the-table-element:htmlcollection-5"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the <code id="the-table-element:the-table-element-22"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> node, whose filter matches only
+  <code id="the-table-element:the-tbody-element-5"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> elements that are children of the <code id="the-table-element:the-table-element-23"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</p>
+
+  <p>The <dfn id="dom-table-createtbody"><code>createTBody()</code></dfn> method must create a
+  new <code id="the-table-element:the-tbody-element-6"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element, insert it immediately after the last <code id="the-table-element:the-tbody-element-7"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element
+  child in the <code id="the-table-element:the-table-element-24"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if any, or at the end of the <code id="the-table-element:the-table-element-25"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element
+  if the <code id="the-table-element:the-table-element-26"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element has no <code id="the-table-element:the-tbody-element-8"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element children, and then must return
+  the new <code id="the-table-element:the-tbody-element-9"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element.</p>
+
+  <p>The <dfn id="dom-table-rows"><code>rows</code></dfn> attribute must return an
+  <code id="the-table-element:htmlcollection-6"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the <code id="the-table-element:the-table-element-27"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> node, whose filter matches only
+  <code id="the-table-element:the-tr-element-6"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements that are either children of the <code id="the-table-element:the-table-element-28"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, or children
+  of <code id="the-table-element:the-thead-element-17"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, <code id="the-table-element:the-tbody-element-10"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, or <code id="the-table-element:the-tfoot-element-16"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements that are themselves
+  children of the <code id="the-table-element:the-table-element-29"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element. The elements in the collection must be ordered such
+  that those elements whose parent is a <code id="the-table-element:the-thead-element-18"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> are included first, in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-table-element:tree-order">tree order</a>,
+  followed by those elements whose parent is either a <code id="the-table-element:the-table-element-30"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> or <code id="the-table-element:the-tbody-element-11"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>
+  element, again in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-table-element:tree-order-2">tree order</a>, followed finally by those elements whose parent is a
+  <code id="the-table-element:the-tfoot-element-17"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, still in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-table-element:tree-order-3">tree order</a>.</p>
+
+  <p>The behaviour of the <dfn id="dom-table-insertrow"><code>insertRow(<var>index</var>)</code></dfn> method depends on the state of the table. When it is called,
+  the method must act as required by the first item in the following list of conditions that
+  describes the state of the table and the <var>index</var> argument:</p>
+
+  <dl class="switch"><dt>If <var>index</var> is less than −1 or greater than the number of elements
+   in <code id="the-table-element:dom-table-rows-3"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection:</dt><dd>The method must throw an <code id="the-table-element:indexsizeerror-3"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</dd><dt>If the <code id="the-table-element:dom-table-rows-4"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection has zero elements in it, and the
+   <code id="the-table-element:the-table-element-31"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> has no <code id="the-table-element:the-tbody-element-12"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> elements in it:</dt><dd>The method must create a <code id="the-table-element:the-tbody-element-13"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element, then create a <code id="the-table-element:the-tr-element-7"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element,
+   then append the <code id="the-table-element:the-tr-element-8"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element to the <code id="the-table-element:the-tbody-element-14"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element, then append the
+   <code id="the-table-element:the-tbody-element-15"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element to the <code id="the-table-element:the-table-element-32"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, and finally return the
+   <code id="the-table-element:the-tr-element-9"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</dd><dt>If the <code id="the-table-element:dom-table-rows-5"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection has zero elements in it:</dt><dd>The method must create a <code id="the-table-element:the-tr-element-10"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, append it to the last <code id="the-table-element:the-tbody-element-16"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>
+   element in the table, and return the <code id="the-table-element:the-tr-element-11"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</dd><dt>If <var>index</var> is −1 or equal to the number of items in <code id="the-table-element:dom-table-rows-6"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection:</dt><dd>The method must create a <code id="the-table-element:the-tr-element-12"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, and append it to the parent of the last
+   <code id="the-table-element:the-tr-element-13"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element in the <code id="the-table-element:dom-table-rows-7"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection. Then, the
+   newly created <code id="the-table-element:the-tr-element-14"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element must be returned.</dd><dt>Otherwise:</dt><dd>The method must create a <code id="the-table-element:the-tr-element-15"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, insert it immediately before the <var>index</var>th <code id="the-table-element:the-tr-element-16"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element in the <code id="the-table-element:dom-table-rows-8"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code>
+   collection, in the same parent, and finally must return the newly created <code id="the-table-element:the-tr-element-17"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+   element.</dd></dl>
+
+  <p>When the <dfn id="dom-table-deleterow"><code>deleteRow(<var>index</var>)</code></dfn> method is called, the user agent must run the following
+  steps:</p>
+
+  <ol><li><p>If <var>index</var> is equal to −1, then <var>index</var> must be
+   set to the number of items in the <code id="the-table-element:dom-table-rows-9"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection, minus
+   one.</p></li><li><p>Now, if <var>index</var> is less than zero, or greater than or equal to the
+   number of elements in the <code id="the-table-element:dom-table-rows-10"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection, the method must
+   instead throw an <code id="the-table-element:indexsizeerror-4"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception, and these steps must be aborted.</p></li><li><p>Otherwise, the method must remove the <var>index</var>th element in the <code id="the-table-element:dom-table-rows-11"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection from its parent.</p>
+
+  </li></ol>
+
+  <p>The <code id="the-table-element:dom-table-stopsorting-2"><a href="/breakup/specs/sortable-tables/#dom-table-stopsorting">stopSorting()</a></code> method is used in the <a href="/breakup/specs/sortable-tables/#table-sorting-model" id="the-table-element:table-sorting-model-2">table
+  sorting model</a>.</p>
+
+  <p>The IDL attribute <dfn id="dom-table-sortable"><code>sortable</code></dfn> must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-table-element:reflect">reflect</a> the <code id="the-table-element:attr-table-sortable-3"><a href="/breakup/specs/sortable-tables/#attr-table-sortable">sortable</a></code> content attribute.</p>
+
+  
+
+
+  <div class="example">
+
+   <p>Here is an example of a table being used to mark up a Sudoku puzzle. Observe the lack of
+   headers, which are not necessary in such a table.</p>
+
+   <pre>&lt;section&gt;
+ &lt;style scoped&gt;
+  table { border-collapse: collapse; border: solid thick; }
+  colgroup, tbody { border: solid medium; }
+  td { border: solid thin; height: 1.4em; width: 1.4em; text-align: center; padding: 0; }
+ &lt;/style&gt;
+ &lt;h1&gt;Today's Sudoku&lt;/h1&gt;
+ &lt;table&gt;
+  &lt;colgroup&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;
+  &lt;colgroup&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;
+  &lt;colgroup&gt;&lt;col&gt;&lt;col&gt;&lt;col&gt;
+  &lt;tbody&gt;
+   &lt;tr&gt; &lt;td&gt; 1 &lt;td&gt;   &lt;td&gt; 3 &lt;td&gt; 6 &lt;td&gt;   &lt;td&gt; 4 &lt;td&gt; 7 &lt;td&gt;   &lt;td&gt; 9
+   &lt;tr&gt; &lt;td&gt;   &lt;td&gt; 2 &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 9 &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 1 &lt;td&gt;
+   &lt;tr&gt; &lt;td&gt; 7 &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 6
+  &lt;tbody&gt;
+   &lt;tr&gt; &lt;td&gt; 2 &lt;td&gt;   &lt;td&gt; 4 &lt;td&gt;   &lt;td&gt; 3 &lt;td&gt;   &lt;td&gt; 9 &lt;td&gt;   &lt;td&gt; 8
+   &lt;tr&gt; &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;
+   &lt;tr&gt; &lt;td&gt; 5 &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 9 &lt;td&gt;   &lt;td&gt; 7 &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 1
+  &lt;tbody&gt;
+   &lt;tr&gt; &lt;td&gt; 6 &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 5 &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 2
+   &lt;tr&gt; &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 7 &lt;td&gt;   &lt;td&gt;   &lt;td&gt;   &lt;td&gt;
+   &lt;tr&gt; &lt;td&gt; 9 &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 8 &lt;td&gt;   &lt;td&gt; 2 &lt;td&gt;   &lt;td&gt;   &lt;td&gt; 5
+ &lt;/table&gt;
+&lt;/section&gt;</pre>
+
+  </div>
+
+
+
+
+  <section><h2>Techniques for describing tables</h2>
+
+  <p id="table-descriptions">For tables that consist of more than just a grid of cells with headers
+  in the first row and headers in the first column, and for any table in general where the reader
+  might have difficulty understanding the content, authors should include explanatory information
+  introducing the table. This information is useful for all users, but is especially useful for
+  users who cannot see the table, e.g. users of screen readers.</p>
+
+  <p>Such explanatory information should introduce the purpose of the table, outline its basic cell
+  structure, highlight any trends or patterns, and generally teach the user how to use the
+  table.</p>
+
+  
+
+  <p>For instance, the following table:</p>
+
+  <table><caption>Characteristics with positive and negative sides</caption><thead><tr><th id="n"> Negative
+     </th><th> Characteristic
+     </th><th> Positive
+   </th></tr></thead><tbody><tr><td headers="n r1"> Sad
+     </td><th id="r1"> Mood
+     </th><td> Happy
+    </td></tr><tr><td headers="n r2"> Failing
+     </td><th id="r2"> Grade
+     </th><td> Passing
+  </td></tr></tbody></table>
+
+  <p>...might benefit from a description explaining the way the table is laid out, something like
+  "Characteristics are given in the second column, with the negative side in the left column and the
+  positive side in the right column".</p>
+
+  <p>There are a variety of ways to include this information, such as:</p>
+
+  <dl><dt>In prose, surrounding the table</dt><dd>
+    <div class="example"><pre><strong>&lt;p&gt;In the following table, characteristics are given in the second
+column, with the negative side in the left column and the positive
+side in the right column.&lt;/p&gt;</strong>
+&lt;table&gt;
+ &lt;caption&gt;Characteristics with positive and negative sides&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th id="n"&gt; Negative
+   &lt;th&gt; Characteristic
+   &lt;th&gt; Positive
+ &lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td headers="n r1"&gt; Sad
+   &lt;th id="r1"&gt; Mood
+   &lt;td&gt; Happy
+  &lt;tr&gt;
+   &lt;td headers="n r2"&gt; Failing
+   &lt;th id="r2"&gt; Grade
+   &lt;td&gt; Passing
+&lt;/table&gt;</pre></div>
+   </dd><dt>In the table's <code id="table-descriptions-techniques:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code></dt><dd>
+    <div class="example"><pre>&lt;table&gt;
+<strong> &lt;caption&gt;
+  &lt;strong&gt;Characteristics with positive and negative sides.&lt;/strong&gt;
+  &lt;p&gt;Characteristics are given in the second column, with the
+  negative side in the left column and the positive side in the right
+  column.&lt;/p&gt;</strong>
+ &lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th id="n"&gt; Negative
+   &lt;th&gt; Characteristic
+   &lt;th&gt; Positive
+ &lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td headers="n r1"&gt; Sad
+   &lt;th id="r1"&gt; Mood
+   &lt;td&gt; Happy
+  &lt;tr&gt;
+   &lt;td headers="n r2"&gt; Failing
+   &lt;th id="r2"&gt; Grade
+   &lt;td&gt; Passing
+&lt;/table&gt;</pre></div>
+   </dd><dt>In the table's <code id="table-descriptions-techniques:the-caption-element-2"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>, in a <code id="table-descriptions-techniques:the-details-element"><a href="#the-details-element">details</a></code> element</dt><dd>
+    <div class="example"><pre>&lt;table&gt;
+ &lt;caption&gt;
+  &lt;strong&gt;Characteristics with positive and negative sides.&lt;/strong&gt;
+<strong>  &lt;details&gt;
+   &lt;summary&gt;Help&lt;/summary&gt;
+   &lt;p&gt;Characteristics are given in the second column, with the
+   negative side in the left column and the positive side in the right
+   column.&lt;/p&gt;
+  &lt;/details&gt;</strong>
+ &lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th id="n"&gt; Negative
+   &lt;th&gt; Characteristic
+   &lt;th&gt; Positive
+ &lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td headers="n r1"&gt; Sad
+   &lt;th id="r1"&gt; Mood
+   &lt;td&gt; Happy
+  &lt;tr&gt;
+   &lt;td headers="n r2"&gt; Failing
+   &lt;th id="r2"&gt; Grade
+   &lt;td&gt; Passing
+&lt;/table&gt;</pre></div>
+   </dd><dt>Next to the table, in the same <code id="table-descriptions-techniques:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code></dt><dd>
+    <div class="example"><pre>&lt;figure&gt;
+ &lt;figcaption&gt;Characteristics with positive and negative sides&lt;/figcaption&gt;
+<strong> &lt;p&gt;Characteristics are given in the second column, with the
+ negative side in the left column and the positive side in the right
+ column.&lt;/p&gt;</strong>
+ &lt;table&gt;
+  &lt;thead&gt;
+   &lt;tr&gt;
+    &lt;th id="n"&gt; Negative
+    &lt;th&gt; Characteristic
+    &lt;th&gt; Positive
+  &lt;tbody&gt;
+   &lt;tr&gt;
+    &lt;td headers="n r1"&gt; Sad
+    &lt;th id="r1"&gt; Mood
+    &lt;td&gt; Happy
+   &lt;tr&gt;
+    &lt;td headers="n r2"&gt; Failing
+    &lt;th id="r2"&gt; Grade
+    &lt;td&gt; Passing
+ &lt;/table&gt;
+&lt;/figure&gt;</pre></div>
+   </dd><dt>Next to the table, in a <code id="table-descriptions-techniques:the-figure-element-2"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>'s <code id="table-descriptions-techniques:the-figcaption-element"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code></dt><dd>
+    <div class="example"><pre>&lt;figure&gt;
+ &lt;figcaption&gt;
+  &lt;strong&gt;Characteristics with positive and negative sides&lt;/strong&gt;
+<strong>  &lt;p&gt;Characteristics are given in the second column, with the
+  negative side in the left column and the positive side in the right
+  column.&lt;/p&gt;</strong>
+ &lt;/figcaption&gt;
+ &lt;table&gt;
+  &lt;thead&gt;
+   &lt;tr&gt;
+    &lt;th id="n"&gt; Negative
+    &lt;th&gt; Characteristic
+    &lt;th&gt; Positive
+  &lt;tbody&gt;
+   &lt;tr&gt;
+    &lt;td headers="n r1"&gt; Sad
+    &lt;th id="r1"&gt; Mood
+    &lt;td&gt; Happy
+   &lt;tr&gt;
+    &lt;td headers="n r2"&gt; Failing
+    &lt;th id="r2"&gt; Grade
+    &lt;td&gt; Passing
+ &lt;/table&gt;
+&lt;/figure&gt;</pre></div>
+   </dd></dl>
+
+  <p>Authors may also use other techniques, or combinations of the above techniques, as
+  appropriate.</p>
+
+  <p>The best option, of course, rather than writing a description explaining the way the table is
+  laid out, is to adjust the table such that no explanation is needed.</p>
+
+  <div class="example">
+
+   <p>In the case of the table used in the examples above, a simple rearrangement of the table so
+   that the headers are on the top and left sides removes the need for an explanation as well as
+   removing the need for the use of <code id="table-descriptions-techniques:attr-tdth-headers"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> attributes:</p>
+
+   <pre>&lt;table&gt;
+ &lt;caption&gt;Characteristics with positive and negative sides&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th&gt; Characteristic
+   &lt;th&gt; Negative
+   &lt;th&gt; Positive
+ &lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;th&gt; Mood
+   &lt;td&gt; Sad
+   &lt;td&gt; Happy
+  &lt;tr&gt;
+   &lt;th&gt; Grade
+   &lt;td&gt; Failing
+   &lt;td&gt; Passing
+&lt;/table&gt;</pre>
+
+  </div></section>
+
+
+  <section><h2>Techniques for table design</h2>
+
+  <p>Good table design is key to making tables more readable and usable.</p>
+
+  <p>In visual media, providing column and row borders and alternating row backgrounds can be very
+  effective to make complicated tables more readable.</p>
+
+  <p>For tables with large volumes of numeric content, using monospaced fonts can help users see
+  patterns, especially in situations where a user agent does not render the borders. (Unfortunately,
+  for historical reasons, not rendering borders on tables is a common default.)</p>
+
+  <p>In speech media, table cells can be distinguished by reporting the corresponding headers before
+  reading the cell's contents, and by allowing users to navigate the table in a grid fashion, rather
+  than serialising the entire contents of the table in source order.</p>
+
+  <p>Authors are encouraged to use CSS to achieve these effects.</p>
+
+  
+
+  <p>User agents are encouraged to render tables using these techniques whenever the page does not
+  use CSS and the table is not classified as a layout table.</p></section></section><section><h2>The <dfn><code>caption</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-caption-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-caption-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As the first element child of a <code id="the-caption-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-caption-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-caption-element:flow-content-2">Flow content</a>, but with no descendant <code id="the-caption-element:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> elements.</dd><dt><a href="#concept-element-tag-omission" id="the-caption-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-caption-element:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-caption-element:syntax-end-tag">end tag</a> can be omitted if
+   the <code id="the-caption-element:the-caption-element-2"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element is not immediately followed by a <a href="/breakup/specs/core-algorithms/#space-character" id="the-caption-element:space-character">space character</a> or
+   a <a href="/breakup/specs/html-syntax/#syntax-comments" id="the-caption-element:syntax-comments">comment</a>.</dd><dt><a href="#concept-element-attributes" id="the-caption-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-caption-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-caption-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmltablecaptionelement">HTMLTableCaptionElement</dfn> : <a href="#htmlelement" id="the-caption-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLTableCaptionElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-caption-element:the-caption-element-3"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element <a href="#represents" id="the-caption-element:represents">represents</a> the title of the <code id="the-caption-element:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>
+  that is its parent, if it has a parent and that is a <code id="the-caption-element:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</p>
+
+  
+
+  <p>The <code id="the-caption-element:the-caption-element-4"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element takes part in the <a href="/breakup/specs/html-tables/#table-model" id="the-caption-element:table-model">table model</a>.</p>
+
+  
+
+  <p>When a <code id="the-caption-element:the-table-element-5"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element is the only content in a <code id="the-caption-element:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element other
+  than the <code id="the-caption-element:the-figcaption-element"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code>, the <code id="the-caption-element:the-caption-element-5"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element should be omitted in favor of
+  the <code id="the-caption-element:the-figcaption-element-2"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code>.</p>
+
+  <p>A caption can introduce context for a table, making it significantly easier to understand.</p>
+
+  <div class="example">
+
+   <p>Consider, for instance, the following table:</p>
+
+   <table class="dice-example"><tbody><tr><th>   </th><th> 1 </th><th> 2 </th><th> 3 </th><th> 4 </th><th> 5 </th><th> 6
+    </th></tr><tr><th> 1 </th><td> 2 </td><td> 3 </td><td> 4 </td><td> 5 </td><td> 6 </td><td> 7
+    </td></tr><tr><th> 2 </th><td> 3 </td><td> 4 </td><td> 5 </td><td> 6 </td><td> 7 </td><td> 8
+    </td></tr><tr><th> 3 </th><td> 4 </td><td> 5 </td><td> 6 </td><td> 7 </td><td> 8 </td><td> 9
+    </td></tr><tr><th> 4 </th><td> 5 </td><td> 6 </td><td> 7 </td><td> 8 </td><td> 9 </td><td> 10
+    </td></tr><tr><th> 5 </th><td> 6 </td><td> 7 </td><td> 8 </td><td> 9 </td><td> 10 </td><td> 11
+    </td></tr><tr><th> 6 </th><td> 7 </td><td> 8 </td><td> 9 </td><td> 10 </td><td> 11 </td><td> 12
+   </td></tr></tbody></table>
+
+   <p>In the abstract, this table is not clear. However, with a caption giving the table's number
+   (for reference in the main prose) and explaining its use, it makes more sense:</p>
+
+   <pre>&lt;caption&gt;
+&lt;p&gt;Table 1.
+&lt;p&gt;This table shows the total score obtained from rolling two
+six-sided dice. The first row represents the value of the first die,
+the first column the value of the second die. The total is given in
+the cell that corresponds to the values of the two dice.
+&lt;/caption&gt;</pre>
+
+   <p>This provides the user with more context:</p>
+
+   <table class="dice-example"><caption>
+     <p>Table 1.
+     </p><p>This table shows the total score obtained from rolling two
+     six-sided dice. The first row represents the value of the first
+     die, the first column the value of the second die. The total is
+     given in the cell that corresponds to the values of the two dice.
+    </p></caption><tbody><tr><th>   </th><th> 1 </th><th> 2 </th><th> 3 </th><th> 4 </th><th> 5 </th><th> 6
+    </th></tr><tr><th> 1 </th><td> 2 </td><td> 3 </td><td> 4 </td><td> 5 </td><td> 6 </td><td> 7
+    </td></tr><tr><th> 2 </th><td> 3 </td><td> 4 </td><td> 5 </td><td> 6 </td><td> 7 </td><td> 8
+    </td></tr><tr><th> 3 </th><td> 4 </td><td> 5 </td><td> 6 </td><td> 7 </td><td> 8 </td><td> 9
+    </td></tr><tr><th> 4 </th><td> 5 </td><td> 6 </td><td> 7 </td><td> 8 </td><td> 9 </td><td> 10
+    </td></tr><tr><th> 5 </th><td> 6 </td><td> 7 </td><td> 8 </td><td> 9 </td><td> 10 </td><td> 11
+    </td></tr><tr><th> 6 </th><td> 7 </td><td> 8 </td><td> 9 </td><td> 10 </td><td> 11 </td><td> 12
+   </td></tr></tbody></table>
+
+  </div></section><section><h2>The <dfn><code>colgroup</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-colgroup-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-colgroup-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-colgroup-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, after any
+   <code id="the-colgroup-element:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> elements and before any <code id="the-colgroup-element:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>,
+   <code id="the-colgroup-element:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, <code id="the-colgroup-element:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>, and <code id="the-colgroup-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+   elements.</dd><dt><a href="#concept-element-content-model" id="the-colgroup-element:concept-element-content-model">Content model</a>:</dt><dd>If the <code id="the-colgroup-element:attr-colgroup-span"><a href="/breakup/specs/html-tables/#attr-colgroup-span">span</a></code> attribute is present: <a href="#concept-content-nothing" id="the-colgroup-element:concept-content-nothing">Nothing</a>.</dd><dd>If the <code id="the-colgroup-element:attr-colgroup-span-2"><a href="/breakup/specs/html-tables/#attr-colgroup-span">span</a></code> attribute is absent: Zero or more <code id="the-colgroup-element:the-col-element"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> and <code id="the-colgroup-element:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code> elements.</dd><dt><a href="#concept-element-tag-omission" id="the-colgroup-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-colgroup-element:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-start-tag" id="the-colgroup-element:syntax-start-tag">start tag</a> can be
+   omitted if the first thing inside the <code id="the-colgroup-element:the-colgroup-element-2"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element is a <code id="the-colgroup-element:the-col-element-2"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element,
+   and if the element is not immediately preceded by another <code id="the-colgroup-element:the-colgroup-element-3"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element whose
+   <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-colgroup-element:syntax-end-tag">end tag</a> has been omitted. (It can't be omitted if the element
+   is empty.)</dd><dd>A <code id="the-colgroup-element:the-colgroup-element-4"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-colgroup-element:syntax-end-tag-2">end tag</a> can be omitted if
+   the <code id="the-colgroup-element:the-colgroup-element-5"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element is not immediately followed by a <a href="/breakup/specs/core-algorithms/#space-character" id="the-colgroup-element:space-character">space character</a> or
+   a <a href="/breakup/specs/html-syntax/#syntax-comments" id="the-colgroup-element:syntax-comments">comment</a>.</dd><dt><a href="#concept-element-attributes" id="the-colgroup-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-colgroup-element:global-attributes">Global attributes</a></dd><dd><code id="the-colgroup-element:attr-colgroup-span-3"><a href="/breakup/specs/html-tables/#attr-colgroup-span">span</a></code> — Number of columns spanned by the element</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-colgroup-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmltablecolelement">HTMLTableColElement</dfn> : <a href="#htmlelement" id="the-colgroup-element:htmlelement">HTMLElement</a> {
+  attribute unsigned long <a href="/breakup/specs/html-tables/#dom-colgroup-span" id="the-colgroup-element:dom-colgroup-span">span</a>;
+
+  // <a href="#HTMLTableColElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-colgroup-element:the-colgroup-element-6"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element <a href="#represents" id="the-colgroup-element:represents">represents</a> a <a href="/breakup/specs/html-tables/#concept-column-group" id="the-colgroup-element:concept-column-group">group</a> of one or more <a href="/breakup/specs/html-tables/#concept-column" id="the-colgroup-element:concept-column">columns</a> in the <code id="the-colgroup-element:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> that is its parent, if it has a
+  parent and that is a <code id="the-colgroup-element:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</p>
+
+  <p>If the <code id="the-colgroup-element:the-colgroup-element-7"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element contains no <code id="the-colgroup-element:the-col-element-3"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> elements, then the element
+  may have a <dfn id="attr-colgroup-span"><code>span</code></dfn> content attribute specified,
+  whose value must be a <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="the-colgroup-element:valid-non-negative-integer">valid non-negative integer</a> greater than zero.</p>
+
+  
+
+  <p>The <code id="the-colgroup-element:the-colgroup-element-8"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element and its <code id="the-colgroup-element:attr-colgroup-span-4"><a href="/breakup/specs/html-tables/#attr-colgroup-span">span</a></code>
+  attribute take part in the <a href="/breakup/specs/html-tables/#table-model" id="the-colgroup-element:table-model">table model</a>.</p>
+
+  <p>The <dfn id="dom-colgroup-span"><code>span</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-colgroup-element:reflect">reflect</a> the content attribute of the same name. The value must be <a href="/breakup/specs/core-algorithms/#limited-to-only-non-negative-numbers-greater-than-zero" id="the-colgroup-element:limited-to-only-non-negative-numbers-greater-than-zero">limited to
+  only non-negative numbers greater than zero</a>.</p></section><section><h2>The <dfn><code>col</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-col-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-col-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-col-element:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element that doesn't have
+   a <code id="the-col-element:attr-col-span"><a href="/breakup/specs/html-tables/#attr-col-span">span</a></code> attribute.</dd><dt><a href="#concept-element-content-model" id="the-col-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#concept-content-nothing" id="the-col-element:concept-content-nothing">Nothing</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-col-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>No <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-col-element:syntax-end-tag">end tag</a>.</dd><dt><a href="#concept-element-attributes" id="the-col-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-col-element:global-attributes">Global attributes</a></dd><dd><code id="the-col-element:attr-col-span-2"><a href="/breakup/specs/html-tables/#attr-col-span">span</a></code> — Number of columns spanned by the element</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-col-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <p><code id="the-col-element:htmltablecolelement"><a href="/breakup/specs/html-tables/#htmltablecolelement">HTMLTableColElement</a></code>, same as for
+    <code id="the-col-element:the-colgroup-element-2"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> elements. This interface defines one member,
+    <code id="the-col-element:dom-col-span"><a href="/breakup/specs/html-tables/#dom-col-span">span</a></code>.</p>
+   </dd></dl>
+
+  <p>If a <code id="the-col-element:the-col-element"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element has a parent and that is a <code id="the-col-element:the-colgroup-element-3"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element that
+  itself has a parent that is a <code id="the-col-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, then the <code id="the-col-element:the-col-element-2"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element
+  <a href="#represents" id="the-col-element:represents">represents</a> one or more <a href="/breakup/specs/html-tables/#concept-column" id="the-col-element:concept-column">columns</a> in the <a href="/breakup/specs/html-tables/#concept-column-group" id="the-col-element:concept-column-group">column group</a> represented by that <code id="the-col-element:the-colgroup-element-4"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>.</p>
+
+  <p>The element may have a <dfn id="attr-col-span"><code>span</code></dfn> content attribute
+  specified, whose value must be a <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="the-col-element:valid-non-negative-integer">valid non-negative integer</a> greater than zero.</p>
+
+  
+
+  <p>The <code id="the-col-element:the-col-element-3"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element and its <code id="the-col-element:attr-col-span-3"><a href="/breakup/specs/html-tables/#attr-col-span">span</a></code> attribute take
+  part in the <a href="/breakup/specs/html-tables/#table-model" id="the-col-element:table-model">table model</a>.</p>
+
+  <p>The <dfn id="dom-col-span"><code>span</code></dfn> IDL attribute must <a href="/breakup/specs/core-algorithms/#reflect" id="the-col-element:reflect">reflect</a>
+  the content attribute of the same name. The value must be <a href="/breakup/specs/core-algorithms/#limited-to-only-non-negative-numbers-greater-than-zero" id="the-col-element:limited-to-only-non-negative-numbers-greater-than-zero">limited to only non-negative
+  numbers greater than zero</a>.</p></section><section><h2>The <dfn><code>tbody</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-tbody-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-tbody-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-tbody-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, after any
+   <code id="the-tbody-element:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>, <code id="the-tbody-element:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>, and
+   <code id="the-tbody-element:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> elements, but only if there are no
+   <code id="the-tbody-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements that are children of the
+   <code id="the-tbody-element:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-tbody-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-tbody-element:the-tr-element-2"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> and <a href="#script-supporting-elements-2" id="the-tbody-element:script-supporting-elements-2">script-supporting</a> elements</dd><dt><a href="#concept-element-tag-omission" id="the-tbody-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-tbody-element:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-start-tag" id="the-tbody-element:syntax-start-tag">start tag</a> can be omitted
+   if the first thing inside the <code id="the-tbody-element:the-tbody-element-2"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element is a <code id="the-tbody-element:the-tr-element-3"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, and if the
+   element is not immediately preceded by a <code id="the-tbody-element:the-tbody-element-3"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, <code id="the-tbody-element:the-thead-element-2"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, or
+   <code id="the-tbody-element:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element whose <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-tbody-element:syntax-end-tag">end tag</a> has been omitted. (It
+   can't be omitted if the element is empty.)</dd><dd>A <code id="the-tbody-element:the-tbody-element-4"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-tbody-element:syntax-end-tag-2">end tag</a> can be omitted if
+   the <code id="the-tbody-element:the-tbody-element-5"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element is immediately followed by a <code id="the-tbody-element:the-tbody-element-6"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> or
+   <code id="the-tbody-element:the-tfoot-element-2"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, or if there is no more content in the parent element.</dd><dt><a href="#concept-element-attributes" id="the-tbody-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-tbody-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-tbody-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmltablesectionelement">HTMLTableSectionElement</dfn> : <a href="#htmlelement" id="the-tbody-element:htmlelement">HTMLElement</a> {
+  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-tbody-element:htmlcollection">HTMLCollection</a> <a href="/breakup/specs/html-tables/#dom-tbody-rows" id="the-tbody-element:dom-tbody-rows">rows</a>;
+  <a href="#htmlelement" id="the-tbody-element:htmlelement-2">HTMLElement</a> <a href="/breakup/specs/html-tables/#dom-tbody-insertrow" id="the-tbody-element:dom-tbody-insertrow">insertRow</a>(optional long index = -1);
+  void <a href="/breakup/specs/html-tables/#dom-tbody-deleterow" id="the-tbody-element:dom-tbody-deleterow">deleteRow</a>(long index);
+
+  // <a href="#HTMLTableSectionElement-partial">also has obsolete members</a>
+};</pre>
+    <p>The <code id="the-tbody-element:htmltablesectionelement"><a href="/breakup/specs/html-tables/#htmltablesectionelement">HTMLTableSectionElement</a></code> interface is also
+    used for <code id="the-tbody-element:the-thead-element-3"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> and <code id="the-tbody-element:the-tfoot-element-3"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements.</p>
+   </dd></dl>
+
+  <p>The <code id="the-tbody-element:the-tbody-element-7"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element <a href="#represents" id="the-tbody-element:represents">represents</a> a <a href="/breakup/specs/html-tables/#concept-row-group" id="the-tbody-element:concept-row-group">block</a> of <a href="/breakup/specs/html-tables/#concept-row" id="the-tbody-element:concept-row">rows</a> that consist of a
+  body of data for the parent <code id="the-tbody-element:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if the <code id="the-tbody-element:the-tbody-element-8"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element has a
+  parent and it is a <code id="the-tbody-element:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>.</p>
+
+  
+
+  <p>The <code id="the-tbody-element:the-tbody-element-9"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element takes part in the <a href="/breakup/specs/html-tables/#table-model" id="the-tbody-element:table-model">table model</a>.</p>
+
+  
+
+
+  <dl class="domintro"><dt><var>tbody</var> . <code id="the-tbody-element:dom-tbody-rows-2"><a href="/breakup/specs/html-tables/#dom-tbody-rows">rows</a></code></dt><dd>
+
+    <p>Returns an <code id="the-tbody-element:htmlcollection-2"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-tbody-element:the-tr-element-4"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements of the table
+    section.</p>
+
+   </dd><dt><var>tr</var> = <var>tbody</var> . <code id="the-tbody-element:dom-tbody-insertrow-2"><a href="/breakup/specs/html-tables/#dom-tbody-insertrow">insertRow</a></code>( [ <var>index</var> ] )</dt><dd>
+
+    <p>Creates a <code id="the-tbody-element:the-tr-element-5"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, inserts it into the table section at the position given by
+    the argument, and returns the <code id="the-tbody-element:the-tr-element-6"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>.</p>
+
+    <p>The position is relative to the rows in the table section. The index −1, which is the
+    default if the argument is omitted, is equivalent to inserting at the end of the table
+    section.</p>
+
+    <p>If the given position is less than −1 or greater than the number of rows, throws an
+    <code id="the-tbody-element:indexsizeerror"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+   </dd><dt><var>tbody</var> . <code id="the-tbody-element:dom-tbody-deleterow-2"><a href="/breakup/specs/html-tables/#dom-tbody-deleterow">deleteRow</a></code>(<var>index</var>)</dt><dd>
+
+    <p>Removes the <code id="the-tbody-element:the-tr-element-7"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element with the given position in the table section.</p>
+
+    <p>The position is relative to the rows in the table section. The index −1 is equivalent
+    to deleting the last row of the table section.</p>
+
+    <p>If the given position is less than −1 or greater than the index of the last row, or if
+    there are no rows, throws an <code id="the-tbody-element:indexsizeerror-2"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-tbody-rows"><code>rows</code></dfn> attribute must return an
+  <code id="the-tbody-element:htmlcollection-3"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the element, whose filter matches only <code id="the-tbody-element:the-tr-element-8"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+  elements that are children of the element.</p>
+
+  <p>The <dfn id="dom-tbody-insertrow"><code>insertRow(<var>index</var>)</code></dfn>
+  method must, when invoked on an element <var>table section</var>, act as follows:</p>
+
+  <p>If <var>index</var> is less than −1 or greater than the number of elements in
+  the <code id="the-tbody-element:dom-tbody-rows-3"><a href="/breakup/specs/html-tables/#dom-tbody-rows">rows</a></code> collection, the method must throw an
+  <code id="the-tbody-element:indexsizeerror-3"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+  <p>If <var>index</var> is −1 or equal to the number of items in the <code id="the-tbody-element:dom-tbody-rows-4"><a href="/breakup/specs/html-tables/#dom-tbody-rows">rows</a></code> collection, the method must create a <code id="the-tbody-element:the-tr-element-9"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element,
+  append it to the element <var>table section</var>, and return the newly created
+  <code id="the-tbody-element:the-tr-element-10"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</p>
+
+  <p>Otherwise, the method must create a <code id="the-tbody-element:the-tr-element-11"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, insert it as a child of the <var>table section</var> element, immediately before the <var>index</var>th
+  <code id="the-tbody-element:the-tr-element-12"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element in the <code id="the-tbody-element:dom-tbody-rows-5"><a href="/breakup/specs/html-tables/#dom-tbody-rows">rows</a></code> collection, and finally
+  must return the newly created <code id="the-tbody-element:the-tr-element-13"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</p>
+
+  <p>The <dfn id="dom-tbody-deleterow"><code>deleteRow(<var>index</var>)</code></dfn>
+  method must remove the <var>index</var>th element in the <code id="the-tbody-element:dom-tbody-rows-6"><a href="/breakup/specs/html-tables/#dom-tbody-rows">rows</a></code> collection from its parent. If <var>index</var> is
+  less than zero or greater than or equal to the number of elements in the <code id="the-tbody-element:dom-tbody-rows-7"><a href="/breakup/specs/html-tables/#dom-tbody-rows">rows</a></code> collection, the method must instead throw an
+  <code id="the-tbody-element:indexsizeerror-4"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p></section><section><h2>The <dfn><code>thead</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-thead-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-thead-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-thead-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, after any
+   <code id="the-thead-element:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>, and <code id="the-thead-element:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>
+   elements and before any <code id="the-thead-element:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, <code id="the-thead-element:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>, and
+   <code id="the-thead-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements, but only if there are no other
+   <code id="the-thead-element:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> elements that are children of the
+   <code id="the-thead-element:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-thead-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-thead-element:the-tr-element-2"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> and <a href="#script-supporting-elements-2" id="the-thead-element:script-supporting-elements-2">script-supporting</a> elements</dd><dt><a href="#concept-element-tag-omission" id="the-thead-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-thead-element:the-thead-element-2"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-thead-element:syntax-end-tag">end tag</a> can be omitted if
+   the <code id="the-thead-element:the-thead-element-3"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element is immediately followed by a <code id="the-thead-element:the-tbody-element-2"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> or
+   <code id="the-thead-element:the-tfoot-element-2"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element.</dd><dt><a href="#concept-element-attributes" id="the-thead-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-thead-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-thead-element:concept-element-dom">DOM interface</a>:</dt><dd><code id="the-thead-element:htmltablesectionelement"><a href="/breakup/specs/html-tables/#htmltablesectionelement">HTMLTableSectionElement</a></code>, as defined for
+   <code id="the-thead-element:the-tbody-element-3"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> elements.</dd></dl>
+
+  <p>The <code id="the-thead-element:the-thead-element-4"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element <a href="#represents" id="the-thead-element:represents">represents</a> the <a href="/breakup/specs/html-tables/#concept-row-group" id="the-thead-element:concept-row-group">block</a> of <a href="/breakup/specs/html-tables/#concept-row" id="the-thead-element:concept-row">rows</a> that consist of
+  the column labels (headers) for the parent <code id="the-thead-element:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if the <code id="the-thead-element:the-thead-element-5"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>
+  element has a parent and it is a <code id="the-thead-element:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>.</p>
+
+  
+
+  <p>The <code id="the-thead-element:the-thead-element-6"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element takes part in the <a href="/breakup/specs/html-tables/#table-model" id="the-thead-element:table-model">table model</a>.</p>
+
+  
+
+  <div class="example">
+
+   <p>This example shows a <code id="the-thead-element:the-thead-element-7"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element being used. Notice the use of both
+   <code id="the-thead-element:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> and <code id="the-thead-element:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> elements in the <code id="the-thead-element:the-thead-element-8"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element: the first row is
+   the headers, and the second row is an explanation of how to fill in the table.</p>
+
+   <pre>&lt;table&gt;
+ &lt;caption&gt; School auction sign-up sheet &lt;/caption&gt;
+<strong> &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th&gt;&lt;label for=e1&gt;Name&lt;/label&gt;
+   &lt;th&gt;&lt;label for=e2&gt;Product&lt;/label&gt;
+   &lt;th&gt;&lt;label for=e3&gt;Picture&lt;/label&gt;
+   &lt;th&gt;&lt;label for=e4&gt;Price&lt;/label&gt;
+  &lt;tr&gt;
+   &lt;td&gt;Your name here
+   &lt;td&gt;What are you selling?
+   &lt;td&gt;Link to a picture
+   &lt;td&gt;Your reserve price
+</strong> &lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td&gt;Ms Danus
+   &lt;td&gt;Doughnuts
+   &lt;td&gt;&lt;img src="http://example.com/mydoughnuts.png" title="Doughnuts from Ms Danus"&gt;
+   &lt;td&gt;$45
+  &lt;tr&gt;
+   &lt;td&gt;&lt;input id=e1 type=text name=who required form=f&gt;
+   &lt;td&gt;&lt;input id=e2 type=text name=what required form=f&gt;
+   &lt;td&gt;&lt;input id=e3 type=url name=pic form=f&gt;
+   &lt;td&gt;&lt;input id=e4 type=number step=0.01 min=0 value=0 required form=f&gt;
+&lt;/table&gt;
+&lt;form id=f action="/auction.cgi"&gt;
+ &lt;input type=button name=add value="Submit"&gt;
+&lt;/form&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>tfoot</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-tfoot-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-tfoot-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-tfoot-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, after any
+   <code id="the-tfoot-element:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>, <code id="the-tfoot-element:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>, and <code id="the-tfoot-element:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>
+   elements and before any <code id="the-tfoot-element:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> and <code id="the-tfoot-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+   elements, but only if there are no other <code id="the-tfoot-element:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>
+   elements that are children of the <code id="the-tfoot-element:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</dd><dd>As a child of a <code id="the-tfoot-element:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, after any
+   <code id="the-tfoot-element:the-caption-element-2"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>, <code id="the-tfoot-element:the-colgroup-element-2"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>, <code id="the-tfoot-element:the-thead-element-2"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>,
+   <code id="the-tfoot-element:the-tbody-element-2"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, and <code id="the-tfoot-element:the-tr-element-2"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements, but only if there
+   are no other <code id="the-tfoot-element:the-tfoot-element-2"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements that are children of the
+   <code id="the-tfoot-element:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-tfoot-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-tfoot-element:the-tr-element-3"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> and <a href="#script-supporting-elements-2" id="the-tfoot-element:script-supporting-elements-2">script-supporting</a> elements</dd><dt><a href="#concept-element-tag-omission" id="the-tfoot-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-tfoot-element:the-tfoot-element-3"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-tfoot-element:syntax-end-tag">end tag</a> can be omitted if
+   the <code id="the-tfoot-element:the-tfoot-element-4"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element is immediately followed by a <code id="the-tfoot-element:the-tbody-element-3"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element, or if
+   there is no more content in the parent element.</dd><dt><a href="#concept-element-attributes" id="the-tfoot-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-tfoot-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-tfoot-element:concept-element-dom">DOM interface</a>:</dt><dd><code id="the-tfoot-element:htmltablesectionelement"><a href="/breakup/specs/html-tables/#htmltablesectionelement">HTMLTableSectionElement</a></code>, as defined for
+   <code id="the-tfoot-element:the-tbody-element-4"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> elements.</dd></dl>
+
+  <p>The <code id="the-tfoot-element:the-tfoot-element-5"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element <a href="#represents" id="the-tfoot-element:represents">represents</a> the <a href="/breakup/specs/html-tables/#concept-row-group" id="the-tfoot-element:concept-row-group">block</a> of <a href="/breakup/specs/html-tables/#concept-row" id="the-tfoot-element:concept-row">rows</a> that consist of
+  the column summaries (footers) for the parent <code id="the-tfoot-element:the-table-element-5"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, if the
+  <code id="the-tfoot-element:the-tfoot-element-6"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element has a parent and it is a <code id="the-tfoot-element:the-table-element-6"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>.</p>
+
+  
+
+  <p>The <code id="the-tfoot-element:the-tfoot-element-7"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element takes part in the <a href="/breakup/specs/html-tables/#table-model" id="the-tfoot-element:table-model">table
+  model</a>.</p></section><section><h2>The <dfn><code>tr</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-tr-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-tr-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-tr-element:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element.</dd><dd>As a child of a <code id="the-tr-element:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element.</dd><dd>As a child of a <code id="the-tr-element:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element.</dd><dd>As a child of a <code id="the-tr-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, after any
+   <code id="the-tr-element:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code>, <code id="the-tr-element:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>, and <code id="the-tr-element:the-thead-element-2"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>
+   elements, but only if there are no <code id="the-tr-element:the-tbody-element-2"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> elements that
+   are children of the <code id="the-tr-element:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-tr-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-tr-element:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code>, <code id="the-tr-element:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code>, and <a href="#script-supporting-elements-2" id="the-tr-element:script-supporting-elements-2">script-supporting</a> elements</dd><dt><a href="#concept-element-tag-omission" id="the-tr-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-tr-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-tr-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-tr-element:the-tr-element-2"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element is immediately followed by another <code id="the-tr-element:the-tr-element-3"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, or if there is
+   no more content in the parent element.</dd><dt><a href="#concept-element-attributes" id="the-tr-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-tr-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-tr-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmltablerowelement">HTMLTableRowElement</dfn> : <a href="#htmlelement" id="the-tr-element:htmlelement">HTMLElement</a> {
+  readonly attribute long <a href="/breakup/specs/html-tables/#dom-tr-rowindex" id="the-tr-element:dom-tr-rowindex">rowIndex</a>;
+  readonly attribute long <a href="/breakup/specs/html-tables/#dom-tr-sectionrowindex" id="the-tr-element:dom-tr-sectionrowindex">sectionRowIndex</a>;
+  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-tr-element:htmlcollection">HTMLCollection</a> <a href="/breakup/specs/html-tables/#dom-tr-cells" id="the-tr-element:dom-tr-cells">cells</a>;
+  <a href="#htmlelement" id="the-tr-element:htmlelement-2">HTMLElement</a> <a href="/breakup/specs/html-tables/#dom-tr-insertcell" id="the-tr-element:dom-tr-insertcell">insertCell</a>(optional long index = -1);
+  void <a href="/breakup/specs/html-tables/#dom-tr-deletecell" id="the-tr-element:dom-tr-deletecell">deleteCell</a>(long index);
+
+  // <a href="#HTMLTableRowElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-tr-element:the-tr-element-4"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element <a href="#represents" id="the-tr-element:represents">represents</a> a <a href="/breakup/specs/html-tables/#concept-row" id="the-tr-element:concept-row">row</a> of
+  <a href="/breakup/specs/html-tables/#concept-cell" id="the-tr-element:concept-cell">cells</a> in a <a href="/breakup/specs/html-tables/#concept-table" id="the-tr-element:concept-table">table</a>.</p>
+
+  
+
+  <p>The <code id="the-tr-element:the-tr-element-5"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element takes part in the <a href="/breakup/specs/html-tables/#table-model" id="the-tr-element:table-model">table model</a>.</p>
+
+  
+
+
+  <dl class="domintro"><dt><var>tr</var> . <code id="the-tr-element:dom-tr-rowindex-2"><a href="/breakup/specs/html-tables/#dom-tr-rowindex">rowIndex</a></code></dt><dd>
+
+    <p>Returns the position of the row in the table's <code id="the-tr-element:dom-table-rows"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code>
+    list.</p>
+
+    <p>Returns −1 if the element isn't in a table.</p>
+
+   </dd><dt><var>tr</var> . <code id="the-tr-element:dom-tr-sectionrowindex-2"><a href="/breakup/specs/html-tables/#dom-tr-sectionrowindex">sectionRowIndex</a></code></dt><dd>
+
+    <p>Returns the position of the row in the table section's <code id="the-tr-element:dom-tbody-rows"><a href="/breakup/specs/html-tables/#dom-tbody-rows">rows</a></code> list.</p>
+
+    <p>Returns −1 if the element isn't in a table section.</p>
+
+   </dd><dt><var>tr</var> . <code id="the-tr-element:dom-tr-cells-2"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code></dt><dd>
+
+    <p>Returns an <code id="the-tr-element:htmlcollection-2"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-tr-element:the-td-element-2"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="the-tr-element:the-th-element-2"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements of
+    the row.</p>
+
+   </dd><dt><var>cell</var> = <var>tr</var> . <code id="the-tr-element:dom-tr-insertcell-2"><a href="/breakup/specs/html-tables/#dom-tr-insertcell">insertCell</a></code>( [ <var>index</var> ] )</dt><dd>
+
+    <p>Creates a <code id="the-tr-element:the-td-element-3"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element, inserts it into the table row at the position given by the
+    argument, and returns the <code id="the-tr-element:the-td-element-4"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code>.</p>
+
+    <p>The position is relative to the cells in the row. The index −1, which is the default
+    if the argument is omitted, is equivalent to inserting at the end of the row.</p>
+
+    <p>If the given position is less than −1 or greater than the number of cells, throws an
+    <code id="the-tr-element:indexsizeerror"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+   </dd><dt><var>tr</var> . <code id="the-tr-element:dom-tr-deletecell-2"><a href="/breakup/specs/html-tables/#dom-tr-deletecell">deleteCell</a></code>(<var>index</var>)</dt><dd>
+
+    <p>Removes the <code id="the-tr-element:the-td-element-5"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="the-tr-element:the-th-element-3"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element with the given position in the
+    row.</p>
+
+    <p>The position is relative to the cells in the row. The index −1 is equivalent to
+    deleting the last cell of the row.</p>
+
+    <p>If the given position is less than −1 or greater than the index of the last cell, or
+    if there are no cells, throws an <code id="the-tr-element:indexsizeerror-2"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-tr-rowindex"><code>rowIndex</code></dfn> attribute must, if the element has
+  a parent <code id="the-tr-element:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, or a parent <code id="the-tr-element:the-tbody-element-3"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, <code id="the-tr-element:the-thead-element-3"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, or
+  <code id="the-tr-element:the-tfoot-element-2"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element and a <em>grandparent</em> <code id="the-tr-element:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, return the index
+  of the <code id="the-tr-element:the-tr-element-6"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element in that <code id="the-tr-element:the-table-element-5"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element's <code id="the-tr-element:dom-table-rows-2"><a href="/breakup/specs/html-tables/#dom-table-rows">rows</a></code> collection. If there is no such <code id="the-tr-element:the-table-element-6"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element,
+  then the attribute must return −1.</p>
+
+  <p>The <dfn id="dom-tr-sectionrowindex"><code>sectionRowIndex</code></dfn> attribute must, if
+  the element has a parent <code id="the-tr-element:the-table-element-7"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>, <code id="the-tr-element:the-tbody-element-4"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, <code id="the-tr-element:the-thead-element-4"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, or
+  <code id="the-tr-element:the-tfoot-element-3"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, return the index of the <code id="the-tr-element:the-tr-element-7"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element in the parent
+  element's <code>rows</code> collection (for tables, that's the <code id="the-tr-element:dom-table-rows-3"><a href="/breakup/specs/html-tables/#dom-table-rows">HTMLTableElement.rows</a></code> collection; for table sections, that's the
+  <code id="the-tr-element:dom-tbody-rows-2"><a href="/breakup/specs/html-tables/#dom-tbody-rows">HTMLTableRowElement.rows</a></code> collection). If there is no such
+  parent element, then the attribute must return −1.</p>
+
+  <p>The <dfn id="dom-tr-cells"><code>cells</code></dfn> attribute must return an
+  <code id="the-tr-element:htmlcollection-3"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the <code id="the-tr-element:the-tr-element-8"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, whose filter matches only
+  <code id="the-tr-element:the-td-element-6"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="the-tr-element:the-th-element-4"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements that are children of the <code id="the-tr-element:the-tr-element-9"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</p>
+
+  <p>The <dfn id="dom-tr-insertcell"><code>insertCell(<var>index</var>)</code></dfn>
+  method must act as follows:</p>
+
+  <p>If <var>index</var> is less than −1 or greater than the number of elements in
+  the <code id="the-tr-element:dom-tr-cells-3"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code> collection, the method must throw an
+  <code id="the-tr-element:indexsizeerror-3"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p>
+
+  <p>If <var>index</var> is equal to −1 or equal to the number of items in <code id="the-tr-element:dom-tr-cells-4"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code> collection, the method must create a <code id="the-tr-element:the-td-element-7"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element,
+  append it to the <code id="the-tr-element:the-tr-element-10"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, and return the newly created <code id="the-tr-element:the-td-element-8"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code>
+  element.</p>
+
+  <p>Otherwise, the method must create a <code id="the-tr-element:the-td-element-9"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element, insert it as a child of the
+  <code id="the-tr-element:the-tr-element-11"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, immediately before the <var>index</var>th <code id="the-tr-element:the-td-element-10"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or
+  <code id="the-tr-element:the-th-element-5"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element in the <code id="the-tr-element:dom-tr-cells-5"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code> collection, and finally
+  must return the newly created <code id="the-tr-element:the-td-element-11"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element.</p>
+
+  <p>The <dfn id="dom-tr-deletecell"><code>deleteCell(<var>index</var>)</code></dfn>
+  method must remove the <var>index</var>th element in the <code id="the-tr-element:dom-tr-cells-6"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code> collection from its parent. If <var>index</var> is less
+  than zero or greater than or equal to the number of elements in the <code id="the-tr-element:dom-tr-cells-7"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code> collection, the method must instead throw an
+  <code id="the-tr-element:indexsizeerror-4"><a href="/breakup/specs/core-algorithms/#indexsizeerror">IndexSizeError</a></code> exception.</p></section><section><h2>The <dfn><code>td</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-td-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html-sectioning/#sectioning-root" id="the-td-element:sectioning-root">Sectioning root</a>.</dd><dt><a href="#concept-element-contexts" id="the-td-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-td-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-td-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-td-element:flow-content-2">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-td-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-td-element:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-td-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-td-element:the-td-element-2"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element is immediately followed by a <code id="the-td-element:the-td-element-3"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="the-td-element:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element,
+   or if there is no more content in the parent element.</dd><dt><a href="#concept-element-attributes" id="the-td-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-td-element:global-attributes">Global attributes</a></dd><dd><code id="the-td-element:attr-tdth-colspan"><a href="/breakup/specs/html-tables/#attr-tdth-colspan">colspan</a></code> — Number of columns that the cell is to span</dd><dd><code id="the-td-element:attr-tdth-rowspan"><a href="/breakup/specs/html-tables/#attr-tdth-rowspan">rowspan</a></code> — Number of rows that the cell is to span</dd><dd><code id="the-td-element:attr-tdth-headers"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> — The header cells for this cell</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-td-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmltabledatacellelement">HTMLTableDataCellElement</dfn> : <a href="/breakup/specs/html-tables/#htmltablecellelement" id="the-td-element:htmltablecellelement">HTMLTableCellElement</a> {
+  // <a href="#HTMLTableDataCellElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-td-element:the-td-element-4"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element <a href="#represents" id="the-td-element:represents">represents</a> a data <a href="/breakup/specs/html-tables/#concept-cell" id="the-td-element:concept-cell">cell</a> in a table.</p>
+
+  
+
+  <p>The <code id="the-td-element:the-td-element-5"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element and its <code id="the-td-element:attr-tdth-colspan-2"><a href="/breakup/specs/html-tables/#attr-tdth-colspan">colspan</a></code>, <code id="the-td-element:attr-tdth-rowspan-2"><a href="/breakup/specs/html-tables/#attr-tdth-rowspan">rowspan</a></code>, and <code id="the-td-element:attr-tdth-headers-2"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code>
+  attributes take part in the <a href="/breakup/specs/html-tables/#table-model" id="the-td-element:table-model">table model</a>.</p>
+
+  <p>User agents, especially in non-visual environments or where displaying the table as a 2D grid
+  is impractical, may give the user context for the cell when rendering the contents of a cell; for
+  instance, giving its position in the <a href="/breakup/specs/html-tables/#table-model" id="the-td-element:table-model-2">table model</a>, or listing the cell's header cells
+  (as determined by the <a href="/breakup/specs/html-tables/#algorithm-for-assigning-header-cells" id="the-td-element:algorithm-for-assigning-header-cells">algorithm for assigning header cells</a>). When a cell's header
+  cells are being listed, user agents may use the value of <code id="the-td-element:attr-th-abbr"><a href="/breakup/specs/html-tables/#attr-th-abbr">abbr</a></code>
+  attributes on those header cells, if any, instead of the contents of the header cells
+  themselves.</p>
+
+  
+
+  <div class="example">
+
+   <p>In this example, we see a snippet of a Web application consisting of a grid of editable cells
+   (essentially a simple spreadsheet). One of the cells has been configured to show the sum of the
+   cells above it. Three have been marked as headings, which use <code id="the-td-element:the-th-element-2"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements instead of
+   <code id="the-td-element:the-td-element-6"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> elements. A script would attach event handlers to these elements to maintain the
+   total.</p>
+
+   <pre>&lt;table&gt;
+ &lt;tr&gt;
+  &lt;th&gt;&lt;input value="Name"&gt;
+  &lt;th&gt;&lt;input value="Paid ($)"&gt;
+ &lt;tr&gt;
+  &lt;td&gt;&lt;input value="Jeff"&gt;
+  &lt;td&gt;&lt;input value="14"&gt;
+ &lt;tr&gt;
+  &lt;td&gt;&lt;input value="Britta"&gt;
+  &lt;td&gt;&lt;input value="9"&gt;
+ &lt;tr&gt;
+  &lt;td&gt;&lt;input value="Abed"&gt;
+  &lt;td&gt;&lt;input value="25"&gt;
+ &lt;tr&gt;
+  &lt;td&gt;&lt;input value="Shirley"&gt;
+  &lt;td&gt;&lt;input value="2"&gt;
+ &lt;tr&gt;
+  &lt;td&gt;&lt;input value="Annie"&gt;
+  &lt;td&gt;&lt;input value="5"&gt;
+ &lt;tr&gt;
+  &lt;td&gt;&lt;input value="Troy"&gt;
+  &lt;td&gt;&lt;input value="5"&gt;
+ &lt;tr&gt;
+  &lt;td&gt;&lt;input value="Pierce"&gt;
+  &lt;td&gt;&lt;input value="1000"&gt;
+ &lt;tr&gt;
+  &lt;th&gt;&lt;input value="Total"&gt;
+  &lt;td&gt;&lt;output value="1060"&gt;
+&lt;/table&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>th</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-th-element:concept-element-categories">Categories</a>:</dt><dd>If the <code id="the-th-element:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element is a <a href="/breakup/specs/sortable-tables/#sorting-interface-th-element" id="the-th-element:sorting-interface-th-element">sorting interface <code>th</code> element</a>: <a href="#interactive-content-2" id="the-th-element:interactive-content-2">Interactive content</a>.</dd><dd>Otherwise: None.</dd><dt><a href="#concept-element-contexts" id="the-th-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-th-element:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-th-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-th-element:flow-content-2">Flow content</a>, but with no <code id="the-th-element:the-header-element"><a href="/breakup/specs/html-sectioning/#the-header-element">header</a></code>, <code id="the-th-element:the-footer-element"><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code>, <a href="#sectioning-content-2" id="the-th-element:sectioning-content-2">sectioning content</a>, or <a href="#heading-content-2" id="the-th-element:heading-content-2">heading content</a> descendants, and if the <code id="the-th-element:the-th-element-2"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element is a <a href="/breakup/specs/sortable-tables/#sorting-interface-th-element" id="the-th-element:sorting-interface-th-element-2">sorting interface <code>th</code> element</a>, no <a href="#interactive-content-2" id="the-th-element:interactive-content-2-2">interactive content</a> descendants.</dd><dt><a href="#concept-element-tag-omission" id="the-th-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-th-element:the-th-element-3"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-th-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-th-element:the-th-element-4"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element is immediately followed by a <code id="the-th-element:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="the-th-element:the-th-element-5"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element,
+   or if there is no more content in the parent element.</dd><dt><a href="#concept-element-attributes" id="the-th-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-th-element:global-attributes">Global attributes</a></dd><dd><code id="the-th-element:attr-tdth-colspan"><a href="/breakup/specs/html-tables/#attr-tdth-colspan">colspan</a></code> — Number of columns that the cell is to span</dd><dd><code id="the-th-element:attr-tdth-rowspan"><a href="/breakup/specs/html-tables/#attr-tdth-rowspan">rowspan</a></code> — Number of rows that the cell is to span</dd><dd><code id="the-th-element:attr-tdth-headers"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> — The header cells for this cell</dd><dd><code id="the-th-element:attr-th-scope"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> — Specifies which cells the header cell applies to</dd><dd><code id="the-th-element:attr-th-abbr"><a href="/breakup/specs/html-tables/#attr-th-abbr">abbr</a></code> — Alternative label to use for the header cell when referencing the cell in other contexts</dd><dd><code id="the-th-element:attr-th-sorted"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> — <a href="/breakup/specs/sortable-tables/#column-sort-direction" id="the-th-element:column-sort-direction">Column sort direction</a> and <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="the-th-element:column-key-ordinality">ordinality</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-th-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmltableheadercellelement">HTMLTableHeaderCellElement</dfn> : <a href="/breakup/specs/html-tables/#htmltablecellelement" id="the-th-element:htmltablecellelement">HTMLTableCellElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-tables/#dom-th-scope" id="the-th-element:dom-th-scope">scope</a>;
+  attribute DOMString <a href="/breakup/specs/html-tables/#dom-th-abbr" id="the-th-element:dom-th-abbr">abbr</a>;
+  attribute DOMString <a href="/breakup/specs/html-tables/#dom-th-sorted" id="the-th-element:dom-th-sorted">sorted</a>;
+  void <a href="/breakup/specs/sortable-tables/#dom-th-sort" id="the-th-element:dom-th-sort">sort</a>();
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-th-element:the-th-element-6"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element <a href="#represents" id="the-th-element:represents">represents</a> a header <a href="/breakup/specs/html-tables/#concept-cell" id="the-th-element:concept-cell">cell</a> in a table.</p>
+
+  <p>The <code id="the-th-element:the-th-element-7"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element may have a <dfn id="attr-th-scope"><code>scope</code></dfn>
+  content attribute specified. The <code id="the-th-element:attr-th-scope-2"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute is an
+  <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="the-th-element:enumerated-attribute">enumerated attribute</a> with five states, four of which have explicit keywords:</p>
+
+  <dl><dt>The <dfn id="attr-th-scope-row"><code>row</code></dfn> keyword, which maps to the
+   <i>row</i> state</dt><dd>The <i>row</i> state means the header cell applies to some of the subsequent cells in the
+   same row(s).</dd><dt>The <dfn id="attr-th-scope-col"><code>col</code></dfn> keyword, which maps to the
+   <i>column</i> state</dt><dd>The <i>column</i> state means the header cell applies to some of the subsequent cells in the
+   same column(s).</dd><dt>The <dfn id="attr-th-scope-rowgroup"><code>rowgroup</code></dfn> keyword, which maps to
+   the <i>row group</i> state</dt><dd>The <i>row group</i> state means the header cell applies to all the remaining cells in the
+   row group. A <code id="the-th-element:the-th-element-8"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element's <code id="the-th-element:attr-th-scope-3"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute must
+   not be in the <a href="/breakup/specs/html-tables/#attr-th-scope-rowgroup" id="the-th-element:attr-th-scope-rowgroup">row group</a> state if the element is not
+   anchored in a <a href="/breakup/specs/html-tables/#concept-row-group" id="the-th-element:concept-row-group">row group</a>.</dd><dt>The <dfn id="attr-th-scope-colgroup"><code>colgroup</code></dfn> keyword, which maps to
+   the <i>column group</i> state</dt><dd>The <i>column group</i> state means the header cell applies to all the remaining cells in the
+   column group. A <code id="the-th-element:the-th-element-9"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element's <code id="the-th-element:attr-th-scope-4"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute must
+   not be in the <a href="/breakup/specs/html-tables/#attr-th-scope-colgroup" id="the-th-element:attr-th-scope-colgroup">column group</a> state if the element is
+   not anchored in a <a href="/breakup/specs/html-tables/#concept-column-group" id="the-th-element:concept-column-group">column group</a>.</dd><dt>The <dfn id="attr-th-scope-auto">auto</dfn> state</dt><dd>The <i>auto</i> state makes the header cell apply to a set of cells selected based on
+   context.</dd></dl>
+
+  <p>The <code id="the-th-element:attr-th-scope-5"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute's <i id="the-th-element:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i> is the
+  <i>auto</i> state.</p>
+
+  <p>The <code id="the-th-element:the-th-element-10"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element may have an <dfn id="attr-th-abbr"><code>abbr</code></dfn>
+  content attribute specified. Its value must be an alternative label for the header cell, to be
+  used when referencing the cell in other contexts (e.g. when describing the header cells that apply
+  to a data cell). It is typically an abbreviated form of the full header cell, but can also be an
+  expansion, or merely a different phrasing.</p>
+
+  <p>The <code id="the-th-element:attr-th-sorted-2"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute is used in the <a href="/breakup/specs/sortable-tables/#table-sorting-model" id="the-th-element:table-sorting-model">table
+  sorting model</a>.</p>
+
+  
+
+  <p>The <code id="the-th-element:the-th-element-11"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element and its <code id="the-th-element:attr-tdth-colspan-2"><a href="/breakup/specs/html-tables/#attr-tdth-colspan">colspan</a></code>, <code id="the-th-element:attr-tdth-rowspan-2"><a href="/breakup/specs/html-tables/#attr-tdth-rowspan">rowspan</a></code>, <code id="the-th-element:attr-tdth-headers-2"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code>, and
+  <code id="the-th-element:attr-th-scope-6"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attributes take part in the <a href="/breakup/specs/html-tables/#table-model" id="the-th-element:table-model">table model</a>.</p>
+
+  <p>The <code id="the-th-element:dom-th-sort-2"><a href="/breakup/specs/sortable-tables/#dom-th-sort">sort()</a></code> method is used in the <a href="/breakup/specs/sortable-tables/#table-sorting-model" id="the-th-element:table-sorting-model-2">table sorting
+  model</a>.</p>
+
+  <p>The <dfn id="dom-th-scope"><code>scope</code></dfn> IDL attribute must <a href="/breakup/specs/core-algorithms/#reflect" id="the-th-element:reflect">reflect</a>
+  the content attribute of the same name, <a href="/breakup/specs/core-algorithms/#limited-to-only-known-values" id="the-th-element:limited-to-only-known-values">limited to only known values</a>.</p>
+
+  <p>The <dfn id="dom-th-abbr"><code>abbr</code></dfn> and <dfn id="dom-th-sorted"><code>sorted</code></dfn> IDL attributes must <a href="/breakup/specs/core-algorithms/#reflect" id="the-th-element:reflect-2">reflect</a> the
+  content attributes of the same name.</p>
+
+  
+
+  <div class="example">
+
+   <p>The following example shows how the <code id="the-th-element:attr-th-scope-7"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute's <code id="the-th-element:attr-th-scope-rowgroup-2"><a href="/breakup/specs/html-tables/#attr-th-scope-rowgroup">rowgroup</a></code> value affects which data cells a header cell
+   applies to.</p>
+
+   <p>Here is a markup fragment showing a table:</p>
+
+   <pre>&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt; &lt;th&gt; ID &lt;th&gt; Measurement &lt;th&gt; Average &lt;th&gt; Maximum
+ &lt;tbody&gt;
+  &lt;tr&gt; &lt;td&gt; &lt;th scope=rowgroup&gt; Cats &lt;td&gt; &lt;td&gt;
+  &lt;tr&gt; &lt;td&gt; 93 &lt;th scope=row&gt; Legs &lt;td&gt; 3.5 &lt;td&gt; 4
+  &lt;tr&gt; &lt;td&gt; 10 &lt;th scope=row&gt; Tails &lt;td&gt; 1 &lt;td&gt; 1
+ &lt;tbody&gt;
+  &lt;tr&gt; &lt;td&gt; &lt;th scope=rowgroup&gt; English speakers &lt;td&gt; &lt;td&gt;
+  &lt;tr&gt; &lt;td&gt; 32 &lt;th scope=row&gt; Legs &lt;td&gt; 2.67 &lt;td&gt; 4
+  &lt;tr&gt; &lt;td&gt; 35 &lt;th scope=row&gt; Tails &lt;td&gt; 0.33 &lt;td&gt; 1
+&lt;/table&gt;</pre>
+
+   <p>This would result in the following table:</p>
+
+   <table><thead><tr><th> ID </th><th> Measurement </th><th> Average </th><th> Maximum
+    </th></tr></thead><tbody><tr><td> </td><th scope="rowgroup"> Cats </th><td> </td><td>
+     </td></tr><tr><td> 93 </td><th scope="row"> Legs </th><td> 3.5 </td><td> 4
+     </td></tr><tr><td> 10 </td><th scope="row"> Tails </th><td> 1 </td><td> 1
+    </td></tr></tbody><tbody><tr><td> </td><th scope="rowgroup"> English speakers </th><td> </td><td>
+     </td></tr><tr><td> 32 </td><th scope="row"> Legs </th><td> 2.67 </td><td> 4
+     </td></tr><tr><td> 35 </td><th scope="row"> Tails </th><td> 0.33 </td><td> 1
+   </td></tr></tbody></table>
+
+   <p>The headers in the first row all apply directly down to the rows in their column.</p>
+
+   <p>The headers with the explicit <code id="the-th-element:attr-th-scope-8"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attributes apply to all
+   the cells in their row group other than the cells in the first column.</p>
+
+   <p>The remaining headers apply just to the cells to the right of them.</p>
+
+   
+   <img src="img/table-scope-diagram.png" width="459" alt="" height="256">
+
+  </div></section><section><h2>Attributes common to <code id="attributes-common-to-td-and-th-elements:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="attributes-common-to-td-and-th-elements:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements</h2>
+
+  <p>The <code id="attributes-common-to-td-and-th-elements:the-td-element-2"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="attributes-common-to-td-and-th-elements:the-th-element-2"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements may have a <dfn id="attr-tdth-colspan"><code>colspan</code></dfn> content attribute specified, whose value must
+  be a <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="attributes-common-to-td-and-th-elements:valid-non-negative-integer">valid non-negative integer</a> greater than zero.</p>
+
+  <p>The <code id="attributes-common-to-td-and-th-elements:the-td-element-3"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="attributes-common-to-td-and-th-elements:the-th-element-3"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements may also have a <dfn id="attr-tdth-rowspan"><code>rowspan</code></dfn> content attribute specified, whose value must
+  be a <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="attributes-common-to-td-and-th-elements:valid-non-negative-integer-2">valid non-negative integer</a>. For this attribute, the value zero means that the
+  cell is to span all the remaining rows in the row group.</p> 
+
+  <p>These attributes give the number of columns and rows respectively that the cell is to span.
+  These attributes must not be used to overlap cells, as described in the
+  description of the <a href="/breakup/specs/html-tables/#table-model" id="attributes-common-to-td-and-th-elements:table-model">table model</a>.</p> 
+
+  <hr>
+
+  <p>The <code id="attributes-common-to-td-and-th-elements:the-td-element-4"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="attributes-common-to-td-and-th-elements:the-th-element-4"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element may have a <dfn id="attr-tdth-headers"><code>headers</code></dfn> content attribute specified. The <code id="attributes-common-to-td-and-th-elements:attr-tdth-headers"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> attribute, if specified, must contain a string consisting
+  of an <a href="/breakup/specs/core-algorithms/#unordered-set-of-unique-space-separated-tokens" id="attributes-common-to-td-and-th-elements:unordered-set-of-unique-space-separated-tokens">unordered set of unique space-separated tokens</a> that are
+  <a href="/breakup/specs/core-algorithms/#case-sensitive" id="attributes-common-to-td-and-th-elements:case-sensitive">case-sensitive</a>, each of which must have the value of an <a href="/breakup/specs/core-algorithms/#concept-id" id="attributes-common-to-td-and-th-elements:concept-id">ID</a> of a <code id="attributes-common-to-td-and-th-elements:the-th-element-5"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element taking part in the same <a href="/breakup/specs/html-tables/#concept-table" id="attributes-common-to-td-and-th-elements:concept-table">table</a> as the <code id="attributes-common-to-td-and-th-elements:the-td-element-5"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="attributes-common-to-td-and-th-elements:the-th-element-6"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element (as defined by the <a href="/breakup/specs/html-tables/#table-model" id="attributes-common-to-td-and-th-elements:table-model-2">table model</a>).</p>
+
+  <p>A <code id="attributes-common-to-td-and-th-elements:the-th-element-7"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element with <a href="/breakup/specs/core-algorithms/#concept-id" id="attributes-common-to-td-and-th-elements:concept-id-2">ID</a> <var>id</var> is
+  said to be <i>directly targeted</i> by all <code id="attributes-common-to-td-and-th-elements:the-td-element-6"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="attributes-common-to-td-and-th-elements:the-th-element-8"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements in the
+  same <a href="/breakup/specs/html-tables/#concept-table" id="attributes-common-to-td-and-th-elements:concept-table-2">table</a> that have <code id="attributes-common-to-td-and-th-elements:attr-tdth-headers-2"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> attributes whose values include as one of their tokens
+  the <a href="/breakup/specs/core-algorithms/#concept-id" id="attributes-common-to-td-and-th-elements:concept-id-3">ID</a> <var>id</var>. A <code id="attributes-common-to-td-and-th-elements:the-th-element-9"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element <var>A</var> is said to be <i>targeted</i> by a <code id="attributes-common-to-td-and-th-elements:the-th-element-10"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> or <code id="attributes-common-to-td-and-th-elements:the-td-element-7"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element
+  <var>B</var> if either <var>A</var> is <i>directly targeted</i> by <var>B</var> or if there exists an element <var>C</var> that is itself
+  <i>targeted</i> by the element <var>B</var> and <var>A</var> is <i>directly
+  targeted</i> by <var>C</var>.</p>
+
+  <p>A <code id="attributes-common-to-td-and-th-elements:the-th-element-11"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element must not be <i>targeted</i> by itself.</p>
+
+  
+
+  <p>The <code id="attributes-common-to-td-and-th-elements:attr-tdth-colspan"><a href="/breakup/specs/html-tables/#attr-tdth-colspan">colspan</a></code>, <code id="attributes-common-to-td-and-th-elements:attr-tdth-rowspan"><a href="/breakup/specs/html-tables/#attr-tdth-rowspan">rowspan</a></code>, and <code id="attributes-common-to-td-and-th-elements:attr-tdth-headers-3"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code>
+  attributes take part in the <a href="/breakup/specs/html-tables/#table-model" id="attributes-common-to-td-and-th-elements:table-model-3">table model</a>.</p>
+
+  
+
+  <hr>
+
+  <p>The <code id="attributes-common-to-td-and-th-elements:the-td-element-8"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> and <code id="attributes-common-to-td-and-th-elements:the-th-element-12"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements implement interfaces that inherit from the
+  <code id="attributes-common-to-td-and-th-elements:htmltablecellelement"><a href="/breakup/specs/html-tables/#htmltablecellelement">HTMLTableCellElement</a></code> interface:</p>
+
+  <pre class="idl">interface <dfn id="htmltablecellelement">HTMLTableCellElement</dfn> : <a href="#htmlelement" id="attributes-common-to-td-and-th-elements:htmlelement">HTMLElement</a> {
+  attribute unsigned long <a href="/breakup/specs/html-tables/#dom-tdth-colspan" id="attributes-common-to-td-and-th-elements:dom-tdth-colspan">colSpan</a>;
+  attribute unsigned long <a href="/breakup/specs/html-tables/#dom-tdth-rowspan" id="attributes-common-to-td-and-th-elements:dom-tdth-rowspan">rowSpan</a>;
+  [PutForwards=<a href="/breakup/specs/core-algorithms/#dom-domsettabletokenlist-value" id="attributes-common-to-td-and-th-elements:dom-domsettabletokenlist-value">value</a>] readonly attribute <a href="/breakup/specs/core-algorithms/#domsettabletokenlist" id="attributes-common-to-td-and-th-elements:domsettabletokenlist">DOMSettableTokenList</a> <a href="/breakup/specs/html-tables/#dom-tdth-headers" id="attributes-common-to-td-and-th-elements:dom-tdth-headers">headers</a>;
+  readonly attribute long <a href="/breakup/specs/html-tables/#dom-tdth-cellindex" id="attributes-common-to-td-and-th-elements:dom-tdth-cellindex">cellIndex</a>;
+
+  // <a href="#HTMLTableCellElement-partial">also has obsolete members</a>
+};</pre>
+
+
+  <dl class="domintro"><dt><var>cell</var> . <code id="attributes-common-to-td-and-th-elements:dom-tdth-cellindex-2"><a href="/breakup/specs/html-tables/#dom-tdth-cellindex">cellIndex</a></code></dt><dd>
+
+    <p>Returns the position of the cell in the row's <code id="attributes-common-to-td-and-th-elements:dom-tr-cells"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code> list.
+    This does not necessarily correspond to the <var>x</var>-position of the cell in the
+    table, since earlier cells might cover multiple rows or columns.</p>
+
+    <p>Returns −1 if the element isn't in a row.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-tdth-colspan"><code>colSpan</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="attributes-common-to-td-and-th-elements:reflect">reflect</a> the <code id="attributes-common-to-td-and-th-elements:attr-tdth-colspan-2"><a href="/breakup/specs/html-tables/#attr-tdth-colspan">colspan</a></code> content attribute. Its
+  default value is 1.</p>
+
+  
+
+  <p>The <dfn id="dom-tdth-rowspan"><code>rowSpan</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="attributes-common-to-td-and-th-elements:reflect-2">reflect</a> the <code id="attributes-common-to-td-and-th-elements:attr-tdth-rowspan-2"><a href="/breakup/specs/html-tables/#attr-tdth-rowspan">rowspan</a></code> content attribute. Its
+  default value is 1.</p>
+
+  <p>The <dfn id="dom-tdth-headers"><code>headers</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="attributes-common-to-td-and-th-elements:reflect-3">reflect</a> the content attribute of the same name.</p>
+
+  <p>The <dfn id="dom-tdth-cellindex"><code>cellIndex</code></dfn> IDL attribute must, if the
+  element has a parent <code id="attributes-common-to-td-and-th-elements:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element, return the index of the cell's element in the parent
+  element's <code id="attributes-common-to-td-and-th-elements:dom-tr-cells-2"><a href="/breakup/specs/html-tables/#dom-tr-cells">cells</a></code> collection. If there is no such parent element,
+  then the attribute must return −1.</p></section><section><h2>Processing model</h2>
+
+  <p>The various table elements and their content attributes together define the <dfn id="table-model">table
+  model</dfn>.</p>
+
+  <p>A <dfn id="concept-table">table</dfn> consists of cells aligned on a two-dimensional grid of
+  <dfn id="concept-slots">slots</dfn> with coordinates (<var>x</var>, <var>y</var>). The grid is finite, and is either empty or has one or more slots. If the grid
+  has one or more slots, then the <var>x</var> coordinates are always in the range <span>0&nbsp;≤&nbsp;<var>x</var>&nbsp;&lt;&nbsp;<var>x<sub>width</sub></var></span>, and the <var>y</var> coordinates are always in the
+  range <span>0&nbsp;≤&nbsp;<var>y</var>&nbsp;&lt;&nbsp;<var>y<sub>height</sub></var></span>. If one or both of <var>x<sub>width</sub></var> and <var>y<sub>height</sub></var> are zero, then the
+  table is empty (has no slots). Tables correspond to <code id="processing-model-3:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> elements.</p>
+
+  <p>A <dfn id="concept-cell">cell</dfn> is a set of slots anchored at a slot (<var>cell<sub>x</sub></var>, <var>cell<sub>y</sub></var>), and with
+  a particular <var>width</var> and <var>height</var> such that the cell covers
+  all the slots with coordinates (<var>x</var>, <var>y</var>) where <span><var>cell<sub>x</sub></var>&nbsp;≤&nbsp;<var>x</var>&nbsp;&lt;&nbsp;<var>cell<sub>x</sub></var>+<var>width</var></span> and <span><var>cell<sub>y</sub></var>&nbsp;≤&nbsp;<var>y</var>&nbsp;&lt;&nbsp;<var>cell<sub>y</sub></var>+<var>height</var></span>. Cells can either be <em>data cells</em>
+  or <em>header cells</em>. Data cells correspond to <code id="processing-model-3:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> elements, and header cells
+  correspond to <code id="processing-model-3:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements. Cells of both types can have zero or more associated
+  header cells.</p>
+
+  <p>It is possible, in certain error cases, for two cells to occupy the same slot.</p>
+
+  <p>A <dfn id="concept-row">row</dfn> is a complete set of slots from <span><var>x</var>=0</span> to <span><var>x</var>=<var>x<sub>width</sub></var>-1</span>, for a particular value of <var>y</var>. Rows usually
+  correspond to <code id="processing-model-3:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements, though a <a href="/breakup/specs/html-tables/#concept-row-group" id="processing-model-3:concept-row-group">row group</a>
+  can have some implied <a href="/breakup/specs/html-tables/#concept-row" id="processing-model-3:concept-row">rows</a> at the end in some cases involving
+  <a href="/breakup/specs/html-tables/#concept-cell" id="processing-model-3:concept-cell">cells</a> spanning multiple rows.</p>
+
+  <p>A <dfn id="concept-column">column</dfn> is a complete set of slots from <span><var>y</var>=0</span> to <span><var>y</var>=<var>y<sub>height</sub></var>-1</span>, for a particular value of <var>x</var>. Columns can
+  correspond to <code id="processing-model-3:the-col-element"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> elements. In the absence of <code id="processing-model-3:the-col-element-2"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> elements, columns are
+  implied.</p>
+
+  <p>A <dfn id="concept-row-group">row group</dfn> is a set of <a href="/breakup/specs/html-tables/#concept-row" id="processing-model-3:concept-row-2">rows</a> anchored at a slot (0, <var>group<sub>y</sub></var>) with a particular <var>height</var> such that the row group
+  covers all the slots with coordinates (<var>x</var>, <var>y</var>) where <span>0&nbsp;≤&nbsp;<var>x</var>&nbsp;&lt;&nbsp;<var>x<sub>width</sub></var></span> and <span><var>group<sub>y</sub></var>&nbsp;≤&nbsp;<var>y</var>&nbsp;&lt;&nbsp;<var>group<sub>y</sub></var>+<var>height</var></span>. Row groups correspond to
+  <code id="processing-model-3:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, <code id="processing-model-3:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, and <code id="processing-model-3:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements. Not every row is
+  necessarily in a row group.</p>
+
+  <p>A <dfn id="concept-column-group">column group</dfn> is a set of <a href="/breakup/specs/html-tables/#concept-column" id="processing-model-3:concept-column">columns</a> anchored at a slot (<var>group<sub>x</sub></var>, 0) with a particular <var>width</var> such that the column group
+  covers all the slots with coordinates (<var>x</var>, <var>y</var>) where <span><var>group<sub>x</sub></var>&nbsp;≤&nbsp;<var>x</var>&nbsp;&lt;&nbsp;<var>group<sub>x</sub></var>+<var>width</var></span> and <span>0&nbsp;≤&nbsp;<var>y</var>&nbsp;&lt;&nbsp;<var>y<sub>height</sub></var></span>. Column
+  groups correspond to <code id="processing-model-3:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> elements. Not every column is necessarily in a column
+  group.</p>
+
+  <p><a href="/breakup/specs/html-tables/#concept-row-group" id="processing-model-3:concept-row-group-2">Row groups</a> cannot overlap each other. Similarly, <a href="/breakup/specs/html-tables/#concept-column-group" id="processing-model-3:concept-column-group">column groups</a> cannot overlap each other.</p>
+
+  <p>A <a href="/breakup/specs/html-tables/#concept-cell" id="processing-model-3:concept-cell-2">cell</a> cannot cover slots that are from two or more <a href="/breakup/specs/html-tables/#concept-row-group" id="processing-model-3:concept-row-group-3">row groups</a>. It is, however, possible for a cell to be in multiple
+  <a href="/breakup/specs/html-tables/#concept-column-group" id="processing-model-3:concept-column-group-2">column groups</a>. All the slots that form part of one cell
+  are part of zero or one <a href="/breakup/specs/html-tables/#concept-row-group" id="processing-model-3:concept-row-group-4">row groups</a> and zero or more <a href="/breakup/specs/html-tables/#concept-column-group" id="processing-model-3:concept-column-group-3">column groups</a>.</p>
+
+  <p>In addition to <a href="/breakup/specs/html-tables/#concept-cell" id="processing-model-3:concept-cell-3">cells</a>, <a href="/breakup/specs/html-tables/#concept-column" id="processing-model-3:concept-column-2">columns</a>, <a href="/breakup/specs/html-tables/#concept-row" id="processing-model-3:concept-row-3">rows</a>, <a href="/breakup/specs/html-tables/#concept-row-group" id="processing-model-3:concept-row-group-5">row groups</a>, and <a href="/breakup/specs/html-tables/#concept-column-group" id="processing-model-3:concept-column-group-4">column
+  groups</a>, <a href="/breakup/specs/html-tables/#concept-table" id="processing-model-3:concept-table">tables</a> can have a <code id="processing-model-3:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element
+  associated with them. This gives the table a heading, or legend.</p>
+
+  <p>A <dfn id="table-model-error">table model error</dfn> is an error with the data represented by <code id="processing-model-3:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>
+  elements and their descendants. Documents must not have table model errors.</p>
+
+
+  <section><h2>Forming a table</h2>
+
+  <p>To determine which elements correspond to which slots in a <a href="/breakup/specs/html-tables/#concept-table" id="forming-a-table:concept-table">table</a> associated with a <code id="forming-a-table:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element, to determine the
+  dimensions of the table (<var>x<sub>width</sub></var> and <var>y<sub>height</sub></var>), and to determine if there are any <a href="/breakup/specs/html-tables/#table-model-error" id="forming-a-table:table-model-error">table model errors</a>, user agents must use the following algorithm:</p>
+
+  <ol><li>
+    <p>Let <var>x<sub>width</sub></var> be zero.</p>
+   </li><li>
+    <p>Let <var>y<sub>height</sub></var> be zero.</p>
+   </li><li>
+
+    <p>Let <var>pending <code id="forming-a-table:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements</var> be a list of <code id="forming-a-table:the-tfoot-element-2"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>
+    elements, initially empty.</p>
+
+   </li><li>
+
+    <p>Let <var>the table</var> be the <a href="/breakup/specs/html-tables/#concept-table" id="forming-a-table:concept-table-2">table</a> represented
+    by the <code id="forming-a-table:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element. The <var>x<sub>width</sub></var> and <var>y<sub>height</sub></var> variables give <var>the table</var>'s
+    dimensions. <var>The table</var> is initially empty.</p>
+
+   </li><li>
+
+    
+
+    <p>If the <code id="forming-a-table:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element has no children elements, then return <var>the
+    table</var> (which will be empty), and abort these steps.</p>
+
+   </li><li>
+
+    <p>Associate the first <code id="forming-a-table:the-caption-element"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element child of the <code id="forming-a-table:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element with
+    <var>the table</var>. If there are no such children, then it has no associated
+    <code id="forming-a-table:the-caption-element-2"><a href="/breakup/specs/html-tables/#the-caption-element">caption</a></code> element.</p>
+
+   </li><li>
+
+    <p>Let the <var>current element</var> be the first element child of the
+    <code id="forming-a-table:the-table-element-5"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element.</p>
+
+    <p>If a step in this algorithm ever requires the <var>current element</var> to be <dfn id="concept-table-advance">advanced to the next child of the <code>table</code></dfn> when
+    there is no such next child, then the user agent must jump to the step labeled <i>end</i>, near
+    the end of this algorithm.</p>
+
+   </li><li>
+
+    <p>While the <var>current element</var> is not one of the following elements, <a href="/breakup/specs/html-tables/#concept-table-advance" id="forming-a-table:concept-table-advance">advance</a> the <var>current element</var> to the next
+    child of the <code id="forming-a-table:the-table-element-6"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>:</p>
+
+    <ul class="brief"><li><code id="forming-a-table:the-colgroup-element"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code></li><li><code id="forming-a-table:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code></li><li><code id="forming-a-table:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code></li><li><code id="forming-a-table:the-tfoot-element-3"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code></li><li><code id="forming-a-table:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code></li></ul>
+
+   </li><li>
+
+    <p>If the <var>current element</var> is a <code id="forming-a-table:the-colgroup-element-2"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code>, follow these
+    substeps:</p>
+
+    <ol><li>
+
+      <p><i>Column groups</i>: Process the <var>current element</var> according to the
+      appropriate case below:</p>
+
+      <dl class="switch"><dt>If the <var>current element</var> has any <code id="forming-a-table:the-col-element"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element children</dt><dd>
+
+        <p>Follow these steps:</p>
+
+        <ol><li>
+
+          <p>Let <var>x<sub>start</sub></var> have the value of <span><var>x<sub>width</sub></var></span>.</p>
+
+         </li><li>
+
+          <p>Let the <var>current column</var> be the first <code id="forming-a-table:the-col-element-2"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element child
+          of the <code id="forming-a-table:the-colgroup-element-3"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element.</p>
+
+         </li><li>
+
+          <p><i>Columns</i>: If the <var>current column</var> <code id="forming-a-table:the-col-element-3"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element has
+          a <code id="forming-a-table:attr-col-span"><a href="/breakup/specs/html-tables/#attr-col-span">span</a></code> attribute, then parse its value using the
+          <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="forming-a-table:rules-for-parsing-non-negative-integers">rules for parsing non-negative integers</a>.</p>
+
+          <p>If the result of parsing the value is not an error or zero, then let <var>span</var> be that value.</p>
+
+          <p>Otherwise, if the <code id="forming-a-table:the-col-element-4"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element has no <code id="forming-a-table:attr-col-span-2"><a href="/breakup/specs/html-tables/#attr-col-span">span</a></code> attribute, or if trying to parse the attribute's value
+          resulted in an error or zero, then let <var>span</var> be 1.</p>
+
+         </li><li>
+
+          <p>Increase <var>x<sub>width</sub></var> by <var>span</var>.</p>
+
+         </li><li>
+
+          <p>Let the last <var>span</var> <a href="/breakup/specs/html-tables/#concept-column" id="forming-a-table:concept-column">columns</a> in
+          <var>the table</var> correspond to the <var>current column</var>
+          <code id="forming-a-table:the-col-element-5"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element.</p>
+
+         </li><li>
+
+          <p>If <var>current column</var> is not the last <code id="forming-a-table:the-col-element-6"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element child of
+          the <code id="forming-a-table:the-colgroup-element-4"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element, then let the <var>current column</var> be the
+          next <code id="forming-a-table:the-col-element-7"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element child of the <code id="forming-a-table:the-colgroup-element-5"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element, and return to
+          the step labeled <i>columns</i>.</p>
+
+         </li><li>
+
+          <p>Let all the last <a href="/breakup/specs/html-tables/#concept-column" id="forming-a-table:concept-column-2">columns</a> in <var>the
+          table</var> from <span>x=<var>x<sub>start</sub></var></span> to
+          <span>x=<var>x<sub>width</sub></var>-1</span> form a new <a href="/breakup/specs/html-tables/#concept-column-group" id="forming-a-table:concept-column-group">column group</a>, anchored at the slot (<var>x<sub>start</sub></var>, 0), with width <span><var>x<sub>width</sub></var>-<var>x<sub>start</sub></var></span>, corresponding to the <code id="forming-a-table:the-colgroup-element-6"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element.</p>
+
+         </li></ol>
+
+       </dd><dt>If the <var>current element</var> has no <code id="forming-a-table:the-col-element-8"><a href="/breakup/specs/html-tables/#the-col-element">col</a></code> element children</dt><dd>
+
+        <ol><li>
+
+          <p>If the <code id="forming-a-table:the-colgroup-element-7"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element has a <code id="forming-a-table:attr-colgroup-span"><a href="/breakup/specs/html-tables/#attr-colgroup-span">span</a></code>
+ attribute, then parse its value using the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="forming-a-table:rules-for-parsing-non-negative-integers-2">rules for parsing non-negative
+          integers</a>.</p>
+
+          <p>If the result of parsing the value is not an error or zero, then let <var>span</var> be that value.</p>
+
+          <p>Otherwise, if the <code id="forming-a-table:the-colgroup-element-8"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element has no <code id="forming-a-table:attr-colgroup-span-2"><a href="/breakup/specs/html-tables/#attr-colgroup-span">span</a></code> attribute, or if trying to parse the attribute's
+          value resulted in an error or zero, then let <var>span</var> be 1.</p>
+
+         </li><li>
+
+          <p>Increase <var>x<sub>width</sub></var> by <var>span</var>.</p>
+
+         </li><li>
+
+          <p>Let the last <var>span</var> <a href="/breakup/specs/html-tables/#concept-column" id="forming-a-table:concept-column-3">columns</a> in
+          <var>the table</var> form a new <a href="/breakup/specs/html-tables/#concept-column-group" id="forming-a-table:concept-column-group-2">column
+          group</a>, anchored at the slot (<span><var>x<sub>width</sub></var>-<var>span</var></span>, 0), with width <var>span</var>, corresponding to the <code id="forming-a-table:the-colgroup-element-9"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element.</p>
+
+         </li></ol>
+
+       </dd></dl>
+
+     </li><li>
+
+      <p><a href="/breakup/specs/html-tables/#concept-table-advance" id="forming-a-table:concept-table-advance-2">Advance</a> the <var>current element</var>
+      to the next child of the <code id="forming-a-table:the-table-element-7"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>.</p>
+
+     </li><li>
+
+      <p>While the <var>current element</var> is not one of the following elements, <a href="/breakup/specs/html-tables/#concept-table-advance" id="forming-a-table:concept-table-advance-3">advance</a> the <var>current element</var> to the
+      next child of the <code id="forming-a-table:the-table-element-8"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>:</p>
+
+      <ul class="brief"><li><code id="forming-a-table:the-colgroup-element-10"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code></li><li><code id="forming-a-table:the-thead-element-2"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code></li><li><code id="forming-a-table:the-tbody-element-2"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code></li><li><code id="forming-a-table:the-tfoot-element-4"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code></li><li><code id="forming-a-table:the-tr-element-2"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code></li></ul>
+
+     </li><li>
+
+      <p>If the <var>current element</var> is a <code id="forming-a-table:the-colgroup-element-11"><a href="/breakup/specs/html-tables/#the-colgroup-element">colgroup</a></code> element, jump to the
+      step labeled <i>column groups</i> above.</p>
+
+     </li></ol>
+
+   </li><li>
+
+    <p>Let <var>y<sub>current</sub></var> be zero.</p>
+
+   </li><li>
+
+    <p>Let the <var>list of downward-growing cells</var> be an empty list.</p>
+
+   </li><li>
+
+    <p><i>Rows</i>: While the <var>current element</var> is not one of the following
+    elements, <a href="/breakup/specs/html-tables/#concept-table-advance" id="forming-a-table:concept-table-advance-4">advance</a> the <var>current
+    element</var> to the next child of the <code id="forming-a-table:the-table-element-9"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>:</p>
+
+    <ul class="brief"><li><code id="forming-a-table:the-thead-element-3"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code></li><li><code id="forming-a-table:the-tbody-element-3"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code></li><li><code id="forming-a-table:the-tfoot-element-5"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code></li><li><code id="forming-a-table:the-tr-element-3"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code></li></ul>
+
+   </li><li>
+
+    <p>If the <var>current element</var> is a <code id="forming-a-table:the-tr-element-4"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>, then run the <a href="/breakup/specs/html-tables/#algorithm-for-processing-rows" id="forming-a-table:algorithm-for-processing-rows">algorithm
+    for processing rows</a>, <a href="/breakup/specs/html-tables/#concept-table-advance" id="forming-a-table:concept-table-advance-5">advance</a> the <var>current element</var> to the next child of the <code id="forming-a-table:the-table-element-10"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>, and return to the
+    step labeled <i>rows</i>.</p>
+
+   </li><li>
+
+    <p>Run the <a href="/breakup/specs/html-tables/#algorithm-for-ending-a-row-group" id="forming-a-table:algorithm-for-ending-a-row-group">algorithm for ending a row group</a>.</p>
+
+   </li><li>
+
+    <p>If the <var>current element</var> is a <code id="forming-a-table:the-tfoot-element-6"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>, then add that element to
+    the list of <var>pending <code id="forming-a-table:the-tfoot-element-7"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements</var>, <a href="/breakup/specs/html-tables/#concept-table-advance" id="forming-a-table:concept-table-advance-6">advance</a> the <var>current element</var> to the next
+    child of the <code id="forming-a-table:the-table-element-11"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>, and return to the step labeled <i>rows</i>.</p>
+
+   </li><li>
+
+    <p>The <var>current element</var> is either a <code id="forming-a-table:the-thead-element-4"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> or a
+    <code id="forming-a-table:the-tbody-element-4"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>.</p>
+
+    <p>Run the <a href="/breakup/specs/html-tables/#algorithm-for-processing-row-groups" id="forming-a-table:algorithm-for-processing-row-groups">algorithm for processing row groups</a>.</p>
+
+   </li><li>
+
+    <p><a href="/breakup/specs/html-tables/#concept-table-advance" id="forming-a-table:concept-table-advance-7">Advance</a> the <var>current element</var> to
+    the next child of the <code id="forming-a-table:the-table-element-12"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>.</p>
+
+   </li><li>
+
+    <p>Return to the step labeled <i>rows</i>.</p>
+
+   </li><li>
+
+    <p><i>End</i>: For each <code id="forming-a-table:the-tfoot-element-8"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element in the list of <var>pending
+    <code id="forming-a-table:the-tfoot-element-9"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements</var>, in <a href="/breakup/specs/core-algorithms/#tree-order" id="forming-a-table:tree-order">tree order</a>, run the <a href="/breakup/specs/html-tables/#algorithm-for-processing-row-groups" id="forming-a-table:algorithm-for-processing-row-groups-2">algorithm for processing row
+    groups</a>.</p>
+
+   </li><li>
+
+    <p>If there exists a <a href="/breakup/specs/html-tables/#concept-row" id="forming-a-table:concept-row">row</a> or <a href="/breakup/specs/html-tables/#concept-column" id="forming-a-table:concept-column-4">column</a> in <var>the table</var> containing only <a href="/breakup/specs/html-tables/#concept-slots" id="forming-a-table:concept-slots">slots</a> that do not have a <a href="/breakup/specs/html-tables/#concept-cell" id="forming-a-table:concept-cell">cell</a>
+    anchored to them, then this is a <a href="/breakup/specs/html-tables/#table-model-error" id="forming-a-table:table-model-error-2">table model error</a>.</p>
+
+   </li><li>
+
+    <p>Return <var>the table</var>.</p>
+
+   </li></ol>
+
+  <p>The <dfn id="algorithm-for-processing-row-groups">algorithm for processing row groups</dfn>, which is invoked by the set of steps above
+  for processing <code id="forming-a-table:the-thead-element-5"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, <code id="forming-a-table:the-tbody-element-5"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code>, and <code id="forming-a-table:the-tfoot-element-10"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> elements, is:</p>
+
+  <ol><li>
+
+    <p>Let <var>y<sub>start</sub></var> have the value of <var>y<sub>height</sub></var>.</p>
+
+   </li><li>
+
+    <p>For each <code id="forming-a-table:the-tr-element-5"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element that is a child of the element being processed, in tree
+    order, run the <a href="/breakup/specs/html-tables/#algorithm-for-processing-rows" id="forming-a-table:algorithm-for-processing-rows-2">algorithm for processing rows</a>.</p>
+
+   </li><li>
+
+    
+    <p>If <span><var>y<sub>height</sub></var>&nbsp;&gt;&nbsp;<var>y<sub>start</sub></var></span>, then let all the last <a href="/breakup/specs/html-tables/#concept-row" id="forming-a-table:concept-row-2">rows</a> in <var>the table</var> from <span>y=<var>y<sub>start</sub></var></span> to <span>y=<var>y<sub>height</sub></var>-1</span> form a new <a href="/breakup/specs/html-tables/#concept-row-group" id="forming-a-table:concept-row-group">row
+    group</a>, anchored at the slot with coordinate (0, <var>y<sub>start</sub></var>), with height <span><var>y<sub>height</sub></var>-<var>y<sub>start</sub></var></span>, corresponding
+    to the element being processed.</p>
+
+   </li><li>
+
+    <p>Run the <a href="/breakup/specs/html-tables/#algorithm-for-ending-a-row-group" id="forming-a-table:algorithm-for-ending-a-row-group-2">algorithm for ending a row group</a>.</p>
+
+   </li></ol>
+
+  <p>The <dfn id="algorithm-for-ending-a-row-group">algorithm for ending a row group</dfn>, which is invoked by the set of steps above
+  when starting and ending a block of rows, is:</p>
+
+  <ol><li>
+
+    <p>While <var>y<sub>current</sub></var> is less than <var>y<sub>height</sub></var>, follow these steps:</p>
+
+    <ol><li>
+
+      <p>Run the <a href="/breakup/specs/html-tables/#algorithm-for-growing-downward-growing-cells" id="forming-a-table:algorithm-for-growing-downward-growing-cells">algorithm for growing downward-growing cells</a>.</p>
+
+     </li><li>
+
+      <p>Increase <var>y<sub>current</sub></var> by 1.</p>
+
+     </li></ol>
+
+   </li><li>
+
+    <p>Empty the <var>list of downward-growing cells</var>.</p>
+
+   </li></ol>
+
+
+  <p>The <dfn id="algorithm-for-processing-rows">algorithm for processing rows</dfn>, which is invoked by the set of steps above for
+  processing <code id="forming-a-table:the-tr-element-6"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements, is:</p>
+
+  <ol><li>
+
+    <p>If <var>y<sub>height</sub></var> is equal to <var>y<sub>current</sub></var>, then increase <var>y<sub>height</sub></var> by
+    1. (<var>y<sub>current</sub></var> is never <em>greater</em> than <var>y<sub>height</sub></var>.)</p>
+
+   </li><li>
+
+    <p>Let <var>x<sub>current</sub></var> be 0.</p>
+
+   </li><li>
+
+    <p>Run the <a href="/breakup/specs/html-tables/#algorithm-for-growing-downward-growing-cells" id="forming-a-table:algorithm-for-growing-downward-growing-cells-2">algorithm for growing downward-growing cells</a>.</p>
+
+   </li><li>
+
+    <p>If the <code id="forming-a-table:the-tr-element-7"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element being processed has no <code id="forming-a-table:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="forming-a-table:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code>
+    element children, then increase <var>y<sub>current</sub></var> by 1, abort
+    this set of steps, and return to the algorithm above.</p>
+
+   </li><li>
+
+    <p>Let <var>current cell</var> be the first <code id="forming-a-table:the-td-element-2"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="forming-a-table:the-th-element-2"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element child
+    in the <code id="forming-a-table:the-tr-element-8"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element being processed.</p>
+
+   </li><li>
+
+    <p><i>Cells</i>: While <var>x<sub>current</sub></var> is less than <var>x<sub>width</sub></var> and the slot with coordinate (<var>x<sub>current</sub></var>, <var>y<sub>current</sub></var>) already has a
+    cell assigned to it, increase <var>x<sub>current</sub></var> by 1.</p>
+
+   </li><li>
+
+    <p>If <var>x<sub>current</sub></var> is equal to <var>x<sub>width</sub></var>, increase <var>x<sub>width</sub></var> by 1. (<var>x<sub>current</sub></var> is never <em>greater</em> than <var>x<sub>width</sub></var>.)</p>
+
+   </li><li>
+
+    <p>If the <var>current cell</var> has a <code id="forming-a-table:attr-tdth-colspan"><a href="/breakup/specs/html-tables/#attr-tdth-colspan">colspan</a></code>
+    attribute, then <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="forming-a-table:rules-for-parsing-non-negative-integers-3">parse that attribute's
+    value</a>, and let <var>colspan</var> be the result.</p>
+
+    <p>If parsing that value failed, or returned zero, or if the attribute is absent, then let <var>colspan</var> be 1, instead.</p>
+
+   </li><li>
+
+    <p>If the <var>current cell</var> has a <code id="forming-a-table:attr-tdth-rowspan"><a href="/breakup/specs/html-tables/#attr-tdth-rowspan">rowspan</a></code>
+    attribute, then <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="forming-a-table:rules-for-parsing-non-negative-integers-4">parse that attribute's
+    value</a>, and let <var>rowspan</var> be the result.</p>
+
+    <p>If parsing that value failed or if the attribute is absent, then let <var>rowspan</var> be 1, instead.</p>
+
+   </li><li>
+
+    <p>If <var>rowspan</var> is zero and the <code id="forming-a-table:the-table-element-13"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element's
+    <a id="forming-a-table:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> is not set to <a href="/breakup/specs/core-algorithms/#quirks-mode" id="forming-a-table:quirks-mode">quirks mode</a>, then let <var>cell grows
+    downward</var> be true, and set <var>rowspan</var> to 1. Otherwise, let <var>cell grows downward</var> be false.</p>
+
+   </li><li>
+
+    <p>If <span><var>x<sub>width</sub></var>&nbsp;&lt;&nbsp;<var>x<sub>current</sub></var>+<var>colspan</var></span>, then let <var>x<sub>width</sub></var> be <span><var>x<sub>current</sub></var>+<var>colspan</var></span>.</p>
+
+   </li><li>
+
+    <p>If <span><var>y<sub>height</sub></var>&nbsp;&lt;&nbsp;<var>y<sub>current</sub></var>+<var>rowspan</var></span>, then let <var>y<sub>height</sub></var> be <span><var>y<sub>current</sub></var>+<var>rowspan</var></span>.</p>
+
+   </li><li>
+
+    <p>Let the slots with coordinates (<var>x</var>, <var>y</var>) such that <span><var>x<sub>current</sub></var>&nbsp;≤&nbsp;<var>x</var>&nbsp;&lt;&nbsp;<var>x<sub>current</sub></var>+<var>colspan</var></span> and <span><var>y<sub>current</sub></var>&nbsp;≤&nbsp;<var>y</var>&nbsp;&lt;&nbsp;<var>y<sub>current</sub></var>+<var>rowspan</var></span> be covered by a
+    new <a href="/breakup/specs/html-tables/#concept-cell" id="forming-a-table:concept-cell-2">cell</a> <var>c</var>, anchored at (<var>x<sub>current</sub></var>, <var>y<sub>current</sub></var>),
+    which has width <var>colspan</var> and height <var>rowspan</var>,
+    corresponding to the <var>current cell</var> element.</p>
+
+    <p>If the <var>current cell</var> element is a <code id="forming-a-table:the-th-element-3"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element, let this new
+    cell <var>c</var> be a header cell; otherwise, let it be a data cell.</p>
+
+    <p>To establish which header cells apply to the <var>current cell</var> element, use
+    the <a href="/breakup/specs/html-tables/#algorithm-for-assigning-header-cells" id="forming-a-table:algorithm-for-assigning-header-cells">algorithm for assigning header cells</a> described in the next section.</p>
+
+    <p>If any of the slots involved already had a <a href="/breakup/specs/html-tables/#concept-cell" id="forming-a-table:concept-cell-3">cell</a> covering
+    them, then this is a <a href="/breakup/specs/html-tables/#table-model-error" id="forming-a-table:table-model-error-3">table model error</a>. Those slots now have two cells
+    overlapping.</p>
+
+   </li><li>
+
+    <p>If <var>cell grows downward</var> is true, then add the tuple {<var>c</var>, <var>x<sub>current</sub></var>, <var>colspan</var>}
+    to the <var>list of downward-growing cells</var>.</p>
+
+   </li><li>
+
+    <p>Increase <var>x<sub>current</sub></var> by <var>colspan</var>.</p>
+
+   </li><li>
+
+    <p>If <var>current cell</var> is the last <code id="forming-a-table:the-td-element-3"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="forming-a-table:the-th-element-4"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element child in
+    the <code id="forming-a-table:the-tr-element-9"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element being processed, then increase <var>y<sub>current</sub></var> by 1, abort this set of steps, and return to the algorithm
+    above.</p>
+
+   </li><li>
+
+    <p>Let <var>current cell</var> be the next <code id="forming-a-table:the-td-element-4"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> or <code id="forming-a-table:the-th-element-5"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element child
+    in the <code id="forming-a-table:the-tr-element-10"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element being processed.</p>
+
+   </li><li>
+
+    <p>Return to the step labeled <i>cells</i>.</p>
+
+   </li></ol>
+
+
+  <p>When the algorithms above require the user agent to run the <dfn id="algorithm-for-growing-downward-growing-cells">algorithm for growing
+  downward-growing cells</dfn>, the user agent must, for each {<var>cell</var>, <var>cell<sub>x</sub></var>, <var>width</var>} tuple in the <var>list of downward-growing cells</var>, if any, extend the <a href="/breakup/specs/html-tables/#concept-cell" id="forming-a-table:concept-cell-4">cell</a> <var>cell</var> so that it also covers the slots with
+  coordinates (<var>x</var>, <var>y<sub>current</sub></var>), where <span><var>cell<sub>x</sub></var>&nbsp;≤&nbsp;<var>x</var>&nbsp;&lt;&nbsp;<var>cell<sub>x</sub></var>+<var>width</var></span>.</p></section>
+
+
+
+
+  <section><h2>Forming relationships between data cells and header cells</h2>
+
+  <p>Each cell can be assigned zero or more header cells. The <dfn id="algorithm-for-assigning-header-cells">algorithm for assigning header
+  cells</dfn> to a cell <var>principal cell</var> is as follows.</p>
+
+  <ol><li>
+
+    <p>Let <var>header list</var> be an empty list of cells.</p>
+
+   </li><li>
+
+    <p>Let (<var>principal<sub>x</sub></var>, <var>principal<sub>y</sub></var>) be the coordinate of the slot to which the <var>principal
+    cell</var> is anchored.</p>
+
+   </li><li>
+
+    <dl class="switch"><dt>If the <var>principal cell</var> has a <code id="header-and-data-cell-semantics:attr-tdth-headers"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> attribute specified</dt><dd>
+
+      
+
+      <ol><li>
+
+        <p>Take the value of the <var>principal cell</var>'s <code id="header-and-data-cell-semantics:attr-tdth-headers-2"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> attribute and <a href="/breakup/specs/core-algorithms/#split-a-string-on-spaces" id="header-and-data-cell-semantics:split-a-string-on-spaces">split it on spaces</a>, letting <var>id list</var> be the list of tokens
+        obtained.</p>
+
+       </li><li>
+
+        
+        
+        <p>For each token in the <var>id list</var>, if the
+        first element in the <code id="header-and-data-cell-semantics:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> with an <a href="/breakup/specs/core-algorithms/#concept-id" id="header-and-data-cell-semantics:concept-id">ID</a> equal to
+        the token is a cell in the same <a href="/breakup/specs/html-tables/#concept-table" id="header-and-data-cell-semantics:concept-table">table</a>, and that cell is not the
+        <var>principal cell</var>, then add that cell to <var>header list</var>.</p>
+
+       </li></ol>
+
+     </dd><dt>If <var>principal cell</var> does not have a <code id="header-and-data-cell-semantics:attr-tdth-headers-3"><a href="/breakup/specs/html-tables/#attr-tdth-headers">headers</a></code> attribute specified</dt><dd>
+
+      <ol><li>
+
+        <p>Let <var>principal<sub>width</sub></var> be the width of the <var>principal cell</var>.</p>
+
+       </li><li>
+
+        <p>Let <var>principal<sub>height</sub></var> be the height of the <var>principal cell</var>.</p>
+
+       </li><li>
+
+        <p>For each value of <var>y</var> from <var>principal<sub>y</sub></var> to <span><var>principal<sub>y</sub></var>+<var>principal<sub>height</sub></var>-1</span>, run
+        the <a href="/breakup/specs/html-tables/#internal-algorithm-for-scanning-and-assigning-header-cells" id="header-and-data-cell-semantics:internal-algorithm-for-scanning-and-assigning-header-cells">internal algorithm for scanning and assigning header cells</a>, with the <var>principal cell</var>, the <var>header list</var>, the initial coordinate
+        (<var>principal<sub>x</sub></var>,<var>y</var>), and the
+        increments <span>Δ<var>x</var>=−1</span> and <span>Δ<var>y</var>=0</span>.</p>
+
+       </li><li>
+
+        <p>For each value of <var>x</var> from <var>principal<sub>x</sub></var> to <span><var>principal<sub>x</sub></var>+<var>principal<sub>width</sub></var>-1</span>, run
+        the <a href="/breakup/specs/html-tables/#internal-algorithm-for-scanning-and-assigning-header-cells" id="header-and-data-cell-semantics:internal-algorithm-for-scanning-and-assigning-header-cells-2">internal algorithm for scanning and assigning header cells</a>, with the <var>principal cell</var>, the <var>header list</var>, the initial coordinate
+        (<var>x</var>,<var>principal<sub>y</sub></var>), and the
+        increments <span>Δ<var>x</var>=0</span> and <span>Δ<var>y</var>=−1</span>.</p>
+
+       </li><li>
+
+        <p>If the <var>principal cell</var> is anchored in a <a href="/breakup/specs/html-tables/#concept-row-group" id="header-and-data-cell-semantics:concept-row-group">row group</a>, then add all header cells that are <a href="/breakup/specs/html-tables/#row-group-header" id="header-and-data-cell-semantics:row-group-header">row group headers</a> and are anchored in the same row group
+        with an <var>x</var>-coordinate less than or equal to <span><var>principal<sub>x</sub></var>+<var>principal<sub>width</sub></var>-1</span> and a <var>y</var>-coordinate less than or
+        equal to <span><var>principal<sub>y</sub></var>+<var>principal<sub>height</sub></var>-1</span> to <var>header
+        list</var>.</p>
+
+        
+
+       </li><li>
+
+        <p>If the <var>principal cell</var> is anchored in a <a href="/breakup/specs/html-tables/#concept-column-group" id="header-and-data-cell-semantics:concept-column-group">column group</a>, then add all header cells that are <a href="/breakup/specs/html-tables/#column-group-header" id="header-and-data-cell-semantics:column-group-header">column group headers</a> and are anchored in the same column
+        group with an <var>x</var>-coordinate less than or equal to <span><var>principal<sub>x</sub></var>+<var>principal<sub>width</sub></var>-1</span> and a <var>y</var>-coordinate less than or
+        equal to <span><var>principal<sub>y</sub></var>+<var>principal<sub>height</sub></var>-1</span> to <var>header
+        list</var>.</p>
+
+        
+
+       </li></ol>
+
+     </dd></dl>
+
+   </li><li>
+
+    <p>Remove all the <a href="/breakup/specs/html-tables/#empty-cell" id="header-and-data-cell-semantics:empty-cell">empty cells</a> from the <var>header
+    list</var>.</p>
+
+   </li><li>
+
+    <p>Remove any duplicates from the <var>header list</var>.</p>
+
+   </li><li>
+
+    <p>Remove <var>principal cell</var> from the <var>header list</var> if it is
+    there.</p> 
+
+   </li><li>
+
+    <p>Assign the headers in the <var>header list</var> to the <var>principal
+    cell</var>.</p>
+
+   </li></ol>
+
+  <p>The <dfn id="internal-algorithm-for-scanning-and-assigning-header-cells">internal algorithm for scanning and assigning header cells</dfn>, given a <var>principal cell</var>, a <var>header list</var>, an initial coordinate (<var>initial<sub>x</sub></var>, <var>initial<sub>y</sub></var>),
+  and Δ<var>x</var> and Δ<var>y</var> increments, is as follows:</p>
+
+  <ol><li>
+
+    <p>Let <var>x</var> equal <var>initial<sub>x</sub></var>.</p>
+
+   </li><li>
+
+    <p>Let <var>y</var> equal <var>initial<sub>y</sub></var>.</p>
+
+   </li><li>
+
+    <p>Let <var>opaque headers</var> be an empty list of cells.</p>
+
+   </li><li>
+
+    <dl class="switch"><dt>If <var>principal cell</var> is a header cell</dt><dd><p>Let <var>in header block</var> be true, and let <var>headers from
+     current header block</var> be a list of cells containing just the <var>principal
+     cell</var>.</p></dd><dt>Otherwise</dt><dd><p>Let <var>in header block</var> be false and let <var>headers from
+     current header block</var> be an empty list of cells.</p>
+
+    </dd></dl>
+
+   </li><li>
+
+    <p><i>Loop</i>: Increment <var>x</var> by Δ<var>x</var>; increment <var>y</var> by Δ<var>y</var>.</p>
+
+    <p class="note">For each invocation of this algorithm, one of Δ<var>x</var> and
+    Δ<var>y</var> will be −1, and the other will be 0.</p>
+
+   </li><li>
+
+    <p>If either <var>x</var> or <var>y</var> is less than 0, then abort this
+    internal algorithm.</p>
+
+   </li><li>
+
+    <p>If there is no cell covering slot (<var>x</var>, <var>y</var>), or if there
+    is more than one cell covering slot (<var>x</var>, <var>y</var>), return to
+    the substep labeled <i>loop</i>.</p>
+
+   </li><li>
+
+    <p>Let <var>current cell</var> be the cell covering slot (<var>x</var>, <var>y</var>).</p>
+
+   </li><li>
+
+    <dl class="switch"><dt>If <var>current cell</var> is a header cell</dt><dd>
+
+      <ol><li><p>Set <var>in header block</var> to true.</p></li><li><p>Add <var>current cell</var> to <var>headers from current header
+       block</var>.</p></li><li><p>Let <var>blocked</var> be false.</p></li><li>
+
+        <dl class="switch"><dt>If Δ<var>x</var> is 0</dt><dd>
+
+          <p>If there are any cells in the <var>opaque headers</var> list anchored with the
+          same <var>x</var>-coordinate as the <var>current cell</var>, and with
+          the same width as <var>current cell</var>, then let <var>blocked</var>
+          be true.</p>
+
+          <p>If the <var>current cell</var> is not a <a href="/breakup/specs/html-tables/#column-header" id="header-and-data-cell-semantics:column-header">column header</a>, then let
+          <var>blocked</var> be true.</p>
+
+         </dd><dt>If Δ<var>y</var> is 0</dt><dd>
+
+          <p>If there are any cells in the <var>opaque headers</var> list anchored with the
+          same <var>y</var>-coordinate as the <var>current cell</var>, and with
+          the same height as <var>current cell</var>, then let <var>blocked</var>
+          be true.</p>
+
+          <p>If the <var>current cell</var> is not a <a href="/breakup/specs/html-tables/#row-header" id="header-and-data-cell-semantics:row-header">row header</a>, then let <var>blocked</var> be true.</p>
+
+         </dd></dl>
+
+       </li><li><p>If <var>blocked</var> is false, then add the <var>current cell</var>
+       to the <var>headers list</var>.</p></li></ol>
+
+     </dd><dt>If <var>current cell</var> is a data cell and <var>in header block</var> is true</dt><dd><p>Set <var>in header block</var> to false. Add all the cells in <var>headers from current header block</var> to the <var>opaque headers</var>
+     list, and empty the <var>headers from current header block</var> list.</p>
+
+    </dd></dl>
+
+   </li><li>
+
+    <p>Return to the step labeled <i>loop</i>.</p>
+
+   </li></ol>
+
+  <p>A header cell anchored at the slot with coordinate (<var>x</var>, <var>y</var>) with width <var>width</var> and height <var>height</var> is
+  said to be a <dfn id="column-header">column header</dfn> if any of the following conditions are true:</p>
+
+  <ul><li>The cell's <code id="header-and-data-cell-semantics:attr-th-scope"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute is in the <a href="/breakup/specs/html-tables/#attr-th-scope-col" id="header-and-data-cell-semantics:attr-th-scope-col">column</a> state, or</li><li>The cell's <code id="header-and-data-cell-semantics:attr-th-scope-2"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute is in the <a href="/breakup/specs/html-tables/#attr-th-scope-auto" id="header-and-data-cell-semantics:attr-th-scope-auto">auto</a> state, and there are no data cells in any of the cells
+   covering slots with <var>y</var>-coordinates <var>y</var> .. <span><var>y</var>+<var>height</var>-1</span>.</li></ul>
+
+  <p>A header cell anchored at the slot with coordinate (<var>x</var>, <var>y</var>) with width <var>width</var> and height <var>height</var> is
+  said to be a <dfn id="row-header">row header</dfn> if any of the following conditions are true:</p>
+
+  <ul><li>The cell's <code id="header-and-data-cell-semantics:attr-th-scope-3"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute is in the <a href="/breakup/specs/html-tables/#attr-th-scope-row" id="header-and-data-cell-semantics:attr-th-scope-row">row</a> state, or</li><li>The cell's <code id="header-and-data-cell-semantics:attr-th-scope-4"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute is in the <a href="/breakup/specs/html-tables/#attr-th-scope-auto" id="header-and-data-cell-semantics:attr-th-scope-auto-2">auto</a> state, the cell is not a <a href="/breakup/specs/html-tables/#column-header" id="header-and-data-cell-semantics:column-header-2">column header</a>, and
+   there are no data cells in any of the cells covering slots with <var>x</var>-coordinates
+   <var>x</var> .. <span><var>x</var>+<var>width</var>-1</span>.</li></ul>
+
+  <p>A header cell is said to be a <dfn id="column-group-header">column group header</dfn> if its <code id="header-and-data-cell-semantics:attr-th-scope-5"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute is in the <a href="/breakup/specs/html-tables/#attr-th-scope-colgroup" id="header-and-data-cell-semantics:attr-th-scope-colgroup">column
+  group</a> state.</p>
+
+  <p>A header cell is said to be a <dfn id="row-group-header">row group header</dfn> if its <code id="header-and-data-cell-semantics:attr-th-scope-6"><a href="/breakup/specs/html-tables/#attr-th-scope">scope</a></code> attribute is in the <a href="/breakup/specs/html-tables/#attr-th-scope-rowgroup" id="header-and-data-cell-semantics:attr-th-scope-rowgroup">row
+  group</a> state.</p>
+
+  <p>A cell is said to be an <dfn id="empty-cell">empty cell</dfn> if it contains no elements and its text content,
+  if any, consists only of <a href="/breakup/specs/core-algorithms/#white_space" id="header-and-data-cell-semantics:white_space">White_Space</a> characters.</p></section></section></body></html>

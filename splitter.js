@@ -66,12 +66,38 @@ jsdom.env(
         if (err) return console.error(err);
         console.log("Source loaded!");
         
-        // create a mapping of all IDs and links based on which document they end up in
         var splits = []
         ,   $ = win.$
-        ,   section = function (id) { return $(id).parent(); }
+        ,   section = function (id) {
+                var $el = $(id);
+                if (!$el.length) console.error("ID not found: " + id);
+                return $el.parent();
+            }
+        ,   refMap = {}
         ,   idMap = {}
         ;
+        
+        // XXX need a way to map references to specref
+
+        // premap references to know which are normative
+        $("#ref-list dt").each(function () {
+            var $dt = $(this)
+            ,   isNormative = true
+            ,   $cur = $dt
+            ,   id = $dt.text().replace(/[\[\]]/g, "")
+            ;
+            while ($cur.next().is("dd")) {
+                if (/non-normative/i.test($cur.next().text())) {
+                    isNormative = false;
+                    break;
+                }
+                $cur = $cur.next();
+            }
+            refMap[id] = isNormative;
+        });
+        console.log("Created references map");
+
+        // create a mapping of all IDs and links based on which document they end up in
         for (var spec in config) {
             splits.push({ title: spec, abstract: config[spec].abstract });
             config[spec].content.forEach(function (id) {
@@ -106,8 +132,8 @@ jsdom.env(
                     makeDoc(data, function (err, win) {
                         var doc = win.document;
                         if (err) return console.error(err);
+                        // move sections beetwen documents
                         config[spec].content.forEach(function (id) {
-                            
                             if (typeof id === "string") moveOver(section(id), doc);
                             else if (id.unwrap) {
                                 section(id.id).find("> section")
@@ -121,21 +147,28 @@ jsdom.env(
                         });
                         var $doc = win.$;
 
-                        // XXX
-                        //      escape things that look like references (typically in WebIDL)
+                        // escape things that look like references (typically in WebIDL)
+                        console.log("\t- Escaping things that look like references");
                         allTextNodes($doc("body").get(0))
                             .forEach(function (txt) {
                                 if (/\[\[(?!\\)/.test(txt.data)) txt.data = txt.data.replace(/\[\[(?!\\)/g, "[[\\");
                             })
                         ;
                         
-                        //      premap references to know which are normative
-                        //      replace them
+                        // replace references
+                        console.log("\t- Remapping references");
+                        $doc("a[href^='#refs']").each(function () {
+                            var $a = $(this)
+                            ,   ref = $a.text().replace(/[\[\]]/g, "")
+                            ,   cnt = "[[" + (refMap[ref] ? "!" : "") + ref + "]]"
+                            ;
+                            $a.replaceWith(doc.createTextNode(cnt));
+                        });
 
                         // remove hN numbers
                         // make all hN h2
                         console.log("\t- Fixing hN numbers and making all h2");
-                        $doc.find("h2, h3, h4, h5, h6")
+                        $doc("h2, h3, h4, h5, h6")
                             .each(function () {
                                 var $h = $doc(this)
                                 ,   html = $h.html().replace(/^[\d\.]+\s+/, "")
@@ -159,10 +192,12 @@ jsdom.env(
                             ;
                         });
 
-
+                        // XXX
                         // copy over the dependencies
 
                         // save it
+                        console.log("\t- Saving the document");
+                        $doc(".jsdom").remove();
                         var dir = jn(options.out, spec);
                         fs.mkdirpSync(dir);
                         fs.writeFileSync(jn(dir, "index.html"), jsdom.serializeDocument(doc), { encoding: "utf8" });

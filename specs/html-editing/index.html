@@ -1,0 +1,316 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Editing</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-editing"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Enabling in-browser editing of HTML content.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>Making document regions editable: The <code id="contenteditable:attr-contenteditable"><a href="/breakup/specs/html-editing/#attr-contenteditable">contenteditable</a></code> content attribute</h2>
+
+  <pre class="idl">[NoInterfaceObject]
+interface ElementContentEditable {
+  attribute DOMString <a href="/breakup/specs/html-editing/#dom-contenteditable" id="contenteditable:dom-contenteditable">contentEditable</a>;
+  readonly attribute boolean <a href="/breakup/specs/html-editing/#dom-iscontenteditable" id="contenteditable:dom-iscontenteditable">isContentEditable</a>;
+};</pre>
+
+  <p>The <dfn id="attr-contenteditable"><code>contenteditable</code></dfn> content attribute is an
+  <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="contenteditable:enumerated-attribute">enumerated attribute</a> whose keywords are the empty string, <code>true</code>,
+  and <code>false</code>. The empty string and the <code>true</code> keyword map
+  to the <i>true</i> state. The <code>false</code> keyword maps to the <i>false</i> state.
+  In addition, there is a third state, the <i>inherit</i> state, which is the <i id="contenteditable:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i> (and the <i id="contenteditable:invalid-value-default"><a href="/breakup/specs/core-algorithms/#invalid-value-default">invalid value default</a></i>).</p>
+
+  <p>The <i>true</i> state indicates that the element is editable. The <i>inherit</i> state
+  indicates that the element is editable if its parent is. The <i>false</i> state indicates that the
+  element is not editable.</p>
+
+  <dl class="domintro"><dt><var>element</var> . <code id="contenteditable:dom-contenteditable-2"><a href="/breakup/specs/html-editing/#dom-contenteditable">contentEditable</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns "<code>true</code>", "<code>false</code>", or "<code>inherit</code>", based on the state of the <code id="contenteditable:attr-contenteditable-2"><a href="/breakup/specs/html-editing/#attr-contenteditable">contenteditable</a></code> attribute.</p>
+
+    <p>Can be set, to change that state.</p>
+
+    <p>Throws a <code id="contenteditable:syntaxerror"><a href="/breakup/specs/core-algorithms/#syntaxerror">SyntaxError</a></code> exception if the new value isn't one of those strings.</p>
+
+   </dd><dt><var>element</var> . <code id="contenteditable:dom-iscontenteditable-2"><a href="/breakup/specs/html-editing/#dom-iscontenteditable">isContentEditable</a></code></dt><dd>
+
+    <p>Returns true if the element is editable; otherwise, returns false.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-contenteditable"><code>contentEditable</code></dfn> IDL attribute, on
+  getting, must return the string "<code>true</code>" if the content attribute is set to
+  the true state, "<code>false</code>" if the content attribute is set to the false state,
+  and "<code>inherit</code>" otherwise. On setting, if the new value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="contenteditable:ascii-case-insensitive">ASCII
+  case-insensitive</a> match for the string "<code>inherit</code>" then the content
+  attribute must be removed, if the new value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="contenteditable:ascii-case-insensitive-2">ASCII case-insensitive</a> match for
+  the string "<code>true</code>" then the content attribute must be set to the string
+  "<code>true</code>", if the new value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="contenteditable:ascii-case-insensitive-3">ASCII case-insensitive</a> match for
+  the string "<code>false</code>" then the content attribute must be set to the string
+  "<code>false</code>", and otherwise the attribute setter must throw a
+  <code id="contenteditable:syntaxerror-2"><a href="/breakup/specs/core-algorithms/#syntaxerror">SyntaxError</a></code> exception.</p>
+
+  <p>The <dfn id="dom-iscontenteditable"><code>isContentEditable</code></dfn> IDL attribute, on
+  getting, must return true if the element is either an <a href="/breakup/specs/html-editing/#editing-host" id="contenteditable:editing-host">editing host</a> or
+  <a href="/breakup/specs/html-editing/#editable" id="contenteditable:editable">editable</a>, and false otherwise.</p></section><section><h2>Making entire documents editable: The <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code> IDL attribute</h2>
+
+  
+
+  <p>Documents have a <dfn id="designMode"><code>designMode</code></dfn>, which can be either enabled or
+  disabled.</p>
+
+  
+
+  <dl class="domintro"><dt><var>document</var> . <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode-2"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns "<code>on</code>" if the document is editable, and "<code>off</code>" if it isn't.</p>
+
+    <p>Can be set, to change the document's current state. This focuses the document and resets the
+    selection in that document.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode-3"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code> IDL attribute on the
+  <code id="making-entire-documents-editable:-the-designmode-idl-attribute:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> object takes two values, "<code>on</code>" and "<code>off</code>". On setting, the new value must be compared in an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="making-entire-documents-editable:-the-designmode-idl-attribute:ascii-case-insensitive">ASCII
+  case-insensitive</a> manner to these two values; if it matches the "<code>on</code>"
+  value, then <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode-4"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code> must be enabled, and if it
+  matches the "<code>off</code>" value, then <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode-5"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code> must be disabled. Other values must be
+  ignored.</p>
+
+  <p>On getting, if <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode-6"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code> is enabled, the IDL
+  attribute must return the value "<code>on</code>"; otherwise it is disabled, and the
+  attribute must return the value "<code>off</code>".</p>
+
+  <p>The last state set must persist until the document is destroyed or the state is changed.
+  Initially, documents must have their <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode-7"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code>
+  disabled.</p>
+
+  <p>When the <code id="making-entire-documents-editable:-the-designmode-idl-attribute:designMode-8"><a href="/breakup/specs/html-editing/#designMode">designMode</a></code> changes from being disabled to
+  being enabled, the user agent must <a href="/breakup/specs/core-algorithms/#immediately" id="making-entire-documents-editable:-the-designmode-idl-attribute:immediately">immediately</a> reset the document's <a href="/breakup/specs/html-editing/#active-range" id="making-entire-documents-editable:-the-designmode-idl-attribute:active-range">active range</a>'s
+  start and end boundary points to be at the start of the <code id="making-entire-documents-editable:-the-designmode-idl-attribute:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> and then run the
+  <a href="/breakup/specs/html-interacton-attr/#focusing-steps" id="making-entire-documents-editable:-the-designmode-idl-attribute:focusing-steps">focusing steps</a> for the root element of the <code id="making-entire-documents-editable:-the-designmode-idl-attribute:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, if any.</p></section><section><h2>Best practices for in-page editors</h2>
+
+  <p>Authors are encouraged to set the 'white-space' property on <a href="/breakup/specs/html-editing/#editing-host" id="best-practices-for-in-page-editors:editing-host">editing
+  hosts</a> and on markup that was originally created through these editing mechanisms to the
+  value 'pre-wrap'. Default HTML whitespace handling is not well suited to WYSIWYG editing, and line
+  wrapping will not work correctly in some corner cases if 'white-space' is left at its default
+  value.</p>
+
+  <div class="example">
+
+   <p>As an example of problems that occur if the default 'normal' value is used instead, consider
+   the case of the user typing "<kbd>yellow␣␣ball</kbd>", with two spaces (here
+   represented by "␣") between the words. With the editing rules in place for the default
+   value of 'white-space' ('normal'), the resulting markup will either consist of
+   "<samp>yellow&amp;nbsp;&nbsp;ball</samp>" or "<samp>yellow&nbsp;&amp;nbsp;ball</samp>"; i.e.,
+   there will be a non-breaking space between the two words in addition to the regular space. This
+   is necessary because the 'normal' value for 'white-space' requires adjacent regular spaces to be
+   collapsed together.</p>
+
+   <p>In the former case, "<samp>yellow⍽</samp>" might wrap to the next line ("⍽"
+   being used here to represent a non-breaking space) even though "<samp>yellow</samp>" alone might
+   fit at the end of the line; in the latter case, "<samp>⍽ball</samp>", if wrapped to the
+   start of the line, would have visible indentation from the non-breaking space.</p>
+
+   <p>When 'white-space' is set to 'pre-wrap', however, the editing rules will instead simply put
+   two regular spaces between the words, and should the two words be split at the end of a line, the
+   spaces would be neatly removed from the rendering.</p>
+
+  </div></section><section><h2>Editing APIs</h2>
+
+  <p>The definition of the terms <dfn id="active-range">active range</dfn>, <dfn id="editing-host">editing host</dfn>, and
+  <dfn id="editable">editable</dfn>, the user interface requirements of elements that are <a href="/breakup/specs/html-editing/#editing-host" id="editing-apis:editing-host">editing hosts</a> or <a href="/breakup/specs/html-editing/#editable" id="editing-apis:editable">editable</a>, the
+
+  <dfn id="execCommand"><code>execCommand()</code></dfn>,
+  <dfn id="dom-document-querycommandenabled"><code>queryCommandEnabled()</code></dfn>,
+  <dfn id="dom-document-querycommandindeterm"><code>queryCommandIndeterm()</code></dfn>,
+  <dfn id="dom-document-querycommandstate"><code>queryCommandState()</code></dfn>,
+  <dfn id="dom-document-querycommandsupported"><code>queryCommandSupported()</code></dfn>, and
+  <dfn id="dom-document-querycommandvalue"><code>queryCommandValue()</code></dfn>
+
+  methods, text selections, and the <dfn id="delete-the-selection">delete the selection</dfn> algorithm are defined in the
+  HTML Editing APIs specification.  [[!EDITING]]
+  </p></section><section><h2>Spelling and grammar checking</h2>
+
+  
+
+  <p>User agents can support the checking of spelling and grammar of editable text, either in form
+  controls (such as the value of <code id="spelling-and-grammar-checking:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements), or in elements in an <a href="/breakup/specs/html-editing/#editing-host" id="spelling-and-grammar-checking:editing-host">editing
+  host</a> (e.g. using <code id="spelling-and-grammar-checking:attr-contenteditable"><a href="/breakup/specs/html-editing/#attr-contenteditable">contenteditable</a></code>).</p>
+
+  <p>For each element, user agents must establish a <dfn id="concept-spellcheck-default">default
+  behaviour</dfn>, either through defaults or through preferences expressed by the user. There are
+  three possible default behaviours for each element:</p>
+
+  <dl><dt><dfn id="concept-spellcheck-default-true">true-by-default</dfn>
+
+   </dt><dd>The element will be checked for spelling and grammar if its contents are editable.
+
+   </dd><dt><dfn id="concept-spellcheck-default-false">false-by-default</dfn>
+
+   </dt><dd>The element will never be checked for spelling and grammar.
+
+   </dd><dt><dfn id="concept-spellcheck-default-inherit">inherit-by-default</dfn>
+
+   </dt><dd>The element's default behaviour is the same as its parent element's. Elements that have no
+   parent element cannot have this as their default behaviour.
+
+  </dd></dl>
+
+  <hr>
+
+  
+
+  <p>The <dfn id="attr-spellcheck"><code>spellcheck</code></dfn> attribute is an <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="spelling-and-grammar-checking:enumerated-attribute">enumerated
+  attribute</a> whose keywords are the empty string, <code>true</code> and <code>false</code>. The empty string and the <code>true</code> keyword map to the
+  <i>true</i> state. The <code>false</code> keyword maps to the <i>false</i> state. In
+  addition, there is a third state, the <i>default</i> state, which is the <i id="spelling-and-grammar-checking:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i> (and the <i id="spelling-and-grammar-checking:invalid-value-default"><a href="/breakup/specs/core-algorithms/#invalid-value-default">invalid value default</a></i>).</p>
+
+  <p class="note">The <i>true</i> state indicates that the element is to have its spelling and
+  grammar checked. The <i>default</i> state indicates that the element is to act according to a
+  default behaviour, possibly based on the parent element's own <code id="spelling-and-grammar-checking:attr-spellcheck"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> state, as defined below. The <i>false</i> state
+  indicates that the element is not to be checked.</p>
+
+  
+
+  <hr>
+
+  
+
+  <dl class="domintro"><dt><var>element</var> . <code id="spelling-and-grammar-checking:dom-spellcheck"><a href="/breakup/specs/html-editing/#dom-spellcheck">spellcheck</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns true if the element is to have its spelling and grammar checked; otherwise, returns
+    false.</p>
+
+    <p>Can be set, to override the default and set the <code id="spelling-and-grammar-checking:attr-spellcheck-2"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> content attribute.</p>
+
+   </dd><dt><var>element</var> . <code id="spelling-and-grammar-checking:dom-forcespellcheck"><a href="/breakup/specs/html-editing/#dom-forcespellcheck">forceSpellCheck</a></code>()</dt><dd>
+
+    <p>Forces the user agent to report spelling and grammar errors on the element (if checking is
+    enabled), even if the user has never focused the element. (If the method is not invoked, user
+    agents can hide errors in text that wasn't just entered by the user.)</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-spellcheck"><code>spellcheck</code></dfn> IDL attribute, on getting, must
+  return true if the element's <code id="spelling-and-grammar-checking:attr-spellcheck-3"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> content attribute is
+  in the <i>true</i> state, or if the element's <code id="spelling-and-grammar-checking:attr-spellcheck-4"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code>
+  content attribute is in the <i>default</i> state and the element's <a href="/breakup/specs/html-editing/#concept-spellcheck-default" id="spelling-and-grammar-checking:concept-spellcheck-default">default behaviour</a> is <a href="/breakup/specs/html-editing/#concept-spellcheck-default-true" id="spelling-and-grammar-checking:concept-spellcheck-default-true">true-by-default</a>, or if the element's <code id="spelling-and-grammar-checking:attr-spellcheck-5"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> content attribute is in the <i>default</i> state and the
+  element's <a href="/breakup/specs/html-editing/#concept-spellcheck-default" id="spelling-and-grammar-checking:concept-spellcheck-default-2">default behaviour</a> is <a href="/breakup/specs/html-editing/#concept-spellcheck-default-inherit" id="spelling-and-grammar-checking:concept-spellcheck-default-inherit">inherit-by-default</a> and the element's parent
+  element's <code id="spelling-and-grammar-checking:dom-spellcheck-2"><a href="/breakup/specs/html-editing/#dom-spellcheck">spellcheck</a></code> IDL attribute would return true;
+  otherwise, if none of those conditions applies, then the attribute must instead return false.</p>
+
+  <p class="note">The <code id="spelling-and-grammar-checking:dom-spellcheck-3"><a href="/breakup/specs/html-editing/#dom-spellcheck">spellcheck</a></code> IDL attribute is not affected
+  by user preferences that override the <code id="spelling-and-grammar-checking:attr-spellcheck-6"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> content
+  attribute, and therefore might not reflect the actual spellchecking state.</p>
+
+  <p>On setting, if the new value is true, then the element's <code id="spelling-and-grammar-checking:attr-spellcheck-7"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> content attribute must be set to the literal string
+  "<code>true</code>", otherwise it must be set to the literal string "<code>false</code>".
+
+  </p><hr>
+
+  <p>User agents must only consider the following pieces of text as checkable for the purposes of
+  this feature:</p>
+
+  <ul><li>The <a href="/breakup/specs/html-forms/#concept-fe-value" id="spelling-and-grammar-checking:concept-fe-value">value</a> of <code id="spelling-and-grammar-checking:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <code id="spelling-and-grammar-checking:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attributes are in the <a href="/breakup/specs/html-forms/#text-(type=text)-state-and-search-state-(type=search)" id="spelling-and-grammar-checking:text-(type=text)-state-and-search-state-(type=search)">Text</a>, <a href="/breakup/specs/html-forms/#text-(type=text)-state-and-search-state-(type=search)" id="spelling-and-grammar-checking:text-(type=text)-state-and-search-state-(type=search)-2">Search</a>,
+   <a href="/breakup/specs/html-forms/#url-state-(type=url)" id="spelling-and-grammar-checking:url-state-(type=url)">URL</a>, or <a href="/breakup/specs/html-forms/#e-mail-state-(type=email)" id="spelling-and-grammar-checking:e-mail-state-(type=email)">E-mail</a> states and that are <i id="spelling-and-grammar-checking:concept-fe-mutable"><a href="/breakup/specs/html-forms/#concept-fe-mutable">mutable</a></i> (i.e. that do not have the <code id="spelling-and-grammar-checking:attr-input-readonly"><a href="/breakup/specs/html-forms/#attr-input-readonly">readonly</a></code> attribute specified and that are not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="spelling-and-grammar-checking:concept-fe-disabled">disabled</a>).</li><li>The <a href="/breakup/specs/html-forms/#concept-fe-value" id="spelling-and-grammar-checking:concept-fe-value-2">value</a> of <code id="spelling-and-grammar-checking:the-textarea-element-2"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements that do not
+   have a <code id="spelling-and-grammar-checking:attr-textarea-readonly"><a href="/breakup/specs/html-forms/#attr-textarea-readonly">readonly</a></code> attribute and that are not <a href="/breakup/specs/html-forms/#concept-fe-disabled" id="spelling-and-grammar-checking:concept-fe-disabled-2">disabled</a>.</li><li>Text in <code id="spelling-and-grammar-checking:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes that are children of <a href="/breakup/specs/html-editing/#editing-host" id="spelling-and-grammar-checking:editing-host-2">editing
+   hosts</a> or <a href="/breakup/specs/html-editing/#editable" id="spelling-and-grammar-checking:editable">editable</a> elements.</li><li>Text in attributes of <a href="/breakup/specs/html-editing/#editable" id="spelling-and-grammar-checking:editable-2">editable</a> elements.</li></ul>
+
+  <p>For text that is part of a <code id="spelling-and-grammar-checking:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node, the element with which the text is
+  associated is the element that is the immediate parent of the first character of the word,
+  sentence, or other piece of text. For text in attributes, it is the attribute's element. For the
+  values of <code id="spelling-and-grammar-checking:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> and <code id="spelling-and-grammar-checking:the-textarea-element-3"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> elements, it is the element itself.</p>
+
+  <p>To determine if a word, sentence, or other piece of text in an applicable element (as defined
+  above) is to have spelling- and grammar-checking enabled, the UA must use the following
+  algorithm:</p>
+
+  <ol><li>If the user has disabled the checking for this text, then the checking is disabled.</li><li>Otherwise, if the user has forced the checking for this text to always be enabled, then the
+   checking is enabled.</li><li>Otherwise, if the element with which the text is associated has a <code id="spelling-and-grammar-checking:attr-spellcheck-8"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> content attribute, then: if that attribute is in the
+   <i>true</i> state, then checking is enabled; otherwise, if that attribute is in the <i>false</i>
+   state, then checking is disabled.</li><li>Otherwise, if there is an ancestor element with a <code id="spelling-and-grammar-checking:attr-spellcheck-9"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code> content attribute that is not in the <i>default</i>
+   state, then: if the nearest such ancestor's <code id="spelling-and-grammar-checking:attr-spellcheck-10"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code>
+   content attribute is in the <i>true</i> state, then checking is enabled; otherwise, checking is
+   disabled.</li><li>Otherwise, if the element's <a href="/breakup/specs/html-editing/#concept-spellcheck-default" id="spelling-and-grammar-checking:concept-spellcheck-default-3">default behaviour</a>
+   is <a href="/breakup/specs/html-editing/#concept-spellcheck-default-true" id="spelling-and-grammar-checking:concept-spellcheck-default-true-2">true-by-default</a>, then checking is
+   enabled.</li><li>Otherwise, if the element's <a href="/breakup/specs/html-editing/#concept-spellcheck-default" id="spelling-and-grammar-checking:concept-spellcheck-default-4">default behaviour</a>
+   is <a href="/breakup/specs/html-editing/#concept-spellcheck-default-false" id="spelling-and-grammar-checking:concept-spellcheck-default-false">false-by-default</a>, then checking is
+   disabled.</li><li>Otherwise, if the element's parent element has <em>its</em> checking enabled, then checking
+   is enabled.</li><li>Otherwise, checking is disabled.</li></ol>
+
+  <p>If the checking is enabled for a word/sentence/text, the user agent should indicate spelling
+  and grammar errors in that text. User agents should take into account the other semantics given in
+  the document when suggesting spelling and grammar corrections. User agents may use the language of
+  the element to determine what spelling and grammar rules to use, or may use the user's preferred
+  language settings. UAs should use <code id="spelling-and-grammar-checking:the-input-element-3"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element attributes such as <code id="spelling-and-grammar-checking:attr-input-pattern"><a href="/breakup/specs/html-forms/#attr-input-pattern">pattern</a></code> to ensure that the resulting value is valid, where
+  possible.</p>
+
+  <p>If checking is disabled, the user agent should not indicate spelling or grammar errors for that
+  text.</p>
+
+  <p>Even when checking is enabled, user agents may opt to not report spelling or grammar errors in
+  text that the user agent deems the user has no interest in having checked (e.g. text that was
+  already present when the page was loaded, or that the user did not type, or text in controls that
+  the user has not focused, or in parts of e-mail addresses that the user agent is not confident
+  were misspelt). The <dfn id="dom-forcespellcheck"><code>forceSpellCheck()</code></dfn> method,
+  when invoked on an element, must override this behaviour, forcing the user agent to consider all
+  spelling and grammar errors in text in that element for which checking is enabled to be of
+  interest to the user.</p>
+
+  <div class="example">
+
+   <p>The element with ID "a" in the following example would be the one used to determine if the
+   word "Hello" is checked for spelling errors. In this example, it would not be.</p>
+
+   <pre>&lt;div contenteditable="true"&gt;
+ &lt;span spellcheck="false" id="a"&gt;Hell&lt;/span&gt;&lt;em&gt;o!&lt;/em&gt;
+&lt;/div&gt;</pre>
+
+   <p>The element with ID "b" in the following example would have checking enabled (the leading
+   space character in the attribute's value on the <code id="spelling-and-grammar-checking:the-input-element-4"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element causes the attribute
+   to be ignored, so the ancestor's value is used instead, regardless of the default).</p>
+
+   <pre class="bad">&lt;p spellcheck="true"&gt;
+ &lt;label&gt;Name: &lt;input spellcheck=" false" id="b"&gt;&lt;/label&gt;
+&lt;/p&gt;</pre>
+
+  </div>
+
+  
+
+  <p class="note">This specification does not define the user interface for spelling and grammar
+  checkers. A user agent could offer on-demand checking, could perform continuous checking while the
+  checking is enabled, or could use other interfaces.</p></section></body></html>

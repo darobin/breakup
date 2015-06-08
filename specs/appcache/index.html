@@ -1,0 +1,1653 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>The Application Cache</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "appcache"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        A system for offlining content automatically.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>Introduction</h2>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <p>In order to enable users to continue interacting with Web applications and documents even when
+  their network connection is unavailable — for instance, because they are traveling outside
+  of their ISP's coverage area — authors can provide a manifest which lists the files that are
+  needed for the Web application to work offline and which causes the user's browser to keep a copy
+  of the files for use offline.</p>
+
+  <p>To illustrate this, consider a simple clock applet consisting of an HTML page "<code>clock.html</code>", a CSS style sheet "<code>clock.css</code>", and a JavaScript
+  script "<code>clock.js</code>".</p>
+
+  <p>Before adding the manifest, these three files might look like this:</p>
+
+  <pre>&lt;!-- clock.html --&gt;
+&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;Clock&lt;/title&gt;
+  &lt;script src="clock.js"&gt;&lt;/script&gt;
+  &lt;link rel="stylesheet" href="clock.css"&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;p&gt;The time is: &lt;output id="clock"&gt;&lt;/output&gt;&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+  <pre>/* clock.css */
+output { font: 2em sans-serif; }</pre>
+  <pre>/* clock.js */
+setInterval(function () {
+    document.getElementById('clock').value = new Date();
+}, 1000);</pre>
+
+  <p>If the user tries to open the "<code>clock.html</code>" page while offline, though,
+  the user agent (unless it happens to have it still in the local cache) will fail with an
+  error.</p>
+
+  <p>The author can instead provide a manifest of the three files, say "<code>clock.appcache</code>":</p>
+
+  <pre>CACHE MANIFEST
+clock.html
+clock.css
+clock.js
+</pre>
+
+  <p>With a small change to the HTML file, the manifest (served as <code id="introduction-10:text/cache-manifest"><a href="#text/cache-manifest">text/cache-manifest</a></code>)
+  is linked to the application:</p>
+
+  <pre>&lt;!-- clock.html --&gt;
+&lt;!DOCTYPE HTML&gt;
+&lt;html manifest="clock.appcache"&gt;
+ &lt;head&gt;
+  &lt;title&gt;Clock&lt;/title&gt;
+  &lt;script src="clock.js"&gt;&lt;/script&gt;
+  &lt;link rel="stylesheet" href="clock.css"&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;p&gt;The time is: &lt;output id="clock"&gt;&lt;/output&gt;&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  <p>Now, if the user goes to the page, the browser will cache the files and make them available
+  even when the user is offline.</p>
+
+  <p class="note">Authors are encouraged to include the main page in the manifest also, but in
+  practice the page that referenced the manifest is automatically cached even if it isn't explicitly
+  mentioned.</p>
+
+  <p class="note">With the exception of "no-store" directive, HTTP cache headers and restrictions on
+  caching pages served over TLS (encrypted, using <code id="introduction-10:https-protocol"><a data-x-internal="https-protocol" href="http://tools.ietf.org/html/rfc7230#section-2.7.2">https:</a></code>) are
+  overridden by manifests. Thus, pages will not expire from an application cache before the user
+  agent has updated it, and even applications served over TLS can be made to work offline.</p>
+
+  <p><a href="https://whatwg.org/demos/offline/clock/live-demo/clock.html">View this example online</a>.</p>
+
+
+
+  <section><h2>Supporting offline caching for legacy applications</h2>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <p>The application cache feature works best if the application logic is separate from the
+  application and user data, with the logic (markup, scripts, style sheets, images, etc) listed in
+  the manifest and stored in the application cache, with a finite number of static HTML pages for
+  the application, and with the application and user data stored in Web Storage or a client-side
+  Indexed Database, updated dynamically using Web Sockets, <code id="supporting-offline-caching-for-legacy-applications:xmlhttprequest"><a href="/breakup/specs/core-algorithms/#xmlhttprequest">XMLHttpRequest</a></code>, server-sent
+  events, or some other similar mechanism.</p>
+
+  <p>This model results in a fast experience for the user: the application immediately loads, and
+  fresh data is obtained as fast as the network will allow it (possibly while stale data shows).</p>
+
+  <p>Legacy applications, however, tend to be designed so that the user data and the logic are mixed
+  together in the HTML, with each operation resulting in a new HTML page from the server.</p>
+
+  <div class="example">
+
+   <p>For example, consider a news application. The typical architecture of such an application,
+   when not using the application cache feature, is that the user fetches the main page, and the
+   server returns a dynamically-generated page with the current headlines and the user interface
+   logic mixed together.</p>
+
+   <p>A news application designed for the application cache feature, however, would instead have the
+   main page just consist of the logic, and would then have the main page fetch the data separately
+   from the server, e.g. using <code id="supporting-offline-caching-for-legacy-applications:xmlhttprequest-2"><a href="/breakup/specs/core-algorithms/#xmlhttprequest">XMLHttpRequest</a></code>.</p>
+
+  </div>
+
+  <p>The mixed-content model does not work well with the application cache feature: since the
+  content is cached, it would result in the user always seeing the stale data from the previous time
+  the cache was updated.</p>
+
+  <p>While there is no way to make the legacy model work as fast as the separated model, it
+  <em>can</em> at least be retrofitted for offline use using the <a href="/breakup/specs/appcache/#concept-appcache-mode-prefer-online" id="supporting-offline-caching-for-legacy-applications:concept-appcache-mode-prefer-online">prefer-online</a> <a href="/breakup/specs/appcache/#concept-appcache-mode" id="supporting-offline-caching-for-legacy-applications:concept-appcache-mode">application cache mode</a>. To do so, list all the static
+  resources used by the HTML page you want to have work offline in an <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="supporting-offline-caching-for-legacy-applications:concept-appcache-manifest">application cache manifest</a>, use the <code id="supporting-offline-caching-for-legacy-applications:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> attribute to select that manifest from the HTML file,
+  and then add the following line at the bottom of the manifest:</p>
+
+  <pre>SETTINGS:
+prefer-online
+NETWORK:
+*</pre>
+
+  <p>This causes the <a href="/breakup/specs/appcache/#application-cache" id="supporting-offline-caching-for-legacy-applications:application-cache">application cache</a> to only be used for <a href="/breakup/specs/appcache/#concept-appcache-master" id="supporting-offline-caching-for-legacy-applications:concept-appcache-master">master entries</a> when the user is offline, and causes the
+  application cache to be used as an atomic HTTP cache (essentially pinning resources listed in the
+  manifest), while allowing all resources not listed in the manifest to be accessed normally when
+  the user is online.</p></section>
+
+
+
+  <section><h2>Event summary</h2>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <p>When the user visits a page that declares a manifest, the browser will try to update the cache.
+  It does this by fetching a copy of the manifest and, if the manifest has changed since the user
+  agent last saw it, redownloading all the resources it mentions and caching them anew.</p>
+
+  <p>As this is going on, a number of events get fired on the <code id="appcacheevents:applicationcache"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object
+  to keep the script updated as to the state of the cache update, so that the user can be notified
+  appropriately. The events are as follows:</p>
+
+  <table><thead><tr><th> Event name
+     </th><th> Interface
+     </th><th> Fired when...
+     </th><th> Next events
+   </th></tr></thead><tbody><tr><td> <dfn id="event-appcache-checking"><code>checking</code></dfn>
+     </td><td> <code id="appcacheevents:event"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
+     </td><td> The user agent is checking for an update, or attempting to download the manifest for the
+          first time. <strong>This is always the first event in the sequence.</strong>
+     </td><td> <code id="appcacheevents:event-appcache-noupdate"><a href="/breakup/specs/appcache/#event-appcache-noupdate">noupdate</a></code>, <code id="appcacheevents:event-appcache-downloading"><a href="/breakup/specs/appcache/#event-appcache-downloading">downloading</a></code>, <code id="appcacheevents:event-appcache-obsolete"><a href="/breakup/specs/appcache/#event-appcache-obsolete">obsolete</a></code>, <code id="appcacheevents:event-appcache-error"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code>
+
+    </td></tr><tr><td> <dfn id="event-appcache-noupdate"><code>noupdate</code></dfn>
+     </td><td> <code id="appcacheevents:event-2"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
+     </td><td> The manifest hadn't changed.
+     </td><td> Last event in sequence.
+
+    </td></tr><tr><td> <dfn id="event-appcache-downloading"><code>downloading</code></dfn>
+     </td><td> <code id="appcacheevents:event-3"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
+     </td><td> The user agent has found an update and is fetching it, or is downloading the resources
+          listed by the manifest for the first time.
+     </td><td> <code id="appcacheevents:event-appcache-progress"><a href="/breakup/specs/appcache/#event-appcache-progress">progress</a></code>, <code id="appcacheevents:event-appcache-error-2"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code>, <code id="appcacheevents:event-appcache-cached"><a href="/breakup/specs/appcache/#event-appcache-cached">cached</a></code>, <code id="appcacheevents:event-appcache-updateready"><a href="/breakup/specs/appcache/#event-appcache-updateready">updateready</a></code>
+
+    </td></tr><tr><td> <dfn id="event-appcache-progress"><code>progress</code></dfn>
+     </td><td> <code id="appcacheevents:progressevent"><a href="/breakup/specs/core-algorithms/#progressevent">ProgressEvent</a></code>
+     </td><td> The user agent is downloading resources listed by the manifest.
+          The event object's <code id="appcacheevents:dom-progressevent-total"><a href="/breakup/specs/core-algorithms/#dom-progressevent-total">total</a></code> attribute returns the total number of files to be downloaded.
+          The event object's <code id="appcacheevents:dom-progressevent-loaded"><a href="/breakup/specs/core-algorithms/#dom-progressevent-loaded">loaded</a></code> attribute returns the number of files processed so far.
+     </td><td> <code id="appcacheevents:event-appcache-progress-2"><a href="/breakup/specs/appcache/#event-appcache-progress">progress</a></code>, <code id="appcacheevents:event-appcache-error-3"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code>, <code id="appcacheevents:event-appcache-cached-2"><a href="/breakup/specs/appcache/#event-appcache-cached">cached</a></code>, <code id="appcacheevents:event-appcache-updateready-2"><a href="/breakup/specs/appcache/#event-appcache-updateready">updateready</a></code>
+
+    </td></tr><tr><td> <dfn id="event-appcache-cached"><code>cached</code></dfn>
+     </td><td> <code id="appcacheevents:event-4"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
+     </td><td> The resources listed in the manifest have been downloaded, and the application is now cached.
+     </td><td> Last event in sequence.
+
+    </td></tr><tr><td> <dfn id="event-appcache-updateready"><code>updateready</code></dfn>
+     </td><td> <code id="appcacheevents:event-5"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
+     </td><td> The resources listed in the manifest have been newly redownloaded, and the script can use
+          <code id="appcacheevents:dom-appcache-swapcache"><a href="/breakup/specs/appcache/#dom-appcache-swapcache">swapCache()</a></code> to switch to the new cache.
+     </td><td> Last event in sequence.
+
+    </td></tr><tr><td> <dfn id="event-appcache-obsolete"><code>obsolete</code></dfn>
+     </td><td> <code id="appcacheevents:event-6"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
+     </td><td> The manifest was found to have become a 404 or 410 page, so the application cache is being deleted.
+     </td><td> Last event in sequence.
+
+    </td></tr><tr><td rowspan="4"> <dfn id="event-appcache-error"><code>error</code></dfn>
+     </td><td rowspan="4"> <code id="appcacheevents:event-7"><a href="/breakup/specs/core-algorithms/#event">Event</a></code>
+     </td><td> The manifest was a 404 or 410 page, so the attempt to cache the application has been aborted.
+     </td><td rowspan="3"> Last event in sequence.
+
+    </td></tr><tr><td> The manifest hadn't changed, but the page referencing the manifest failed to download properly.
+
+    </td></tr><tr><td> A fatal error occurred while fetching the resources listed in the manifest.
+
+    </td></tr><tr><td> The manifest changed while the update was being run.
+     </td><td> The user agent will try fetching the files again momentarily.
+
+  </td></tr></tbody></table>
+
+  <p>These events are cancelable; their default action is for the user agent to show download
+  progress information. If the page shows its own update UI, canceling the events will prevent the
+  user agent from showing redundant progress information.</p></section></section><section><h2>Application caches</h2> 
+
+  <p>An <dfn id="application-cache">application cache</dfn> is a set of cached resources consisting of:</p>
+
+  <ul><li>
+
+    <p>One or more resources (including their out-of-band metadata, such as HTTP headers, if any),
+    identified by URLs, each falling into one (or more) of the following categories:</p>
+
+    <dl><dt><dfn id="concept-appcache-master">Master entries</dfn>
+
+     </dt><dd><p class="note">These are documents that were added to the cache because a <a href="/breakup/specs/browser-dom/#browsing-context" id="appcache:browsing-context">browsing
+     context</a> was <a href="/breakup/specs/browsing/#navigate" id="appcache:navigate">navigated</a> to that document and the document
+     indicated that this was its cache, using the <code id="appcache:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code>
+     attribute.</p>
+
+
+     </dd><dt><dfn id="concept-appcache-manifest">The manifest</dfn>
+
+     </dt><dd><p class="note">This is the resource corresponding to the URL that was given in a master
+     entry's <code id="appcache:the-html-element"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element's <code id="appcache:attr-html-manifest-2"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> attribute.
+     The manifest is fetched and processed during the <a href="/breakup/specs/appcache/#application-cache-download-process" id="appcache:application-cache-download-process">application cache download
+     process</a>. All the <a href="/breakup/specs/appcache/#concept-appcache-master" id="appcache:concept-appcache-master">master entries</a> have the
+     <a href="/breakup/specs/browser-dom/#same-origin" id="appcache:same-origin">same origin</a> as the manifest.</p>
+
+
+     </dd><dt><dfn id="concept-appcache-explicit">Explicit entries</dfn>
+
+     </dt><dd><p class="note">These are the resources that were listed in the cache's <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="appcache:concept-appcache-manifest">manifest</a> in an <a href="/breakup/specs/appcache/#concept-appcache-manifest-explicit" id="appcache:concept-appcache-manifest-explicit">explicit section</a>.</p>
+
+
+     </dd><dt><dfn id="concept-appcache-fallback">Fallback entries</dfn>
+
+     </dt><dd><p class="note">These are the resources that were listed in the cache's <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="appcache:concept-appcache-manifest-2">manifest</a> in a <a href="/breakup/specs/appcache/#concept-appcache-manifest-fallback" id="appcache:concept-appcache-manifest-fallback">fallback section</a>.</p>
+
+
+    </dd></dl>
+
+    <p><a href="/breakup/specs/appcache/#concept-appcache-explicit" id="appcache:concept-appcache-explicit">Explicit entries</a> and <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="appcache:concept-appcache-fallback">Fallback entries</a> can be marked as <dfn id="concept-appcache-foreign">foreign</dfn>, which means that they have a <code id="appcache:attr-html-manifest-3"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> attribute but that it doesn't point at this cache's
+    <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="appcache:concept-appcache-manifest-3">manifest</a>.</p>
+
+    <p class="note">A URL in the list can be flagged with multiple different types, and thus an
+    entry can end up being categorised as multiple entries. For example, an entry can be a manifest
+    entry and an explicit entry at the same time, if the manifest is listed within the manifest.</p>
+
+   </li><li>
+
+    <p>Zero or more <dfn id="concept-appcache-fallback-ns">fallback namespaces</dfn>, each of
+    which is mapped to a <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="appcache:concept-appcache-fallback-2">fallback entry</a>.</p>
+
+    <p class="note">These are URLs used as <a href="/breakup/specs/appcache/#concept-appcache-matches-fallback" id="appcache:concept-appcache-matches-fallback">prefix
+    match patterns</a> for resources that are to be fetched from the network if possible, or to
+    be replaced by the corresponding <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="appcache:concept-appcache-fallback-3">fallback entry</a>
+    if not. Each namespace URL has the <a href="/breakup/specs/browser-dom/#same-origin" id="appcache:same-origin-2">same origin</a> as <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="appcache:concept-appcache-manifest-4">the manifest</a>.</p>
+
+   </li><li>
+
+    <p>Zero or more URLs that form the <dfn id="concept-appcache-onlinewhitelist">online
+    whitelist namespaces</dfn>.</p>
+
+    <p class="note">These are used as prefix match patterns, and declare URLs for which the user
+    agent will ignore the application cache, instead fetching them normally (i.e. from the network
+    or local HTTP cache as appropriate).</p>
+
+   </li><li>
+
+    <p>An <dfn id="concept-appcache-onlinewhitelist-wildcard">online whitelist wildcard
+    flag</dfn>, which is either <i>open</i> or <i>blocking</i>.</p>
+
+    <p class="note">The <i>open</i> state indicates that any URL not listed as cached is to
+    be implicitly treated as being in the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="appcache:concept-appcache-onlinewhitelist">online
+    whitelist namespaces</a>; the <i>blocking</i> state indicates that URLs not listed
+    explicitly in the manifest are to be treated as unavailable.</p>
+
+   </li><li>
+
+    <p>A <dfn id="concept-appcache-mode">cache mode flag</dfn>, which is either in the <dfn id="concept-appcache-mode-fast"><i>fast</i></dfn> state or the <dfn id="concept-appcache-mode-prefer-online"><i>prefer-online</i></dfn> state.</p>
+
+   </li></ul>
+
+  <p>Each <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache">application cache</a> has a <dfn id="concept-appcache-completeness">completeness flag</dfn>, which is either <i>complete</i> or
+  <i>incomplete</i>.</p>
+
+  <hr>
+
+  <p>An <dfn id="application-cache-group">application cache group</dfn> is a group of <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-2">application
+  caches</a>, identified by the <a href="/breakup/specs/core-algorithms/#absolute-url" id="appcache:absolute-url">absolute URL</a> of a resource <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="appcache:concept-appcache-manifest-5">manifest</a> which is used to populate the caches in the
+  group.</p>
+
+  <p>An <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-3">application cache</a> is <dfn id="concept-appcache-newer">newer</dfn> than
+  another if it was created after the other (in other words, <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-4">application caches</a> in an <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group">application cache group</a> have a chronological
+  order).</p>
+
+  <p>Only the newest <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-5">application cache</a> in an <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-2">application cache group</a> can
+  have its <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="appcache:concept-appcache-completeness">completeness flag</a> set to
+  <i>incomplete</i>; the others are always all <i>complete</i>.</p>
+
+  <p>Each <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-3">application cache group</a> has an <dfn id="concept-appcache-status">update
+  status</dfn>, which is one of the following: <i>idle</i>, <i>checking</i>, <i>downloading</i>.</p>
+
+  <p>A <dfn id="relevant-application-cache">relevant application cache</dfn> is an <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-6">application cache</a> that is the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="appcache:concept-appcache-newer">newest</a> in its <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-4">group</a> to be <i>complete</i>.</p>
+
+  <p>Each <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-5">application cache group</a> has a <dfn id="concept-appcache-pending-masters">list of pending master entries</dfn>. Each entry in this
+  list consists of a resource and a corresponding <code id="appcache:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> object. It is used during
+  the <a href="/breakup/specs/appcache/#application-cache-download-process" id="appcache:application-cache-download-process-2">application cache download process</a> to ensure that new master entries are cached
+  even if the <a href="/breakup/specs/appcache/#application-cache-download-process" id="appcache:application-cache-download-process-3">application cache download process</a> was already running for their
+  <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-6">application cache group</a> when they were loaded.</p>
+
+  <p>An <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-7">application cache group</a> can be marked as <dfn id="concept-appcache-obsolete">obsolete</dfn>, meaning that it must be ignored when looking at
+  what <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-8">application cache groups</a> exist.</p>
+
+  <hr>
+
+  <p>A <dfn id="cache-host">cache host</dfn> is a <code id="appcache:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> or a <code id="appcache:sharedworkerglobalscope"><a href="http://www.w3.org/TR/workers/#sharedworkerglobalscope">SharedWorkerGlobalScope</a></code>
+  object. A <a href="/breakup/specs/appcache/#cache-host" id="appcache:cache-host">cache host</a> can be associated with an <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-7">application cache</a>.</p>
+
+  <p>A <code id="appcache:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code> initially is not associated with an <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-8">application cache</a>, but
+  can become associated with one early during the page load process, when steps <a href="/breakup/specs/html-syntax/#parser-appcache">in the parser</a> and in the <a href="/breakup/specs/browsing/#navigate" id="appcache:navigate-2">navigation</a>
+  sections cause <a href="/breakup/specs/appcache/#concept-appcache-init" id="appcache:concept-appcache-init">cache selection</a> to occur.</p>
+
+  <p>A <code id="appcache:sharedworkerglobalscope-2"><a href="http://www.w3.org/TR/workers/#sharedworkerglobalscope">SharedWorkerGlobalScope</a></code> can be associated with an <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-9">application cache</a>
+  when it is created.</p>
+
+  <p>Each <a href="/breakup/specs/appcache/#cache-host" id="appcache:cache-host-2">cache host</a> has an associated <code id="appcache:applicationcache"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object.</p>
+
+  <hr>
+
+  <p>Multiple <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-10">application caches</a> in different <a href="/breakup/specs/appcache/#application-cache-group" id="appcache:application-cache-group-9">application cache groups</a> can contain the same resource,
+  e.g. if the manifests all reference that resource. If the user agent is to <dfn id="concept-appcache-selection">select an application cache</dfn> from a list of <a href="/breakup/specs/appcache/#relevant-application-cache" id="appcache:relevant-application-cache">relevant application caches</a> that contain a resource, the
+  user agent must use the application cache that the user most likely wants to see the resource
+  from, taking into account the following:</p>
+
+  <ul><li>which application cache was most recently updated,
+
+   </li><li>which application cache was being used to display the resource from which the user decided to
+   look at the new resource, and
+
+   </li><li>which application cache the user prefers.
+
+  </li></ul>
+
+  <hr>
+
+  <p>A URL <dfn id="concept-appcache-matches-fallback">matches a fallback namespace</dfn> if
+  there exists a <a href="/breakup/specs/appcache/#relevant-application-cache" id="appcache:relevant-application-cache-2">relevant application cache</a> whose <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="appcache:concept-appcache-manifest-6">manifest</a>'s URL has the <a href="/breakup/specs/browser-dom/#same-origin" id="appcache:same-origin-3">same origin</a> as the
+  URL in question, and that has a <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="appcache:concept-appcache-fallback-ns">fallback
+  namespace</a> that is a <a href="/breakup/specs/core-algorithms/#prefix-match" id="appcache:prefix-match">prefix match</a> for the URL being examined. If multiple
+  fallback namespaces match the same URL, the longest one is the one that matches. A URL looking for
+  a fallback namespace can match more than one application cache at a time, but only matches one
+  namespace in each cache.</p>
+
+  <div class="example">
+
+   <p>If a manifest <code>http://example.com/app1/manifest</code> declares that <code>http://example.com/resources/images</code> is a fallback namespace, and the user
+   navigates to <code>HTTP://EXAMPLE.COM:80/resources/images/cat.png</code>, then the user
+   agent will decide that the application cache identified by <code>http://example.com/app1/manifest</code> contains a namespace with a match for that
+   URL.</p>
+
+   
+
+  </div></section><section><h2>The cache manifest syntax</h2>
+
+
+  <section><h2>Some sample manifests</h2>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <div class="example">
+
+   <p>This example manifest requires two images and a style sheet to be cached and whitelists a CGI
+   script.</p>
+
+   <pre>CACHE MANIFEST
+# the above line is required
+
+# this is a comment
+# there can be as many of these anywhere in the file
+# they are all ignored
+  # comments can have spaces before them
+  # but must be alone on the line
+
+# blank lines are ignored too
+
+# these are files that need to be cached they can either be listed
+# first, or a "CACHE:" header could be put before them, as is done
+# lower down.
+images/sound-icon.png
+images/background.png
+# note that each file has to be put on its own line
+
+# here is a file for the online whitelist -- it isn't cached, and
+# references to this file will bypass the cache, always hitting the
+# network (or trying to, if the user is offline).
+NETWORK:
+comm.cgi
+
+# here is another set of files to cache, this time just the CSS file.
+CACHE:
+style/default.css</pre>
+
+   <p>It could equally well be written as follows:</p>
+
+   <pre>CACHE MANIFEST
+NETWORK:
+comm.cgi
+CACHE:
+style/default.css
+images/sound-icon.png
+images/background.png</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>Offline application cache manifests can use absolute paths or even absolute URLs:</p>
+
+   <pre>CACHE MANIFEST
+
+/main/home
+/main/app.js
+/settings/home
+/settings/app.js
+http://img.example.com/logo.png
+http://img.example.com/check.png
+http://img.example.com/cross.png</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>The following manifest defines a catch-all error page that is displayed for any page on the
+   site while the user is offline. It also specifies that the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist-wildcard" id="some-sample-manifests:concept-appcache-onlinewhitelist-wildcard">online whitelist wildcard flag</a> is <i>open</i>, meaning that accesses to resources on other sites will not be blocked.
+   (Resources on the same site are already not blocked because of the catch-all fallback
+   namespace.)</p>
+
+   <p>So long as all pages on the site reference this manifest, they will get cached locally as they
+   are fetched, so that subsequent hits to the same page will load the page immediately from the
+   cache. Until the manifest is changed, those pages will not be fetched from the server again. When
+   the manifest changes, then all the files will be redownloaded.</p>
+
+   <p>Subresources, such as style sheets, images, etc, would only be cached using the regular HTTP
+   caching semantics, however.</p>
+
+   <pre>CACHE MANIFEST
+FALLBACK:
+/ /offline.html
+NETWORK:
+*</pre>
+
+  </div></section>
+
+
+
+  <section><h2>Writing cache manifests</h2>
+
+  <p>Manifests must be served using the <code id="writing-cache-manifests:text/cache-manifest"><a href="#text/cache-manifest">text/cache-manifest</a></code> <a href="/breakup/specs/core-algorithms/#mime-type" id="writing-cache-manifests:mime-type">MIME type</a>. All
+  resources served using the <code id="writing-cache-manifests:text/cache-manifest-2"><a href="#text/cache-manifest">text/cache-manifest</a></code> <a href="/breakup/specs/core-algorithms/#mime-type" id="writing-cache-manifests:mime-type-2">MIME type</a> must follow the
+  syntax of application cache manifests, as described in this section.</p>
+
+  <p>An application cache manifest is a text file, whose text is encoded using UTF-8. Data in
+  application cache manifests is line-based. Newlines must be represented by U+000A LINE FEED (LF)
+  characters, U+000D CARRIAGE RETURN (CR) characters, or U+000D CARRIAGE RETURN (CR) U+000A LINE
+  FEED (LF) pairs. [[!ENCODING]]</p>
+
+  <p class="note">This is a <a href="/breakup/specs/html/#willful-violation" id="writing-cache-manifests:willful-violation">willful violation</a> of RFC 2046, which requires all <code>text/*</code> types to only allow CRLF line breaks. This requirement, however, is
+  outdated; the use of CR, LF, and CRLF line breaks is commonly supported and indeed sometimes CRLF
+  is <em>not</em> supported by text editors. [[!RFC2046]]</p>
+
+  <p>The first line of an application cache manifest must consist of the string "CACHE", a single
+  U+0020 SPACE character, the string "MANIFEST", and either a U+0020 SPACE character, a U+0009
+  CHARACTER TABULATION (tab) character, a U+000A LINE FEED (LF) character, or a U+000D CARRIAGE
+  RETURN (CR) character. The first line may optionally be preceded by a U+FEFF BYTE ORDER MARK (BOM)
+  character. If any other text is found on the first line, it is ignored.</p>
+
+  <p>Subsequent lines, if any, must all be one of the following:</p>
+
+  <dl><dt>A blank line
+   </dt><dd>
+    <p>Blank lines must consist of zero or more U+0020 SPACE and
+    U+0009 CHARACTER TABULATION (tab) characters only.</p>
+
+   </dd><dt>A comment
+   </dt><dd>
+    <p>Comment lines must consist of zero or more U+0020 SPACE and U+0009 CHARACTER TABULATION (tab)
+    characters, followed by a single U+0023 NUMBER SIGN character (#), followed by zero or more
+    characters other than U+000A LINE FEED (LF) and U+000D CARRIAGE RETURN (CR) characters.</p>
+
+    <p class="note">Comments must be on a line on their own. If they were to be included on a line
+    with a URL, the "#" would be mistaken for part of a fragment identifier.</p>
+
+   </dd><dt>A section header
+   </dt><dd>
+
+    <p>Section headers change the current section. There are four possible section headers:
+
+    </p><dl><dt><code>CACHE:</code>
+     </dt><dd>Switches to the <dfn id="concept-appcache-manifest-explicit">explicit section</dfn>.
+
+     </dd><dt><code>FALLBACK:</code>
+     </dt><dd>Switches to the <dfn id="concept-appcache-manifest-fallback">fallback section</dfn>.
+
+     </dd><dt><code>NETWORK:</code>
+     </dt><dd>Switches to the <dfn id="concept-appcache-manifest-network">online whitelist section</dfn>.
+
+     </dd><dt><code>SETTINGS:</code>
+     </dt><dd>Switches to the <dfn id="concept-appcache-manifest-settings">settings section</dfn>.
+
+    </dd></dl>
+
+    <p>Section header lines must consist of zero or more U+0020 SPACE and U+0009 CHARACTER
+    TABULATION (tab) characters, followed by one of the names above (including the U+003A COLON
+    character (:)) followed by zero or more U+0020 SPACE and U+0009 CHARACTER TABULATION (tab)
+    characters.</p>
+
+    <p>Ironically, by default, the current section is the <a href="/breakup/specs/appcache/#concept-appcache-manifest-explicit" id="writing-cache-manifests:concept-appcache-manifest-explicit">explicit section</a>.</p>
+
+   </dd><dt>Data for the current section
+   </dt><dd>
+
+    <p>The format that data lines must take depends on the current section.</p>
+
+    <p>When the current section is the <a href="/breakup/specs/appcache/#concept-appcache-manifest-explicit" id="writing-cache-manifests:concept-appcache-manifest-explicit-2">explicit
+    section</a>, data lines must consist of zero or more U+0020 SPACE and U+0009 CHARACTER
+    TABULATION (tab) characters, a <a href="/breakup/specs/core-algorithms/#valid-url" id="writing-cache-manifests:valid-url">valid URL</a> identifying a resource other than the
+    manifest itself, and then zero or more U+0020 SPACE and U+0009 CHARACTER TABULATION (tab)
+    characters.</p>
+
+    <p>When the current section is the <a href="/breakup/specs/appcache/#concept-appcache-manifest-fallback" id="writing-cache-manifests:concept-appcache-manifest-fallback">fallback
+    section</a>, data lines must consist of zero or more U+0020 SPACE and U+0009 CHARACTER
+    TABULATION (tab) characters, a <a href="/breakup/specs/core-algorithms/#valid-url" id="writing-cache-manifests:valid-url-2">valid URL</a> identifying a resource other than the
+    manifest itself, one or more U+0020 SPACE and U+0009 CHARACTER TABULATION (tab) characters,
+    another <a href="/breakup/specs/core-algorithms/#valid-url" id="writing-cache-manifests:valid-url-3">valid URL</a> identifying a resource other than the manifest itself, and then
+    zero or more U+0020 SPACE and U+0009 CHARACTER TABULATION (tab) characters.</p>
+
+    <p>When the current section is the <a href="/breakup/specs/appcache/#concept-appcache-manifest-network" id="writing-cache-manifests:concept-appcache-manifest-network">online
+    whitelist section</a>, data lines must consist of zero or more U+0020 SPACE and U+0009
+    CHARACTER TABULATION (tab) characters, either a single U+002A ASTERISK character (*)  or a <a href="/breakup/specs/core-algorithms/#valid-url" id="writing-cache-manifests:valid-url-4">valid URL</a> identifying a resource
+    other than the manifest itself, and then zero or more U+0020 SPACE and U+0009 CHARACTER
+    TABULATION (tab) characters.</p>
+
+    <p>When the current section is the <a href="/breakup/specs/appcache/#concept-appcache-manifest-settings" id="writing-cache-manifests:concept-appcache-manifest-settings">settings
+    section</a>, data lines must consist of zero or more U+0020 SPACE and U+0009 CHARACTER
+    TABULATION (tab) characters, a <a href="/breakup/specs/appcache/#concept-appcache-manifest-setting" id="writing-cache-manifests:concept-appcache-manifest-setting">setting</a>,
+    and then zero or more U+0020 SPACE and U+0009 CHARACTER TABULATION (tab) characters.</p>
+
+    <p>Currently only one <dfn id="concept-appcache-manifest-setting">setting</dfn> is
+    defined:</p>
+
+    <dl><dt>The cache mode setting</dt><dd>This consists of the string "<code>prefer-online</code>". It sets the <a href="/breakup/specs/appcache/#concept-appcache-mode" id="writing-cache-manifests:concept-appcache-mode">cache mode</a> to <a href="/breakup/specs/appcache/#concept-appcache-mode-prefer-online" id="writing-cache-manifests:concept-appcache-mode-prefer-online">prefer-online</a>. (The <a href="/breakup/specs/appcache/#concept-appcache-mode" id="writing-cache-manifests:concept-appcache-mode-2">cache mode</a> defaults to <a href="/breakup/specs/appcache/#concept-appcache-mode-fast" id="writing-cache-manifests:concept-appcache-mode-fast">fast</a>.)</dd></dl>
+
+    <p>Within a <a href="/breakup/specs/appcache/#concept-appcache-manifest-settings" id="writing-cache-manifests:concept-appcache-manifest-settings-2">settings section</a>, each <a href="/breakup/specs/appcache/#concept-appcache-manifest-setting" id="writing-cache-manifests:concept-appcache-manifest-setting-2">setting</a> must occur no more than once.</p>
+
+
+
+  </dd></dl>
+
+  <p>Manifests may contain sections more than once. Sections may be empty.</p>
+
+  <p>URLs that are to be fallback pages associated with <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="writing-cache-manifests:concept-appcache-fallback-ns">fallback namespaces</a>, and those namespaces themselves,
+  must be given in <a href="/breakup/specs/appcache/#concept-appcache-manifest-fallback" id="writing-cache-manifests:concept-appcache-manifest-fallback-2">fallback sections</a>, with
+  the namespace being the first URL of the data line, and the corresponding fallback page being the
+  second URL. All the other pages to be cached must be listed in <a href="/breakup/specs/appcache/#concept-appcache-manifest-explicit" id="writing-cache-manifests:concept-appcache-manifest-explicit-3">explicit sections</a>.</p>
+
+  <p><a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="writing-cache-manifests:concept-appcache-fallback-ns-2">Fallback namespaces</a> and <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="writing-cache-manifests:concept-appcache-fallback">fallback entries</a> must have the <a href="/breakup/specs/browser-dom/#same-origin" id="writing-cache-manifests:same-origin">same origin</a>
+  as the manifest itself. <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="writing-cache-manifests:concept-appcache-fallback-ns-3">Fallback namespaces</a>
+  must also be <span>in the same path</span> as the manifest's URL.</p>
+
+  <p>A <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="writing-cache-manifests:concept-appcache-fallback-ns-4">fallback namespace</a> must not be listed more
+  than once.</p>
+
+  <p>Namespaces that the user agent is to put into the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="writing-cache-manifests:concept-appcache-onlinewhitelist">online whitelist</a> must all be specified in <a href="/breakup/specs/appcache/#concept-appcache-manifest-network" id="writing-cache-manifests:concept-appcache-manifest-network-2">online whitelist sections</a>. (This is needed for
+  any URL that the page is intending to use to communicate back to the server.) To specify that all
+  URLs are automatically whitelisted in this way, a U+002A ASTERISK character (*) may be specified
+  as one of the URLs. </p>
+
+  <p>Authors should not include namespaces in the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="writing-cache-manifests:concept-appcache-onlinewhitelist-2">online whitelist</a> for which another namespace in
+  the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="writing-cache-manifests:concept-appcache-onlinewhitelist-3">online whitelist</a> is a <a href="/breakup/specs/core-algorithms/#prefix-match" id="writing-cache-manifests:prefix-match">prefix
+  match</a>.</p>
+
+  <p><a href="/breakup/specs/core-algorithms/#relative-url" id="writing-cache-manifests:relative-url">Relative URLs</a> must be given relative to the manifest's own
+  URL. All URLs in the manifest must have the same <a href="/breakup/specs/core-algorithms/#concept-url-scheme" id="writing-cache-manifests:concept-url-scheme">scheme</a> as
+  the manifest itself (either explicitly or implicitly, through the use of <a href="/breakup/specs/core-algorithms/#relative-url" id="writing-cache-manifests:relative-url-2">relative URLs</a>). [[!URL]]</p>
+
+  <p>URLs in manifests must not have fragment identifiers (i.e. the U+0023 NUMBER SIGN character
+  isn't allowed in URLs in manifests).</p>
+
+  <p><a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="writing-cache-manifests:concept-appcache-fallback-ns-5">Fallback namespaces</a> and namespaces in the
+  <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="writing-cache-manifests:concept-appcache-onlinewhitelist-4">online whitelist</a> are matched by <a href="/breakup/specs/core-algorithms/#prefix-match" id="writing-cache-manifests:prefix-match-2">prefix
+  match</a>.</p></section>
+
+
+  
+
+  <section><h2>Parsing cache manifests</h2>
+
+  <p>When a user agent is to <dfn id="parse-a-manifest">parse a manifest</dfn>, it means that the user agent must run the
+  following steps:</p>
+
+  <ol><li>
+
+    <p><a href="/breakup/specs/core-algorithms/#utf-8-decode" id="parsing-cache-manifests:utf-8-decode">UTF-8 decode</a> the byte stream corresponding with the manifest to be parsed.</p>
+
+    <p class="note">The <a href="/breakup/specs/core-algorithms/#utf-8-decode" id="parsing-cache-manifests:utf-8-decode-2">UTF-8 decode</a> algorithm strips a leading BOM, if any.</p>
+
+    
+
+   </li><li><p>Let <var>base URL</var> be the <a href="/breakup/specs/core-algorithms/#absolute-url" id="parsing-cache-manifests:absolute-url">absolute URL</a> representing the
+   manifest.</p></li><li><p>Apply the <a href="/breakup/specs/core-algorithms/#url-parser" id="parsing-cache-manifests:url-parser">URL parser</a> to <var>base URL</var>, and let <var>manifest path</var>
+   be the <a href="/breakup/specs/core-algorithms/#concept-url-path" id="parsing-cache-manifests:concept-url-path">path</a> component thus obtained.</p></li><li><p>Remove all the characters in <var>manifest path</var> after the last U+002F SOLIDUS
+   character (/), if any. (The first character and the last character in <var>manifest path</var>
+   after this step will both be slashes, the URL path separator character.)</p></li><li><p>Apply the <a href="/breakup/specs/core-algorithms/#url-parser" id="parsing-cache-manifests:url-parser-2">URL parser</a> steps to the <var>base URL</var>, so that the
+   components from its <a href="/breakup/specs/core-algorithms/#parsed-url" id="parsing-cache-manifests:parsed-url">parsed URL</a> can be used by the subseqent steps of this
+   algorithm.</p></li><li><p>Let <var>explicit URLs</var> be an initially empty list of <a href="/breakup/specs/core-algorithms/#absolute-url" id="parsing-cache-manifests:absolute-url-2">absolute URLs</a> for <a href="/breakup/specs/appcache/#concept-appcache-explicit" id="parsing-cache-manifests:concept-appcache-explicit">explicit
+   entries</a>.</p></li><li><p>Let <var>fallback URLs</var> be an initially empty mapping of <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="parsing-cache-manifests:concept-appcache-fallback-ns">fallback namespaces</a> to <a href="/breakup/specs/core-algorithms/#absolute-url" id="parsing-cache-manifests:absolute-url-3">absolute URLs</a> for <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="parsing-cache-manifests:concept-appcache-fallback">fallback
+   entries</a>.</p></li><li><p>Let <var>online whitelist namespaces</var> be an initially empty list of <a href="/breakup/specs/core-algorithms/#absolute-url" id="parsing-cache-manifests:absolute-url-4">absolute URLs</a> for an <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="parsing-cache-manifests:concept-appcache-onlinewhitelist">online whitelist</a>.</p></li><li><p>Let <var>online whitelist wildcard flag</var> be <i>blocking</i>. </p></li><li><p>Let <var>cache mode flag</var> be <i>fast</i>. </p></li><li><p>Let <var>input</var> be the decoded text of the manifest's byte stream.</p></li><li><p>Let <var>position</var> be a pointer into <var>input</var>, initially
+   pointing at the first character.</p></li><li><p>If the characters starting from <var>position</var> are "CACHE", followed by a
+   U+0020 SPACE character, followed by "MANIFEST", then advance <var>position</var> to the
+   next character after those. Otherwise, this isn't a cache manifest; abort this algorithm with a
+   failure while checking for the magic signature.</p></li><li><p>If the character at <var>position</var> is neither a U+0020 SPACE character, a
+   U+0009 CHARACTER TABULATION (tab) character, U+000A LINE FEED (LF) character, nor a U+000D
+   CARRIAGE RETURN (CR) character, then this isn't a cache manifest; abort this algorithm with a
+   failure while checking for the magic signature.</p></li><li><p>This is a cache manifest. The algorithm cannot fail beyond
+   this point (though bogus lines can get ignored).</p></li><li><p><a href="/breakup/specs/core-algorithms/#collect-a-sequence-of-characters" id="parsing-cache-manifests:collect-a-sequence-of-characters">Collect a sequence of characters</a> that are <em>not</em> U+000A LINE FEED (LF)
+   or U+000D CARRIAGE RETURN (CR) characters, and ignore those characters. (Extra text on the first
+   line, after the signature, is ignored.)</p></li><li><p>Let <var>mode</var> be "explicit".</p></li><li><p><i>Start of line</i>: If <var>position</var> is past the end of <var>input</var>, then jump to the last step. Otherwise, <a href="/breakup/specs/core-algorithms/#collect-a-sequence-of-characters" id="parsing-cache-manifests:collect-a-sequence-of-characters-2">collect a sequence of
+   characters</a> that are U+000A LINE FEED (LF), U+000D CARRIAGE RETURN (CR), U+0020 SPACE, or
+   U+0009 CHARACTER TABULATION (tab) characters.</p></li><li><p>Now, <a href="/breakup/specs/core-algorithms/#collect-a-sequence-of-characters" id="parsing-cache-manifests:collect-a-sequence-of-characters-3">collect a sequence of characters</a> that are <em>not</em> U+000A LINE FEED
+   (LF) or U+000D CARRIAGE RETURN (CR) characters, and let the result be <var>line</var>.</p></li><li><p>Drop any trailing U+0020 SPACE and U+0009 CHARACTER TABULATION (tab) characters at the end
+   of <var>line</var>.</p></li><li><p>If <var>line</var> is the empty string, then jump back to the step labeled <i>start
+   of line</i>.</p></li><li><p>If the first character in <var>line</var> is a U+0023 NUMBER SIGN character (#),
+   then jump back to the step labeled <i>start of line</i>.</p></li><li><p>If <var>line</var> equals "CACHE:" (the word "CACHE" followed by a U+003A COLON
+   character (:)), then set <var>mode</var> to "explicit" and jump back to the step labeled
+   <i>start of line</i>.</p></li><li><p>If <var>line</var> equals "FALLBACK:" (the word "FALLBACK" followed by a U+003A
+   COLON character (:)), then set <var>mode</var> to "fallback" and jump back to the step
+   labeled <i>start of line</i>.</p></li><li><p>If <var>line</var> equals "NETWORK:" (the word "NETWORK" followed by a U+003A
+   COLON character (:)), then set <var>mode</var> to "online whitelist" and jump back to
+   the step labeled <i>start of line</i>.</p></li><li><p>If <var>line</var> equals "SETTINGS:" (the word "SETTINGS" followed by a U+003A
+   COLON character (:)), then set <var>mode</var> to "settings" and jump back to the step
+   labeled <i>start of line</i>.</p></li><li><p>If <var>line</var> ends with a U+003A COLON character (:), then set <var>mode</var> to "unknown" and jump back to the step labeled <i>start of line</i>.</p></li><li><p>This is either a data line or it is syntactically incorrect.</p></li><li><p>Let <var>position</var> be a pointer into <var>line</var>, initially
+   pointing at the start of the string.</p></li><li><p>Let <var>tokens</var> be a list of strings, initially empty.</p></li><li>
+
+    <p>While <var>position</var> doesn't point past the end of <var>line</var>:</p>
+
+    <ol><li><p>Let <var>current token</var> be an empty string.</p></li><li><p>While <var>position</var> doesn't point past the end of <var>line</var> and the character at <var>position</var> is neither a U+0020 SPACE
+     nor a U+0009 CHARACTER TABULATION (tab) character, add the character at <var>position</var> to <var>current token</var> and advance <var>position</var> to the next character in <var>input</var>.</p></li><li><p>Add <var>current token</var> to the <var>tokens</var> list.</p></li><li><p>While <var>position</var> doesn't point past the end of <var>line</var> and the character at <var>position</var> is either a U+0020 SPACE
+     or a U+0009 CHARACTER TABULATION (tab) character, advance <var>position</var> to the
+     next character in <var>input</var>.</p></li></ol>
+
+   </li><li>
+
+    <p>Process <var>tokens</var> as follows:</p>
+
+    <dl class="switch"><dt>If <var>mode</var> is "explicit"</dt><dd>
+
+      <p><a href="/breakup/specs/core-algorithms/#resolve-a-url" id="parsing-cache-manifests:resolve-a-url">Resolve</a> the first item in <var>tokens</var>,
+      relative to <var>base URL</var>, with the URL character encoding set to UTF-8;
+      ignore the rest.</p>
+
+      <p>If this fails, then jump back to the step labeled <i>start of line</i>.</p>
+
+      <p>If the resulting <a href="/breakup/specs/core-algorithms/#parsed-url" id="parsing-cache-manifests:parsed-url-2">parsed URL</a> has a different <a href="/breakup/specs/core-algorithms/#concept-url-scheme" id="parsing-cache-manifests:concept-url-scheme">scheme</a> component than <var>base URL</var> (the
+      manifest's URL), then jump back to the step labeled <i>start of line</i>.</p>
+
+      <p>Let <var>new URL</var> be the result of applying the <a href="/breakup/specs/core-algorithms/#concept-url-serialiser" id="parsing-cache-manifests:concept-url-serialiser">URL serialiser</a> algorithm to the resulting <a href="/breakup/specs/core-algorithms/#parsed-url" id="parsing-cache-manifests:parsed-url-3">parsed
+      URL</a>, with the <i>exclude fragment flag</i> set.</p>
+
+      <p>Add <var>new URL</var> to the <var>explicit URLs</var>.</p>
+
+     </dd><dt>If <var>mode</var> is "fallback"</dt><dd>
+
+      <p>Let <var>part one</var> be the first token in <var>tokens</var>, and let
+      <var>part two</var> be the second token in <var>tokens</var>.</p>
+
+      <p><a href="/breakup/specs/core-algorithms/#resolve-a-url" id="parsing-cache-manifests:resolve-a-url-2">Resolve</a> <var>part one</var> and <var>part two</var>, relative to <var>base URL</var>, with the URL character
+      encoding set to UTF-8.</p>
+
+      <p>If either fails, then jump back to the step labeled <i>start of line</i>.</p>
+
+
+      <p>If the <a href="/breakup/specs/core-algorithms/#absolute-url" id="parsing-cache-manifests:absolute-url-5">absolute URL</a> corresponding to either <var>part one</var> or
+      <var>part two</var> does not have the <a href="/breakup/specs/browser-dom/#same-origin" id="parsing-cache-manifests:same-origin">same origin</a> as the manifest's URL,
+      then jump back to the step labeled <i>start of line</i>.</p> 
+
+      <p>Let <var>part one path</var> be the <a href="/breakup/specs/core-algorithms/#concept-url-path" id="parsing-cache-manifests:concept-url-path-2">path</a> component
+      of the <a href="/breakup/specs/core-algorithms/#resulting-parsed-url" id="parsing-cache-manifests:resulting-parsed-url">resulting parsed URL</a> for <var>part one</var>.</p>
+
+      <p>If <var>manifest path</var> is not a <a href="/breakup/specs/core-algorithms/#prefix-match" id="parsing-cache-manifests:prefix-match">prefix match</a> for <var>part one
+      path</var>, then jump back to the step labeled <i>start of line</i>.</p> 
+
+
+      <p>Let <var>part one</var> be the result of applying the <a href="/breakup/specs/core-algorithms/#concept-url-serialiser" id="parsing-cache-manifests:concept-url-serialiser-2">URL serialiser</a> algorithm to the first resulting
+      <a href="/breakup/specs/core-algorithms/#parsed-url" id="parsing-cache-manifests:parsed-url-4">parsed URL</a>, with the <i>exclude fragment flag</i> set.</p>
+
+      <p>Let <var>part two</var> be the result of applying the <a href="/breakup/specs/core-algorithms/#concept-url-serialiser" id="parsing-cache-manifests:concept-url-serialiser-3">URL serialiser</a> algorithm to the second resulting
+      <a href="/breakup/specs/core-algorithms/#parsed-url" id="parsing-cache-manifests:parsed-url-5">parsed URL</a>, with the <i>exclude fragment flag</i> set.</p>
+
+      <p>If <var>part one</var> is already in the <var>fallback URLs</var> mapping
+      as a <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="parsing-cache-manifests:concept-appcache-fallback-ns-2">fallback namespace</a>, then jump back to
+      the step labeled <i>start of line</i>.</p>
+
+      <p>Otherwise, add <var>part one</var> to the <var>fallback URLs</var>
+      mapping as a <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="parsing-cache-manifests:concept-appcache-fallback-ns-3">fallback namespace</a>, mapped to
+      <var>part two</var> as the <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="parsing-cache-manifests:concept-appcache-fallback-2">fallback
+      entry</a>.</p>
+
+     </dd><dt>If <var>mode</var> is "online whitelist"</dt><dd>
+
+      <p>If the first item in <var>tokens</var> is a U+002A ASTERISK character (*), then
+      set <var>online whitelist wildcard flag</var> to <i>open</i> and jump back
+      to the step labeled <i>start of line</i>.</p>
+
+      <p>Otherwise, <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="parsing-cache-manifests:resolve-a-url-3">resolve</a> the first item in <var>tokens</var>, relative to <var>base URL</var>, with the URL character
+      encoding set to UTF-8; ignore the rest.</p>
+
+      <p>If this fails, then jump back to the step labeled <i>start of line</i>.</p>
+
+      <p>If the resulting <a href="/breakup/specs/core-algorithms/#parsed-url" id="parsing-cache-manifests:parsed-url-6">parsed URL</a> has a different <a href="/breakup/specs/core-algorithms/#concept-url-scheme" id="parsing-cache-manifests:concept-url-scheme-2">scheme</a> component than <var>base URL</var> (the
+      manifest's URL), then jump back to the step labeled <i>start of line</i>.</p>
+
+      <p>Let <var>new URL</var> be the result of applying the <a href="/breakup/specs/core-algorithms/#concept-url-serialiser" id="parsing-cache-manifests:concept-url-serialiser-4">URL serialiser</a> algorithm to the resulting <a href="/breakup/specs/core-algorithms/#parsed-url" id="parsing-cache-manifests:parsed-url-7">parsed
+      URL</a>, with the <i>exclude fragment flag</i> set.</p>
+
+      <p>Add <var>new URL</var> to the <var>online whitelist namespaces</var>.</p>
+
+     </dd><dt>If <var>mode</var> is "settings"</dt><dd>
+
+      <p>If <var>tokens</var> contains a single token, and that token is a
+      <a href="/breakup/specs/core-algorithms/#case-sensitive" id="parsing-cache-manifests:case-sensitive">case-sensitive</a> match for the string "<code>prefer-online</code>", then
+      set <var>cache mode flag</var> to <i>prefer-online</i> and jump back to the
+      step labeled <i>start of line</i>.</p>
+
+      <p>Otherwise, the line is an unsupported setting: do nothing; the line is ignored.</p>
+
+     </dd><dt>If <var>mode</var> is "unknown"</dt><dd>
+
+      <p>Do nothing. The line is ignored.</p>
+
+     </dd></dl>
+
+   </li><li><p>Jump back to the step labeled <i>start of line</i>. (That step jumps to the next, and last,
+   step when the end of the file is reached.)</p></li><li><p>Return the <var>explicit URLs</var> list, the <var>fallback URLs</var>
+   mapping, the <var>online whitelist namespaces</var>, the <var>online whitelist
+   wildcard flag</var>, and the <var>cache mode flag</var>.</p></li></ol>
+
+  <div class="note">
+
+   <p>The resource that declares the manifest (with the <code id="parsing-cache-manifests:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> attribute) will always get taken from the cache,
+   whether it is listed in the cache or not, even if it is listed in an <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="parsing-cache-manifests:concept-appcache-onlinewhitelist-2">online whitelist namespace</a>.</p>
+
+   <p>If a resource is listed in the <a href="/breakup/specs/appcache/#concept-appcache-manifest-explicit" id="parsing-cache-manifests:concept-appcache-manifest-explicit">explicit
+   section</a> or as a <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="parsing-cache-manifests:concept-appcache-fallback-3">fallback entry</a> in the <a href="/breakup/specs/appcache/#concept-appcache-manifest-fallback" id="parsing-cache-manifests:concept-appcache-manifest-fallback">fallback section</a>, the resource will always be
+   taken from the cache, regardless of any other matching entries in the <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="parsing-cache-manifests:concept-appcache-fallback-ns-4">fallback namespaces</a> or <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="parsing-cache-manifests:concept-appcache-onlinewhitelist-3">online whitelist namespaces</a>.</p>
+
+   <p>When a <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="parsing-cache-manifests:concept-appcache-fallback-ns-5">fallback namespace</a> and an <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="parsing-cache-manifests:concept-appcache-onlinewhitelist-4">online whitelist namespace</a> overlap, the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="parsing-cache-manifests:concept-appcache-onlinewhitelist-5">online whitelist namespace</a> has priority.</p>
+
+   <p>The <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist-wildcard" id="parsing-cache-manifests:concept-appcache-onlinewhitelist-wildcard">online whitelist wildcard
+   flag</a> is applied last, only for URLs that match neither the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="parsing-cache-manifests:concept-appcache-onlinewhitelist-6">online whitelist namespace</a> nor the <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="parsing-cache-manifests:concept-appcache-fallback-ns-6">fallback namespace</a> and that are not listed in the
+   <a href="/breakup/specs/appcache/#concept-appcache-manifest-explicit" id="parsing-cache-manifests:concept-appcache-manifest-explicit-2">explicit section</a>.</p>
+
+  </div></section></section><section><h2>Downloading or updating an application cache</h2>
+
+  <p>When the user agent is required (by other parts of this specification) to start the
+  <dfn id="application-cache-download-process">application cache download process</dfn> for an <a href="/breakup/specs/core-algorithms/#absolute-url" id="downloading-or-updating-an-application-cache:absolute-url">absolute URL</a> purported to
+  identify a <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="downloading-or-updating-an-application-cache:concept-appcache-manifest">manifest</a>, or for an <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group">application
+  cache group</a>, potentially given a particular <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host">cache host</a>, and potentially given
+  a <a href="/breakup/specs/appcache/#concept-appcache-master" id="downloading-or-updating-an-application-cache:concept-appcache-master">master</a> resource, the user agent must run the steps
+  below. These steps are always run <a href="/breakup/specs/core-algorithms/#in-parallel" id="downloading-or-updating-an-application-cache:in-parallel">in parallel</a> with the <a href="/breakup/specs/browser-dom/#event-loop" id="downloading-or-updating-an-application-cache:event-loop">event loop</a>
+  <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task">tasks</a>.</p>
+
+  <p>Some of these steps have requirements that only apply if the user agent <dfn id="shows-caching-progress">shows caching
+  progress</dfn>. Support for this is optional. Caching progress UI could consist of a progress bar
+  or message panel in the user agent's interface, or an overlay, or something else. Certain events
+  fired during the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process">application cache download process</a> allow the script to override the
+  display of such an interface. (Such events are delayed until after the <code id="downloading-or-updating-an-application-cache:event-load"><a href="/breakup/specs/html/#event-load">load</a></code> event has fired.)
+
+  The goal of this is to allow Web applications to provide more
+  seamless update mechanisms, hiding from the user the mechanics of the application cache mechanism.
+  User agents may display user interfaces independent of this, but are encouraged to not show
+  prominent update progress notifications for applications that cancel the relevant events.</p>
+
+  <p>The <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-2">application cache download process</a> steps are as follows:
+
+  </p><ol><li><p>Optionally, wait until the permission to start the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-3">application cache download
+   process</a> has been obtained from the user and until the user agent is confident that the
+   network is available. This could include doing nothing until the user explicitly opts-in to
+   caching the site, or could involve prompting the user for permission. The algorithm might never
+   get past this point. (This step is particularly intended to be used by user agents running on
+   severely space-constrained devices or in highly privacy-sensitive environments).</p></li><li>
+
+    <p>Atomically, so as to avoid race conditions, perform the following substeps:</p>
+
+    <ol><li>
+
+      <p>Pick the appropriate substeps:</p>
+
+      <dl class="switch"><dt>If these steps were invoked with an <a href="/breakup/specs/core-algorithms/#absolute-url" id="downloading-or-updating-an-application-cache:absolute-url-2">absolute URL</a> purported to identify a
+       <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="downloading-or-updating-an-application-cache:concept-appcache-manifest-2">manifest</a></dt><dd>
+
+        <p>Let <var>manifest URL</var> be that <a href="/breakup/specs/core-algorithms/#absolute-url" id="downloading-or-updating-an-application-cache:absolute-url-3">absolute URL</a>.</p>
+
+        <p>If there is no <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group-2">application cache group</a> identified by <var>manifest
+        URL</var>, then create a new <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group-3">application cache group</a> identified by <var>manifest URL</var>. Initially, it has no <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache">application caches</a>. One will be created later in this algorithm.</p>
+
+       </dd><dt>If these steps were invoked with an <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group-4">application cache group</a></dt><dd>
+
+        <p>Let <var>manifest URL</var> be the <a href="/breakup/specs/core-algorithms/#absolute-url" id="downloading-or-updating-an-application-cache:absolute-url-4">absolute URL</a> of the <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="downloading-or-updating-an-application-cache:concept-appcache-manifest-3">manifest</a> used to identify the <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group-5">application
+        cache group</a> to be updated.</p>
+
+        <p>If that <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group-6">application cache group</a> is <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="downloading-or-updating-an-application-cache:concept-appcache-obsolete">obsolete</a>, then abort this instance of the
+        <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-4">application cache download process</a>. This can happen if another instance of this
+        algorithm found the manifest to be 404 or 410 while this algorithm was waiting in the first
+        step above.</p>
+
+       </dd></dl>
+
+     </li><li><p>Let <var>cache group</var> be the <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group-7">application cache group</a>
+     identified by <var>manifest URL</var>.</p></li><li><p>If these steps were invoked with a <a href="/breakup/specs/appcache/#concept-appcache-master" id="downloading-or-updating-an-application-cache:concept-appcache-master-2">master</a>
+     resource, then add the resource, along with the resource's <code id="downloading-or-updating-an-application-cache:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, to <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters">list of pending
+     master entries</a>.</p></li><li><p>If these steps were invoked with a <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-2">cache host</a>, and the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status">status</a> of <var>cache group</var> is
+     <i>checking</i> or <i>downloading</i>, then <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task">queue a post-load task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event">fire a
+     simple event</a> named <code id="downloading-or-updating-an-application-cache:event-appcache-checking"><a href="/breakup/specs/appcache/#event-appcache-checking">checking</a></code> that is
+     cancelable at the <code id="downloading-or-updating-an-application-cache:applicationcache"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of that <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-3">cache host</a>. The
+     default action of this event must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress">shows caching progress</a>,
+     the display of some sort of user interface indicating to the user that the user agent is
+     checking to see if it can download the application.</p></li><li><p>If these steps were invoked with a <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-4">cache host</a>, and the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-2">status</a> of <var>cache group</var> is
+     <i>downloading</i>, then also <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-2">queue a post-load task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-2">fire a simple
+     event</a> named <code id="downloading-or-updating-an-application-cache:event-appcache-downloading"><a href="/breakup/specs/appcache/#event-appcache-downloading">downloading</a></code> that is
+     cancelable at the <code id="downloading-or-updating-an-application-cache:applicationcache-2"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of that <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-5">cache host</a>. The
+     default action of this event must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-2">shows caching progress</a>,
+     the display of some sort of user interface indicating to the user the application is being
+     downloaded.</p></li><li><p>If the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-3">status</a> of the <var>cache
+     group</var> is either <i>checking</i> or <i>downloading</i>, then abort this instance of the
+     <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-5">application cache download process</a>, as an update is already in progress.</p></li><li><p>Set the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-4">status</a> of <var>cache
+     group</var> to <i>checking</i>.</p>
+
+     </li><li><p>For each <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-6">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-2">application cache</a> in
+     <var>cache group</var>, <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-3">queue a post-load task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-3">fire a simple
+     event</a> that is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-checking-2"><a href="/breakup/specs/appcache/#event-appcache-checking">checking</a></code> at
+     the <code id="downloading-or-updating-an-application-cache:applicationcache-3"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-7">cache host</a>. The default action
+     of these events must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-3">shows caching progress</a>, the display of
+     some sort of user interface indicating to the user that the user agent is checking for the
+     availability of updates.</p></li></ol>
+
+    <p class="note">The remainder of the steps run <a href="/breakup/specs/core-algorithms/#in-parallel" id="downloading-or-updating-an-application-cache:in-parallel-2">in parallel</a>.</p>
+
+    <p>If <var>cache group</var> already has an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-3">application cache</a> in it, then
+    this is an <dfn id="concept-appcache-upgrade">upgrade attempt</dfn>. Otherwise, this is a
+    <dfn id="concept-appcache-cache">cache attempt</dfn>.</p>
+
+   </li><li><p>If this is a <a href="/breakup/specs/appcache/#concept-appcache-cache" id="downloading-or-updating-an-application-cache:concept-appcache-cache">cache attempt</a>, then this
+   algorithm was invoked with a <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-8">cache host</a>; <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-4">queue a post-load task</a> to
+   <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-4">fire a simple event</a> named <code id="downloading-or-updating-an-application-cache:event-appcache-checking-3"><a href="/breakup/specs/appcache/#event-appcache-checking">checking</a></code> that
+   is cancelable at the <code id="downloading-or-updating-an-application-cache:applicationcache-4"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of that <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-9">cache host</a>. The
+   default action of this event must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-4">shows caching progress</a>, the
+   display of some sort of user interface indicating to the user that the user agent is checking for
+   the availability of updates.</p></li><li>
+
+    <p><i>Fetching the manifest</i>: <a href="/breakup/specs/core-algorithms/#fetch" id="downloading-or-updating-an-application-cache:fetch">Fetch</a> the resource from <var>manifest URL</var> with the <i>blocking flag</i> set, and let <var>manifest</var> be that resource. HTTP caching semantics should be honored for this
+    request. The <i>override referrer source</i> must be null.</p> 
+
+    <p>Parse <var>manifest</var> according to the <a href="/breakup/specs/appcache/#parse-a-manifest" id="downloading-or-updating-an-application-cache:parse-a-manifest">rules for
+    parsing manifests</a>, obtaining a list of <a href="/breakup/specs/appcache/#concept-appcache-explicit" id="downloading-or-updating-an-application-cache:concept-appcache-explicit">explicit
+    entries</a>, <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="downloading-or-updating-an-application-cache:concept-appcache-fallback">fallback entries</a> and the <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="downloading-or-updating-an-application-cache:concept-appcache-fallback-ns">fallback namespaces</a> that map to them, entries for
+    the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="downloading-or-updating-an-application-cache:concept-appcache-onlinewhitelist">online whitelist</a>, and values for the
+    <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist-wildcard" id="downloading-or-updating-an-application-cache:concept-appcache-onlinewhitelist-wildcard">online whitelist wildcard flag</a>
+    and the <a href="/breakup/specs/appcache/#concept-appcache-mode" id="downloading-or-updating-an-application-cache:concept-appcache-mode">cache mode flag</a>.</p>
+
+    <p class="note">The <a href="/breakup/specs/core-algorithms/#mime-type" id="downloading-or-updating-an-application-cache:mime-type">MIME type</a> of the resource is ignored — it is assumed to
+    be <code id="downloading-or-updating-an-application-cache:text/cache-manifest"><a href="#text/cache-manifest">text/cache-manifest</a></code>. In the future, if new manifest formats are supported, the
+    different types will probably be distinguished on the basis of the file signatures (for the
+    current format, that is the "<code>CACHE&nbsp;MANIFEST</code>" string at the top of the
+    file).</p>
+
+   </li><li>
+
+    <p>If <i>fetching the manifest</i> fails due to a 404 or 410 response <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="downloading-or-updating-an-application-cache:concept-http-equivalent-codes">or equivalent</a>, then run these substeps:</p>
+
+    <ol><li><p>Mark <var>cache group</var> as <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="downloading-or-updating-an-application-cache:concept-appcache-obsolete-2">obsolete</a>. This <var>cache group</var> no
+     longer exists for any purpose other than the processing of <code id="downloading-or-updating-an-application-cache:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> objects
+     already associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-4">application cache</a> in the <var>cache
+     group</var>.</p></li><li><p>Let <var>task list</var> be an empty list of <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-2">tasks</a>.</p>
+
+     </li><li><p>For each <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-10">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-5">application cache</a> in
+     <var>cache group</var>, create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-3">task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-5">fire
+     a simple event</a> named <code id="downloading-or-updating-an-application-cache:event-appcache-obsolete"><a href="/breakup/specs/appcache/#event-appcache-obsolete">obsolete</a></code> that is
+     cancelable at the <code id="downloading-or-updating-an-application-cache:applicationcache-5"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-11">cache host</a>, and
+     append it to <var>task list</var>. The default action of these events must be, if the
+     user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-5">shows caching progress</a>, the display of some sort of user interface
+     indicating to the user that the application is no longer available for offline use.</p></li><li><p>For each entry in <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-2">list of pending master entries</a>, create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-4">task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-6">fire a simple event</a> that is cancelable named
+     <code id="downloading-or-updating-an-application-cache:event-appcache-error"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code> (not <code id="downloading-or-updating-an-application-cache:event-appcache-obsolete-2"><a href="/breakup/specs/appcache/#event-appcache-obsolete">obsolete</a></code>!) at the <code id="downloading-or-updating-an-application-cache:applicationcache-6"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code>
+     singleton of the <code id="downloading-or-updating-an-application-cache:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry, if there still is one, and append it to
+     <var>task list</var>. The default action of this event must be, if the user agent
+     <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-6">shows caching progress</a>, the display of some sort of user interface indicating to
+     the user that the user agent failed to save the application for offline use.</p></li><li><p>If <var>cache group</var> has an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-6">application cache</a> whose <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="downloading-or-updating-an-application-cache:concept-appcache-completeness">completeness flag</a> is <i>incomplete</i>, then
+     discard that <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-7">application cache</a>.</p>
+
+     </li><li><p>If appropriate, remove any user interface indicating that an update for this cache is in
+     progress.</p></li><li><p>Let the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-5">status</a> of <var>cache
+     group</var> be <i>idle</i>.</p></li><li><p>For each <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-5">task</a> in <var>task list</var>, <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-5">queue that task as a post-load task</a>.</p></li><li><p>Abort the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-6">application cache download process</a>.</p></li></ol>
+
+   </li><li>
+
+    <p>Otherwise, if <i>fetching the manifest</i> fails in some other way (e.g. the server returns
+    another 4xx or 5xx response <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="downloading-or-updating-an-application-cache:concept-http-equivalent-codes-2">or equivalent</a>, or
+    there is a DNS error, or the connection times out, or the user cancels the download, or the
+    parser for manifests fails when checking the magic signature), or if the server returned a
+    redirect, then run the <a href="/breakup/specs/appcache/#cache-failure-steps" id="downloading-or-updating-an-application-cache:cache-failure-steps">cache failure steps</a>. [[!HTTP]]</p>
+
+   </li><li>
+
+    <p>If this is an <a href="/breakup/specs/appcache/#concept-appcache-upgrade" id="downloading-or-updating-an-application-cache:concept-appcache-upgrade">upgrade attempt</a> and the newly
+    downloaded <var>manifest</var> is byte-for-byte identical to the manifest found in the
+    <a href="/breakup/specs/appcache/#concept-appcache-newer" id="downloading-or-updating-an-application-cache:concept-appcache-newer">newest</a> <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-8">application cache</a> in <var>cache group</var>, or the server reported it as "304 Not Modified" <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="downloading-or-updating-an-application-cache:concept-http-equivalent-codes-3">or equivalent</a>, then run these substeps:</p>
+
+    <ol><li><p>Let <var>cache</var> be the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="downloading-or-updating-an-application-cache:concept-appcache-newer-2">newest</a>
+     <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-9">application cache</a> in <var>cache group</var>.</p></li><li><p>Let <var>task list</var> be an empty list of <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-6">tasks</a>.</p>
+
+     </li><li>
+
+      <p>For each entry in <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-3">list of pending master entries</a>, wait for the
+      resource for this entry to have either completely downloaded or failed.</p>
+
+      <p>If the download failed (e.g. the server returns a 4xx or 5xx response <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="downloading-or-updating-an-application-cache:concept-http-equivalent-codes-4">or equivalent</a>, or there is a DNS error, the
+      connection times out, or the user cancels the download), or if the resource is labeled with
+      the "no-store" cache directive, then create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-7">task</a> to
+      <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-7">fire a simple event</a> that is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-error-2"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code> at the <code id="downloading-or-updating-an-application-cache:applicationcache-7"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of
+      the <code id="downloading-or-updating-an-application-cache:document-4"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry, if there still is one, and append it to <var>task list</var>. The default action of this event must be, if the user agent
+      <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-7">shows caching progress</a>, the display of some sort of user interface indicating to
+      the user that the user agent failed to save the application for offline use.</p>
+
+      <p>Otherwise, associate the <code id="downloading-or-updating-an-application-cache:document-5"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry with <var>cache</var>; store the resource for this entry in <var>cache</var>, if it
+      isn't already there, and categorise its entry as a <a href="/breakup/specs/appcache/#concept-appcache-master" id="downloading-or-updating-an-application-cache:concept-appcache-master-3">master entry</a>. If applying the <a href="/breakup/specs/core-algorithms/#url-parser" id="downloading-or-updating-an-application-cache:url-parser">URL parser</a>
+      algorithm to the resource's <a href="/breakup/specs/core-algorithms/#url" id="downloading-or-updating-an-application-cache:url">URL</a> results in a <a href="/breakup/specs/core-algorithms/#parsed-url" id="downloading-or-updating-an-application-cache:parsed-url">parsed URL</a> that has a
+      non-null <a href="/breakup/specs/core-algorithms/#concept-url-fragment" id="downloading-or-updating-an-application-cache:concept-url-fragment">fragment</a> component, the <a href="/breakup/specs/core-algorithms/#url" id="downloading-or-updating-an-application-cache:url-2">URL</a>
+      used for the entry in <var>cache</var> must instead be the <a href="/breakup/specs/core-algorithms/#absolute-url" id="downloading-or-updating-an-application-cache:absolute-url-5">absolute URL</a>
+      obtained from applying the <a href="/breakup/specs/core-algorithms/#concept-url-serialiser" id="downloading-or-updating-an-application-cache:concept-url-serialiser">URL serialiser</a>
+      algorithm to the <a href="/breakup/specs/core-algorithms/#parsed-url" id="downloading-or-updating-an-application-cache:parsed-url-2">parsed URL</a> with the <i>exclude fragment flag</i> set
+      (application caches never include fragment identifiers).</p>
+
+     </li><li><p>For each <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-12">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-10">application cache</a> in
+     <var>cache group</var>, create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-8">task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-8">fire
+     a simple event</a> that is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-noupdate"><a href="/breakup/specs/appcache/#event-appcache-noupdate">noupdate</a></code> at the <code id="downloading-or-updating-an-application-cache:applicationcache-8"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton
+     of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-13">cache host</a>, and append it to <var>task list</var>. The default
+     action of these events must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-8">shows caching progress</a>, the
+     display of some sort of user interface indicating to the user that the application is up to
+     date.</p></li><li><p>Empty <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-4">list of pending master entries</a>.</p></li><li><p>If appropriate, remove any user interface indicating that an update for this cache is in
+     progress.</p></li><li><p>Let the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-6">status</a> of <var>cache
+     group</var> be <i>idle</i>.</p></li><li><p>For each <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-9">task</a> in <var>task list</var>, <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-6">queue that task as a post-load task</a>.</p></li><li><p>Abort the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-7">application cache download process</a>.</p></li></ol>
+
+   </li><li><p>Let <var>new cache</var> be a newly created <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-11">application cache</a> in
+   <var>cache group</var>. Set its <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="downloading-or-updating-an-application-cache:concept-appcache-completeness-2">completeness
+   flag</a> to <i>incomplete</i>.</p></li><li><p>For each entry in <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-5">list of pending master entries</a>, associate the
+   <code id="downloading-or-updating-an-application-cache:document-6"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry with <var>new cache</var>.</p></li><li><p>Set the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-7">status</a> of <var>cache
+   group</var> to <i>downloading</i>.</p></li><li><p>For each <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-14">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-12">application cache</a> in <var>cache group</var>, <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-7">queue a post-load task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-9">fire a simple
+   event</a> that is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-downloading-2"><a href="/breakup/specs/appcache/#event-appcache-downloading">downloading</a></code>
+   at the <code id="downloading-or-updating-an-application-cache:applicationcache-9"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-15">cache host</a>. The default action
+   of these events must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-9">shows caching progress</a>, the display of
+   some sort of user interface indicating to the user that a new version is being
+   downloaded.</p></li><li><p>Let <var>file list</var> be an empty list of URLs with flags.</p></li><li><p>Add all the URLs in the list of <a href="/breakup/specs/appcache/#concept-appcache-explicit" id="downloading-or-updating-an-application-cache:concept-appcache-explicit-2">explicit
+   entries</a> obtained by parsing <var>manifest</var> to <var>file list</var>,
+   each flagged with "explicit entry".</p></li><li><p>Add all the URLs in the list of <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="downloading-or-updating-an-application-cache:concept-appcache-fallback-2">fallback
+   entries</a> obtained by parsing <var>manifest</var> to <var>file list</var>,
+   each flagged with "fallback entry".</p></li><li><p>If this is an <a href="/breakup/specs/appcache/#concept-appcache-upgrade" id="downloading-or-updating-an-application-cache:concept-appcache-upgrade-2">upgrade attempt</a>, then add all
+   the URLs of <a href="/breakup/specs/appcache/#concept-appcache-master" id="downloading-or-updating-an-application-cache:concept-appcache-master-4">master entries</a> in the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="downloading-or-updating-an-application-cache:concept-appcache-newer-3">newest</a> <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-13">application cache</a> in <var>cache group</var> whose <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="downloading-or-updating-an-application-cache:concept-appcache-completeness-3">completeness
+   flag</a> is <i>complete</i> to <var>file list</var>, each flagged with "master
+   entry".</p></li><li><p>If any URL is in <var>file list</var> more than once, then merge the entries into
+   one entry for that URL, that entry having all the flags that the original entries had.</p></li><li>
+
+    <p>For each URL in <var>file list</var>, run the following steps. These steps may be
+    run in parallel for two or more of the URLs at a time. If, while running these steps, the
+    <code id="downloading-or-updating-an-application-cache:applicationcache-10"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <code id="downloading-or-updating-an-application-cache:dom-appcache-abort"><a href="/breakup/specs/appcache/#dom-appcache-abort">abort()</a></code> method
+    <a href="/breakup/specs/appcache/#send-a-signal" id="downloading-or-updating-an-application-cache:send-a-signal">sends a signal</a> to this instance of the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-8">application
+    cache download process</a> algorithm, then run the <a href="/breakup/specs/appcache/#cache-failure-steps" id="downloading-or-updating-an-application-cache:cache-failure-steps-2">cache failure steps</a>
+    instead.</p>
+
+    <ol><li>
+
+      <p>If the resource URL being processed was flagged as neither an "explicit entry" nor or a
+      "fallback entry", then the user agent may skip this URL.</p>
+
+      <p class="note">This is intended to allow user agents to expire resources not listed in the
+      manifest from the cache. Generally, implementors are urged to use an approach that expires
+      lesser-used resources first.</p>
+
+     </li><li><p>For each <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-16">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-14">application cache</a> in
+     <var>cache group</var>, <a href="/breakup/specs/appcache/#queue-a-progress-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-progress-post-load-task">queue a progress post-load task</a> to <a href="/breakup/specs/core-algorithms/#concept-event-fire" id="downloading-or-updating-an-application-cache:concept-event-fire">fire</a> a <a href="/breakup/specs/core-algorithms/#concept-events-trusted" id="downloading-or-updating-an-application-cache:concept-events-trusted">trusted</a>
+     event with the name <code id="downloading-or-updating-an-application-cache:event-appcache-progress"><a href="/breakup/specs/appcache/#event-appcache-progress">progress</a></code>, which does not
+     bubble, which is cancelable, and which uses the <code id="downloading-or-updating-an-application-cache:progressevent"><a href="/breakup/specs/core-algorithms/#progressevent">ProgressEvent</a></code> interface, at the
+     <code id="downloading-or-updating-an-application-cache:applicationcache-11"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-17">cache host</a>. The <code id="downloading-or-updating-an-application-cache:dom-progressevent-lengthcomputable"><a href="/breakup/specs/core-algorithms/#dom-progressevent-lengthcomputable">lengthComputable</a></code> attribute must be set to
+     true, the <code id="downloading-or-updating-an-application-cache:dom-progressevent-total"><a href="/breakup/specs/core-algorithms/#dom-progressevent-total">total</a></code> attribute must be set to the
+     number of files in <var>file list</var>, and the <code id="downloading-or-updating-an-application-cache:dom-progressevent-loaded"><a href="/breakup/specs/core-algorithms/#dom-progressevent-loaded">loaded</a></code> attribute must be set to the number of files in
+     <var>file list</var> that have been either downloaded or skipped so far. The default
+     action of these events must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-10">shows caching progress</a>, the
+     display of some sort of user interface indicating to the user that a file is being downloaded
+     in preparation for updating the application. [[!XHR]]</p></li><li>
+
+      <p><a href="/breakup/specs/core-algorithms/#fetch" id="downloading-or-updating-an-application-cache:fetch-2">Fetch</a> the resource, from the <a href="/breakup/specs/browser-dom/#origin-2" id="downloading-or-updating-an-application-cache:origin-2">origin</a> of the
+      <a href="/breakup/specs/core-algorithms/#url" id="downloading-or-updating-an-application-cache:url-3">URL</a> <var>manifest URL</var>, with the <i>blocking flag</i> set and
+      the <i>manual redirect flag</i> set. If this is an <a href="/breakup/specs/appcache/#concept-appcache-upgrade" id="downloading-or-updating-an-application-cache:concept-appcache-upgrade-3">upgrade attempt</a>, then use the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="downloading-or-updating-an-application-cache:concept-appcache-newer-4">newest</a> <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-15">application cache</a> in <var>cache group</var> as an HTTP cache, and honor HTTP caching semantics (such as
+      expiration, ETags, and so forth) with respect to that cache. User agents may also have other
+      caches in place that are also honored. The <i>override referrer source</i> must be null.</p> 
+
+      <p class="note">If the resource in question is already being downloaded for other reasons then
+      the existing download process can sometimes be used for the purposes of this step, as defined
+      by the <a href="/breakup/specs/core-algorithms/#fetch" id="downloading-or-updating-an-application-cache:fetch-3">fetching</a> algorithm.</p>
+
+      <p class="example">An example of a resource that might already be being downloaded is a large
+      image on a Web page that is being seen for the first time. The image would get downloaded to
+      satisfy the <code id="downloading-or-updating-an-application-cache:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element on the page, as well as being listed in the cache
+      manifest. According to the rules for <a href="/breakup/specs/core-algorithms/#fetch" id="downloading-or-updating-an-application-cache:fetch-4">fetching</a> that image only need
+      be downloaded once, and it can be used both for the cache and for the rendered Web page.</p>
+
+     </li><li>
+
+      <p>If the previous step fails (e.g. the server returns a 4xx or 5xx response <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="downloading-or-updating-an-application-cache:concept-http-equivalent-codes-5">or equivalent</a>, or there is a DNS error, or the
+      connection times out, or the user cancels the download), or if the server returned a redirect,
+      or if the resource is labeled with the "no-store" cache directive, then run the first
+      appropriate step from the following list: [[!HTTP]]</p>
+
+      <dl class="switch"><dt>If the URL being processed was flagged as an "explicit entry" or a "fallback entry"</dt><dd>
+
+        <p>If these steps are being run in parallel for any other URLs in <var>file
+        list</var>, then abort these steps for those other URLs. Run the <a href="/breakup/specs/appcache/#cache-failure-steps" id="downloading-or-updating-an-application-cache:cache-failure-steps-3">cache failure
+        steps</a>.</p>
+
+        <p class="note">Redirects are fatal because they are either indicative of a network problem
+        (e.g. a captive portal); or would allow resources to be added to the cache under URLs that
+        differ from any URL that the networking model will allow access to, leaving orphan entries;
+        or would allow resources to be stored under URLs different than their true URLs. All of
+        these situations are bad.</p>
+
+       </dd><dt>If the error was a 404 or 410 HTTP response <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="downloading-or-updating-an-application-cache:concept-http-equivalent-codes-6">or equivalent</a></dt><dt>If the resource was labeled with the "no-store" cache directive</dt><dd>
+
+        <p>Skip this resource. It is dropped from the cache.</p>
+
+       </dd><dt>Otherwise</dt><dd>
+
+        <p>Copy the resource and its metadata from the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="downloading-or-updating-an-application-cache:concept-appcache-newer-5">newest</a> <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-16">application cache</a> in <var>cache group</var> whose <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="downloading-or-updating-an-application-cache:concept-appcache-completeness-4">completeness
+        flag</a> is <i>complete</i>, and act as if that was the fetched resource, ignoring the
+        resource obtained from the network.</p>
+
+       </dd></dl>
+
+      <p>User agents may warn the user of these errors as an aid to development.</p>
+
+      <p class="note">These rules make errors for resources listed in the manifest fatal, while
+      making it possible for other resources to be removed from caches when they are removed from
+      the server, without errors, and making non-manifest resources survive server-side errors.</p>
+
+      <p class="note">Except for the "no-store" directive, HTTP caching rules that would cause a
+      file to be expired or otherwise not cached are ignored for the purposes of the
+      <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-9">application cache download process</a>.</p>
+
+     </li><li>
+
+      <p>Otherwise, the fetching succeeded. Store the resource in the <var>new
+      cache</var>.</p>
+
+      <p>If the user agent is not able to store the resource (e.g. because of quota restrictions),
+      the user agent may prompt the user or try to resolve the problem in some other manner (e.g.
+      automatically pruning content in other caches). If the problem cannot be resolved, the user
+      agent must run the <a href="/breakup/specs/appcache/#cache-failure-steps" id="downloading-or-updating-an-application-cache:cache-failure-steps-4">cache failure steps</a>.</p>
+
+     </li><li><p>If the URL being processed was flagged as an "explicit entry" in <var>file
+     list</var>, then categorise the entry as an <a href="/breakup/specs/appcache/#concept-appcache-explicit" id="downloading-or-updating-an-application-cache:concept-appcache-explicit-3">explicit
+     entry</a>.</p></li><li><p>If the URL being processed was flagged as a "fallback entry" in <var>file
+     list</var>, then categorise the entry as a <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="downloading-or-updating-an-application-cache:concept-appcache-fallback-3">fallback
+     entry</a>.</p></li><li><p>If the URL being processed was flagged as an "master entry" in <var>file
+     list</var>, then categorise the entry as a <a href="/breakup/specs/appcache/#concept-appcache-master" id="downloading-or-updating-an-application-cache:concept-appcache-master-5">master
+     entry</a>.</p></li><li><p>As an optimization, if the resource is an HTML or XML file whose root element is an
+     <code id="downloading-or-updating-an-application-cache:the-html-element"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element with a <code id="downloading-or-updating-an-application-cache:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> attribute
+     whose value doesn't match the manifest URL of the application cache being processed, then the
+     user agent should mark the entry as being <a href="/breakup/specs/appcache/#concept-appcache-foreign" id="downloading-or-updating-an-application-cache:concept-appcache-foreign">foreign</a>.</p>
+
+    </li></ol>
+
+   </li><li><p>For each <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-18">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-17">application cache</a> in <var>cache group</var>, <a href="/breakup/specs/appcache/#queue-a-progress-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-progress-post-load-task-2">queue a progress post-load task</a> to <a href="/breakup/specs/core-algorithms/#concept-event-fire" id="downloading-or-updating-an-application-cache:concept-event-fire-2">fire</a> a <a href="/breakup/specs/core-algorithms/#concept-events-trusted" id="downloading-or-updating-an-application-cache:concept-events-trusted-2">trusted</a>
+   event with the name <code id="downloading-or-updating-an-application-cache:event-appcache-progress-2"><a href="/breakup/specs/appcache/#event-appcache-progress">progress</a></code>, which does not bubble,
+   which is cancelable, and which uses the <code id="downloading-or-updating-an-application-cache:progressevent-2"><a href="/breakup/specs/core-algorithms/#progressevent">ProgressEvent</a></code> interface, at the
+   <code id="downloading-or-updating-an-application-cache:applicationcache-12"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-19">cache host</a>. The <code id="downloading-or-updating-an-application-cache:dom-progressevent-lengthcomputable-2"><a href="/breakup/specs/core-algorithms/#dom-progressevent-lengthcomputable">lengthComputable</a></code> attribute must be set to
+   true, the <code id="downloading-or-updating-an-application-cache:dom-progressevent-total-2"><a href="/breakup/specs/core-algorithms/#dom-progressevent-total">total</a></code> and the <code id="downloading-or-updating-an-application-cache:dom-progressevent-loaded-2"><a href="/breakup/specs/core-algorithms/#dom-progressevent-loaded">loaded</a></code> attributes must be set to the number of files in
+   <var>file list</var>. The default action of these events must be, if the user agent
+   <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-11">shows caching progress</a>, the display of some sort of user interface indicating to the
+   user that all the files have been downloaded. [[!XHR]]</p></li><li><p>Store the list of <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="downloading-or-updating-an-application-cache:concept-appcache-fallback-ns-2">fallback namespaces</a>,
+   and the URLs of the <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="downloading-or-updating-an-application-cache:concept-appcache-fallback-4">fallback entries</a> that they map
+   to, in <var>new cache</var>.</p></li><li><p>Store the URLs that form the new <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="downloading-or-updating-an-application-cache:concept-appcache-onlinewhitelist-2">online
+   whitelist</a> in <var>new cache</var>.</p></li><li><p>Store the value of the new <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist-wildcard" id="downloading-or-updating-an-application-cache:concept-appcache-onlinewhitelist-wildcard-2">online
+   whitelist wildcard flag</a> in <var>new cache</var>.</p></li><li><p>Store the value of the new <a href="/breakup/specs/appcache/#concept-appcache-mode" id="downloading-or-updating-an-application-cache:concept-appcache-mode-2">cache mode flag</a> in
+   <var>new cache</var>.</p></li><li>
+
+    <p>For each entry in <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-6">list of pending master entries</a>, wait for the
+    resource for this entry to have either completely downloaded or failed.</p>
+
+    <p>If the download failed (e.g. the server returns a 4xx or 5xx response <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="downloading-or-updating-an-application-cache:concept-http-equivalent-codes-7">or equivalent</a>, or there is a DNS error, the
+    connection times out, or the user cancels the download), or if the resource is labeled with the
+    "no-store" cache directive, then run these substeps:</p>
+
+    <ol><li><p>Unassociate the <code id="downloading-or-updating-an-application-cache:document-7"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry from <var>new
+     cache</var>.</p></li><li><p><a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-8">Queue a post-load task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-10">fire a simple event</a> that is
+     cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-error-3"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code> at the
+     <code id="downloading-or-updating-an-application-cache:applicationcache-13"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <code id="downloading-or-updating-an-application-cache:document-8"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry, if there
+     still is one. The default action of this event must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-12">shows caching
+     progress</a>, the display of some sort of user interface indicating to the user that the
+     user agent failed to save the application for offline use.</p>
+
+     </li><li>
+
+      <p>If this is a <a href="/breakup/specs/appcache/#concept-appcache-cache" id="downloading-or-updating-an-application-cache:concept-appcache-cache-2">cache attempt</a> and this entry is
+      the last entry in <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-7">list of pending master entries</a>, then run these
+      further substeps:</p>
+
+      <ol><li><p>Discard <var>cache group</var> and its only <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-18">application cache</a>,
+       <var>new cache</var>.</p>
+
+       </li><li><p>If appropriate, remove any user interface indicating that an update for this cache is
+       in progress.</p></li><li><p>Abort the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-10">application cache download process</a>.</p></li></ol>
+
+     </li><li><p>Otherwise, remove this entry from <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-8">list of pending master entries</a>.</p></li></ol>
+
+    <p>Otherwise, store the resource for this entry in <var>new cache</var>, if it isn't
+    already there, and categorise its entry as a <a href="/breakup/specs/appcache/#concept-appcache-master" id="downloading-or-updating-an-application-cache:concept-appcache-master-6">master
+    entry</a>.</p>
+
+   </li><li>
+
+    <p><a href="/breakup/specs/core-algorithms/#fetch" id="downloading-or-updating-an-application-cache:fetch-5">Fetch</a> the resource from <var>manifest URL</var> again, with
+    the <i>blocking flag</i> set, and let <var>second manifest</var> be that resource.
+    HTTP caching semantics should again be honored for this request. The <i>override referrer source</i> must be null.</p> 
+
+    <p class="note">Since caching can be honored, authors are encouraged to avoid setting the cache
+    headers on the manifest in such a way that the user agent would simply not contact the network
+    for this second request; otherwise, the user agent would not notice if the cache had changed
+    during the cache update process.</p>
+
+   </li><li>
+
+    <p>If the previous step failed for any reason, or if the fetching attempt involved a redirect,
+    or if <var>second manifest</var> and <var>manifest</var> are not byte-for-byte
+    identical, then schedule a rerun of the entire algorithm with the same parameters after a short
+    delay, and run the <a href="/breakup/specs/appcache/#cache-failure-steps" id="downloading-or-updating-an-application-cache:cache-failure-steps-5">cache failure steps</a>.</p>
+
+   </li><li>
+
+    <p>Otherwise, store <var>manifest</var> in <var>new cache</var>, if it's not
+    there already, and categorise its entry as <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="downloading-or-updating-an-application-cache:concept-appcache-manifest-4">the
+    manifest</a>.</p>
+
+   </li><li><p>Set the <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="downloading-or-updating-an-application-cache:concept-appcache-completeness-5">completeness flag</a> of <var>new cache</var> to <i>complete</i>.</p></li><li><p>Let <var>task list</var> be an empty list of <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-10">tasks</a>.</p>
+
+   </li><li>
+
+    <p>If this is a <a href="/breakup/specs/appcache/#concept-appcache-cache" id="downloading-or-updating-an-application-cache:concept-appcache-cache-3">cache attempt</a>, then for each
+    <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-20">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-19">application cache</a> in <var>cache
+    group</var>, create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-11">task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-11">fire a simple event</a>
+    that is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-cached"><a href="/breakup/specs/appcache/#event-appcache-cached">cached</a></code> at the
+    <code id="downloading-or-updating-an-application-cache:applicationcache-14"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-21">cache host</a>, and append it to <var>task list</var>. The default action of these events must be, if the user agent
+    <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-13">shows caching progress</a>, the display of some sort of user interface indicating to
+    the user that the application has been cached and that they can now use it offline.</p>
+
+    <p>Otherwise, it is an <a href="/breakup/specs/appcache/#concept-appcache-upgrade" id="downloading-or-updating-an-application-cache:concept-appcache-upgrade-4">upgrade attempt</a>. For each
+    <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-22">cache host</a> associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-20">application cache</a> in <var>cache
+    group</var>, create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-12">task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-12">fire a simple event</a>
+    that is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-updateready"><a href="/breakup/specs/appcache/#event-appcache-updateready">updateready</a></code> at the
+    <code id="downloading-or-updating-an-application-cache:applicationcache-15"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-23">cache host</a>, and append it to <var>task list</var>. The default action of these events must be, if the user agent
+    <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-14">shows caching progress</a>, the display of some sort of user interface indicating to
+    the user that a new version is available and that they can activate it by reloading the
+    page.</p>
+
+   </li><li><p>If appropriate, remove any user interface indicating that an update for this cache is in
+   progress.</p></li><li><p>Set the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-8">update status</a> of <var>cache
+   group</var> to <i>idle</i>.</p></li><li><p>For each <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-13">task</a> in <var>task list</var>, <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-9">queue that task as a post-load task</a>.</p></li></ol>
+
+  <p>The <dfn id="cache-failure-steps">cache failure steps</dfn> are as follows:</p>
+
+  <ol><li><p>Let <var>task list</var> be an empty list of <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-14">tasks</a>.</p>
+
+   </li><li>
+
+    <p>For each entry in <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-9">list of pending master entries</a>, run the
+    following further substeps. These steps may be run in parallel for two or more entries at a
+    time.</p>
+
+    <ol><li><p>Wait for the resource for this entry to have either completely downloaded or failed.</p>
+
+     </li><li><p>Unassociate the <code id="downloading-or-updating-an-application-cache:document-9"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry from its <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-21">application
+     cache</a>, if it has one.</p></li><li><p>Create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-15">task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-13">fire a simple event</a> that
+     is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-error-4"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code> at the
+     <code id="downloading-or-updating-an-application-cache:applicationcache-16"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <code id="downloading-or-updating-an-application-cache:document-10"><a href="/breakup/specs/browser-dom/#document">Document</a></code> for this entry, if there
+     still is one, and append it to <var>task list</var>. The default action of these
+     events must be, if the user agent <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-15">shows caching progress</a>, the display of some sort
+     of user interface indicating to the user that the user agent failed to save the application for
+     offline use.</p>
+
+    </li></ol>
+
+   </li><li><p>For each <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-24">cache host</a> still associated with an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-22">application cache</a>
+   in <var>cache group</var>, create a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-16">task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="downloading-or-updating-an-application-cache:fire-a-simple-event-14">fire
+   a simple event</a> that is cancelable named <code id="downloading-or-updating-an-application-cache:event-appcache-error-5"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code> at
+   the <code id="downloading-or-updating-an-application-cache:applicationcache-17"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> singleton of the <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-25">cache host</a>, and append it to <var>task list</var>. The default action of these events must be, if the user agent
+   <a href="/breakup/specs/appcache/#shows-caching-progress" id="downloading-or-updating-an-application-cache:shows-caching-progress-16">shows caching progress</a>, the display of some sort of user interface indicating to the
+   user that the user agent failed to save the application for offline use.</p></li><li><p>Empty <var>cache group</var>'s <a href="/breakup/specs/appcache/#concept-appcache-pending-masters" id="downloading-or-updating-an-application-cache:concept-appcache-pending-masters-10">list of pending master entries</a>.</p></li><li><p>If <var>cache group</var> has an <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-23">application cache</a> whose <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="downloading-or-updating-an-application-cache:concept-appcache-completeness-6">completeness flag</a> is <i>incomplete</i>, then discard
+   that <a href="/breakup/specs/appcache/#application-cache" id="downloading-or-updating-an-application-cache:application-cache-24">application cache</a>.</p>
+
+   </li><li><p>If appropriate, remove any user interface indicating that an update for this cache is in
+   progress.</p></li><li><p>Let the <a href="/breakup/specs/appcache/#concept-appcache-status" id="downloading-or-updating-an-application-cache:concept-appcache-status-9">status</a> of <var>cache
+   group</var> be <i>idle</i>.</p></li><li><p>If this was a <a href="/breakup/specs/appcache/#concept-appcache-cache" id="downloading-or-updating-an-application-cache:concept-appcache-cache-4">cache attempt</a>, discard <var>cache group</var> altogether.</p>
+
+   </li><li><p>For each <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-17">task</a> in <var>task list</var>, <a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-10">queue that task as a post-load task</a>.</p></li><li><p>Abort the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-11">application cache download process</a>.</p></li></ol>
+
+  <p>Attempts to <a href="/breakup/specs/core-algorithms/#fetch" id="downloading-or-updating-an-application-cache:fetch-6">fetch</a> resources as part of the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-12">application cache download
+  process</a> may be done with cache-defeating semantics, to avoid problems with stale or
+  inconsistent intermediary caches.</p>
+
+  <hr>
+
+  <p>User agents may invoke the <a href="/breakup/specs/appcache/#application-cache-download-process" id="downloading-or-updating-an-application-cache:application-cache-download-process-13">application cache download process</a>, in the background,
+  for any <a href="/breakup/specs/appcache/#application-cache-group" id="downloading-or-updating-an-application-cache:application-cache-group-8">application cache group</a>, at any time (with no <a href="/breakup/specs/appcache/#cache-host" id="downloading-or-updating-an-application-cache:cache-host-26">cache host</a>). This
+  allows user agents to keep caches primed and to update caches even before the user visits a
+  site.</p>
+
+  <hr>
+
+  <p>Each <code id="downloading-or-updating-an-application-cache:document-11"><a href="/breakup/specs/browser-dom/#document">Document</a></code> has a list of <dfn id="pending-application-cache-download-process-tasks">pending application cache download process
+  tasks</dfn> that is used to delay events fired by the algorithm above until the document's <code id="downloading-or-updating-an-application-cache:event-load-2"><a href="/breakup/specs/html/#event-load">load</a></code> event has fired. When the <code id="downloading-or-updating-an-application-cache:document-12"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is created, the
+  list must be empty.</p>
+
+  <p>When the steps above say to <dfn id="queue-a-post-load-task">queue a post-load task</dfn> <var>task</var>, where
+  <var>task</var> is a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-18">task</a> that dispatches an event on a
+  target <code id="downloading-or-updating-an-application-cache:applicationcache-18"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object <var>target</var>, the user agent must run
+  the appropriate steps from the following list:</p>
+
+  <dl><dt>If <var>target</var>'s <a id="downloading-or-updating-an-application-cache:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> is
+   <a href="/breakup/specs/html-syntax/#ready-for-post-load-tasks" id="downloading-or-updating-an-application-cache:ready-for-post-load-tasks">ready for post-load tasks</a></dt><dd><p><a href="/breakup/specs/browser-dom/#queue-a-task" id="downloading-or-updating-an-application-cache:queue-a-task">Queue</a> the task <var>task</var>.</p></dd><dt>Otherwise</dt><dd><p>Add <var>task</var> to <var>target</var>'s <a id="downloading-or-updating-an-application-cache:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s list
+   of <a href="/breakup/specs/appcache/#pending-application-cache-download-process-tasks" id="downloading-or-updating-an-application-cache:pending-application-cache-download-process-tasks">pending application cache download process tasks</a>.</p></dd></dl>
+
+  <p>When the steps above say to <dfn id="queue-a-progress-post-load-task">queue a progress post-load task</dfn> <var>task</var>, where
+  <var>task</var> is a <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-19">task</a> that dispatches an event on a
+  target <code id="downloading-or-updating-an-application-cache:applicationcache-19"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object <var>target</var>, the user agent must run
+  the following steps:</p>
+
+  <ol><li><p>If there is a <var>task</var> in <var>target</var>'s <a id="downloading-or-updating-an-application-cache:node-document-3" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s list
+   of <a href="/breakup/specs/appcache/#pending-application-cache-download-process-tasks" id="downloading-or-updating-an-application-cache:pending-application-cache-download-process-tasks-2">pending application cache download process tasks</a> that is labeled as a
+   <i>progress task</i>, then remove that task from the list.</p></li><li><p>Label <var>task</var> as a <i>progress task</i>.</p></li><li><p><a href="/breakup/specs/appcache/#queue-a-post-load-task" id="downloading-or-updating-an-application-cache:queue-a-post-load-task-11">Queue a post-load task</a> <var>task</var>.</p></li></ol>
+
+  <p>The <a href="/breakup/specs/browser-dom/#task-source" id="downloading-or-updating-an-application-cache:task-source">task source</a> for these <a href="/breakup/specs/browser-dom/#concept-task" id="downloading-or-updating-an-application-cache:concept-task-20">tasks</a> is the
+  <a href="/breakup/specs/browser-dom/#networking-task-source" id="downloading-or-updating-an-application-cache:networking-task-source">networking task source</a>.</p></section><section><h2>The application cache selection algorithm</h2>
+
+  <p>When the <dfn id="concept-appcache-init">application cache selection algorithm</dfn>
+  algorithm is invoked with a <code id="the-application-cache-selection-algorithm:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> <var>document</var> and optionally a
+  manifest <a href="/breakup/specs/core-algorithms/#url" id="the-application-cache-selection-algorithm:url">URL</a> <var>manifest URL</var>, the user agent must run the first
+  applicable set of steps from the following list:</p>
+
+  <dl class="switch"><dt>If there is a <var>manifest URL</var>, and <var>document</var> was loaded
+   from an <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache">application cache</a>, and the URL of the <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="the-application-cache-selection-algorithm:concept-appcache-manifest">manifest</a> of that cache's <a href="/breakup/specs/appcache/#application-cache-group" id="the-application-cache-selection-algorithm:application-cache-group">application cache
+   group</a> is <em>not</em> the same as <var>manifest URL</var></dt><dd>
+
+    <p>Mark the entry for the resource from which <var>document</var> was taken in the
+    <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache-2">application cache</a> from which it was loaded as <a href="/breakup/specs/appcache/#concept-appcache-foreign" id="the-application-cache-selection-algorithm:concept-appcache-foreign">foreign</a>.</p>
+
+    <p>Restart the current navigation from the top of the <a href="/breakup/specs/browsing/#navigate" id="the-application-cache-selection-algorithm:navigate">navigation
+    algorithm</a>, undoing any changes that were made as part of the initial load (changes can be
+    avoided by ensuring that the step to <a href="/breakup/specs/browsing/#update-the-session-history-with-the-new-page" id="the-application-cache-selection-algorithm:update-the-session-history-with-the-new-page">update the session history with the new page</a>
+    is only ever completed <em>after</em> this <a href="/breakup/specs/appcache/#concept-appcache-init" id="the-application-cache-selection-algorithm:concept-appcache-init">application cache
+    selection algorithm</a> is run, though this is not required).</p>
+
+    <p class="note">The navigation will not result in the same resource being loaded, because
+    "foreign" entries are never picked during navigation.</p>
+
+    <p>User agents may notify the user of the inconsistency between the cache manifest and the
+    document's own metadata, to aid in application development.</p>
+
+   </dd><dt>If <var>document</var> was loaded from an <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache-3">application cache</a>, and that
+   <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache-4">application cache</a> still exists (it is not now <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="the-application-cache-selection-algorithm:concept-appcache-obsolete">obsolete</a>)</dt><dd>
+
+    <p>Associate <var>document</var> with the <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache-5">application cache</a> from which it
+    was loaded. Invoke, in the background, the <a href="/breakup/specs/appcache/#application-cache-download-process" id="the-application-cache-selection-algorithm:application-cache-download-process">application cache download process</a> for
+    that <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache-6">application cache</a>'s <a href="/breakup/specs/appcache/#application-cache-group" id="the-application-cache-selection-algorithm:application-cache-group-2">application cache group</a>, with <var>document</var> as the <a href="/breakup/specs/appcache/#cache-host" id="the-application-cache-selection-algorithm:cache-host">cache host</a>.</p>
+
+   </dd><dt>If <var>document</var>  was loaded using HTTP GET <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-get" id="the-application-cache-selection-algorithm:concept-http-equivalent-get">or
+   equivalent</a>, and, there is a <var>manifest URL</var>, and <var>manifest
+   URL</var> has the <a href="/breakup/specs/browser-dom/#same-origin" id="the-application-cache-selection-algorithm:same-origin">same origin</a> as <var>document</var></dt><dd>
+
+    <p>Invoke, in the background, the <a href="/breakup/specs/appcache/#application-cache-download-process" id="the-application-cache-selection-algorithm:application-cache-download-process-2">application cache download process</a> for <var>manifest URL</var>, with <var>document</var> as the <a href="/breakup/specs/appcache/#cache-host" id="the-application-cache-selection-algorithm:cache-host-2">cache host</a>
+    and with the resource from which <var>document</var> was parsed as the <a href="/breakup/specs/appcache/#concept-appcache-master" id="the-application-cache-selection-algorithm:concept-appcache-master">master</a> resource.</p>
+
+    <p>If there are <a href="/breakup/specs/appcache/#relevant-application-cache" id="the-application-cache-selection-algorithm:relevant-application-cache">relevant application caches</a> that
+    are identified by a URL with the <a href="/breakup/specs/browser-dom/#same-origin" id="the-application-cache-selection-algorithm:same-origin-2">same origin</a> as the URL of <var>document</var>, and that have this URL as one of their entries, excluding entries
+    marked as <a href="/breakup/specs/appcache/#concept-appcache-foreign" id="the-application-cache-selection-algorithm:concept-appcache-foreign-2">foreign</a>, then the user agent should use
+    the <a href="/breakup/specs/appcache/#concept-appcache-selection" id="the-application-cache-selection-algorithm:concept-appcache-selection">most appropriate application cache</a> of those
+    that match as an HTTP cache for any subresource loads. User agents may also have other caches in
+    place that are also honored.</p>
+
+   </dd><dt>Otherwise</dt><dd>
+
+    <p>The <code id="the-application-cache-selection-algorithm:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is not associated with any <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache-7">application cache</a>.</p>
+
+    <p>If there was a <var>manifest URL</var>, the user agent may report to the user that
+    it was ignored, to aid in application development.</p>
+
+   </dd></dl></section><section><h2>Changes to the networking model</h2>
+
+  <p>When a <a href="/breakup/specs/appcache/#cache-host" id="changesToNetworkingModel:cache-host">cache host</a> is associated with an <a href="/breakup/specs/appcache/#application-cache" id="changesToNetworkingModel:application-cache">application cache</a> whose <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="changesToNetworkingModel:concept-appcache-completeness">completeness flag</a> is <i>complete</i>, any and all
+  loads for resources related to that <a href="/breakup/specs/appcache/#cache-host" id="changesToNetworkingModel:cache-host-2">cache host</a> other than those for <a href="/breakup/specs/browser-dom/#child-browsing-context" id="changesToNetworkingModel:child-browsing-context">child browsing contexts</a> must go through the following steps
+  instead of immediately invoking the mechanisms appropriate to that resource's scheme:</p>
+
+  <ol><li><p>If the resource is not to be fetched using the HTTP GET mechanism <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-get" id="changesToNetworkingModel:concept-http-equivalent-get">or equivalent</a>, or if applying the <a href="/breakup/specs/core-algorithms/#url-parser" id="changesToNetworkingModel:url-parser">URL
+   parser</a> algorithm to both its <a href="/breakup/specs/core-algorithms/#url" id="changesToNetworkingModel:url">URL</a> and the <a href="/breakup/specs/appcache/#application-cache" id="changesToNetworkingModel:application-cache-2">application cache</a>'s
+   <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="changesToNetworkingModel:concept-appcache-manifest">manifest</a>'s URL results in two <a href="/breakup/specs/core-algorithms/#parsed-url" id="changesToNetworkingModel:parsed-url">parsed URLs</a> with different <a href="/breakup/specs/core-algorithms/#concept-url-scheme" id="changesToNetworkingModel:concept-url-scheme">scheme</a> components,
+   then <a href="/breakup/specs/core-algorithms/#fetch" id="changesToNetworkingModel:fetch">fetch</a> the resource normally and abort these steps.</p></li><li><p>If the resource's URL is <a href="/breakup/specs/appcache/#concept-appcache-master" id="changesToNetworkingModel:concept-appcache-master">a master entry</a>,
+   <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="changesToNetworkingModel:concept-appcache-manifest-2">the manifest</a>, <a href="/breakup/specs/appcache/#concept-appcache-explicit" id="changesToNetworkingModel:concept-appcache-explicit">an explicit entry</a>, or <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="changesToNetworkingModel:concept-appcache-fallback">a fallback entry</a> in the <a href="/breakup/specs/appcache/#application-cache" id="changesToNetworkingModel:application-cache-3">application cache</a>,
+   then get the resource from the cache (instead of fetching it), and abort these steps.</p></li><li><p>If there is an entry in the <a href="/breakup/specs/appcache/#application-cache" id="changesToNetworkingModel:application-cache-4">application cache</a>'s <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist" id="changesToNetworkingModel:concept-appcache-onlinewhitelist">online whitelist</a> that has the <a href="/breakup/specs/browser-dom/#same-origin" id="changesToNetworkingModel:same-origin">same
+   origin</a> as the resource's URL and that is a <a href="/breakup/specs/core-algorithms/#prefix-match" id="changesToNetworkingModel:prefix-match">prefix match</a> for the resource's
+   URL, then <a href="/breakup/specs/core-algorithms/#fetch" id="changesToNetworkingModel:fetch-2">fetch</a> the resource normally and abort these steps.</p></li><li>
+
+    <p>If the resource's URL has the <a href="/breakup/specs/browser-dom/#same-origin" id="changesToNetworkingModel:same-origin-2">same origin</a> as the manifest's URL, and there is a
+    <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="changesToNetworkingModel:concept-appcache-fallback-ns">fallback namespace</a> <var>f</var> in
+    the <a href="/breakup/specs/appcache/#application-cache" id="changesToNetworkingModel:application-cache-5">application cache</a> that is a <a href="/breakup/specs/core-algorithms/#prefix-match" id="changesToNetworkingModel:prefix-match-2">prefix match</a> for the resource's URL,
+    then:</p>
+
+    <p><a href="/breakup/specs/core-algorithms/#fetch" id="changesToNetworkingModel:fetch-3">Fetch</a> the resource normally. If this results in a redirect to a resource with
+    another <a href="/breakup/specs/browser-dom/#origin-2" id="changesToNetworkingModel:origin-2">origin</a> (indicative of a captive portal), or a 4xx or 5xx status code <a href="/breakup/specs/core-algorithms/#concept-http-equivalent-codes" id="changesToNetworkingModel:concept-http-equivalent-codes">or equivalent</a>, or if there were network errors (but
+    not if the user canceled the download), then instead get, from the cache, the resource of the
+    <a href="/breakup/specs/appcache/#concept-appcache-fallback" id="changesToNetworkingModel:concept-appcache-fallback-2">fallback entry</a> corresponding to the <a href="/breakup/specs/appcache/#concept-appcache-fallback-ns" id="changesToNetworkingModel:concept-appcache-fallback-ns-2">fallback namespace</a> <var>f</var>. Abort
+    these steps.</p>
+
+   </li><li><p>If the <a href="/breakup/specs/appcache/#application-cache" id="changesToNetworkingModel:application-cache-6">application cache</a>'s <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist-wildcard" id="changesToNetworkingModel:concept-appcache-onlinewhitelist-wildcard">online whitelist wildcard flag</a> is <i>open</i>, then <a href="/breakup/specs/core-algorithms/#fetch" id="changesToNetworkingModel:fetch-4">fetch</a> the resource normally and abort these steps.</p></li><li><p>Fail the resource load as if there had been a generic network error.</p></li></ol>
+
+  <p class="note">The above algorithm ensures that so long as the <a href="/breakup/specs/appcache/#concept-appcache-onlinewhitelist-wildcard" id="changesToNetworkingModel:concept-appcache-onlinewhitelist-wildcard-2">online whitelist wildcard flag</a> is <i>blocking</i>, resources that are not present in the <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="changesToNetworkingModel:concept-appcache-manifest-3">manifest</a> will always fail to load (at least, after the
+  <a href="/breakup/specs/appcache/#application-cache" id="changesToNetworkingModel:application-cache-7">application cache</a> has been primed the first time), making the testing of offline
+  applications simpler.</p></section><section><h2>Expiring application caches</h2>
+
+  <p>As a general rule, user agents should not expire application caches, except on request from the
+  user, or after having been left unused for an extended period of time.</p>
+
+  <p>Application caches and cookies have similar implications with respect to privacy (e.g. if the
+  site can identify the user when providing the cache, it can store data in the cache that can be
+  used for cookie resurrection). Implementors are therefore encouraged to expose application caches
+  in a manner related to HTTP cookies, allowing caches to be expunged together with cookies and
+  other origin-specific data.</p>
+
+  <p class="example">For example, a user agent could have a "delete site-specific data" feature that
+  clears all cookies, application caches, local storage, databases, etc, from an origin all at
+  once.</p></section><section><h2>Disk space</h2>
+
+  <p>User agents should consider applying constraints on disk usage of <a href="/breakup/specs/appcache/#application-cache" id="disk-space:application-cache">application caches</a>, and care should be taken to ensure that the restrictions cannot
+  be easily worked around using subdomains.</p>
+
+  <p>User agents should allow users to see how much space each domain is using, and may offer the
+  user the ability to delete specific <a href="/breakup/specs/appcache/#application-cache" id="disk-space:application-cache-2">application caches</a>.</p>
+
+  <p>For predictability, quotas should be based on the uncompressed size of data stored.</p>
+  
+
+  <p class="note">How quotas are presented to the user is not defined by this specification. User
+  agents are encouraged to provide features such as allowing a user to indicate that certain sites
+  are trusted to use more than the default quota, e.g. by presenting a non-modal user interface
+  while a cache is being updated, or by having an explicit whitelist in the user agent's
+  configuration interface.</p></section><section><h2>Security concerns with offline applications caches</h2>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <p>The main risk introduced by offline application caches is that an injection attack can be
+  elevated into persistent site-wide page replacement. This attack involves using an injection
+  vulnerability to upload two files to the victim site. The first file is an application cache
+  manifest consisting of just a fallback entry pointing to the second file, which is an HTML page
+  whose manifest is declared as that first file. Once the user has been directed to that second
+  file, all subsequent accesses to any file covered by the given fallback namespace while either the
+  user or the site is offline will instead show that second file. Targetted denial-of-service
+  attacks or cookie bombing attacks (where the client is made to send so many cookies that the
+  server refuses to process the request) can be used to ensure that the site appears offline.</p>
+
+  <p>To mitigate this, manifests can only specify fallbacks that are in the same path as the
+  manifest itself. This means that a content injection upload vulnerability in a particular
+  directory on a server can only be escalated to a take-over of that directory and its
+  subdirectories. If there is no way to inject a file into the root directory, the entire site
+  cannot be taken over.</p>
+
+  <p>If a site has been attacked in this way, simply removing the offending manifest might eventually
+  clear the problem, since the next time the manifest is updated, a 404 error will be seen, and the
+  user agent will clear the cache. "Eventually" is the key word here, however; while the attack on
+  the user or server is ongoing, such that connections from an affected user to the affected site
+  are blocked, the user agent will simply assume that the user is offline and will continue to use
+  the hostile manifest. Unfortunately, if a cookie bombing attack has also been used, merely
+  removing the manifest is insufficient; in addition, the server has to be configured to return a
+  404 or 410 response instead of the 413 "Request Entity Too Large" response.</p>
+
+  <p>TLS does not inherently protect a site from this attack, since the attack relies on content
+  being served from the server itself. Not using application caches also does not prevent this
+  attack, since the attack relies on an attacker-provided manifest.</p></section><section><h2>Application cache API</h2>
+
+  <pre class="idl">[Exposed=(Window,SharedWorker)]
+interface <dfn id="applicationcache">ApplicationCache</dfn> : <a href="/breakup/specs/core-algorithms/#eventtarget" id="application-cache-api:eventtarget">EventTarget</a> {
+
+  // <a href="/breakup/specs/appcache/#concept-appcache-status" id="application-cache-api:concept-appcache-status">update status</a>
+  const unsigned short <a href="/breakup/specs/appcache/#dom-appcache-uncached" id="application-cache-api:dom-appcache-uncached">UNCACHED</a> = 0;
+  const unsigned short <a href="/breakup/specs/appcache/#dom-appcache-idle" id="application-cache-api:dom-appcache-idle">IDLE</a> = 1;
+  const unsigned short <a href="/breakup/specs/appcache/#dom-appcache-checking" id="application-cache-api:dom-appcache-checking">CHECKING</a> = 2;
+  const unsigned short <a href="/breakup/specs/appcache/#dom-appcache-downloading" id="application-cache-api:dom-appcache-downloading">DOWNLOADING</a> = 3;
+  const unsigned short <a href="/breakup/specs/appcache/#dom-appcache-updateready" id="application-cache-api:dom-appcache-updateready">UPDATEREADY</a> = 4;
+  const unsigned short <a href="/breakup/specs/appcache/#dom-appcache-obsolete" id="application-cache-api:dom-appcache-obsolete">OBSOLETE</a> = 5;
+  readonly attribute unsigned short <a href="/breakup/specs/appcache/#dom-appcache-status" id="application-cache-api:dom-appcache-status">status</a>;
+
+  // updates
+  void <a href="/breakup/specs/appcache/#dom-appcache-update" id="application-cache-api:dom-appcache-update">update</a>();
+  void <a href="/breakup/specs/appcache/#dom-appcache-abort" id="application-cache-api:dom-appcache-abort">abort</a>();
+  void <a href="/breakup/specs/appcache/#dom-appcache-swapcache" id="application-cache-api:dom-appcache-swapcache">swapCache</a>();
+
+  // events
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-onchecking" id="application-cache-api:handler-appcache-onchecking">onchecking</a>;
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler-2">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-onerror" id="application-cache-api:handler-appcache-onerror">onerror</a>;
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler-3">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-onnoupdate" id="application-cache-api:handler-appcache-onnoupdate">onnoupdate</a>;
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler-4">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-ondownloading" id="application-cache-api:handler-appcache-ondownloading">ondownloading</a>;
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler-5">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-onprogress" id="application-cache-api:handler-appcache-onprogress">onprogress</a>;
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler-6">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-onupdateready" id="application-cache-api:handler-appcache-onupdateready">onupdateready</a>;
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler-7">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-oncached" id="application-cache-api:handler-appcache-oncached">oncached</a>;
+  attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="application-cache-api:eventhandler-8">EventHandler</a> <a href="/breakup/specs/appcache/#handler-appcache-onobsolete" id="application-cache-api:handler-appcache-onobsolete">onobsolete</a>;
+};</pre>
+
+  <dl class="domintro"><dt><var>cache</var> = <var>window</var> . <code id="application-cache-api:dom-applicationcache"><a href="/breakup/specs/appcache/#dom-applicationcache">applicationCache</a></code></dt><dd>
+
+    <p>(In a window.) Returns the <code id="application-cache-api:applicationcache"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object that applies to the
+    <a href="/breakup/specs/browser-dom/#active-document" id="application-cache-api:active-document">active document</a> of that <code id="application-cache-api:window"><a href="/breakup/specs/browser-dom/#window">Window</a></code>.</p>
+
+   </dd><dt><var>cache</var> = <var>self</var> . <code id="application-cache-api:dom-applicationcache-2"><a href="/breakup/specs/appcache/#dom-applicationcache">applicationCache</a></code></dt><dd>
+
+    <p>(In a shared worker.) Returns the <code id="application-cache-api:applicationcache-2"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object that applies to the
+    current shared worker.</p>
+
+   </dd><dt><var>cache</var> . <code id="application-cache-api:dom-appcache-status-2"><a href="/breakup/specs/appcache/#dom-appcache-status">status</a></code></dt><dd>
+
+    <p>Returns the current status of the application cache, as given by the constants defined
+    below.</p>
+
+   </dd><dt><var>cache</var> . <code id="application-cache-api:dom-appcache-update-2"><a href="/breakup/specs/appcache/#dom-appcache-update">update</a></code>()</dt><dd>
+
+    <p>Invokes the <a href="/breakup/specs/appcache/#application-cache-download-process" id="application-cache-api:application-cache-download-process">application cache download process</a>.</p>
+
+    <p>Throws an <code id="application-cache-api:invalidstateerror"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception if there is no application cache to
+    update.</p>
+
+    <p>Calling this method is not usually necessary, as user agents will generally take care of
+    updating <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache">application caches</a> automatically.</p>
+
+    <p>The method can be useful in situations such as long-lived applications. For example, a Web
+    mail application might stay open in a browser tab for weeks at a time. Such an application could
+    want to test for updates each day.</p>
+
+   </dd><dt><var>cache</var> . <code id="application-cache-api:dom-appcache-abort-2"><a href="/breakup/specs/appcache/#dom-appcache-abort">abort</a></code>()</dt><dd>
+
+    <p>Cancels the <a href="/breakup/specs/appcache/#application-cache-download-process" id="application-cache-api:application-cache-download-process-2">application cache download process</a>.</p>
+
+    <p>This method is intended to be used by Web application showing their own caching progress UI,
+    in case the user wants to stop the update (e.g. because bandwidth is limited).</p>
+
+   </dd><dt><var>cache</var> . <code id="application-cache-api:dom-appcache-swapcache-2"><a href="/breakup/specs/appcache/#dom-appcache-swapcache">swapCache</a></code>()</dt><dd>
+
+    <p>Switches to the most recent application cache, if there is a newer one. If there isn't,
+    throws an <code id="application-cache-api:invalidstateerror-2"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.</p>
+
+    <p>This does not cause previously-loaded resources to be reloaded; for example, images do not
+    suddenly get reloaded and style sheets and scripts do not get reparsed or reevaluated. The only
+    change is that subsequent requests for cached resources will obtain the newer copies.</p>
+
+    <p>The <code id="application-cache-api:event-appcache-updateready"><a href="/breakup/specs/appcache/#event-appcache-updateready">updateready</a></code> event will fire before this
+    method can be called. Once it fires, the Web application can, at its leisure, call this method
+    to switch the underlying cache to the one with the more recent updates. To make proper use of
+    this, applications have to be able to bring the new features into play; for example, reloading
+    scripts to enable new features.</p>
+
+    <p>An easier alternative to <code id="application-cache-api:dom-appcache-swapcache-3"><a href="/breakup/specs/appcache/#dom-appcache-swapcache">swapCache()</a></code> is just to
+    reload the entire page at a time suitable for the user, using <code id="application-cache-api:dom-location-reload"><a href="/breakup/specs/browser-dom/#dom-location-reload">location.reload()</a></code>.</p>
+
+   </dd></dl>
+
+  
+
+  <p>There is a one-to-one mapping from <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host">cache hosts</a> to
+  <code id="application-cache-api:applicationcache-3"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> objects. The <dfn id="dom-applicationcache"><code>applicationCache</code></dfn> attribute on <code id="application-cache-api:window-2"><a href="/breakup/specs/browser-dom/#window">Window</a></code>
+  objects must return the <code id="application-cache-api:applicationcache-4"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object associated with the
+  <code id="application-cache-api:window-3"><a href="/breakup/specs/browser-dom/#window">Window</a></code> object's <a href="/breakup/specs/browser-dom/#active-document" id="application-cache-api:active-document-2">active document</a>. The <dfn id="dom-sharedworkerglobalscope-applicationcache"><code>applicationCache</code></dfn> attribute
+  on <code id="application-cache-api:sharedworkerglobalscope"><a href="http://www.w3.org/TR/workers/#sharedworkerglobalscope">SharedWorkerGlobalScope</a></code> objects must return the <code id="application-cache-api:applicationcache-5"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code>
+  object associated with the worker.</p>
+
+  <p class="note">A <code id="application-cache-api:window-4"><a href="/breakup/specs/browser-dom/#window">Window</a></code> or <code id="application-cache-api:sharedworkerglobalscope-2"><a href="http://www.w3.org/TR/workers/#sharedworkerglobalscope">SharedWorkerGlobalScope</a></code> object has an
+  associated <code id="application-cache-api:applicationcache-6"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object even if that <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-2">cache host</a> has no actual
+  <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-2">application cache</a>.</p>
+
+  <hr>
+
+  <p>The <dfn id="dom-appcache-status"><code>status</code></dfn> attribute, on getting, must
+  return the current state of the <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-3">application cache</a> that the
+  <code id="application-cache-api:applicationcache-7"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-3">cache host</a> is associated with, if any. This
+  must be the appropriate value from the following list:</p>
+
+  
+
+  <dl><dt><dfn id="dom-appcache-uncached"><code>UNCACHED</code></dfn> (numeric value 0)</dt><dd><p>The <code id="application-cache-api:applicationcache-8"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-4">cache host</a> is not associated with
+   an <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-4">application cache</a> at this time.</p></dd><dt><dfn id="dom-appcache-idle"><code>IDLE</code></dfn> (numeric value 1)</dt><dd><p>The <code id="application-cache-api:applicationcache-9"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-5">cache host</a> is associated with an
+   <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-5">application cache</a> whose <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group">application cache group</a>'s <a href="/breakup/specs/appcache/#concept-appcache-status" id="application-cache-api:concept-appcache-status-2">update status</a> is <i>idle</i>, and that <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-6">application
+   cache</a> is the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="application-cache-api:concept-appcache-newer">newest</a> cache in its
+   <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-2">application cache group</a>, and the <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-3">application cache group</a> is not marked
+   as <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="application-cache-api:concept-appcache-obsolete">obsolete</a>.</p></dd><dt><dfn id="dom-appcache-checking"><code>CHECKING</code></dfn> (numeric value 2)</dt><dd><p>The <code id="application-cache-api:applicationcache-10"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-6">cache host</a> is associated with an
+   <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-7">application cache</a> whose <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-4">application cache group</a>'s <a href="/breakup/specs/appcache/#concept-appcache-status" id="application-cache-api:concept-appcache-status-3">update status</a> is <i>checking</i>.</p></dd><dt><dfn id="dom-appcache-downloading"><code>DOWNLOADING</code></dfn> (numeric value 3)</dt><dd><p>The <code id="application-cache-api:applicationcache-11"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-7">cache host</a> is associated with an
+   <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-8">application cache</a> whose <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-5">application cache group</a>'s <a href="/breakup/specs/appcache/#concept-appcache-status" id="application-cache-api:concept-appcache-status-4">update status</a> is <i>downloading</i>.</p></dd><dt><dfn id="dom-appcache-updateready"><code>UPDATEREADY</code></dfn> (numeric value 4)</dt><dd><p>The <code id="application-cache-api:applicationcache-12"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-8">cache host</a> is associated with an
+   <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-9">application cache</a> whose <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-6">application cache group</a>'s <a href="/breakup/specs/appcache/#concept-appcache-status" id="application-cache-api:concept-appcache-status-5">update status</a> is <i>idle</i>, and whose <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-7">application
+   cache group</a> is not marked as <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="application-cache-api:concept-appcache-obsolete-2">obsolete</a>, but
+   that <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-10">application cache</a> is <em>not</em> the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="application-cache-api:concept-appcache-newer-2">newest</a> cache in its group.</p></dd><dt><dfn id="dom-appcache-obsolete"><code>OBSOLETE</code></dfn> (numeric value 5)</dt><dd><p>The <code id="application-cache-api:applicationcache-13"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-9">cache host</a> is associated with an
+   <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-11">application cache</a> whose <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-8">application cache group</a> is marked as <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="application-cache-api:concept-appcache-obsolete-3">obsolete</a>.</p></dd></dl>
+
+  
+
+  <hr>
+
+  <p>If the <dfn id="dom-appcache-update"><code>update()</code></dfn> method is invoked, the user
+  agent must invoke the <a href="/breakup/specs/appcache/#application-cache-download-process" id="application-cache-api:application-cache-download-process-3">application cache download process</a>, in the background, for the
+  <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-9">application cache group</a> of the <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-12">application cache</a> with which the
+  <code id="application-cache-api:applicationcache-14"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-10">cache host</a> is associated, but without giving
+  that <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-11">cache host</a> to the algorithm. If there is no such <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-13">application cache</a>,
+  or if its <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-10">application cache group</a> is marked as <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="application-cache-api:concept-appcache-obsolete-4">obsolete</a>, then the method must throw an
+  <code id="application-cache-api:invalidstateerror-3"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception instead.</p>
+
+  <p>If the <dfn id="dom-appcache-abort"><code>abort()</code></dfn> method is invoked, the user
+  agent must <dfn id="send-a-signal">send a signal</dfn> to the current <a href="/breakup/specs/appcache/#application-cache-download-process" id="application-cache-api:application-cache-download-process-4">application cache download process</a>
+  for the <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-11">application cache group</a> of the <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-14">application cache</a> with which the
+  <code id="application-cache-api:applicationcache-15"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-12">cache host</a> is associated, if any. If there is
+  no such <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-15">application cache</a>, or it does not have a current <a href="/breakup/specs/appcache/#application-cache-download-process" id="application-cache-api:application-cache-download-process-5">application cache
+  download process</a>, then do nothing.</p>
+
+  <p>If the <dfn id="dom-appcache-swapcache"><code>swapCache()</code></dfn> method is invoked,
+  the user agent must run the following steps:
+
+  </p><ol><li><p>Check that <code id="application-cache-api:applicationcache-16"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-13">cache host</a> is associated
+   with an <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-16">application cache</a>. If it is not, then throw an
+   <code id="application-cache-api:invalidstateerror-4"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>Let <var>cache</var> be the <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-17">application cache</a> with which the
+   <code id="application-cache-api:applicationcache-17"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-14">cache host</a> is associated. (By definition,
+   this is the same as the one that was found in the previous step.)</p></li><li><p>If <var>cache</var>'s <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-12">application cache group</a> is marked as <a href="/breakup/specs/appcache/#concept-appcache-obsolete" id="application-cache-api:concept-appcache-obsolete-5">obsolete</a>, then unassociate the
+   <code id="application-cache-api:applicationcache-18"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-15">cache host</a> from <var>cache</var> and
+   abort these steps. (Resources will now load from the network instead of the cache.)</p></li><li><p>Check that there is an application cache in the same <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-13">application cache group</a>
+   as <var>cache</var> whose <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="application-cache-api:concept-appcache-completeness">completeness
+   flag</a> is <i>complete</i> and that is <a href="/breakup/specs/appcache/#concept-appcache-newer" id="application-cache-api:concept-appcache-newer-3">newer</a> than
+   <var>cache</var>. If there is not, then throw an <code id="application-cache-api:invalidstateerror-5"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code>
+   exception and abort these steps.</p></li><li><p>Let <var>new cache</var> be the <a href="/breakup/specs/appcache/#concept-appcache-newer" id="application-cache-api:concept-appcache-newer-4">newest</a> <a href="/breakup/specs/appcache/#application-cache" id="application-cache-api:application-cache-18">application cache</a> in the same
+   <a href="/breakup/specs/appcache/#application-cache-group" id="application-cache-api:application-cache-group-14">application cache group</a> as <var>cache</var> whose <a href="/breakup/specs/appcache/#concept-appcache-completeness" id="application-cache-api:concept-appcache-completeness-2">completeness flag</a> is <i>complete</i>.</p></li><li><p>Unassociate the <code id="application-cache-api:applicationcache-19"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> object's <a href="/breakup/specs/appcache/#cache-host" id="application-cache-api:cache-host-16">cache host</a> from <var>cache</var> and instead associate it with <var>new cache</var>.</p></li></ol>
+
+  <p>The following are the <a href="/breakup/specs/browser-dom/#event-handlers" id="application-cache-api:event-handlers">event handlers</a> (and their corresponding <a href="/breakup/specs/browser-dom/#event-handler-event-type" id="application-cache-api:event-handler-event-type">event handler event types</a>) that must be
+  supported, as <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="application-cache-api:event-handler-idl-attributes">event handler IDL attributes</a>, by all objects implementing the
+  <code id="application-cache-api:applicationcache-20"><a href="/breakup/specs/appcache/#applicationcache">ApplicationCache</a></code> interface:</p>
+
+  <table><thead><tr><th><a href="/breakup/specs/browser-dom/#event-handlers" id="application-cache-api:event-handlers-2">Event handler</a> </th><th><a href="/breakup/specs/browser-dom/#event-handler-event-type" id="application-cache-api:event-handler-event-type-2">Event handler event type</a>
+   </th></tr></thead><tbody><tr><td><dfn id="handler-appcache-onchecking"><code>onchecking</code></dfn> </td><td> <code id="application-cache-api:event-appcache-checking"><a href="/breakup/specs/appcache/#event-appcache-checking">checking</a></code>
+    </td></tr><tr><td><dfn id="handler-appcache-onerror"><code>onerror</code></dfn> </td><td> <code id="application-cache-api:event-appcache-error"><a href="/breakup/specs/appcache/#event-appcache-error">error</a></code>
+    </td></tr><tr><td><dfn id="handler-appcache-onnoupdate"><code>onnoupdate</code></dfn> </td><td> <code id="application-cache-api:event-appcache-noupdate"><a href="/breakup/specs/appcache/#event-appcache-noupdate">noupdate</a></code>
+    </td></tr><tr><td><dfn id="handler-appcache-ondownloading"><code>ondownloading</code></dfn> </td><td> <code id="application-cache-api:event-appcache-downloading"><a href="/breakup/specs/appcache/#event-appcache-downloading">downloading</a></code>
+    </td></tr><tr><td><dfn id="handler-appcache-onprogress"><code>onprogress</code></dfn> </td><td> <code id="application-cache-api:event-appcache-progress"><a href="/breakup/specs/appcache/#event-appcache-progress">progress</a></code>
+    </td></tr><tr><td><dfn id="handler-appcache-onupdateready"><code>onupdateready</code></dfn> </td><td> <code id="application-cache-api:event-appcache-updateready-2"><a href="/breakup/specs/appcache/#event-appcache-updateready">updateready</a></code>
+    </td></tr><tr><td><dfn id="handler-appcache-oncached"><code>oncached</code></dfn> </td><td> <code id="application-cache-api:event-appcache-cached"><a href="/breakup/specs/appcache/#event-appcache-cached">cached</a></code>
+    </td></tr><tr><td><dfn id="handler-appcache-onobsolete"><code>onobsolete</code></dfn> </td><td> <code id="application-cache-api:event-appcache-obsolete"><a href="/breakup/specs/appcache/#event-appcache-obsolete">obsolete</a></code>
+  </td></tr></tbody></table></section><section><h2><span id="browser-state">Browser state</span></h2>
+
+  <pre class="idl">[NoInterfaceObject, Exposed=(Window,Worker)]
+interface <dfn id="navigatoronline">NavigatorOnLine</dfn> {
+  readonly attribute boolean <a href="/breakup/specs/appcache/#dom-navigator-online" id="navigator.online:dom-navigator-online">onLine</a>;
+};</pre>
+
+  <dl class="domintro"><dt><var>window</var> . <code id="navigator.online:dom-navigator"><a href="/breakup/specs/browser-dom/#dom-navigator">navigator</a></code> . <code id="navigator.online:dom-navigator-online-2"><a href="/breakup/specs/appcache/#dom-navigator-online">onLine</a></code></dt><dd>
+
+    <p>Returns false if the user agent is definitely offline (disconnected from the network).
+    Returns true if the user agent might be online.</p>
+
+    <p>The events <code id="navigator.online:event-online"><a href="/breakup/specs/html/#event-online">online</a></code> and <code id="navigator.online:event-offline"><a href="/breakup/specs/html/#event-offline">offline</a></code> are fired when the value of this attribute changes.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-navigator-online"><code>navigator.onLine</code></dfn> attribute must return
+  false if the user agent will not contact the network when the user follows links or when a script
+  requests a remote page (or knows that such an attempt would fail), and must return true
+  otherwise.</p>
+
+  <p>When the value that would be returned by the <code id="navigator.online:dom-navigator-online-3"><a href="/breakup/specs/appcache/#dom-navigator-online">navigator.onLine</a></code> attribute of a <code id="navigator.online:window"><a href="/breakup/specs/browser-dom/#window">Window</a></code> or
+  <code id="navigator.online:workerglobalscope"><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code> changes from true to false, the user agent must <a href="/breakup/specs/browser-dom/#queue-a-task" id="navigator.online:queue-a-task">queue a
+  task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="navigator.online:fire-a-simple-event">fire a simple event</a> named <code id="navigator.online:event-offline-2"><a href="/breakup/specs/html/#event-offline">offline</a></code>
+  at the <code id="navigator.online:window-2"><a href="/breakup/specs/browser-dom/#window">Window</a></code> or <code id="navigator.online:workerglobalscope-2"><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code> object.</p>
+
+  <p>On the other hand, when the value that would be returned by the <code id="navigator.online:dom-navigator-online-4"><a href="/breakup/specs/appcache/#dom-navigator-online">navigator.onLine</a></code> attribute of a <code id="navigator.online:window-3"><a href="/breakup/specs/browser-dom/#window">Window</a></code> or
+  <code id="navigator.online:workerglobalscope-3"><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code> changes from false to true, the user agent must <a href="/breakup/specs/browser-dom/#queue-a-task" id="navigator.online:queue-a-task-2">queue a
+  task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="navigator.online:fire-a-simple-event-2">fire a simple event</a> named <code id="navigator.online:event-online-2"><a href="/breakup/specs/html/#event-online">online</a></code> at
+  the <code id="navigator.online:window-4"><a href="/breakup/specs/browser-dom/#window">Window</a></code> or <code id="navigator.online:workerglobalscope-4"><a href="http://www.w3.org/TR/workers/#workerglobalscope">WorkerGlobalScope</a></code> object.</p>
+
+  <p>The <a href="/breakup/specs/browser-dom/#task-source" id="navigator.online:task-source">task source</a> for these <a href="/breakup/specs/browser-dom/#concept-task" id="navigator.online:concept-task">tasks</a> is the
+  <a href="/breakup/specs/browser-dom/#networking-task-source" id="navigator.online:networking-task-source">networking task source</a>.</p>
+
+  
+
+  <p class="note">This attribute is inherently unreliable. A computer can be connected to a network
+  without having Internet access.</p>
+
+  <div class="example">
+
+   <p>In this example, an indicator is updated as the browser goes online and offline.</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;Online status&lt;/title&gt;
+  &lt;script&gt;
+   function updateIndicator() {
+     document.getElementById('indicator').textContent = navigator.onLine ? 'online' : 'offline';
+   }
+  &lt;/script&gt;
+ &lt;/head&gt;
+ &lt;body onload="updateIndicator()" ononline="updateIndicator()" onoffline="updateIndicator()"&gt;
+  &lt;p&gt;The network is: &lt;span id="indicator"&gt;(state unknown)&lt;/span&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div></section></body></html>

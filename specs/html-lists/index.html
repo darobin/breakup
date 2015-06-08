@@ -1,0 +1,484 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Lists</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-lists"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Lists.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>ul</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-ul-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-ul-element:flow-content-2">Flow content</a>.</dd><dd>If the element's children include at least one <code id="the-ul-element:the-li-element"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element: <a href="#palpable-content-2" id="the-ul-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-ul-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-ul-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-ul-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-ul-element:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> and <a href="#script-supporting-elements-2" id="the-ul-element:script-supporting-elements-2">script-supporting</a> elements.</dd><dt><a href="#concept-element-tag-omission" id="the-ul-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-ul-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-ul-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-list"><code title="">list</code></a> role (default - <a href="#aria-usage-note"><em>do not set</em></a>), <a href="#index-aria-directory"><code title="">directory</code></a>, <a href="#index-aria-group"><code title="">group</code></a>, <a href="#index-aria-listbox"><code title="">listbox</code></a>, <a href="#index-aria-menu"><code title="">menu</code></a>, <a href="#index-aria-menubar"><code title="">menubar</code></a>, <a href="#index-aria-presentation"><code title="">presentation</code></a>,<a href="#index-aria-radiogroup"><code title="">radiogroup</code></a>, <a href="#index-aria-tablist"><code title="">tablist</code></a>, <a href="#index-aria-toolbar"><code title="">toolbar</code></a> or <a href="#index-aria-tree"><code title="">tree</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-ul-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmlulistelement">HTMLUListElement</dfn> : <a href="#htmlelement" id="the-ul-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLUListElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-ul-element:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code> element <a href="#represents" id="the-ul-element:represents">represents</a> a list of items, where the order of the
+  items is not important — that is, where changing the order would not materially change the
+  meaning of the document.</p>
+
+  <p>The items of the list are the <code id="the-ul-element:the-li-element-3"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element child nodes of the <code id="the-ul-element:the-ul-element-2"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code>
+  element.</p>
+
+  <div class="example">
+
+   <p>The following markup shows a list where the order does not matter, and where the
+   <code id="the-ul-element:the-ul-element-3"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code> element is therefore appropriate. Compare this list to the equivalent list in the
+   <code id="the-ul-element:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> section to see an example of the same items using the <code id="the-ul-element:the-ol-element-2"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>
+   element.</p>
+
+   <pre>&lt;p&gt;I have lived in the following countries:&lt;/p&gt;
+&lt;ul&gt;
+ &lt;li&gt;Norway
+ &lt;li&gt;Switzerland
+ &lt;li&gt;United Kingdom
+ &lt;li&gt;United States
+&lt;/ul&gt;</pre>
+
+   <p>Note that changing the order of the list does not change the meaning of the document. The
+   items in the snippet above are given in alphabetical order, but in the snippet below they are
+   given in order of the size of their current account balance in 2007, without changing the meaning
+   of the document whatsoever:</p>
+
+   <pre>&lt;p&gt;I have lived in the following countries:&lt;/p&gt;
+&lt;ul&gt;
+ &lt;li&gt;Switzerland
+ &lt;li&gt;Norway
+ &lt;li&gt;United Kingdom
+ &lt;li&gt;United States
+&lt;/ul&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>ol</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-ol-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-ol-element:flow-content-2">Flow content</a>.</dd><dd>If the element's children include at least one <code id="the-ol-element:the-li-element"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element: <a href="#palpable-content-2" id="the-ol-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-ol-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-ol-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-ol-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-ol-element:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> and <a href="#script-supporting-elements-2" id="the-ol-element:script-supporting-elements-2">script-supporting</a> elements.</dd><dt><a href="#concept-element-tag-omission" id="the-ol-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-ol-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-ol-element:global-attributes">Global attributes</a></dd><dd><code id="the-ol-element:attr-ol-reversed"><a href="/breakup/specs/html-lists/#attr-ol-reversed">reversed</a></code> — Number the list backwards</dd><dd><code id="the-ol-element:attr-ol-start"><a href="/breakup/specs/html-lists/#attr-ol-start">start</a></code> — <a href="/breakup/specs/html-lists/#ordinal-value" id="the-ol-element:ordinal-value">Ordinal value</a> of the first item</dd><dd><code id="the-ol-element:attr-ol-type"><a href="/breakup/specs/html-lists/#attr-ol-type">type</a></code> — Kind of list marker</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-list"><code title="">list</code></a> role (default - <a href="#aria-usage-note"><em>do not set</em></a>), <a href="#index-aria-directory"><code title="">directory</code></a>, <a href="#index-aria-group"><code title="">group</code></a>,  <a href="#index-aria-listbox"><code title="">listbox</code></a>, <a href="#index-aria-menu"><code title="">menu</code></a>, <a href="#index-aria-menubar"><code title="">menubar</code></a>, <a href="#index-aria-presentation"><code title="">presentation</code></a>, <a href="#index-aria-radiogroup"><code title="">radiogroup</code></a>, <a href="#index-aria-tablist"><code title="">tablist</code></a>, <a href="#index-aria-toolbar"><code title="">toolbar</code></a> or <a href="#index-aria-tree"><code title="">tree</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-ol-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlolistelement">HTMLOListElement</dfn> : <a href="#htmlelement" id="the-ol-element:htmlelement">HTMLElement</a> {
+  attribute boolean <a href="/breakup/specs/html-lists/#dom-ol-reversed" id="the-ol-element:dom-ol-reversed">reversed</a>;
+  attribute long <a href="/breakup/specs/html-lists/#dom-ol-start" id="the-ol-element:dom-ol-start">start</a>;
+  attribute DOMString <a href="/breakup/specs/html-lists/#dom-ol-type" id="the-ol-element:dom-ol-type">type</a>;
+
+  // <a href="#HTMLOListElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-ol-element:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> element <a href="#represents" id="the-ol-element:represents">represents</a> a list of items, where the items have been
+  intentionally ordered, such that changing the order would change the meaning of the document.</p>
+
+  <p>The items of the list are the <code id="the-ol-element:the-li-element-3"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element child nodes of the <code id="the-ol-element:the-ol-element-2"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>
+  element, in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-ol-element:tree-order">tree order</a>.</p>
+
+  <p>The <dfn id="attr-ol-reversed"><code>reversed</code></dfn> attribute is a <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-ol-element:boolean-attribute">boolean
+  attribute</a>. If present, it indicates that the list is a descending list (..., 3, 2, 1). If
+  the attribute is omitted, the list is an ascending list (1, 2, 3, ...).</p>
+
+  <p>The <dfn id="attr-ol-start"><code>start</code></dfn> attribute, if present, must be a
+  <a href="/breakup/specs/core-algorithms/#valid-integer" id="the-ol-element:valid-integer">valid integer</a> giving the <a href="/breakup/specs/html-lists/#ordinal-value" id="the-ol-element:ordinal-value-2">ordinal value</a> of the first list item.</p>
+
+  
+
+  <p>If the <code id="the-ol-element:attr-ol-start-2"><a href="/breakup/specs/html-lists/#attr-ol-start">start</a></code> attribute is present, user agents must <a href="/breakup/specs/core-algorithms/#rules-for-parsing-integers" id="the-ol-element:rules-for-parsing-integers">parse it as an integer</a>, in order to determine the
+  attribute's value. The default value, used if the attribute is missing or if the value cannot be
+  converted to a number according to the referenced algorithm, is 1 if the element has no <code id="the-ol-element:attr-ol-reversed-2"><a href="/breakup/specs/html-lists/#attr-ol-reversed">reversed</a></code> attribute, and is the number of child <code id="the-ol-element:the-li-element-4"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code>
+  elements otherwise.</p>
+
+  <p>The first item in the list has the <a href="/breakup/specs/html-lists/#ordinal-value" id="the-ol-element:ordinal-value-3">ordinal value</a> given by the <code id="the-ol-element:the-ol-element-3"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>
+  element's <code id="the-ol-element:attr-ol-start-3"><a href="/breakup/specs/html-lists/#attr-ol-start">start</a></code> attribute, unless that <code id="the-ol-element:the-li-element-5"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element
+  has a <code id="the-ol-element:attr-li-value"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code> attribute with a value that can be successfully
+  parsed, in which case it has the <a href="/breakup/specs/html-lists/#ordinal-value" id="the-ol-element:ordinal-value-4">ordinal value</a> given by that <code id="the-ol-element:attr-li-value-2"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code> attribute.</p>
+
+  <p>Each subsequent item in the list has the <a href="/breakup/specs/html-lists/#ordinal-value" id="the-ol-element:ordinal-value-5">ordinal value</a> given by its <code id="the-ol-element:attr-li-value-3"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code> attribute, if it has one, or, if it doesn't, the <a href="/breakup/specs/html-lists/#ordinal-value" id="the-ol-element:ordinal-value-6">ordinal
+  value</a> of the previous item, plus one if the <code id="the-ol-element:attr-ol-reversed-3"><a href="/breakup/specs/html-lists/#attr-ol-reversed">reversed</a></code>
+  is absent, or minus one if it is present.</p>
+
+  
+
+  <p>The <dfn id="attr-ol-type"><code>type</code></dfn> attribute can be used to specify the kind
+  of marker to use in the list, in the cases where that matters (e.g. because items are to be
+  referenced by their number/letter). The attribute, if specified, must have a value that is a
+  <a href="/breakup/specs/core-algorithms/#case-sensitive" id="the-ol-element:case-sensitive">case-sensitive</a> match for one of the characters given in the first cell of one of the
+  rows of the following table. The <code id="the-ol-element:attr-ol-type-2"><a href="/breakup/specs/html-lists/#attr-ol-type">type</a></code>
+  attribute represents the state given in the cell in the second column of the row whose first cell
+  matches the attribute's value; if none of the cells match, or if the attribute is omitted, then
+  the attribute represents the <a href="/breakup/specs/html-lists/#attr-ol-type-state-decimal" id="the-ol-element:attr-ol-type-state-decimal">decimal</a>
+  state.</p>
+
+  <table><thead><tr><th>Keyword
+     </th><th>State
+     </th><th>Description
+     </th><th colspan="8">Examples for values 1-3 and 3999-4001
+   </th></tr></thead><tbody><tr><td><dfn id="attr-ol-type-keyword-decimal"><code>1</code></dfn> (U+0031)
+     </td><td><dfn id="attr-ol-type-state-decimal">decimal</dfn>
+     </td><td>Decimal numbers
+     </td><td class="eg"><samp>1.</samp> </td><td class="eg"><samp>2.</samp> </td><td class="eg"><samp>3.</samp> </td><td class="eg">... </td><td class="eg"><samp>3999.</samp> </td><td class="eg"><samp>4000.</samp> </td><td class="eg"><samp>4001.</samp> </td><td class="eg">...
+    </td></tr><tr><td><dfn id="attr-ol-type-keyword-lower-alpha"><code>a</code></dfn> (U+0061)
+     </td><td><dfn id="attr-ol-type-state-lower-alpha">lower-alpha</dfn>
+     </td><td>Lowercase latin alphabet
+     </td><td class="eg"><samp>a.</samp> </td><td class="eg"><samp>b.</samp> </td><td class="eg"><samp>c.</samp> </td><td class="eg">... </td><td class="eg"><samp>ewu.</samp> </td><td class="eg"><samp>ewv.</samp> </td><td class="eg"><samp>eww.</samp> </td><td class="eg">...
+    </td></tr><tr><td><dfn id="attr-ol-type-keyword-upper-alpha"><code>A</code></dfn> (U+0041)
+     </td><td><dfn id="attr-ol-type-state-upper-alpha">upper-alpha</dfn>
+     </td><td>Uppercase latin alphabet
+     </td><td class="eg"><samp>A.</samp> </td><td class="eg"><samp>B.</samp> </td><td class="eg"><samp>C.</samp> </td><td class="eg">... </td><td class="eg"><samp>EWU.</samp> </td><td class="eg"><samp>EWV.</samp> </td><td class="eg"><samp>EWW.</samp> </td><td class="eg">...
+    </td></tr><tr><td><dfn id="attr-ol-type-keyword-lower-roman"><code>i</code></dfn> (U+0069)
+     </td><td><dfn id="attr-ol-type-state-lower-roman">lower-roman</dfn>
+     </td><td>Lowercase roman numerals
+     </td><td class="eg"><samp>i.</samp> </td><td class="eg"><samp>ii.</samp> </td><td class="eg"><samp>iii.</samp> </td><td class="eg">... </td><td class="eg"><samp>mmmcmxcix.</samp> </td><td class="eg"><samp>i̅v̅.</samp> </td><td class="eg"><samp>i̅v̅i.</samp> </td><td class="eg">...
+    </td></tr><tr><td><dfn id="attr-ol-type-keyword-upper-roman"><code>I</code></dfn> (U+0049)
+     </td><td><dfn id="attr-ol-type-state-upper-roman">upper-roman</dfn>
+     </td><td>Uppercase roman numerals
+     </td><td class="eg"><samp>I.</samp> </td><td class="eg"><samp>II.</samp> </td><td class="eg"><samp>III.</samp> </td><td class="eg">... </td><td class="eg"><samp>MMMCMXCIX.</samp> </td><td class="eg"><samp>I̅V̅.</samp> </td><td class="eg"><samp>I̅V̅I.</samp> </td><td class="eg">...
+  </td></tr></tbody></table>
+
+  
+
+  <p>User agents should render the items of the list in a manner consistent with the state of the
+  <code id="the-ol-element:attr-ol-type-3"><a href="/breakup/specs/html-lists/#attr-ol-type">type</a></code> attribute of the <code id="the-ol-element:the-ol-element-4"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> element. Numbers less than
+  or equal to zero should always use the decimal system regardless of the <code id="the-ol-element:attr-ol-type-4"><a href="/breakup/specs/html-lists/#attr-ol-type">type</a></code> attribute.</p>
+
+  <p class="note">For CSS user agents, a mapping for this attribute to the 'list-style-type' CSS
+  property is given <a href="/breakup/specs/rendering-html/#decohints">in the rendering section</a> (the mapping is
+  straightforward: the states above have the same names as their corresponding CSS values).</p>
+
+  
+
+  <p class="note">It is possible to redefine the default CSS list styles used to implement this
+  attribute in CSS user agents; doing so will affect how list items are rendered.</p>
+
+  
+
+  
+
+  <p>The <dfn id="dom-ol-reversed"><code>reversed</code></dfn>, <dfn id="dom-ol-start"><code>start</code></dfn>, and <dfn id="dom-ol-type"><code>type</code></dfn> IDL attributes must <a href="/breakup/specs/core-algorithms/#reflect" id="the-ol-element:reflect">reflect</a> the
+  respective content attributes of the same name. The <code id="the-ol-element:dom-ol-start-2"><a href="/breakup/specs/html-lists/#dom-ol-start">start</a></code> IDL
+  attribute has the same default as its content attribute.</p>
+
+  
+
+  <div class="example">
+
+   <p>The following markup shows a list where the order matters, and where the <code id="the-ol-element:the-ol-element-5"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>
+   element is therefore appropriate. Compare this list to the equivalent list in the <code id="the-ol-element:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code>
+   section to see an example of the same items using the <code id="the-ol-element:the-ul-element-2"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code> element.</p>
+
+   <pre>&lt;p&gt;I have lived in the following countries (given in the order of when
+I first lived there):&lt;/p&gt;
+&lt;ol&gt;
+ &lt;li&gt;Switzerland
+ &lt;li&gt;United Kingdom
+ &lt;li&gt;United States
+ &lt;li&gt;Norway
+&lt;/ol&gt;</pre>
+
+   <p>Note how changing the order of the list changes the meaning of the document. In the following
+   example, changing the relative order of the first two items has changed the birthplace of the
+   author:</p>
+
+   <pre>&lt;p&gt;I have lived in the following countries (given in the order of when
+I first lived there):&lt;/p&gt;
+&lt;ol&gt;
+ &lt;li&gt;United Kingdom
+ &lt;li&gt;Switzerland
+ &lt;li&gt;United States
+ &lt;li&gt;Norway
+&lt;/ol&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>li</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-li-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-li-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Inside <code id="the-li-element:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> elements.</dd><dd>Inside <code id="the-li-element:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code> elements.</dd><dd>Inside <code id="the-li-element:the-menu-element"><a href="#the-menu-element">menu</a></code> elements whose <code id="the-li-element:attr-menu-type"><a href="#attr-menu-type">type</a></code> attribute is in the <a href="#toolbar-state" id="the-li-element:toolbar-state">toolbar</a> state.</dd><dt><a href="#concept-element-content-model" id="the-li-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-li-element:flow-content-2">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-li-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>An <code id="the-li-element:the-li-element"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-li-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-li-element:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element is immediately followed by another <code id="the-li-element:the-li-element-3"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element or if there is
+   no more content in the parent element.</dd><dt><a href="#concept-element-attributes" id="the-li-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-li-element:global-attributes">Global attributes</a></dd><dd>If the element is a child of an <code id="the-li-element:the-ol-element-2"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> element: <code id="the-li-element:attr-li-value"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code> — <a href="/breakup/specs/html-lists/#ordinal-value" id="the-li-element:ordinal-value">Ordinal value</a> of the list item</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-listitem"><code title="">listitem</code></a> role (default - <a href="#aria-usage-note"><em>do not set</em></a>), <a href="#index-aria-menuitem"><code title="">menuitem</code></a>, <a href="#index-aria-menuitemcheckbox"><code title="">menuitemcheckbox</code></a>, <a href="#index-aria-menuitemradio"><code title="">menuitemradio</code></a>, <a href="#index-aria-option"><code title="">option</code></a>, <a href="#index-aria-radio"><code title="">radio</code></a>,  <a href="#index-aria-tab"><code title="">tab</code></a>, <a href="#index-aria-treeitem"><code title="">treeitem</code></a> or <a href="#index-aria-presentation"><code title="">presentation</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-li-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmllielement">HTMLLIElement</dfn> : <a href="#htmlelement" id="the-li-element:htmlelement">HTMLElement</a> {
+  attribute long <a href="/breakup/specs/html-lists/#dom-li-value" id="the-li-element:dom-li-value">value</a>;
+
+  // <a href="#HTMLLIElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-li-element:the-li-element-4"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element <a href="#represents" id="the-li-element:represents">represents</a> a list item. If its parent element is an
+  <code id="the-li-element:the-ol-element-3"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>, <code id="the-li-element:the-ul-element-2"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code>, or <code id="the-li-element:the-menu-element-2"><a href="#the-menu-element">menu</a></code> element, then the element is an item of the
+  parent element's list, as defined for those elements. Otherwise, the list item has no defined
+  list-related relationship to any other <code id="the-li-element:the-li-element-5"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element.</p>
+
+  <p>If the parent element is an <code id="the-li-element:the-ol-element-4"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> element, then the <code id="the-li-element:the-li-element-6"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element has an
+  <dfn id="ordinal-value">ordinal value</dfn>.</p>
+
+  <p>The <dfn id="attr-li-value"><code>value</code></dfn> attribute, if present, must be a
+  <a href="/breakup/specs/core-algorithms/#valid-integer" id="the-li-element:valid-integer">valid integer</a> giving the <a href="/breakup/specs/html-lists/#ordinal-value" id="the-li-element:ordinal-value-2">ordinal value</a> of the list item.</p>
+
+  
+
+  <p>If the <code id="the-li-element:attr-li-value-2"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code> attribute is present, user agents must <a href="/breakup/specs/core-algorithms/#rules-for-parsing-integers" id="the-li-element:rules-for-parsing-integers">parse it as an integer</a>, in order to determine the
+  attribute's value. If the attribute's value cannot be converted to a number, the attribute must be
+  treated as if it was absent. The attribute has no default value.</p>
+
+  <p>The <code id="the-li-element:attr-li-value-3"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code> attribute is processed relative to the element's
+  parent <code id="the-li-element:the-ol-element-5"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> element (q.v.), if there is one. If there is not, the attribute has no
+  effect.</p>
+
+  <p>The <dfn id="dom-li-value"><code>value</code></dfn> IDL attribute must <a href="/breakup/specs/core-algorithms/#reflect" id="the-li-element:reflect">reflect</a>
+  the value of the <code id="the-li-element:attr-li-value-4"><a href="/breakup/specs/html-lists/#attr-li-value">value</a></code> content attribute.</p>
+
+  
+
+  <div class="example">
+
+   <p>The following example, the top ten movies are listed (in reverse order). Note the way the list
+   is given a title by using a <code id="the-li-element:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element and its <code id="the-li-element:the-figcaption-element"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code>
+   element.</p>
+
+   <pre>&lt;figure&gt;
+ &lt;figcaption&gt;The top 10 movies of all time&lt;/figcaption&gt;
+ &lt;ol&gt;
+  &lt;li value="10"&gt;&lt;cite&gt;Josie and the Pussycats&lt;/cite&gt;, 2001&lt;/li&gt;
+  &lt;li value="9"&gt;&lt;cite lang="sh"&gt;Црна мачка, бели мачор&lt;/cite&gt;, 1998&lt;/li&gt;
+  &lt;li value="8"&gt;&lt;cite&gt;A Bug's Life&lt;/cite&gt;, 1998&lt;/li&gt;
+  &lt;li value="7"&gt;&lt;cite&gt;Toy Story&lt;/cite&gt;, 1995&lt;/li&gt;
+  &lt;li value="6"&gt;&lt;cite&gt;Monsters, Inc&lt;/cite&gt;, 2001&lt;/li&gt;
+  &lt;li value="5"&gt;&lt;cite&gt;Cars&lt;/cite&gt;, 2006&lt;/li&gt;
+  &lt;li value="4"&gt;&lt;cite&gt;Toy Story 2&lt;/cite&gt;, 1999&lt;/li&gt;
+  &lt;li value="3"&gt;&lt;cite&gt;Finding Nemo&lt;/cite&gt;, 2003&lt;/li&gt;
+  &lt;li value="2"&gt;&lt;cite&gt;The Incredibles&lt;/cite&gt;, 2004&lt;/li&gt;
+  &lt;li value="1"&gt;&lt;cite&gt;Ratatouille&lt;/cite&gt;, 2007&lt;/li&gt;
+ &lt;/ol&gt;
+&lt;/figure&gt;</pre>
+
+   <p>The markup could also be written as follows, using the <code id="the-li-element:attr-ol-reversed"><a href="/breakup/specs/html-lists/#attr-ol-reversed">reversed</a></code> attribute on the <code id="the-li-element:the-ol-element-6"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> element:</p>
+
+   <pre>&lt;figure&gt;
+ &lt;figcaption&gt;The top 10 movies of all time&lt;/figcaption&gt;
+ &lt;ol reversed&gt;
+  &lt;li&gt;&lt;cite&gt;Josie and the Pussycats&lt;/cite&gt;, 2001&lt;/li&gt;
+  &lt;li&gt;&lt;cite lang="sh"&gt;Црна мачка, бели мачор&lt;/cite&gt;, 1998&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;A Bug's Life&lt;/cite&gt;, 1998&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;Toy Story&lt;/cite&gt;, 1995&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;Monsters, Inc&lt;/cite&gt;, 2001&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;Cars&lt;/cite&gt;, 2006&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;Toy Story 2&lt;/cite&gt;, 1999&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;Finding Nemo&lt;/cite&gt;, 2003&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;The Incredibles&lt;/cite&gt;, 2004&lt;/li&gt;
+  &lt;li&gt;&lt;cite&gt;Ratatouille&lt;/cite&gt;, 2007&lt;/li&gt;
+ &lt;/ol&gt;
+&lt;/figure&gt;</pre>
+  </div>
+
+  <p class="note">While it is conforming to include heading elements (e.g. <code id="the-li-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>) inside
+  <code id="the-li-element:the-li-element-7"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> elements, it likely does not convey the semantics that the author intended. A
+  heading starts a new section, so a heading in a list implicitly splits the list into spanning
+  multiple sections.</p></section><section><h2>The <dfn><code>dl</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-dl-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-dl-element:flow-content-2">Flow content</a>.</dd><dd>If the element's children include at least one name-value group: <a href="#palpable-content-2" id="the-dl-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-dl-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-dl-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-dl-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more groups each consisting of one or more <code id="the-dl-element:the-dt-element"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> elements followed by one or more <code id="the-dl-element:the-dd-element"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> elements, optionally intermixed with <a href="#script-supporting-elements-2" id="the-dl-element:script-supporting-elements-2">script-supporting elements</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-dl-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-dl-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-dl-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-dl-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmldlistelement">HTMLDListElement</dfn> : <a href="#htmlelement" id="the-dl-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLDListElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-dl-element:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element <a href="#represents" id="the-dl-element:represents">represents</a> an association list consisting of zero or
+  more name-value groups (a description list). A name-value group consists of one or more names
+  (<code id="the-dl-element:the-dt-element-2"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> elements) followed by one or more values (<code id="the-dl-element:the-dd-element-2"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> elements), ignoring any
+  nodes other than <code id="the-dl-element:the-dt-element-3"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> and <code id="the-dl-element:the-dd-element-3"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> elements. Within a single <code id="the-dl-element:the-dl-element-2"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code>
+  element, there should not be more than one <code id="the-dl-element:the-dt-element-4"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element for each name.</p>
+
+  <p>Name-value groups may be terms and definitions, metadata topics and values, questions and
+  answers, or any other groups of name-value data.</p>
+
+  <p>The values within a group are alternatives; multiple paragraphs forming part of the same value
+  must all be given within the same <code id="the-dl-element:the-dd-element-4"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element.</p>
+
+  <p>The order of the list of groups, and of the names and values within each group, may be
+  significant.</p>
+
+  
+
+  <p>If a <code id="the-dl-element:the-dl-element-3"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element has no <code id="the-dl-element:the-dt-element-5"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> or <code id="the-dl-element:the-dd-element-5"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element children, it
+  contains no groups.</p>
+
+  <p>If a <code id="the-dl-element:the-dl-element-4"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element has one or more non-<a href="#inter-element-whitespace" id="the-dl-element:inter-element-whitespace">whitespace</a> <code id="the-dl-element:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node children, or has child elements that are
+  neither <code id="the-dl-element:the-dt-element-6"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> nor <code id="the-dl-element:the-dd-element-6"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> elements, all such <code id="the-dl-element:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes and
+  elements, as well as their descendants (including any <code id="the-dl-element:the-dt-element-7"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> or <code id="the-dl-element:the-dd-element-7"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code>
+  elements), do not form part of any groups in that <code id="the-dl-element:the-dl-element-5"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code>.</p>
+
+  <p>If a <code id="the-dl-element:the-dl-element-6"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element has one or more <code id="the-dl-element:the-dt-element-8"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element children but no
+  <code id="the-dl-element:the-dd-element-8"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element children, then it consists of one group with names but no values.</p>
+
+  <p>If a <code id="the-dl-element:the-dl-element-7"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element has one or more <code id="the-dl-element:the-dd-element-9"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element children but no
+  <code id="the-dl-element:the-dt-element-9"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element children, then it consists of one group with values but no names.</p>
+
+  <p>If a <code id="the-dl-element:the-dl-element-8"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element's first <code id="the-dl-element:the-dt-element-10"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> or <code id="the-dl-element:the-dd-element-10"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element child is a
+  <code id="the-dl-element:the-dd-element-11"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element, then the first group has no associated name.</p>
+
+  <p>If a <code id="the-dl-element:the-dl-element-9"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element's last <code id="the-dl-element:the-dt-element-11"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> or <code id="the-dl-element:the-dd-element-12"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element child is a
+  <code id="the-dl-element:the-dt-element-12"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element, then the last group has no associated value.</p>
+
+  <p class="note">When a <code id="the-dl-element:the-dl-element-10"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element doesn't match its content model, it is often due to
+  accidentally using <code id="the-dl-element:the-dd-element-13"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> elements in the place of <code id="the-dl-element:the-dt-element-13"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> elements and vice
+  versa. Conformance checkers can spot such mistakes and might be able to advise authors how to
+  correctly use the markup.</p>
+
+  
+
+  <div class="example">
+
+   <p>In the following example, one entry ("Authors") is linked to two values ("John" and
+   "Luke").</p>
+
+   <pre>&lt;dl&gt;
+ &lt;dt&gt; Authors
+ &lt;dd&gt; John
+ &lt;dd&gt; Luke
+ &lt;dt&gt; Editor
+ &lt;dd&gt; Frank
+&lt;/dl&gt;</pre>
+  </div>
+
+  <div class="example">
+
+   <p>In the following example, one definition is linked to two terms.</p>
+
+   <pre>&lt;dl&gt;
+ &lt;dt lang="en-US"&gt; &lt;dfn&gt;color&lt;/dfn&gt; &lt;/dt&gt;
+ &lt;dt lang="en-GB"&gt; &lt;dfn&gt;colour&lt;/dfn&gt; &lt;/dt&gt;
+ &lt;dd&gt; A sensation which (in humans) derives from the ability of
+ the fine structure of the eye to distinguish three differently
+ filtered analyses of a view. &lt;/dd&gt;
+&lt;/dl&gt;</pre>
+  </div>
+
+  <div class="example">
+
+   <p>The following example illustrates the use of the <code id="the-dl-element:the-dl-element-11"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element to mark up metadata
+   of sorts. At the end of the example, one group has two metadata labels ("Authors" and "Editors")
+   and two values ("Robert Rothman" and "Daniel Jackson").</p>
+
+   <pre>&lt;dl&gt;
+ &lt;dt&gt; Last modified time &lt;/dt&gt;
+ &lt;dd&gt; 2004-12-23T23:33Z &lt;/dd&gt;
+ &lt;dt&gt; Recommended update interval &lt;/dt&gt;
+ &lt;dd&gt; 60s &lt;/dd&gt;
+ &lt;dt&gt; Authors &lt;/dt&gt;
+ &lt;dt&gt; Editors &lt;/dt&gt;
+ &lt;dd&gt; Robert Rothman &lt;/dd&gt;
+ &lt;dd&gt; Daniel Jackson &lt;/dd&gt;
+&lt;/dl&gt;</pre>
+  </div>
+
+  <div class="example">
+
+   <p>The following example shows the <code id="the-dl-element:the-dl-element-12"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element used to give a set of instructions.
+   The order of the instructions here is important (in the other examples, the order of the blocks
+   was not important).</p>
+
+   <pre>&lt;p&gt;Determine the victory points as follows (use the
+first matching case):&lt;/p&gt;
+&lt;dl&gt;
+ &lt;dt&gt; If you have exactly five gold coins &lt;/dt&gt;
+ &lt;dd&gt; You get five victory points &lt;/dd&gt;
+ &lt;dt&gt; If you have one or more gold coins, and you have one or more silver coins &lt;/dt&gt;
+ &lt;dd&gt; You get two victory points &lt;/dd&gt;
+ &lt;dt&gt; If you have one or more silver coins &lt;/dt&gt;
+ &lt;dd&gt; You get one victory point &lt;/dd&gt;
+ &lt;dt&gt; Otherwise &lt;/dt&gt;
+ &lt;dd&gt; You get no victory points &lt;/dd&gt;
+&lt;/dl&gt;</pre>
+  </div>
+
+  <div class="example">
+
+   <p>The following snippet shows a <code id="the-dl-element:the-dl-element-13"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element being used as a glossary. Note the use
+   of <code id="the-dl-element:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code> to indicate the word being defined.</p>
+
+   <pre>&lt;dl&gt;
+ &lt;dt&gt;&lt;dfn&gt;Apartment&lt;/dfn&gt;, n.&lt;/dt&gt;
+ &lt;dd&gt;An execution context grouping one or more threads with one or
+ more COM objects.&lt;/dd&gt;
+ &lt;dt&gt;&lt;dfn&gt;Flat&lt;/dfn&gt;, n.&lt;/dt&gt;
+ &lt;dd&gt;A deflated tire.&lt;/dd&gt;
+ &lt;dt&gt;&lt;dfn&gt;Home&lt;/dfn&gt;, n.&lt;/dt&gt;
+ &lt;dd&gt;The user's login directory.&lt;/dd&gt;
+&lt;/dl&gt;</pre>
+  </div>
+
+  <p class="note">The <code id="the-dl-element:the-dl-element-14"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element is inappropriate for marking up dialogue. <a href="#conversations">Examples of how to mark up dialogue</a> are shown below.</p></section><section><h2>The <dfn><code>dt</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-dt-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-dt-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Before <code id="the-dt-element:the-dd-element"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> or <code id="the-dt-element:the-dt-element"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> elements inside <code id="the-dt-element:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> elements.</dd><dt><a href="#concept-element-content-model" id="the-dt-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-dt-element:flow-content-2">Flow content</a>, but with no <code id="the-dt-element:the-header-element"><a href="/breakup/specs/html-sectioning/#the-header-element">header</a></code>, <code id="the-dt-element:the-footer-element"><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code>, <a href="#sectioning-content-2" id="the-dt-element:sectioning-content-2">sectioning content</a>, or <a href="#heading-content-2" id="the-dt-element:heading-content-2">heading content</a> descendants.</dd><dt><a href="#concept-element-tag-omission" id="the-dt-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-dt-element:the-dt-element-2"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-dt-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-dt-element:the-dt-element-3"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element is immediately followed by another <code id="the-dt-element:the-dt-element-4"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element or a
+   <code id="the-dt-element:the-dd-element-2"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element.</dd><dt><a href="#concept-element-attributes" id="the-dt-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-dt-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-dt-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-dt-element:htmlelement"><a href="#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-dt-element:the-dt-element-5"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element <a href="#represents" id="the-dt-element:represents">represents</a> the term, or name, part of a
+  term-description group in a description list (<code id="the-dt-element:the-dl-element-2"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element).</p>
+
+  <p class="note">The <code id="the-dt-element:the-dt-element-6"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element itself, when used in a <code id="the-dt-element:the-dl-element-3"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element, does
+  not indicate that its contents are a term being defined, but this can be indicated using the
+  <code id="the-dt-element:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code> element.</p>
+
+  <div class="example">
+
+   <p>This example shows a list of frequently asked questions (a FAQ) marked up using the
+   <code id="the-dt-element:the-dt-element-7"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element for questions and the <code id="the-dt-element:the-dd-element-3"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element for answers.</p>
+
+   <pre>&lt;article&gt;
+ &lt;h1&gt;FAQ&lt;/h1&gt;
+ &lt;dl&gt;
+  &lt;dt&gt;What do we want?&lt;/dt&gt;
+  &lt;dd&gt;Our data.&lt;/dd&gt;
+  &lt;dt&gt;When do we want it?&lt;/dt&gt;
+  &lt;dd&gt;Now.&lt;/dd&gt;
+  &lt;dt&gt;Where is it?&lt;/dt&gt;
+  &lt;dd&gt;We are not sure.&lt;/dd&gt;
+ &lt;/dl&gt;
+&lt;/article&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>dd</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-dd-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-dd-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>After <code id="the-dd-element:the-dt-element"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> or <code id="the-dd-element:the-dd-element"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> elements inside <code id="the-dd-element:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> elements.</dd><dt><a href="#concept-element-content-model" id="the-dd-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-dd-element:flow-content-2">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-dd-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-dd-element:the-dd-element-2"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-dd-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-dd-element:the-dd-element-3"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element is immediately followed by another <code id="the-dd-element:the-dd-element-4"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element or a
+   <code id="the-dd-element:the-dt-element-2"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> element, or if there is no more content in the parent element.</dd><dt><a href="#concept-element-attributes" id="the-dd-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-dd-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-dd-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-dd-element:htmlelement"><a href="#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-dd-element:the-dd-element-5"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code> element <a href="#represents" id="the-dd-element:represents">represents</a> the description, definition, or value, part
+  of a term-description group in a description list (<code id="the-dd-element:the-dl-element-2"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> element).</p>
+
+  <div class="example">
+
+   <p>A <code id="the-dd-element:the-dl-element-3"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> can be used to define a vocabulary list, like in a dictionary. In the
+   following example, each entry, given by a <code id="the-dd-element:the-dt-element-3"><a href="/breakup/specs/html-lists/#the-dt-element">dt</a></code> with a <code id="the-dd-element:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code>, has several
+   <code id="the-dd-element:the-dd-element-6"><a href="/breakup/specs/html-lists/#the-dd-element">dd</a></code>s, showing the various parts of the definition.</p>
+
+   
+   <pre>&lt;dl&gt;
+ &lt;dt&gt;&lt;dfn&gt;happiness&lt;/dfn&gt;&lt;/dt&gt;
+ &lt;dd class="pronunciation"&gt;/'hæ p. nes/&lt;/dd&gt;
+ &lt;dd class="part-of-speech"&gt;&lt;i&gt;&lt;abbr&gt;n.&lt;/abbr&gt;&lt;/i&gt;&lt;/dd&gt;
+ &lt;dd&gt;The state of being happy.&lt;/dd&gt;
+ &lt;dd&gt;Good fortune; success. &lt;q&gt;Oh &lt;b&gt;happiness&lt;/b&gt;! It worked!&lt;/q&gt;&lt;/dd&gt;
+ &lt;dt&gt;&lt;dfn&gt;rejoice&lt;/dfn&gt;&lt;/dt&gt;
+ &lt;dd class="pronunciation"&gt;/ri jois'/&lt;/dd&gt;
+ &lt;dd&gt;&lt;i class="part-of-speech"&gt;&lt;abbr&gt;v.intr.&lt;/abbr&gt;&lt;/i&gt; To be delighted oneself.&lt;/dd&gt;
+ &lt;dd&gt;&lt;i class="part-of-speech"&gt;&lt;abbr&gt;v.tr.&lt;/abbr&gt;&lt;/i&gt; To cause one to be delighted.&lt;/dd&gt;
+&lt;/dl&gt;</pre>
+  </div></section></body></html>

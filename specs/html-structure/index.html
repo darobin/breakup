@@ -1,0 +1,274 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>The Structure of HTML</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-structure"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        All you need to structure an HTML document.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>html</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-html-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-html-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As the root element of a document.</dd><dd>Wherever a subdocument fragment is allowed in a compound document.</dd><dt><a href="#concept-element-content-model" id="the-html-element:concept-element-content-model">Content model</a>:</dt><dd>A <code id="the-html-element:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element followed by a <code id="the-html-element:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element.</dd><dt><a href="#concept-element-tag-omission" id="the-html-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>An <code id="the-html-element:the-html-element"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-start-tag" id="the-html-element:syntax-start-tag">start tag</a> can be omitted
+   if the first thing inside the <code id="the-html-element:the-html-element-2"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element is not a <a href="/breakup/specs/html-syntax/#syntax-comments" id="the-html-element:syntax-comments">comment</a>.</dd><dd>An <code id="the-html-element:the-html-element-3"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-html-element:syntax-end-tag">end tag</a> can be omitted if
+   the <code id="the-html-element:the-html-element-4"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element is not immediately followed by a <a href="/breakup/specs/html-syntax/#syntax-comments" id="the-html-element:syntax-comments-2">comment</a>.</dd><dt><a href="#concept-element-attributes" id="the-html-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-html-element:global-attributes">Global attributes</a></dd><dd><code id="the-html-element:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> — <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="the-html-element:concept-appcache-manifest">Application cache manifest</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-html-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmlhtmlelement">HTMLHtmlElement</dfn> : <a href="#htmlelement" id="the-html-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLHtmlElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-html-element:the-html-element-5"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element <a href="#represents" id="the-html-element:represents">represents</a> the root of an HTML document.</p>
+
+  <p>Authors are encouraged to specify a <code id="the-html-element:attr-lang"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> attribute on the root
+  <code id="the-html-element:the-html-element-6"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element, giving the document's language. This aids speech synthesis tools to
+  determine what pronunciations to use, translation tools to determine what rules to use, and so
+  forth.</p>
+
+
+  <p>The <dfn id="attr-html-manifest"><code>manifest</code></dfn> attribute gives the address of
+  the document's <a href="/breakup/specs/appcache/#application-cache" id="the-html-element:application-cache">application cache</a> <a href="/breakup/specs/appcache/#concept-appcache-manifest" id="the-html-element:concept-appcache-manifest-2">manifest</a>, if there is one. If the attribute is present,
+  the attribute's value must be a <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="the-html-element:valid-non-empty-url-potentially-surrounded-by-spaces">valid non-empty URL potentially surrounded by
+  spaces</a>.</p>
+
+  <p>The <code id="the-html-element:attr-html-manifest-2"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> attribute only <a href="/breakup/specs/appcache/#concept-appcache-init" id="the-html-element:concept-appcache-init">has an effect</a> during the early stages of document load.
+  Changing the attribute dynamically thus has no effect (and thus, no DOM API is provided for this
+  attribute).</p>
+
+  <p class="note">For the purposes of <a href="/breakup/specs/appcache/#concept-appcache-init" id="the-html-element:concept-appcache-init-2">application cache
+  selection</a>, later <code id="the-html-element:the-base-element"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> elements cannot affect the <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="the-html-element:resolve-a-url">resolving of relative URLs</a> in <code id="the-html-element:attr-html-manifest-3"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code>
+  attributes, as the attributes are processed before those elements are seen.</p>
+
+  <p class="note">The <code id="the-html-element:dom-applicationcache"><a href="/breakup/specs/appcache/#dom-applicationcache">window.applicationCache</a></code> IDL
+  attribute provides scripted access to the offline <a href="/breakup/specs/appcache/#application-cache" id="the-html-element:application-cache-2">application cache</a> mechanism.</p>
+
+
+
+  <div class="example">
+
+   <p>The <code id="the-html-element:the-html-element-7"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element in the following example declares that the document's language
+   is English.</p>
+
+   <pre>&lt;!DOCTYPE html&gt;
+<strong>&lt;html lang="en"&gt;</strong>
+&lt;head&gt;
+&lt;title&gt;Swapping Songs&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Swapping Songs&lt;/h1&gt;
+&lt;p&gt;Tonight I swapped some of the songs I wrote with some friends, who
+gave me some of the songs they wrote. I love sharing my music.&lt;/p&gt;
+&lt;/body&gt;
+<strong>&lt;/html&gt;</strong></pre>
+
+  </div></section><section><h2>The <dfn><code>head</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-head-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-head-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As the first element in an <code id="the-head-element:the-html-element"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-head-element:concept-element-content-model">Content model</a>:</dt><dd>If the document is <a href="#an-iframe-srcdoc-document" id="the-head-element:an-iframe-srcdoc-document">an <code>iframe</code> <code>srcdoc</code> document</a> or if title information is available from a higher-level protocol: Zero or more elements of <a href="#metadata-content-2" id="the-head-element:metadata-content-2">metadata content</a>, of which no more than one is a <code id="the-head-element:the-title-element"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element and no more than one is a <code id="the-head-element:the-base-element"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element.</dd><dd>Otherwise: One or more elements of <a href="#metadata-content-2" id="the-head-element:metadata-content-2-2">metadata content</a>, of which exactly one is a <code id="the-head-element:the-title-element-2"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element and no more than one is a <code id="the-head-element:the-base-element-2"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element.</dd><dt><a href="#concept-element-tag-omission" id="the-head-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-head-element:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-start-tag" id="the-head-element:syntax-start-tag">start tag</a> can be omitted if
+   the element is empty, or if the first thing inside the <code id="the-head-element:the-head-element-2"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element is an
+   element.</dd><dd>A <code id="the-head-element:the-head-element-3"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-head-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-head-element:the-head-element-4"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element is not immediately followed by a <a href="/breakup/specs/core-algorithms/#space-character" id="the-head-element:space-character">space character</a> or a <a href="/breakup/specs/html-syntax/#syntax-comments" id="the-head-element:syntax-comments">comment</a>.</dd><dt><a href="#concept-element-attributes" id="the-head-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-head-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-head-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmlheadelement">HTMLHeadElement</dfn> : <a href="#htmlelement" id="the-head-element:htmlelement">HTMLElement</a> {};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-head-element:the-head-element-5"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element <a href="#represents" id="the-head-element:represents">represents</a> a collection of metadata for the
+  <code id="the-head-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
+
+  <div class="example">
+
+   <p>The collection of metadata in a <code id="the-head-element:the-head-element-6"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element can be large or small. Here is an
+   example of a very short one:</p>
+
+   <pre>&lt;!doctype html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;A document with a short head&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+ ...</pre>
+
+   <p>Here is an example of a longer one:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;HTML&gt;
+ &lt;HEAD&gt;
+  &lt;META CHARSET="UTF-8"&gt;
+  &lt;BASE HREF="http://www.example.com/"&gt;
+  &lt;TITLE&gt;An application with a long head&lt;/TITLE&gt;
+  &lt;LINK REL="STYLESHEET" HREF="default.css"&gt;
+  &lt;LINK REL="STYLESHEET ALTERNATE" HREF="big.css" TITLE="Big Text"&gt;
+  &lt;SCRIPT SRC="support.js"&gt;&lt;/SCRIPT&gt;
+  &lt;META NAME="APPLICATION-NAME" CONTENT="Long headed application"&gt;
+ &lt;/HEAD&gt;
+ &lt;BODY&gt;
+ ...</pre>
+
+  </div>
+
+  <p class="note">The <code id="the-head-element:the-title-element-3"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element is a required child in most situations, but when a
+  higher-level protocol provides title information, e.g. in the Subject line of an e-mail when HTML
+  is used as an e-mail authoring format, the <code id="the-head-element:the-title-element-4"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element can be omitted.</p></section><section><h2>The <dfn><code>title</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-title-element:concept-element-categories">Categories</a>:</dt><dd><a href="#metadata-content-2" id="the-title-element:metadata-content-2">Metadata content</a>.</dd><dt><a href="#concept-element-contexts" id="the-title-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>In a <code id="the-title-element:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element containing no other <code id="the-title-element:the-title-element"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> elements.</dd><dt><a href="#concept-element-content-model" id="the-title-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#text-content" id="the-title-element:text-content">Text</a> that is not <a href="#inter-element-whitespace" id="the-title-element:inter-element-whitespace">inter-element whitespace</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-title-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-title-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-title-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-title-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmltitleelement">HTMLTitleElement</dfn> : <a href="#htmlelement" id="the-title-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-structure/#dom-title-text" id="the-title-element:dom-title-text">text</a>;
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-title-element:the-title-element-2"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element <a href="#represents" id="the-title-element:represents">represents</a> the document's title or name. Authors
+  should use titles that identify their documents even when they are used out of context, for
+  example in a user's history or bookmarks, or in search results. The document's title is often
+  different from its first heading, since the first heading does not have to stand alone when taken
+  out of context.</p>
+
+  <p>There must be no more than one <code id="the-title-element:the-title-element-3"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element per document.</p>
+
+  <p class="note">If it's reasonable for the <code id="the-title-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> to have no title, then the
+  <code id="the-title-element:the-title-element-4"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element is probably not required. See the <code id="the-title-element:the-head-element-2"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element's content
+  model for a description of when the element is required.</p>
+
+
+  <dl class="domintro"><dt><var>title</var> . <code id="the-title-element:dom-title-text-2"><a href="/breakup/specs/html-structure/#dom-title-text">text</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns the contents of the element, ignoring child nodes that aren't <code id="the-title-element:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code>
+    nodes.</p>
+
+    <p>Can be set, to replace the element's children with the given value.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The IDL attribute <dfn id="dom-title-text"><code>text</code></dfn> must return a
+  concatenation of the contents of all the <code id="the-title-element:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes that are children of the
+  <code id="the-title-element:the-title-element-5"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element (ignoring any other nodes such as comments or elements), in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-title-element:tree-order">tree order</a>.
+  On setting, it must act the same way as the <code id="the-title-element:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute.</p>
+
+  
+
+
+  <div class="example">
+
+   <p>Here are some examples of appropriate titles, contrasted with the top-level headings that
+   might be used on those same pages.</p>
+
+   <pre>  &lt;title&gt;Introduction to The Mating Rituals of Bees&lt;/title&gt;
+    ...
+  &lt;h1&gt;Introduction&lt;/h1&gt;
+  &lt;p&gt;This companion guide to the highly successful
+  &lt;cite&gt;Introduction to Medieval Bee-Keeping&lt;/cite&gt; book is...</pre>
+
+   <p>The next page might be a part of the same site. Note how the title describes the subject
+   matter unambiguously, while the first heading assumes the reader knows what the context is and
+   therefore won't wonder if the dances are Salsa or Waltz:</p>
+
+   <pre>  &lt;title&gt;Dances used during bee mating rituals&lt;/title&gt;
+    ...
+  &lt;h1&gt;The Dances&lt;/h1&gt;</pre>
+
+  </div>
+
+  <p>The string to use as the document's title is given by the <code id="the-title-element:document.title"><a href="/breakup/specs/browser-dom/#document.title">document.title</a></code> IDL attribute.</p>
+
+  
+
+  <p>User agents should use the document's title when referring to the document in their user
+  interface. When the contents of a <code id="the-title-element:the-title-element-6"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element are used in this way, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-title-element:the-directionality">the
+  directionality</a> of that <code id="the-title-element:the-title-element-7"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code> element should be used to set the directionality
+  of the document's title in the user interface.</p></section><section><h2>The <dfn><code>body</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-body-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html-sectioning/#sectioning-root" id="the-body-element:sectioning-root">Sectioning root</a>.</dd><dt><a href="#concept-element-contexts" id="the-body-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As the second element in an <code id="the-body-element:the-html-element"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-body-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-body-element:flow-content-2">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-body-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-body-element:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-start-tag" id="the-body-element:syntax-start-tag">start tag</a> can be omitted
+   if the element is empty, or if the first thing inside the <code id="the-body-element:the-body-element-2"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element is not a
+   <a href="/breakup/specs/core-algorithms/#space-character" id="the-body-element:space-character">space character</a> or a <a href="/breakup/specs/html-syntax/#syntax-comments" id="the-body-element:syntax-comments">comment</a>, except if the
+   first thing inside the <code id="the-body-element:the-body-element-3"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element is a <code id="the-body-element:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code>, <code id="the-body-element:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+   <code id="the-body-element:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code>, <code id="the-body-element:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code>, or <code id="the-body-element:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code> element. </dd><dd>A <code id="the-body-element:the-body-element-4"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-body-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-body-element:the-body-element-5"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element is not immediately followed by a <a href="/breakup/specs/html-syntax/#syntax-comments" id="the-body-element:syntax-comments-2">comment</a>.</dd><dt><a href="#concept-element-attributes" id="the-body-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-body-element:global-attributes">Global attributes</a></dd><dd><code id="the-body-element:handler-window-onafterprint"><a href="/breakup/specs/browser-dom/#handler-window-onafterprint">onafterprint</a></code></dd><dd><code id="the-body-element:handler-window-onbeforeprint"><a href="/breakup/specs/browser-dom/#handler-window-onbeforeprint">onbeforeprint</a></code></dd><dd><code id="the-body-element:handler-window-onbeforeunload"><a href="/breakup/specs/browser-dom/#handler-window-onbeforeunload">onbeforeunload</a></code></dd><dd><code id="the-body-element:handler-window-onhashchange"><a href="/breakup/specs/browser-dom/#handler-window-onhashchange">onhashchange</a></code></dd><dd><code id="the-body-element:handler-window-onlanguagechange"><a href="/breakup/specs/browser-dom/#handler-window-onlanguagechange">onlanguagechange</a></code></dd><dd><code id="the-body-element:handler-window-onmessage"><a href="/breakup/specs/browser-dom/#handler-window-onmessage">onmessage</a></code></dd><dd><code id="the-body-element:handler-window-onoffline"><a href="/breakup/specs/browser-dom/#handler-window-onoffline">onoffline</a></code></dd><dd><code id="the-body-element:handler-window-ononline"><a href="/breakup/specs/browser-dom/#handler-window-ononline">ononline</a></code></dd><dd><code id="the-body-element:handler-window-onpagehide"><a href="/breakup/specs/browser-dom/#handler-window-onpagehide">onpagehide</a></code></dd><dd><code id="the-body-element:handler-window-onpageshow"><a href="/breakup/specs/browser-dom/#handler-window-onpageshow">onpageshow</a></code></dd><dd><code id="the-body-element:handler-window-onpopstate"><a href="/breakup/specs/browser-dom/#handler-window-onpopstate">onpopstate</a></code></dd><dd><code id="the-body-element:handler-window-onstorage"><a href="/breakup/specs/browser-dom/#handler-window-onstorage">onstorage</a></code></dd><dd><code id="the-body-element:handler-window-onunload"><a href="/breakup/specs/browser-dom/#handler-window-onunload">onunload</a></code></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-document"><code title="">document</code></a> role (default - <a href="#aria-usage-note"><em>do not set</em></a>), <a href="#index-aria-application"><code title="">application</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-body-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlbodyelement">HTMLBodyElement</dfn> : <a href="#htmlelement" id="the-body-element:htmlelement">HTMLElement</a> {
+
+  // <a href="#HTMLBodyElement-partial">also has obsolete members</a>
+};
+<a href="/breakup/specs/html-structure/#htmlbodyelement" id="the-body-element:htmlbodyelement">HTMLBodyElement</a> implements <a href="/breakup/specs/browser-dom/#windoweventhandlers" id="the-body-element:windoweventhandlers">WindowEventHandlers</a>;</pre>
+</dd></dl>
+
+  <p>The <code id="the-body-element:the-body-element-6"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element <a href="#represents" id="the-body-element:represents">represents</a> the  content of the document.</p>
+
+  <p>In conforming documents, there is only one <code id="the-body-element:the-body-element-7"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element. The <code id="the-body-element:dom-document-body"><a href="/breakup/specs/browser-dom/#dom-document-body">document.body</a></code> IDL attribute provides scripts with easy access to
+  a document's <code id="the-body-element:the-body-element-8"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element.</p>
+
+  
+
+  <p class="note">Some DOM operations (for example, parts of the <a href="#dnd" id="the-body-element:dnd">drag and drop</a> model)
+  are defined in terms of "<a href="/breakup/specs/browser-dom/#the-body-element-2" id="the-body-element:the-body-element-2-2">the body element</a>". This refers to a particular element in
+  the DOM, as per the definition of the term, and not any arbitrary <code id="the-body-element:the-body-element-9"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element.</p>
+
+  
+
+  <p>The <code id="the-body-element:the-body-element-10"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element exposes as <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="the-body-element:event-handler-content-attributes">event handler content attributes</a> a number
+  of the <a href="/breakup/specs/browser-dom/#event-handlers" id="the-body-element:event-handlers">event handlers</a> of the <code id="the-body-element:window"><a href="/breakup/specs/browser-dom/#window">Window</a></code> object. It also mirrors their
+  <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="the-body-element:event-handler-idl-attributes">event handler IDL attributes</a>.</p>
+
+  <p>The <code id="the-body-element:handler-onblur"><a href="/breakup/specs/browser-dom/#handler-onblur">onblur</a></code>, <code id="the-body-element:handler-onerror"><a href="/breakup/specs/browser-dom/#handler-onerror">onerror</a></code>,
+  <code id="the-body-element:handler-onfocus"><a href="/breakup/specs/browser-dom/#handler-onfocus">onfocus</a></code>, <code id="the-body-element:handler-onload"><a href="/breakup/specs/browser-dom/#handler-onload">onload</a></code>, <code id="the-body-element:handler-onresize"><a href="/breakup/specs/browser-dom/#handler-onresize">onresize</a></code>, and <code id="the-body-element:handler-onscroll"><a href="/breakup/specs/browser-dom/#handler-onscroll">onscroll</a></code>
+  <a href="/breakup/specs/browser-dom/#event-handlers" id="the-body-element:event-handlers-2">event handlers</a> of the <code id="the-body-element:window-2"><a href="/breakup/specs/browser-dom/#window">Window</a></code> object, exposed on the <code id="the-body-element:the-body-element-11"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code>
+  element, replace the generic <a href="/breakup/specs/browser-dom/#event-handlers" id="the-body-element:event-handlers-3">event handlers</a> with the same names normally supported by
+  <a href="/breakup/specs/core-algorithms/#html-elements" id="the-body-element:html-elements">HTML elements</a>.</p>
+
+  <p class="example">Thus, for example, a bubbling <code id="the-body-element:event-error"><a href="/breakup/specs/html/#event-error">error</a></code> event
+  dispatched on a child of <a href="/breakup/specs/browser-dom/#the-body-element-2" id="the-body-element:the-body-element-2-3">the body element</a> of a <code id="the-body-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> would first
+  trigger the <code id="the-body-element:handler-onerror-2"><a href="/breakup/specs/browser-dom/#handler-onerror">onerror</a></code> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="the-body-element:event-handler-content-attributes-2">event handler content
+  attributes</a> of that element, then that of the root <code id="the-body-element:the-html-element-2"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element, and only
+  <em>then</em> would it trigger the <code id="the-body-element:handler-onerror-3"><a href="/breakup/specs/browser-dom/#handler-onerror">onerror</a></code> <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="the-body-element:event-handler-content-attributes-3">event handler content attribute</a> on the
+  <code id="the-body-element:the-body-element-12"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element. This is because the event would bubble from the target, to the
+  <code id="the-body-element:the-body-element-13"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code>, to the <code id="the-body-element:the-html-element-3"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code>, to the <code id="the-body-element:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, to the
+  <code id="the-body-element:window-3"><a href="/breakup/specs/browser-dom/#window">Window</a></code>, and the <a href="/breakup/specs/browser-dom/#event-handlers" id="the-body-element:event-handlers-4">event handler</a> on the
+  <code id="the-body-element:the-body-element-14"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> is watching the <code id="the-body-element:window-4"><a href="/breakup/specs/browser-dom/#window">Window</a></code> not the <code id="the-body-element:the-body-element-15"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code>. A regular event
+  listener attached to the <code id="the-body-element:the-body-element-16"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> using <code>addEventListener()</code>,
+  however, would be run when the event bubbled through the <code id="the-body-element:the-body-element-17"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> and not when it reaches
+  the <code id="the-body-element:window-5"><a href="/breakup/specs/browser-dom/#window">Window</a></code> object.</p>
+
+  <div class="example">
+
+   <p>This page updates an indicator to show whether or not the user is online:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;Online or offline?&lt;/title&gt;
+  &lt;script&gt;
+   function update(online) {
+     document.getElementById('status').textContent =
+       online ? 'Online' : 'Offline';
+   }
+  &lt;/script&gt;
+ &lt;/head&gt;
+ &lt;body ononline="update(true)"
+       onoffline="update(false)"
+       onload="update(navigator.onLine)"&gt;
+  &lt;p&gt;You are: &lt;span id="status"&gt;(Unknown)&lt;/span&gt;&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div></section></body></html>

@@ -1,0 +1,229 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Figures</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-figures"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Figures.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>figure</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-figure-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-figure-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html-sectioning/#sectioning-root" id="the-figure-element:sectioning-root">Sectioning root</a>.</dd><dd><a href="#palpable-content-2" id="the-figure-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-figure-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-figure-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-figure-element:concept-element-content-model">Content model</a>:</dt><dd>Either: One <code id="the-figure-element:the-figcaption-element"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element followed by <a href="#flow-content-2" id="the-figure-element:flow-content-2-3">flow content</a>.</dd><dd>Or: <a href="#flow-content-2" id="the-figure-element:flow-content-2-4">Flow content</a> followed by one <code id="the-figure-element:the-figcaption-element-2"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element.</dd><dd>Or: <a href="#flow-content-2" id="the-figure-element:flow-content-2-5">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-figure-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-figure-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-figure-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-figure-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-figure-element:htmlelement"><a href="#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  
+
+  <p>The <code id="the-figure-element:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element <a href="#represents" id="the-figure-element:represents">represents</a> some <a href="#flow-content-2" id="the-figure-element:flow-content-2-6">flow content</a>,
+  optionally with a caption, that is self-contained (like a complete sentence) and is typically
+  referenced as a single unit from the main flow of the document.</p>
+
+  <p class="note">Self-contained in this context does not necessarily mean independent. For example,
+  each sentence in a paragraph is self-contained; an image that is part of a sentence would be
+  inappropriate for <code id="the-figure-element:the-figure-element-2"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>, but an entire sentence made of images would be fitting.</p>
+
+  <p>The element can thus be used to annotate illustrations, diagrams, photos, code listings, etc.</p>
+
+  <div class="note">
+
+   <p>When a <code id="the-figure-element:the-figure-element-3"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> is referred to from the main content of the document by identifying
+   it by its caption (e.g. by figure number), it enables such content to be easily moved away from
+   that primary content, e.g. to the side of the page, to dedicated pages, or to an appendix, without
+   affecting the flow of the document.</p>
+
+   <p>If a <code id="the-figure-element:the-figure-element-4"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element is referenced by its relative position, e.g. "in the
+   photograph above" or "as the next figure shows", then moving the figure would disrupt the page's
+   meaning. Authors are encouraged to consider using labels to refer to figures, rather than using
+   such relative references, so that the page can easily be restyled without affecting the page's
+   meaning.</p>
+
+  </div>
+
+  <p>The first <code id="the-figure-element:the-figcaption-element-3"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element child of the element, if
+  any, represents the caption of the <code id="the-figure-element:the-figure-element-5"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element's contents. If there is no child
+  <code id="the-figure-element:the-figcaption-element-4"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element, then there is no caption.</p>
+
+  <p>A <code id="the-figure-element:the-figure-element-6"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element's contents are part of the surrounding flow. If the purpose of
+  the page is to display the figure, for example a photograph on an image sharing site, the
+  <code id="the-figure-element:the-figure-element-7"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> and <code id="the-figure-element:the-figcaption-element-5"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> elements can be used to explicitly provide a
+  caption for that figure. For content that is only tangentially related, or that serves a separate
+  purpose than the surrounding flow, the <code id="the-figure-element:the-aside-element"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code> element should be used (and can itself
+  wrap a <code id="the-figure-element:the-figure-element-8"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>). For example, a pull quote that repeats content from an
+  <code id="the-figure-element:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> would be more appropriate in an <code id="the-figure-element:the-aside-element-2"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code> than in a
+  <code id="the-figure-element:the-figure-element-9"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>, because it isn't part of the content, it's a repetition of the content for
+  the purposes of enticing readers or highlighting key topics.</p>
+
+  <div class="example">
+
+   <p>This example shows the <code id="the-figure-element:the-figure-element-10"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element to mark up a code listing.</p>
+
+   <pre>&lt;p&gt;In &lt;a href="#l4"&gt;listing 4&lt;/a&gt; we see the primary core interface
+API declaration.&lt;/p&gt;
+&lt;figure id="l4"&gt;
+ &lt;figcaption&gt;Listing 4. The primary core interface API declaration.&lt;/figcaption&gt;
+ &lt;pre&gt;&lt;code&gt;interface PrimaryCore {
+ boolean verifyDataLine();
+ void sendData(in sequence&amp;lt;byte&gt; data);
+ void initSelfDestruct();
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+&lt;p&gt;The API is designed to use UTF-8.&lt;/p&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>Here we see a <code id="the-figure-element:the-figure-element-11"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element to mark up a photo that is the main content of the
+   page (as in a gallery).</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;title&gt;Bubbles at work — My Gallery™&lt;/title&gt;
+&lt;figure&gt;
+ &lt;img src="bubbles-work.jpeg"
+      alt="Bubbles, sitting in his office chair, works on his
+           latest project intently."&gt;
+ &lt;figcaption&gt;Bubbles at work&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;nav&gt;&lt;a href="19414.html"&gt;Prev&lt;/a&gt; — &lt;a href="19416.html"&gt;Next&lt;/a&gt;&lt;/nav&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In this example, we see an image that is <em>not</em> a figure, as well as an image and a
+   video that are. The first image is literally part of the example's second sentence, so it's not a
+   self-contained unit, and thus <code id="the-figure-element:the-figure-element-12"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> would be inappropriate.</p>
+
+   <pre>&lt;h2&gt;Malinko's comics&lt;/h2&gt;
+
+&lt;p&gt;This case centered on some sort of "intellectual property"
+infringement related to a comic (see Exhibit A). The suit started
+after a trailer ending with these words:
+
+&lt;blockquote&gt;
+ &lt;img src="promblem-packed-action.png" alt="ROUGH COPY! Promblem-Packed Action!"&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;...was aired. A lawyer, armed with a Bigger Notebook, launched a
+preemptive strike using snowballs. A complete copy of the trailer is
+included with Exhibit B.
+
+&lt;figure&gt;
+ &lt;img src="ex-a.png" alt="Two squiggles on a dirty piece of paper."&gt;
+ &lt;figcaption&gt;Exhibit A. The alleged &lt;cite&gt;rough copy&lt;/cite&gt; comic.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+ &lt;video src="ex-b.mov"&gt;&lt;/video&gt;
+ &lt;figcaption&gt;Exhibit B. The &lt;cite&gt;Rough Copy&lt;/cite&gt; trailer.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The case was resolved out of court.</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>Here, a part of a poem is marked up using <code id="the-figure-element:the-figure-element-13"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>.</p>
+
+   <pre>&lt;figure&gt;
+ &lt;p&gt;'Twas brillig, and the slithy toves&lt;br&gt;
+ Did gyre and gimble in the wabe;&lt;br&gt;
+ All mimsy were the borogoves,&lt;br&gt;
+ And the mome raths outgrabe.&lt;/p&gt;
+ &lt;figcaption&gt;&lt;cite&gt;Jabberwocky&lt;/cite&gt; (first verse). Lewis Carroll, 1832-98&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In this example, which could be part of a much larger work discussing a castle, nested
+   <code id="the-figure-element:the-figure-element-14"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> elements are used to provide both a group caption and individual captions for
+   each figure in the group:</p>
+
+   <pre>&lt;figure&gt;
+ &lt;figcaption&gt;The castle through the ages: 1423, 1858, and 1999 respectively.&lt;/figcaption&gt;
+ &lt;figure&gt;
+  &lt;figcaption&gt;Etching. Anonymous, ca. 1423.&lt;/figcaption&gt;
+  &lt;img src="castle1423.jpeg" alt="The castle has one tower, and a tall wall around it."&gt;
+ &lt;/figure&gt;
+ &lt;figure&gt;
+  &lt;figcaption&gt;Oil-based paint on canvas. Maria Towle, 1858.&lt;/figcaption&gt;
+  &lt;img src="castle1858.jpeg" alt="The castle now has two towers and two walls."&gt;
+ &lt;/figure&gt;
+ &lt;figure&gt;
+  &lt;figcaption&gt;Film photograph. Peter Jankle, 1999.&lt;/figcaption&gt;
+  &lt;img src="castle1999.jpeg" alt="The castle lies in ruins, the original tower all that remains in one piece."&gt;
+ &lt;/figure&gt;
+&lt;/figure&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>The previous example could also be more succintly written as follows (using <code id="the-figure-element:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attributes in place of the nested
+   <code id="the-figure-element:the-figure-element-15"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>/<code id="the-figure-element:the-figcaption-element-6"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> pairs):</p>
+
+   <pre>&lt;figure&gt;
+ &lt;img src="castle1423.jpeg" title="Etching. Anonymous, ca. 1423."
+      alt="The castle has one tower, and a tall wall around it."&gt;
+ &lt;img src="castle1858.jpeg" title="Oil-based paint on canvas. Maria Towle, 1858."
+      alt="The castle now has two towers and two walls."&gt;
+ &lt;img src="castle1999.jpeg" title="Film photograph. Peter Jankle, 1999."
+      alt="The castle lies in ruins, the original tower all that remains in one piece."&gt;
+ &lt;figcaption&gt;The castle through the ages: 1423, 1858, and 1999 respectively.&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>The figure is sometimes referenced only implicitly from the content:</p>
+
+   
+
+   <pre>&lt;article&gt;
+ &lt;h1&gt;Fiscal negotiations stumble in Congress as deadline nears&lt;/h1&gt;
+ &lt;figure&gt;
+  &lt;img src="obama-reid.jpeg" alt="Obama and Reid sit together smiling in the Oval Office."&gt;
+  &lt;figcaption&gt;Barrak Obama and Harry Reid. White House press photograph.&lt;/figcaption&gt;
+ &lt;/figure&gt;
+ &lt;p&gt;Negotiations in Congress to end the fiscal impasse sputtered on Tuesday, leaving both chambers
+ grasping for a way to reopen the government and raise the country's borrowing authority with a
+ Thursday deadline drawing near.&lt;/p&gt;
+ ...
+&lt;/article&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>figcaption</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-figcaption-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="#concept-element-contexts" id="the-figcaption-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As the first or last child of a <code id="the-figcaption-element:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element.</dd><dt><a href="#concept-element-content-model" id="the-figcaption-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-figcaption-element:flow-content-2">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-figcaption-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-figcaption-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-figcaption-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-figcaption-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-figcaption-element:htmlelement"><a href="#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-figcaption-element:the-figcaption-element"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element <a href="#represents" id="the-figcaption-element:represents">represents</a> a caption or legend for the rest of
+  the contents of the <code id="the-figcaption-element:the-figcaption-element-2"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element's parent <code id="the-figcaption-element:the-figure-element-2"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element, if any.</p></section></body></html>

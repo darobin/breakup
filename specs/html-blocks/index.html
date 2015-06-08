@@ -1,0 +1,721 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Blocks</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-blocks"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Blocks.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>p</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-p-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-p-element:flow-content-2">Flow content</a>.</dd><dd><a href="#palpable-content-2" id="the-p-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-p-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-p-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-p-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#phrasing-content-2" id="the-p-element:phrasing-content-2">Phrasing content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-p-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>A <code id="the-p-element:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element's <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-p-element:syntax-end-tag">end tag</a> can be omitted if the
+   <code id="the-p-element:the-p-element-2"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element is immediately followed by an <code id="the-p-element:the-address-element"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code>, <code id="the-p-element:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code>,
+   <code id="the-p-element:the-aside-element"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code>, <code id="the-p-element:the-blockquote-element"><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>, <code id="the-p-element:the-details-element"><a href="#the-details-element">details</a></code>, <code id="the-p-element:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code>, <code id="the-p-element:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code>,
+   <code id="the-p-element:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code>, <code id="the-p-element:the-figcaption-element"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code>, <code id="the-p-element:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>, <code id="the-p-element:the-footer-element"><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code>, <code id="the-p-element:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>, <code id="the-p-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>, <code id="the-p-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-2"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h2</a></code>,
+   <code id="the-p-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-3"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h3</a></code>, <code id="the-p-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-4"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h4</a></code>, <code id="the-p-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-5"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h5</a></code>, <code id="the-p-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code>, <code id="the-p-element:the-header-element"><a href="/breakup/specs/html-sectioning/#the-header-element">header</a></code>,
+   <code id="the-p-element:the-hgroup-element"><a href="#the-hgroup-element">hgroup</a></code>, <code id="the-p-element:the-hr-element"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code>, <code id="the-p-element:the-main-element"><a href="/breakup/specs/html-sectioning/#the-main-element">main</a></code>, <code id="the-p-element:the-menu-element"><a href="#the-menu-element">menu</a></code>, <code id="the-p-element:the-nav-element"><a href="/breakup/specs/html-sectioning/#the-nav-element">nav</a></code>,
+   <code id="the-p-element:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>, <code id="the-p-element:the-p-element-3"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code>, <code id="the-p-element:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code>, <code id="the-p-element:the-section-element"><a href="/breakup/specs/html-sectioning/#the-section-element">section</a></code>, <code id="the-p-element:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>, or
+   <code id="the-p-element:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code>, element, or if there is no more content in the parent element and the parent
+   element is an <a href="/breakup/specs/core-algorithms/#html-elements" id="the-p-element:html-elements">HTML element</a> that is not an <code id="the-p-element:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, <code id="the-p-element:the-audio-element"><a href="#the-audio-element">audio</a></code>, <code id="the-p-element:the-del-element"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code>,
+   <code id="the-p-element:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code>, <code id="the-p-element:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>, <code id="the-p-element:the-noscript-element"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code>, or <code id="the-p-element:the-video-element"><a href="#the-video-element">video</a></code> element.</dd><dt><a href="#concept-element-attributes" id="the-p-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-p-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-p-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmlparagraphelement">HTMLParagraphElement</dfn> : <a href="#htmlelement" id="the-p-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLParagraphElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-p-element:the-p-element-4"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element <a href="#represents" id="the-p-element:represents">represents</a> a <a href="#paragraph" id="the-p-element:paragraph">paragraph</a>.</p>
+
+  <p class="note">While paragraphs are usually represented in visual media by blocks of text that
+  are physically separated from adjacent blocks through blank lines, a style sheet or user agent
+  would be equally justified in presenting paragraph breaks in a different manner, for instance
+  using inline pilcrows (¶).</p>
+
+  <div class="example">
+   <p>The following examples are conforming HTML fragments:</p>
+   <pre>&lt;p&gt;The little kitten gently seated himself on a piece of
+carpet. Later in his life, this would be referred to as the time the
+cat sat on the mat.&lt;/p&gt;</pre>
+   <pre>&lt;fieldset&gt;
+ &lt;legend&gt;Personal information&lt;/legend&gt;
+ &lt;p&gt;
+   &lt;label&gt;Name: &lt;input name="n"&gt;&lt;/label&gt;
+   &lt;label&gt;&lt;input name="anon" type="checkbox"&gt; Hide from other users&lt;/label&gt;
+ &lt;/p&gt;
+ &lt;p&gt;&lt;label&gt;Address: &lt;textarea name="a"&gt;&lt;/textarea&gt;&lt;/label&gt;&lt;/p&gt;
+&lt;/fieldset&gt;</pre>
+   <pre>&lt;p&gt;There was once an example from Femley,&lt;br&gt;
+Whose markup was of dubious quality.&lt;br&gt;
+The validator complained,&lt;br&gt;
+So the author was pained,&lt;br&gt;
+To move the error from the markup to the rhyming.&lt;/p&gt;</pre>
+  </div>
+
+  <p>The <code id="the-p-element:the-p-element-5"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element should not be used when a more specific element is more
+  appropriate.</p>
+
+  <div class="example">
+
+   <p>The following example is technically correct:</p>
+
+<pre>&lt;section&gt;
+ &lt;!-- ... --&gt;
+ &lt;p&gt;Last modified: 2001-04-23&lt;/p&gt;
+ &lt;p&gt;Author: fred@example.com&lt;/p&gt;
+&lt;/section&gt;</pre>
+
+   <p>However, it would be better marked-up as:</p>
+
+<pre>&lt;section&gt;
+ &lt;!-- ... --&gt;
+ &lt;footer&gt;Last modified: 2001-04-23&lt;/footer&gt;
+ &lt;address&gt;Author: fred@example.com&lt;/address&gt;
+&lt;/section&gt;</pre>
+
+   <p>Or:</p>
+
+<pre>&lt;section&gt;
+ &lt;!-- ... --&gt;
+ &lt;footer&gt;
+  &lt;p&gt;Last modified: 2001-04-23&lt;/p&gt;
+  &lt;address&gt;Author: fred@example.com&lt;/address&gt;
+ &lt;/footer&gt;
+&lt;/section&gt;</pre>
+
+  </div>
+
+  <div class="note">
+
+   <p>List elements (in particular, <code id="the-p-element:the-ol-element-2"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> and <code id="the-p-element:the-ul-element-2"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code> elements) cannot be children
+   of <code id="the-p-element:the-p-element-6"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> elements. When a sentence contains a bulleted list, therefore, one might wonder
+   how it should be marked up.</p>
+
+   <div class="example">
+    <p>For instance, this fantastic sentence has bullets relating to</p>
+    <ul><li>wizards,
+     </li><li>faster-than-light travel, and
+     </li><li>telepathy,
+    </li></ul>
+    <p>and is further discussed below.</p>
+   </div>
+
+   <p>The solution is to realise that a <i id="the-p-element:paragraph-2"><a href="#paragraph">paragraph</a></i>, in HTML terms, is not a
+   logical concept, but a structural one. In the fantastic example above, there are actually
+   <em>five</em> <a href="#paragraph" id="the-p-element:paragraph-3">paragraphs</a> as defined by this specification: one
+   before the list, one for each bullet, and one after the list.</p>
+
+   <div class="example">
+
+    <p>The markup for the above example could therefore be:</p>
+
+    <pre>&lt;p&gt;For instance, this fantastic sentence has bullets relating to&lt;/p&gt;
+&lt;ul&gt;
+ &lt;li&gt;wizards,
+ &lt;li&gt;faster-than-light travel, and
+ &lt;li&gt;telepathy,
+&lt;/ul&gt;
+&lt;p&gt;and is further discussed below.&lt;/p&gt;</pre>
+
+   </div>
+
+   <p>Authors wishing to conveniently style such "logical" paragraphs consisting of multiple
+   "structural" paragraphs can use the <code id="the-p-element:the-div-element-2"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element instead of the <code id="the-p-element:the-p-element-7"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code>
+   element.</p>
+
+   <div class="example">
+
+    <p>Thus for instance the above example could become the following:</p>
+
+    <pre>&lt;div&gt;For instance, this fantastic sentence has bullets relating to
+&lt;ul&gt;
+ &lt;li&gt;wizards,
+ &lt;li&gt;faster-than-light travel, and
+ &lt;li&gt;telepathy,
+&lt;/ul&gt;
+and is further discussed below.&lt;/div&gt;</pre>
+
+    <p>This example still has five structural paragraphs, but now the author can style just the
+    <code id="the-p-element:the-div-element-3"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> instead of having to consider each part of the example separately.</p>
+
+   </div>
+
+  </div></section><section><h2>The <dfn><code>div</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-div-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-div-element:flow-content-2">Flow content</a>.</dd><dd><a href="#palpable-content-2" id="the-div-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-div-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-div-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-div-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-div-element:flow-content-2-3">Flow content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-div-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-div-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-div-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-div-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmldivelement">HTMLDivElement</dfn> : <a href="#htmlelement" id="the-div-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLDivElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-div-element:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element has no special meaning at all. It <a href="#represents" id="the-div-element:represents">represents</a> its
+  children. It can be used with the <code id="the-div-element:classes"><a href="/breakup/specs/html-attributes/#classes">class</a></code>, <code id="the-div-element:attr-lang"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code>, and <code id="the-div-element:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attributes to mark up
+  semantics common to a group of consecutive elements.</p>
+
+  <p class="note">Authors are strongly encouraged to view the <code id="the-div-element:the-div-element-2"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element as an element
+  of last resort, for when no other element is suitable. Use of more appropriate elements instead of
+  the <code id="the-div-element:the-div-element-3"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element leads to better accessibility for readers and easier maintainability
+  for authors.</p>
+
+  <div class="example">
+
+   <p>For example, a blog post would be marked up using <code id="the-div-element:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code>, a chapter using
+   <code id="the-div-element:the-section-element"><a href="/breakup/specs/html-sectioning/#the-section-element">section</a></code>, a page's navigation aids using <code id="the-div-element:the-nav-element"><a href="/breakup/specs/html-sectioning/#the-nav-element">nav</a></code>, and a group of form
+   controls using <code id="the-div-element:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code>.</p>
+
+   <p>On the other hand, <code id="the-div-element:the-div-element-4"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> elements can be useful for stylistic purposes or to wrap
+   multiple paragraphs within a section that are all to be annotated in a similar way. In the
+   following example, we see <code id="the-div-element:the-div-element-5"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> elements used as a way to set the language of two
+   paragraphs at once, instead of setting the language on the two paragraph elements separately:</p>
+
+   <pre>&lt;article lang="en-US"&gt;
+ &lt;h1&gt;My use of language and my cats&lt;/h1&gt;
+ &lt;p&gt;My cat's behaviour hasn't changed much since her absence, except
+ that she plays her new physique to the neighbors regularly, in an
+ attempt to get pets.&lt;/p&gt;
+ &lt;div lang="en-GB"&gt;
+  &lt;p&gt;My other cat, coloured black and white, is a sweetie. He followed
+  us to the pool today, walking down the pavement with us. Yesterday
+  he apparently visited our neighbours. I wonder if he recognises that
+  their flat is a mirror image of ours.&lt;/p&gt;
+  &lt;p&gt;Hm, I just noticed that in the last paragraph I used British
+  English. But I'm supposed to write in American English. So I
+  shouldn't say "pavement" or "flat" or "colour"...&lt;/p&gt;
+ &lt;/div&gt;
+ &lt;p&gt;I should say "sidewalk" and "apartment" and "color"!&lt;/p&gt;
+&lt;/article&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>hr</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-hr-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-hr-element:flow-content-2">Flow content</a>.</dd><dt><a href="#concept-element-contexts" id="the-hr-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-hr-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-hr-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#concept-content-nothing" id="the-hr-element:concept-content-nothing">Nothing</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-hr-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>No <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-hr-element:syntax-end-tag">end tag</a>.</dd><dt><a href="#concept-element-attributes" id="the-hr-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-hr-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-separator"><code title="">separator</code></a> (default - <a href="#aria-usage-note"><em>do not set</em></a>) or <a href="#index-aria-presentation"><code title="">presentation</code></a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-hr-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmlhrelement">HTMLHRElement</dfn> : <a href="#htmlelement" id="the-hr-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLHRElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-hr-element:the-hr-element"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element <a href="#represents" id="the-hr-element:represents">represents</a> a <a href="#paragraph" id="the-hr-element:paragraph">paragraph</a>-level thematic
+  break, e.g. a scene change in a story, or a transition to another topic within a section of a
+  reference book.</p>
+
+  <div class="example">
+
+   <p>The following fictional extract from a project manual shows two sections that use the
+   <code id="the-hr-element:the-hr-element-2"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element to separate topics within the section.</p>
+
+   <pre>&lt;section&gt;
+ &lt;h1&gt;Communication&lt;/h1&gt;
+ &lt;p&gt;There are various methods of communication. This section
+ covers a few of the important ones used by the project.&lt;/p&gt;
+ <strong>&lt;hr&gt;</strong>
+ &lt;p&gt;Communication stones seem to come in pairs and have mysterious
+ properties:&lt;/p&gt;
+ &lt;ul&gt;
+  &lt;li&gt;They can transfer thoughts in two directions once activated
+  if used alone.&lt;/li&gt;
+  &lt;li&gt;If used with another device, they can transfer one's
+  consciousness to another body.&lt;/li&gt;
+  &lt;li&gt;If both stones are used with another device, the
+  consciousnesses switch bodies.&lt;/li&gt;
+ &lt;/ul&gt;
+ <strong>&lt;hr&gt;</strong>
+ &lt;p&gt;Radios use the electromagnetic spectrum in the meter range and
+ longer.&lt;/p&gt;
+ <strong>&lt;hr&gt;</strong>
+ &lt;p&gt;Signal flares use the electromagnetic spectrum in the
+ nanometer range.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section&gt;
+ &lt;h1&gt;Food&lt;/h1&gt;
+ &lt;p&gt;All food at the project is rationed:&lt;/p&gt;
+ &lt;dl&gt;
+  &lt;dt&gt;Potatoes&lt;/dt&gt;
+  &lt;dd&gt;Two per day&lt;/dd&gt;
+  &lt;dt&gt;Soup&lt;/dt&gt;
+  &lt;dd&gt;One bowl per day&lt;/dd&gt;
+ &lt;/dl&gt;
+ <strong>&lt;hr&gt;</strong>
+ &lt;p&gt;Cooking is done by the chefs on a set rotation.&lt;/p&gt;
+&lt;/section&gt;</pre>
+
+   <p>There is no need for an <code id="the-hr-element:the-hr-element-3"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element between the sections themselves, since the
+   <code id="the-hr-element:the-section-element"><a href="/breakup/specs/html-sectioning/#the-section-element">section</a></code> elements and the <code id="the-hr-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code> elements imply thematic changes
+   themselves.</p>
+
+  </div>
+
+  <div class="example">
+
+   <p>The following extract from <cite>Pandora's Star</cite> by Peter F. Hamilton shows two
+   paragraphs that precede a scene change and the paragraph that follows it. The scene change,
+   represented in the printed book by a gap containing a solitary centered star between the second
+   and third paragraphs, is here represented using the <code id="the-hr-element:the-hr-element-4"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element.</p>
+
+   
+
+   <pre lang="en-GB">&lt;p&gt;Dudley was ninety-two, in his second life, and fast approaching
+time for another rejuvenation. Despite his body having the physical
+age of a standard fifty-year-old, the prospect of a long degrading
+campaign within academia was one he regarded with dread. For a
+supposedly advanced civilization, the Intersolar Commonwealth could be
+appallingly backward at times, not to mention cruel.&lt;/p&gt;
+&lt;p&gt;&lt;i&gt;Maybe it won't be that bad&lt;/i&gt;, he told himself. The lie was
+comforting enough to get him through the rest of the night's
+shift.&lt;/p&gt;
+<strong>&lt;hr&gt;</strong>
+&lt;p&gt;The Carlton AllLander drove Dudley home just after dawn. Like the
+astronomer, the vehicle was old and worn, but perfectly capable of
+doing its job. It had a cheap diesel engine, common enough on a
+semi-frontier world like Gralmond, although its drive array was a
+thoroughly modern photoneural processor. With its high suspension and
+deep-tread tyres it could plough along the dirt track to the
+observatory in all weather and seasons, including the metre-deep snow
+of Gralmond's winters.&lt;/p&gt;</pre>
+
+  </div>
+
+  <p class="note">The <code id="the-hr-element:the-hr-element-5"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element does not affect the document's
+  <a href="/breakup/specs/html-sectioning/#outline" id="the-hr-element:outline">outline</a>.</p></section><section><h2>The <dfn><code>pre</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-pre-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-pre-element:flow-content-2">Flow content</a>.</dd><dd><a href="#palpable-content-2" id="the-pre-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-pre-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-pre-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-pre-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#phrasing-content-2" id="the-pre-element:phrasing-content-2">Phrasing content</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-pre-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-pre-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-pre-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-pre-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">interface <dfn id="htmlpreelement">HTMLPreElement</dfn> : <a href="#htmlelement" id="the-pre-element:htmlelement">HTMLElement</a> {
+  // <a href="#HTMLPreElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-pre-element:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element <a href="#represents" id="the-pre-element:represents">represents</a> a block of preformatted text, in which
+  structure is represented by typographic conventions rather than by elements.</p>
+
+  <p class="note">In <a href="#syntax" id="the-pre-element:syntax">the HTML syntax</a>, a leading newline character immediately following
+  the <code id="the-pre-element:the-pre-element-2"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element start tag is stripped.</p>
+
+  <p>Some examples of cases where the <code id="the-pre-element:the-pre-element-3"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element could be used:</p>
+
+  <ul><li>Including an e-mail, with paragraphs indicated by blank lines, lists indicated by lines
+   prefixed with a bullet, and so on.</li><li>Including fragments of computer code, with structure indicated according to the conventions
+   of that language.</li><li>Displaying ASCII art.</li></ul>
+
+  <p class="note">Authors are encouraged to consider how preformatted text will be experienced when
+  the formatting is lost, as will be the case for users of speech synthesizers, braille displays,
+  and the like. For cases like ASCII art, it is likely that an alternative presentation, such as a
+  textual description, would be more universally accessible to the readers of the document.</p>
+
+  <p>To represent a block of computer code, the <code id="the-pre-element:the-pre-element-4"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element can be used with a
+  <code id="the-pre-element:the-code-element"><a href="/breakup/specs/html-text/#the-code-element">code</a></code> element; to represent a block of computer output the <code id="the-pre-element:the-pre-element-5"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element
+  can be used with a <code id="the-pre-element:the-samp-element"><a href="/breakup/specs/html-text/#the-samp-element">samp</a></code> element. Similarly, the <code id="the-pre-element:the-kbd-element"><a href="/breakup/specs/html-text/#the-kbd-element">kbd</a></code> element can be used
+  within a <code id="the-pre-element:the-pre-element-6"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element to indicate text that the user is to enter.</p>
+
+  
+
+  <p class="note">This element <a href="#bidireq">has rendering requirements involving the
+  bidirectional algorithm</a>.</p>
+
+  
+
+  <div class="example">
+
+   <p>In the following snippet, a sample of computer code is presented.</p>
+
+   <pre>&lt;p&gt;This is the &lt;code&gt;Panel&lt;/code&gt; constructor:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function Panel(element, canClose, closeHandler) {
+  this.element = element;
+  this.canClose = canClose;
+  this.closeHandler = function () { if (closeHandler) closeHandler() };
+}&lt;/code&gt;&lt;/pre&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In the following snippet, <code id="the-pre-element:the-samp-element-2"><a href="/breakup/specs/html-text/#the-samp-element">samp</a></code> and <code id="the-pre-element:the-kbd-element-2"><a href="/breakup/specs/html-text/#the-kbd-element">kbd</a></code> elements are mixed in the
+   contents of a <code id="the-pre-element:the-pre-element-7"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element to show a session of Zork I.</p>
+
+   <pre>&lt;pre&gt;&lt;samp&gt;You are in an open field west of a big white house with a boarded
+front door.
+There is a small mailbox here.
+
+&gt;&lt;/samp&gt; &lt;kbd&gt;open mailbox&lt;/kbd&gt;
+
+&lt;samp&gt;Opening the mailbox reveals:
+A leaflet.
+
+&gt;&lt;/samp&gt;&lt;/pre&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>The following shows a contemporary poem that uses the <code id="the-pre-element:the-pre-element-8"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> element to preserve its
+   unusual formatting, which forms an intrinsic part of the poem itself.</p>
+
+   <pre>&lt;pre&gt;                maxling
+
+it is with a          heart
+               heavy
+
+that i admit loss of a feline
+        so           loved
+
+a friend lost to the
+        unknown
+                                (night)
+
+~cdr 11dec07&lt;/pre&gt;</pre>
+
+  </div></section><section>
+  <h2>The <dfn><code>blockquote</code></dfn> element</h2>
+
+  <dl class="element">
+   <dt><a href="#concept-element-categories">Categories</a>:</dt>
+   <dd><a href="#flow-content">Flow content</a>.</dd>
+   <dd><a href="/breakup/specs/html-sectioning/#sectioning-root">Sectioning root</a>.</dd>
+   <dd><a href="#palpable-content">Palpable content</a>.</dd>
+   <dt><a href="#concept-element-contexts">Contexts in which this element can be used</a>:</dt>
+   <dd>Where <a href="#flow-content">flow content</a> is expected.</dd>
+   <dt><a href="#concept-element-content-model">Content model</a>:</dt>
+   <dd><a href="#flow-content">Flow content</a>.</dd>
+   <dt><a href="#concept-element-attributes">Content attributes</a>:</dt>
+   <dd><a href="/breakup/specs/html-attributes/#global-attributes">Global attributes</a></dd>
+   <dd><code><a href="/breakup/specs/html-blocks/#attr-blockquote-cite">cite</a></code> - Link to the source of the quotation.</dd>
+   <dt><a href="#concept-element-tag-omission">Tag omission in text/html</a>:</dt>
+   <dd>Neither tag is omissible</dd>
+   <dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom">DOM interface</a>:</dt><!--TOPIC:DOM APIs-->
+   <dd>
+<pre class="idl">interface <dfn id="htmlquoteelement">HTMLQuoteElement</dfn> : <a href="#htmlelement">HTMLElement</a> {
+           attribute DOMString <a href="/breakup/specs/html-blocks/#dom-quote-cite">cite</a>;
+};</pre>
+    <p class="note">The <code><a href="/breakup/specs/html-blocks/#htmlquoteelement">HTMLQuoteElement</a></code> interface is
+    also used by the <code><a href="/breakup/specs/html-text/#the-q-element">q</a></code> element.</p>
+   </dd>
+  </dl><!--TOPIC:HTML-->
+  <p class="rep">The <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> element <a href="#represents">represents</a> content that is quoted from another source, optionally with a citation which must be within a <code><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code> or <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> element, and optionally 
+  with in-line changes such as annotations and abbreviations.</p>
+
+  <p class="auth">Content inside a <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> other than citations and in-line changes must be quoted from another source, whose address, if it has one, may be cited in the <dfn id="attr-blockquote-cite"><code>cite</code></dfn> attribute.</p>
+  
+ <p class="note">In cases where a page contains contributions from multiple people, such as comments on a blog post, 
+ '<i>another source</i>' can include text from the same page, written by another person.</p>
+ 
+  <p class="auth">If the <code><a href="/breakup/specs/html-blocks/#attr-blockquote-cite">cite</a></code> attribute is present, it must be a
+  <a href="/breakup/specs/core-algorithms/#valid-url-potentially-surrounded-by-spaces">valid URL potentially surrounded by spaces</a>. To obtain the
+  corresponding citation link, the value of the attribute must be <a href="/breakup/specs/core-algorithms/#resolve-a-url">resolved</a> relative to the element. User agents may allow users to follow such
+  citation links, but they are primarily intended for private use (e.g. by server-side scripts
+  collecting statistics about a site's use of quotations), not for readers.</p>
+<p>The <dfn id="dom-quote-cite"><code>cite</code></dfn> IDL
+  attribute must <a href="/breakup/specs/core-algorithms/#reflect">reflect</a> the element's <code>cite</code> content attribute.</p>
+  <p class="auth">The content of a <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> may be abbreviated, may have context added or may have annotations. Any such additions or changes to quoted text must be indicated in the text (at the text level). This may mean the use of notational conventions or explicit remarks, such as "emphasis mine".</p>
+
+  <div class="example">
+
+   <p>For example, in English, abbreviations are traditionally identified using square
+   brackets. Consider a page with the sentence "Fred ate the cracker.
+   He then said he liked apples and fish."; it could be quoted as
+   follows:</p>
+
+   <pre>&lt;blockquote&gt;
+ &lt;p&gt;[Fred] then said he liked [...] fish.&lt;/p&gt;
+&lt;/blockquote&gt;</pre>
+
+  </div>
+  <p class="auth">Quotation marks may be used to delineate between quoted text and annotations 
+  within a <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>.
+</p><div class="example">
+<!-- based on example from http://oli.jp/example/blockquote-metadata/ -->
+   <p>For example, an in-line note provided by the author:</p>
+
+   <pre> &lt;figure&gt;
+ &lt;blockquote&gt;
+ "That monster custom, who all sense doth eat
+ Of habit's devil," <mark>&lt;abbr title="et cetera"&gt;&amp;c.&lt;/abbr&gt; not in Folio</mark>
+ 
+ "What a falling off was there !
+ From me, whose love was of that dignity
+ That it went hand in hand even with the vow
+ I made to her in marriage, and to decline
+ Upon a wretch."
+ &lt;/blockquote&gt;
+ &lt;footer&gt;
+ — &lt;cite class="title"&gt;Shakespeare manual&lt;/cite&gt; by &lt;cite class="author"&gt;Frederick Gard Fleay&lt;/cite&gt;, 
+ p19 (in Google Books)
+ &lt;/footer&gt;
+ &lt;/figure&gt;
+ </pre>
+<p class="note">In the example above, the citation is contained within the <code><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code> of a <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element,
+this groups and associates the information, about the quote, with the quote. The <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element was not
+used, in this case, as a container for the citation as it is not a caption.</p> 
+ </div>
+  <p>Attribution for the quotation, may be be placed inside the
+  <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> element, but must be within a <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> element for in-text attributions or within a <code><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code> element.</p> 
+
+  <div class="example">
+
+   <p>For example, here the attribution is given in a <code><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code> after
+   the quoted text, to clearly relate the quote to its attribution:</p>
+
+   <pre>&lt;blockquote&gt;
+ &lt;p&gt;I contend that we are both atheists. I just believe in one fewer
+ god than you do. When you understand why you dismiss all the other
+ possible gods, you will understand why I dismiss yours.&lt;/p&gt;
+ &lt;footer&gt;— &lt;cite&gt;Stephen Roberts&lt;/cite&gt;&lt;/footer&gt;
+ &lt;/blockquote&gt;</pre>
+
+  </div>
+  
+   <div class="example">
+
+   <p>Here the attribution is given in a <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> element on the last line of the quoted text. 
+   Note that a link to the author is also included.</p>
+
+   <pre>&lt;blockquote&gt;
+ The people recognize themselves in their commodities; they find their 
+ soul in their automobile, hi-fi set, split-level home, kitchen equipment. 
+ — <strong>&lt;cite&gt;&lt;a href="http://en.wikipedia.org/wiki/Herbert_Marcuse"&gt;Herbert Marcuse&lt;/a&gt;&lt;/cite&gt;</strong>
+ &lt;/blockquote&gt;</pre>
+
+  </div>
+  
+  <div class="example">
+
+   <p>Here the attribution is given in a <code><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code> after
+   the quoted text, and metadata about the reference has been added using the
+   <a href="http://www.w3.org/TR/microdata/">Microdata</a> syntax
+   (note it could have equally been marked up using <a href="http://www.w3.org/TR/rdfa-lite/">RDFA Lite</a>).</p>
+
+   <pre>&lt;blockquote&gt;
+ &lt;p&gt;... she said she would not sign any deposition containing the word "amorous" 
+ instead of "advances". For her the difference was of crucial significance, 
+ and one of the reasons she had separated from her husband was that he had never been 
+ amorous but had consistently made advances.&lt;/p&gt;
+ 
+ <strong>&lt;footer itemscope itemtype="http://schema.org/Book"&gt;</strong>
+  &lt;span itemprop="author"&gt;Heinrich Böll&lt;/span&gt;,
+  &lt;span itemprop="name"&gt;The Lost Honor of Katharina Blum&lt;/span&gt;, 
+  &lt;span itemprop="datePublished"&gt;January 1, 1974&lt;/span&gt;
+ <strong>&lt;/footer&gt;</strong>
+ &lt;/blockquote&gt;
+ </pre>
+
+  </div>
+  <p class="note">There is no formal method for indicating the markup in a <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> is from a quoted source. It is suggested that if the <code><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code> or <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> elements are included and these elements are also being used within a <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> to identify citations, the elements from the quoted source could be annotated with metadata to identify their origin, for example by using the <code>class</code> attribute (a defined <span>extensibility</span> mechanism).</p>
+  <div class="example">
+  <p>In this example the source of a quote includes a <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> element, which is annotated using the <code>class</code> attribute:</p>
+  <pre>  &lt;blockquote&gt;
+  &lt;p&gt;My favorite book is <mark>&lt;cite class="from-source"&gt;At Swim-Two-Birds&lt;/cite&gt;</mark>&lt;/p&gt;
+  &lt;footer&gt;- &lt;cite&gt;Mike[tm]Smith&lt;/cite&gt;&lt;/footer&gt;
+  &lt;/blockquote&gt;
+  </pre>
+  </div>
+  
+ <p class="author">The other examples below show other ways of showing attribution.</p>
+ 
+ <div class="example">
+
+   <p>Here a <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> element is used in conjunction
+   with a <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element and its <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code>:</p>
+
+   <pre>&lt;figure&gt;
+ &lt;blockquote&gt;
+  &lt;p&gt;The truth may be puzzling. It may take some work to grapple with.
+  It may be counterintuitive. It may contradict deeply held
+  prejudices. It may not be consonant with what we desperately want to
+  be true. But our preferences do not determine what's true. We have a
+  method, and that method helps us to reach not absolute truth, only
+  asymptotic approaches to the truth — never there, just closer
+  and closer, always finding vast new oceans of undiscovered
+  possibilities. Cleverly designed experiments are the key.&lt;/p&gt;
+ &lt;/blockquote&gt;
+ &lt;figcaption&gt;&lt;cite&gt;Carl Sagan&lt;/cite&gt;, in "&lt;cite&gt;Wonder and Skepticism&lt;/cite&gt;", from
+ the &lt;cite&gt;Skeptical Enquirer&lt;/cite&gt; Volume 19, Issue 1 (January-February
+ 1995)&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+
+  </div>
+
+  <div class="example">
+  
+   <p>This next example shows the use of <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> alongside
+   <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>:</p>
+
+   <pre>&lt;p&gt;His next piece was the aptly named &lt;cite&gt;Sonnet 130&lt;/cite&gt;:&lt;/p&gt;
+&lt;blockquote cite="http://quotes.example.org/s/sonnet130.html"&gt;
+  &lt;p&gt;My mistress' eyes are nothing like the sun,&lt;br&gt;
+  Coral is far more red, than her lips red,&lt;br&gt;
+  ...</pre>
+  </div>
+  
+  <div class="example">
+
+   <p>This example shows how a forum post could use
+   <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> to show what post a user is replying
+   to. The <code><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> element is used for each post, to mark
+   up the threading.</p>
+
+   <pre>&lt;article&gt;
+ &lt;h1&gt;&lt;a href="http://bacon.example.com/?blog=109431"&gt;Bacon on a crowbar&lt;/a&gt;&lt;/h1&gt;
+ &lt;article&gt;
+  &lt;header&gt;&lt;strong&gt;t3yw&lt;/strong&gt; 12 points 1 hour ago&lt;/header&gt;
+  &lt;p&gt;I bet a narwhal would love that.&lt;/p&gt;
+  &lt;footer&gt;&lt;a href="?pid=29578"&gt;permalink&lt;/a&gt;&lt;/footer&gt;
+  &lt;article&gt;
+   &lt;header&gt;&lt;strong&gt;greg&lt;/strong&gt; 8 points 1 hour ago&lt;/header&gt;
+   &lt;blockquote&gt;&lt;p&gt;I bet a narwhal would love that.&lt;/p&gt;&lt;/blockquote&gt;
+   &lt;p&gt;Dude narwhals don't eat bacon.&lt;/p&gt;
+   &lt;footer&gt;&lt;a href="?pid=29579"&gt;permalink&lt;/a&gt;&lt;/footer&gt;
+   &lt;article&gt;
+    &lt;header&gt;&lt;strong&gt;t3yw&lt;/strong&gt; 15 points 1 hour ago&lt;/header&gt;
+    &lt;blockquote&gt;
+     &lt;blockquote&gt;&lt;p&gt;I bet a narwhal would love that.&lt;/p&gt;&lt;/blockquote&gt;
+     &lt;p&gt;Dude narwhals don't eat bacon.&lt;/p&gt;
+    &lt;/blockquote&gt;
+    &lt;p&gt;Next thing you'll be saying they don't get capes and wizard
+    hats either!&lt;/p&gt;
+    &lt;footer&gt;&lt;a href="?pid=29580"&gt;permalink&lt;/a&gt;&lt;/footer&gt;
+    &lt;article&gt;
+     &lt;article&gt;
+      &lt;header&gt;&lt;strong&gt;boing&lt;/strong&gt; -5 points 1 hour ago&lt;/header&gt;
+      &lt;p&gt;narwhals are worse than ceiling cat&lt;/p&gt;
+      &lt;footer&gt;&lt;a href="?pid=29581"&gt;permalink&lt;/a&gt;&lt;/footer&gt;
+     &lt;/article&gt;
+    &lt;/article&gt;
+   &lt;/article&gt;
+  &lt;/article&gt;
+  &lt;article&gt;
+   &lt;header&gt;&lt;strong&gt;fred&lt;/strong&gt; 1 points 23 minutes ago&lt;/header&gt;
+   &lt;blockquote&gt;&lt;p&gt;I bet a narwhal would love that.&lt;/p&gt;&lt;/blockquote&gt;
+   &lt;p&gt;I bet they'd love to peel a banana too.&lt;/p&gt;
+   &lt;footer&gt;&lt;a href="?pid=29582"&gt;permalink&lt;/a&gt;&lt;/footer&gt;
+  &lt;/article&gt;
+ &lt;/article&gt;
+&lt;/article&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>This example shows the use of a <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code> for
+   short snippets, demonstrating that one does not have to use
+   <code><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> elements inside <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>
+   elements:</p>
+
+   <pre>&lt;p&gt;He began his list of "lessons" with the following:&lt;/p&gt;
+&lt;blockquote&gt;One should never assume that his side of
+the issue will be recognized, let alone that it will
+be conceded to have merits.&lt;/blockquote&gt;
+&lt;p&gt;He continued with a number of similar points, ending with:&lt;/p&gt;
+&lt;blockquote&gt;Finally, one should be prepared for the threat
+of breakdown in negotiations at any given moment and not
+be cowed by the possibility.&lt;/blockquote&gt;
+&lt;p&gt;We shall now discuss these points...</pre>
+
+  </div>
+  <p class="note"><a href="#conversations">Examples of how to
+  represent a conversation</a> are shown in a later section; it is not
+  appropriate to use the <code><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> and <code><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>
+  elements for this purpose.</p>
+</section><section><h2>The <dfn><code>address</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-address-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-address-element:flow-content-2">Flow content</a>.</dd><dd><a href="#palpable-content-2" id="the-address-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-address-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#flow-content-2" id="the-address-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-address-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#flow-content-2" id="the-address-element:flow-content-2-3">Flow content</a>, but with no <a href="#heading-content-2" id="the-address-element:heading-content-2">heading
+   content</a> descendants, no <a href="#sectioning-content-2" id="the-address-element:sectioning-content-2">sectioning content</a>
+   descendants, and no <code id="the-address-element:the-header-element"><a href="/breakup/specs/html-sectioning/#the-header-element">header</a></code>, <code id="the-address-element:the-footer-element"><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code>, or
+   <code id="the-address-element:the-address-element"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> element descendants.</dd><dt><a href="#concept-element-tag-omission" id="the-address-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-address-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-address-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-contentinfo"><code title="">contentinfo</code></a> role.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-address-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-address-element:htmlelement"><a href="#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-address-element:the-address-element-2"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> element <a href="#represents" id="the-address-element:represents">represents</a> the contact information for its
+  nearest <code id="the-address-element:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> or <code id="the-address-element:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element ancestor. If that is <a href="/breakup/specs/browser-dom/#the-body-element-2" id="the-address-element:the-body-element-2">the body
+  element</a>, then the contact information applies to the document as a whole.</p>
+
+  <div class="example">
+   <p>For example, a page at the W3C Web site related to HTML might
+   include the following contact information:</p>
+   <pre>&lt;ADDRESS&gt;
+ &lt;A href="../People/Raggett/"&gt;Dave Raggett&lt;/A&gt;,
+ &lt;A href="../People/Arnaud/"&gt;Arnaud Le Hors&lt;/A&gt;,
+ contact persons for the &lt;A href="Activity"&gt;W3C HTML Activity&lt;/A&gt;
+&lt;/ADDRESS&gt;</pre>
+  </div>
+
+  <p>The <code id="the-address-element:the-address-element-3"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> element must not be used to represent arbitrary addresses (e.g. postal
+  addresses), unless those addresses are in fact the relevant contact information. (The
+  <code id="the-address-element:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element is the appropriate element for marking up postal addresses in general.)</p>
+
+  <p>The <code id="the-address-element:the-address-element-4"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> element must not contain information other than contact
+  information.</p>
+
+  <div class="example">
+   <p>For example, the following is non-conforming use of the
+   <code id="the-address-element:the-address-element-5"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> element:</p>
+   <pre class="bad">&lt;ADDRESS&gt;Last Modified: 1999/12/24 23:37:50&lt;/ADDRESS&gt;</pre>
+  </div>
+
+  <p>Typically, the <code id="the-address-element:the-address-element-6"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> element would be included along with other information in a
+  <code id="the-address-element:the-footer-element-2"><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code> element.</p>
+
+  
+
+  <p>The contact information for a node <var>node</var> is a collection of
+  <code id="the-address-element:the-address-element-7"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> elements defined by the first applicable entry from the following list:</p>
+
+  <dl class="switch"><dt>If <var>node</var> is an <code id="the-address-element:the-article-element-2"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> element</dt><dt>If <var>node</var> is a <code id="the-address-element:the-body-element-3"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element</dt><dd>
+
+    <p>The contact information consists of all the <code id="the-address-element:the-address-element-8"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code> elements that have <var>node</var> as an ancestor and do not have another <code id="the-address-element:the-body-element-4"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> or
+    <code id="the-address-element:the-article-element-3"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> element ancestor that is a descendant of <var>node</var>.</p>
+
+   </dd><dt>If <var>node</var> has an ancestor element that is an <code id="the-address-element:the-article-element-4"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> element</dt><dt>If <var>node</var> has an ancestor element that is a <code id="the-address-element:the-body-element-5"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element</dt><dd>
+
+    <p>The contact information of <var>node</var> is the same as the contact information of
+    the nearest <code id="the-address-element:the-article-element-5"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> or <code id="the-address-element:the-body-element-6"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element ancestor, whichever is
+    nearest.</p>
+
+   </dd><dt>If <var>node</var>'s <a id="the-address-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> has <a href="/breakup/specs/browser-dom/#the-body-element-2" id="the-address-element:the-body-element-2-2">a body
+   element</a></dt><dd>
+
+    <p>The contact information of <var>node</var> is the same as the contact information of
+    <a href="/breakup/specs/browser-dom/#the-body-element-2" id="the-address-element:the-body-element-2-3">the body element</a> of the <code id="the-address-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
+
+   </dd><dt>Otherwise</dt><dd>
+
+    <p>There is no contact information for <var>node</var>.</p>
+
+   </dd></dl>
+
+  <p>User agents may expose the contact information of a node to the user, or use it for other
+  purposes, such as indexing sections based on the sections' contact information.</p>
+
+  
+
+  <div class="example">
+
+   <p>In this example the footer contains contact information and a copyright notice.</p>
+
+   <pre>&lt;footer&gt;
+ &lt;address&gt;
+  For more details, contact
+  &lt;a href="mailto:js@example.com"&gt;John Smith&lt;/a&gt;.
+ &lt;/address&gt;
+ &lt;p&gt;&lt;small&gt;© copyright 2038 Example Corp.&lt;/small&gt;&lt;/p&gt;
+&lt;/footer&gt;</pre>
+
+  </div></section></body></html>

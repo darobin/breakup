@@ -1,0 +1,1037 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Scripting HTML</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-scripting"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Putting scripts in HTML.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn id="script"><code>script</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-script-element:concept-element-categories">Categories</a>:</dt><dd><a href="#metadata-content-2" id="the-script-element:metadata-content-2">Metadata content</a>.</dd><dd><a href="#flow-content-2" id="the-script-element:flow-content-2">Flow content</a>.</dd><dd><a href="#phrasing-content-2" id="the-script-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="#script-supporting-elements-2" id="the-script-element:script-supporting-elements-2">Script-supporting element</a>.</dd><dt><a href="#concept-element-contexts" id="the-script-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#metadata-content-2" id="the-script-element:metadata-content-2-2">metadata content</a> is expected.</dd><dd>Where <a href="#phrasing-content-2" id="the-script-element:phrasing-content-2-2">phrasing content</a> is expected.</dd><dd>Where <a href="#script-supporting-elements-2" id="the-script-element:script-supporting-elements-2-2">script-supporting elements</a> are expected.</dd><dt><a href="#concept-element-content-model" id="the-script-element:concept-element-content-model">Content model</a>:</dt><dd>If there is no <code id="the-script-element:attr-script-src"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code>
+   attribute, depends on the value of the <code id="the-script-element:attr-script-type"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> attribute, but must match
+   <a href="/breakup/specs/html-scripting/#restrictions-for-contents-of-script-elements" id="the-script-element:restrictions-for-contents-of-script-elements">script content restrictions</a>.</dd><dd>If there <em>is</em> a <code id="the-script-element:attr-script-src-2"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code>
+   attribute, the element must be either empty or contain only
+   <a href="/breakup/specs/html-scripting/#inline-documentation-for-external-scripts" id="the-script-element:inline-documentation-for-external-scripts">script documentation</a> that also matches <a href="/breakup/specs/html-scripting/#restrictions-for-contents-of-script-elements" id="the-script-element:restrictions-for-contents-of-script-elements-2">script
+   content restrictions</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-script-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-script-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-script-element:global-attributes">Global attributes</a></dd><dd><code id="the-script-element:attr-script-src-3"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> — Address of the resource</dd><dd><code id="the-script-element:attr-script-type-2"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> — Type of embedded resource</dd><dd><code id="the-script-element:attr-script-charset"><a href="/breakup/specs/html-scripting/#attr-script-charset">charset</a></code> — Character encoding of the external script resource</dd><dd><code id="the-script-element:attr-script-async"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> — Execute script when available, without blocking</dd><dd><code id="the-script-element:attr-script-defer"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> — Defer script execution</dd><dd><code id="the-script-element:attr-script-crossorigin"><a href="/breakup/specs/html-scripting/#attr-script-crossorigin">crossorigin</a></code> — How the element handles crossorigin requests</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-script-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlscriptelement">HTMLScriptElement</dfn> : <a href="#htmlelement" id="the-script-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-scripting/#dom-script-src" id="the-script-element:dom-script-src">src</a>;
+  attribute DOMString <a href="/breakup/specs/html-scripting/#dom-script-type" id="the-script-element:dom-script-type">type</a>;
+  attribute DOMString <a href="/breakup/specs/html-scripting/#dom-script-charset" id="the-script-element:dom-script-charset">charset</a>;
+  attribute boolean <a href="/breakup/specs/html-scripting/#dom-script-async" id="the-script-element:dom-script-async">async</a>;
+  attribute boolean <a href="/breakup/specs/html-scripting/#dom-script-defer" id="the-script-element:dom-script-defer">defer</a>;
+  attribute DOMString? <a href="/breakup/specs/html-scripting/#dom-script-crossorigin" id="the-script-element:dom-script-crossorigin">crossOrigin</a>;
+  attribute DOMString <a href="/breakup/specs/html-scripting/#dom-script-text" id="the-script-element:dom-script-text">text</a>;
+
+  // <a href="#HTMLScriptElement-partial">also has obsolete members</a>
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-script-element:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element allows authors to include dynamic script and data blocks in
+  their documents. The element does not <a href="#represents" id="the-script-element:represents">represent</a> content for the
+  user.</p>
+
+  <p>When used to include dynamic scripts, the scripts may either be embedded inline or may be
+  imported from an external file using the <code id="the-script-element:attr-script-src-4"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute. If
+  the language is not that described by "<code>text/javascript</code>", then the <code id="the-script-element:attr-script-type-3"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> attribute must be present, as described below. Whatever
+  language is used, the contents of the <code id="the-script-element:the-script-element-2"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element must conform with the
+  requirements of that language's specification.</p>
+
+  <p>When used to include data blocks (as opposed to scripts), the data must be embedded inline, the
+  format of the data must be given using the <code id="the-script-element:attr-script-type-4"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> attribute,
+  the <code id="the-script-element:attr-script-src-5"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute must not be specified, and the contents of
+  the <code id="the-script-element:the-script-element-3"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element must conform to the requirements defined for the format used.</p>
+
+  <p>The <dfn id="attr-script-type"><code>type</code></dfn> attribute gives the language of the
+  script or format of the data. If the attribute is present, its value must be a <a href="/breakup/specs/core-algorithms/#valid-mime-type" id="the-script-element:valid-mime-type">valid MIME
+  type</a>. The <code>charset</code> parameter must not be specified. The default, which
+  is used if the attribute is absent, is "<code>text/javascript</code>".</p>
+
+  <p>The <dfn id="attr-script-src"><code>src</code></dfn> attribute, if specified, gives the
+  address of the external script resource to use. The value of the attribute must be a <a href="/breakup/specs/core-algorithms/#valid-non-empty-url-potentially-surrounded-by-spaces" id="the-script-element:valid-non-empty-url-potentially-surrounded-by-spaces">valid
+  non-empty URL potentially surrounded by spaces</a> identifying a script resource of the type
+  given by the <code id="the-script-element:attr-script-type-5"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> attribute, if the attribute is present, or
+  of the type "<code>text/javascript</code>", if the attribute is absent. A resource is a
+  script resource of a given type if that type identifies a scripting language and the resource
+  conforms with the requirements of that language's specification.</p>
+
+  <p>The <dfn id="attr-script-charset"><code>charset</code></dfn> attribute gives the character
+  encoding of the external script resource. The attribute must not be specified if the <code id="the-script-element:attr-script-src-6"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute is not present. If the attribute is set, its value
+  must be an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="the-script-element:ascii-case-insensitive">ASCII case-insensitive</a> match for one of the <a href="/breakup/specs/core-algorithms/#encoding-label" id="the-script-element:encoding-label">labels</a> of an <a href="/breakup/specs/core-algorithms/#encoding" id="the-script-element:encoding">encoding</a>, and must specify the same <a href="/breakup/specs/core-algorithms/#encoding" id="the-script-element:encoding-2">encoding</a> as
+  the <code>charset</code> parameter of the <a href="/breakup/specs/core-algorithms/#content-type" id="the-script-element:content-type">Content-Type
+  metadata</a> of the external file, if any. [[!ENCODING]]</p>
+
+  <p>The <dfn id="attr-script-async"><code>async</code></dfn> and <dfn id="attr-script-defer"><code>defer</code></dfn> attributes are <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="the-script-element:boolean-attribute">boolean attributes</a> that indicate how the script should be executed. The <code id="the-script-element:attr-script-defer-2"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> and <code id="the-script-element:attr-script-async-2"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> attributes
+  must not be specified if the <code id="the-script-element:attr-script-src-7"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute is not
+  present.</p>
+
+  <p>There are three possible modes that can be selected using these attributes. If the <code id="the-script-element:attr-script-async-3"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> attribute is present, then the script will be executed
+  as soon as it is available, but without blocking further parsing of the page. If the <code id="the-script-element:attr-script-async-4"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code>
+  attribute is not present but the <code id="the-script-element:attr-script-defer-3"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> attribute is
+  present, then the script is executed when the page has finished parsing. If neither attribute is
+  present, then the script is fetched and executed immediately, before the user agent continues
+  parsing the page.</p>
+
+  <p class="note">The exact processing details for these attributes are, for mostly historical
+  reasons, somewhat non-trivial, involving a number of aspects of HTML. The implementation
+  requirements are therefore by necessity scattered throughout the specification. The algorithms
+  below (in this section) describe the core of this processing, but these algorithms reference and
+  are referenced by the parsing rules for <code id="the-script-element:the-script-element-4"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> <a href="/breakup/specs/html-syntax/#scriptTag">start</a> and <a href="/breakup/specs/html-syntax/#scriptEndTag">end</a> tags in HTML, <a href="/breakup/specs/html-syntax/#scriptForeignEndTag">in foreign content</a>,
+  and <a href="/breakup/specs/xhtml-syntax/#scriptTagXML">in XML</a>, the rules for the <code id="the-script-element:dom-document-write"><a href="/breakup/specs/browser-dom/#dom-document-write">document.write()</a></code> method, the handling of <a href="/breakup/specs/browser-dom/#scripting">scripting</a>, etc.</p>
+
+  <p>The <code id="the-script-element:attr-script-defer-4"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> attribute may be specified even if the <code id="the-script-element:attr-script-async-5"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> attribute is specified, to cause legacy Web browsers that
+  only support <code id="the-script-element:attr-script-defer-5"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> (and not <code id="the-script-element:attr-script-async-6"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code>) to fall back to the <code id="the-script-element:attr-script-defer-6"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> behaviour instead of the blocking behaviour that
+  is the default.</p>
+
+  <p>The <dfn id="attr-script-crossorigin"><code>crossorigin</code></dfn> attribute is a
+  <a href="/breakup/specs/core-algorithms/#cors-settings-attribute" id="the-script-element:cors-settings-attribute">CORS settings attribute</a>. It controls, for scripts that are obtained from other <a href="/breakup/specs/browser-dom/#origin-2" id="the-script-element:origin-2">origins</a>, whether error information will be exposed.</p>
+
+  <p>Changing the <code id="the-script-element:attr-script-src-8"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code>, <code id="the-script-element:attr-script-type-6"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code>, <code id="the-script-element:attr-script-charset-2"><a href="/breakup/specs/html-scripting/#attr-script-charset">charset</a></code>, <code id="the-script-element:attr-script-async-7"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code>, <code id="the-script-element:attr-script-defer-7"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code>, and <code id="the-script-element:attr-script-crossorigin-2"><a href="/breakup/specs/html-scripting/#attr-script-crossorigin">crossorigin</a></code> attributes dynamically has no direct effect;
+  these attribute are only used at specific times described below.</p> 
+
+  
+
+  <p>A <code id="the-script-element:the-script-element-5"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element has several associated pieces of state.</p>
+
+  <p>The first is a flag indicating whether or not the script block has been <dfn id="already-started">"already
+  started"</dfn>. Initially, <code id="the-script-element:the-script-element-6"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements must have this flag unset (script blocks,
+  when created, are not "already started"). The <a href="/breakup/specs/core-algorithms/#concept-node-clone-ext" id="the-script-element:concept-node-clone-ext">cloning
+  steps</a> for <code id="the-script-element:the-script-element-7"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements must set the "already started" flag on the copy if
+  it is set on the element being cloned.</p>
+
+  <p>The second is a flag indicating whether the element was <dfn id="parser-inserted">"parser-inserted"</dfn>.
+  Initially, <code id="the-script-element:the-script-element-8"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements must have this flag unset. It is set by the <a href="/breakup/specs/html-syntax/#html-parser" id="the-script-element:html-parser">HTML
+  parser</a> and the <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="the-script-element:xml-parser">XML parser</a> on <code id="the-script-element:the-script-element-9"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements they insert and
+  affects the processing of those elements.</p>
+
+  <p>The third is a flag indicating whether the element will <dfn id="non-blocking">"non-blocking"</dfn>. Initially,
+  <code id="the-script-element:the-script-element-10"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements must have this flag set. It is unset by the <a href="/breakup/specs/html-syntax/#html-parser" id="the-script-element:html-parser-2">HTML parser</a>
+  and the <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="the-script-element:xml-parser-2">XML parser</a> on <code id="the-script-element:the-script-element-11"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements they insert. In addition, whenever
+  a <code id="the-script-element:the-script-element-12"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element whose <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking">"non-blocking"</a> flag is set has a <code id="the-script-element:attr-script-async-8"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> content attribute added, the element's
+  <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking-2">"non-blocking"</a> flag must be unset.</p> 
+
+  <p>The fourth is a flag indicating whether or not the script block is <dfn id="ready-to-be-parser-executed">"ready to be
+  parser-executed"</dfn>. Initially, <code id="the-script-element:the-script-element-13"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements must have this flag unset (script
+  blocks, when created, are not "ready to be parser-executed"). This flag is used only for elements
+  that are also <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted">"parser-inserted"</a>, to let the parser know when to execute the
+  script.</p>
+
+  <p>The last few pieces of state are <dfn id="concept-script-type"><var>the script block's
+  type</var></dfn>, <dfn id="concept-script-encoding"><var>the script block's character
+  encoding</var></dfn>, and <dfn id="concept-script-fallback-encoding"><var>the script block's
+  fallback character encoding</var></dfn>. They are determined when the script is prepared, based on
+  the attributes on the element at that time, and the
+  <code id="the-script-element:the-script-element-14"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element's <a id="the-script-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>.</p>
+
+  <p>When a <code id="the-script-element:the-script-element-15"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element that is not marked as being <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-2">"parser-inserted"</a>
+  experiences one of the events listed in the following list, the user agent must <a href="/breakup/specs/core-algorithms/#immediately" id="the-script-element:immediately">immediately</a>
+  <a href="/breakup/specs/html-scripting/#prepare-a-script" id="the-script-element:prepare-a-script">prepare</a> the <code id="the-script-element:the-script-element-16"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element:</p>
+
+  <ul><li>The <code id="the-script-element:the-script-element-17"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element gets <a href="/breakup/specs/core-algorithms/#insert-an-element-into-a-document" id="the-script-element:insert-an-element-into-a-document">inserted
+   into a document</a>, at the time the <a href="/breakup/specs/core-algorithms/#nodes-are-inserted" id="the-script-element:nodes-are-inserted">node is inserted</a>
+   according to the DOM, after any other <code id="the-script-element:the-script-element-18"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements inserted at the same time that
+   are earlier in the <code id="the-script-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-script-element:tree-order">tree order</a>.</li><li>The <code id="the-script-element:the-script-element-19"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element is <a href="/breakup/specs/core-algorithms/#in-a-document" id="the-script-element:in-a-document">in a <code>Document</code></a> and a node or
+   document fragment is <a href="/breakup/specs/core-algorithms/#nodes-are-inserted" id="the-script-element:nodes-are-inserted-2">inserted</a> into the
+   <code id="the-script-element:the-script-element-20"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element, after any <code id="the-script-element:the-script-element-21"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements <a href="/breakup/specs/core-algorithms/#nodes-are-inserted" id="the-script-element:nodes-are-inserted-3">inserted</a> at that time.</li><li>The <code id="the-script-element:the-script-element-22"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element is <a href="/breakup/specs/core-algorithms/#in-a-document" id="the-script-element:in-a-document-2">in a <code>Document</code></a> and has a <code id="the-script-element:attr-script-src-9"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute set where previously the element had no such
+   attribute.</li></ul>
+
+  <p>To <dfn id="prepare-a-script">prepare a script</dfn>, the user agent must act as
+  follows:</p>
+
+  <ol><li>
+
+    <p>If the <code id="the-script-element:the-script-element-23"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element is marked as having <a href="/breakup/specs/html-scripting/#already-started" id="the-script-element:already-started">"already started"</a>, then
+    the user agent must abort these steps at this point. The script is not executed.</p>
+
+   </li><li>
+
+    <p>If the element has its <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-3">"parser-inserted"</a> flag set, then set <var>was-parser-inserted</var> to true and unset the element's
+    <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-4">"parser-inserted"</a> flag. Otherwise, set <var>was-parser-inserted</var> to
+    false.</p>
+
+    <p class="note">This is done so that if parser-inserted <code id="the-script-element:the-script-element-24"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements fail to run
+    when the parser tries to run them, e.g. because they are empty or specify an unsupported
+    scripting language, another script can later mutate them and cause them to run again.</p>
+
+    
+
+   </li><li>
+
+    <p>If <var>was-parser-inserted</var> is true and the element does not have an <code id="the-script-element:attr-script-async-9"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> attribute, then set the element's
+    <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking-3">"non-blocking"</a> flag to true.</p>
+
+    <p class="note">This is done so that if a parser-inserted <code id="the-script-element:the-script-element-25"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element fails to
+    run when the parser tries to run it, but it is later executed after a script dynamically updates
+    it, it will execute in a non-blocking fashion even if the <code id="the-script-element:attr-script-async-10"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code>
+    attribute isn't set.</p>
+
+   </li><li id="script-processing-empty">
+
+    <p>If the element has no <code id="the-script-element:attr-script-src-10"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute, and its child
+    nodes, if any, consist only of comment nodes and empty <code id="the-script-element:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes, then the user
+    agent must abort these steps at this point. The script is not executed.</p>
+
+   </li><li>
+
+    <p>If the element is not <a href="/breakup/specs/core-algorithms/#in-a-document" id="the-script-element:in-a-document-3">in a <code>Document</code></a>, then the user agent must abort
+    these steps at this point. The script is not executed.</p>
+
+   </li><li id="script-processing-prepare">
+
+    <p>If either:</p>
+
+    <ul class="brief"><li>the <code id="the-script-element:the-script-element-26"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element has a <code id="the-script-element:attr-script-type-7"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> attribute
+     and its value is the empty string, or</li><li>the <code id="the-script-element:the-script-element-27"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element has no <code id="the-script-element:attr-script-type-8"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> attribute
+     but it has a <code id="the-script-element:attr-script-language"><a href="#attr-script-language">language</a></code> attribute and <em>that</em>
+     attribute's value is the empty string, or</li><li>the <code id="the-script-element:the-script-element-28"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element has neither a <code id="the-script-element:attr-script-type-9"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code>
+     attribute nor a <code id="the-script-element:attr-script-language-2"><a href="#attr-script-language">language</a></code> attribute, then</li></ul>
+
+    <p>...let <var id="the-script-element:concept-script-type"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's type</a></var> for this
+    <code id="the-script-element:the-script-element-29"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element be "<code>text/javascript</code>".</p>
+
+    <p>Otherwise, if the <code id="the-script-element:the-script-element-30"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element has a <code id="the-script-element:attr-script-type-10"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code> attribute, let <var id="the-script-element:concept-script-type-2"><a href="/breakup/specs/html-scripting/#concept-script-type">the
+    script block's type</a></var> for this <code id="the-script-element:the-script-element-31"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element be the value of that attribute
+    with any leading or trailing sequences of <a href="/breakup/specs/core-algorithms/#space-character" id="the-script-element:space-character">space characters</a>
+    removed.</p> 
+
+    <p>Otherwise, the element has a non-empty <code id="the-script-element:attr-script-language-3"><a href="#attr-script-language">language</a></code>
+    attribute; let <var id="the-script-element:concept-script-type-3"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's type</a></var> for this
+    <code id="the-script-element:the-script-element-32"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element be the concatenation of the string "<code>text/</code>"
+    followed by the value of the <code id="the-script-element:attr-script-language-4"><a href="#attr-script-language">language</a></code> attribute.</p>
+    
+
+    <p class="note">The <code id="the-script-element:attr-script-language-5"><a href="#attr-script-language">language</a></code> attribute is never
+    conforming, and is always ignored if there is a <code id="the-script-element:attr-script-type-11"><a href="/breakup/specs/html-scripting/#attr-script-type">type</a></code>
+    attribute present.</p>
+
+   </li><li>
+
+    <p>If the user agent does not <a href="/breakup/specs/html-scripting/#support-the-scripting-language" id="the-script-element:support-the-scripting-language">support the scripting language</a> given by <var id="the-script-element:concept-script-type-4"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's type</a></var> for this <code id="the-script-element:the-script-element-33"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element,
+    then the user agent must abort these steps at this point. The script is not executed.</p>
+
+   </li><li>
+
+    <p>If <var>was-parser-inserted</var> is true, then flag the element as
+    <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-5">"parser-inserted"</a> again, and set the element's <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking-4">"non-blocking"</a> flag to
+    false.</p>
+
+   </li><li id="script-processing-start">
+
+    <p>The user agent must set the element's <a href="/breakup/specs/html-scripting/#already-started" id="the-script-element:already-started-2">"already started"</a> flag.</p>
+
+    <p class="note">The state of the element at this moment <a href="/breakup/specs/html-scripting/#establish-script-block-source">is later used</a> to determine the script source.</p>
+
+   </li><li>
+
+    <p>If the element is flagged as <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-6">"parser-inserted"</a>, but the element's
+    <a id="the-script-element:node-document-2" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> is not the <code id="the-script-element:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> of the parser that created the element,
+    then abort these steps.</p>
+
+   </li><li id="script-processing-noscript">
+
+    <p>If <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-script-element:concept-n-noscript">scripting is disabled</a> for the <code id="the-script-element:the-script-element-34"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code>
+    element, then the user agent must abort these steps at this point. The script is not
+    executed.</p>
+
+    <p class="note">The definition of <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-script-element:concept-n-noscript-2">scripting is disabled</a>
+    means that, amongst others, the following scripts will not execute: scripts in
+    <code id="the-script-element:xmlhttprequest"><a href="/breakup/specs/core-algorithms/#xmlhttprequest">XMLHttpRequest</a></code>'s <code id="the-script-element:dom-xmlhttprequest-responsexml"><a href="/breakup/specs/core-algorithms/#dom-xmlhttprequest-responsexml">responseXML</a></code>
+    documents, scripts in <code id="the-script-element:domparser"><a data-x-internal="domparser" href="https://dvcs.w3.org/hg/innerhtml/raw-file/tip/index.html#the-domparser-interface">DOMParser</a></code>-created documents, scripts in documents created by
+    <code id="the-script-element:xsltprocessor"><a href="/breakup/specs/core-algorithms/#xsltprocessor">XSLTProcessor</a></code>'s <code id="the-script-element:dom-xsltprocessor-transformtodocument"><a href="/breakup/specs/core-algorithms/#dom-xsltprocessor-transformtodocument">transformToDocument</a></code> feature, and scripts
+    that are first inserted by a script into a <code id="the-script-element:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that was created using the
+    <code id="the-script-element:dom-domimplementation-createdocument"><a href="/breakup/specs/core-algorithms/#dom-domimplementation-createdocument">createDocument()</a></code> API. [[!XHR]]
+    [[!DOMPARSING]]  [[!DOM]]</p>
+
+
+   </li><li id="script-processing-for">
+
+    <p>If the <code id="the-script-element:the-script-element-35"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element has an <code id="the-script-element:attr-script-event"><a href="#attr-script-event">event</a></code>
+    attribute and a <code id="the-script-element:attr-script-for"><a href="#attr-script-for">for</a></code> attribute, then run these substeps:</p>
+
+    <ol><li><p>Let <var>for</var> be the value of the <code id="the-script-element:attr-script-for-2"><a href="#attr-script-for">for</a></code>
+     attribute.</p></li><li><p>Let <var>event</var> be the value of the <code id="the-script-element:attr-script-event-2"><a href="#attr-script-event">event</a></code> attribute.</p></li><li><p><a href="/breakup/specs/core-algorithms/#strip-leading-and-trailing-whitespace" id="the-script-element:strip-leading-and-trailing-whitespace">Strip leading and trailing whitespace</a> from <var>event</var> and
+     <var>for</var>.</p></li><li><p>If <var>for</var> is not an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="the-script-element:ascii-case-insensitive-2">ASCII case-insensitive</a> match for the
+     string "<code>window</code>", then the user agent must abort these steps at this
+     point. The script is not executed.</p></li><li><p>If <var>event</var> is not an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="the-script-element:ascii-case-insensitive-3">ASCII case-insensitive</a> match for
+     either the string "<code>onload</code>" or the string "<code>onload()</code>", then the user agent must abort these steps at this point. The script
+     is not executed.</p></li></ol>
+
+   </li><li id="script-processing-encoding">
+
+    <p>If the <code id="the-script-element:the-script-element-36"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element has a <code id="the-script-element:attr-script-charset-3"><a href="/breakup/specs/html-scripting/#attr-script-charset">charset</a></code>
+    attribute, then let <var id="the-script-element:concept-script-encoding"><a href="/breakup/specs/html-scripting/#concept-script-encoding">the script block's character
+    encoding</a></var> for this <code id="the-script-element:the-script-element-37"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element be the result of <a id="the-script-element:getting-an-encoding" href="https://encoding.spec.whatwg.org/#concept-encoding-get" data-x-internal="getting-an-encoding">getting an
+    encoding</a> from the value of the <code id="the-script-element:attr-script-charset-4"><a href="/breakup/specs/html-scripting/#attr-script-charset">charset</a></code>
+    attribute.</p>
+
+    <p>Otherwise, let <var id="the-script-element:concept-script-fallback-encoding"><a href="/breakup/specs/html-scripting/#concept-script-fallback-encoding">the script block's fallback
+    character encoding</a></var> for this <code id="the-script-element:the-script-element-38"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element be the same as <a href="/breakup/specs/core-algorithms/#document's-character-encoding" id="the-script-element:document's-character-encoding">the encoding of the document itself</a>.</p>
+
+    <p class="note">Only one of these two pieces of state is set.</p>
+
+   </li><li id="script-processing-src-prepare">
+
+    <p>If the element has a <code id="the-script-element:attr-script-src-11"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> content attribute, run these
+    substeps:</p>
+
+    <ol><li><p>Let <var>src</var> be the value of the element's <code id="the-script-element:attr-script-src-12"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute.</p></li><li><p>If <var>src</var> is the empty string, <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-script-element:queue-a-task">queue a task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-script-element:fire-a-simple-event">fire
+     a simple event</a> named <code id="the-script-element:event-error"><a href="/breakup/specs/html/#event-error">error</a></code> at the element, and abort
+     these steps.</p></li><li><p><a href="/breakup/specs/core-algorithms/#resolve-a-url" id="the-script-element:resolve-a-url">Resolve</a> <var>src</var> relative to the
+     element.</p></li><li><p>If the previous step failed, <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-script-element:queue-a-task-2">queue a task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-script-element:fire-a-simple-event-2">fire a simple
+     event</a> named <code id="the-script-element:event-error-2"><a href="/breakup/specs/html/#event-error">error</a></code> at the element, and abort these
+     steps.</p></li><li>
+
+      <p>Do a <a href="/breakup/specs/core-algorithms/#potentially-cors-enabled-fetch" id="the-script-element:potentially-cors-enabled-fetch">potentially CORS-enabled fetch</a> of the resulting
+      <a href="/breakup/specs/core-algorithms/#absolute-url" id="the-script-element:absolute-url">absolute URL</a>, with the <i>mode</i> being the current state of the element's <code id="the-script-element:attr-script-crossorigin-3"><a href="/breakup/specs/html-scripting/#attr-script-crossorigin">crossorigin</a></code> content attribute, the <i>origin</i> being
+      the <a href="/breakup/specs/browser-dom/#origin-2" id="the-script-element:origin-2-2">origin</a> of the <code id="the-script-element:the-script-element-39"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element's <a id="the-script-element:node-document-3" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>, and the
+      <i>default origin behaviour</i> set to <i>taint</i>.</p>
+
+      <p>The resource obtained in this fashion can be either <a href="/breakup/specs/core-algorithms/#cors-same-origin" id="the-script-element:cors-same-origin">CORS-same-origin</a> or
+      <a href="/breakup/specs/core-algorithms/#cors-cross-origin" id="the-script-element:cors-cross-origin">CORS-cross-origin</a>. This only affects how error reporting happens.</p>
+
+      <p>For performance reasons, user agents may start fetching the script (as defined above) as
+      soon as the <code id="the-script-element:attr-script-src-13"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute is set, instead, in the hope
+      that the element will be inserted into the document (and that the <code id="the-script-element:attr-script-crossorigin-4"><a href="/breakup/specs/html-scripting/#attr-script-crossorigin">crossorigin</a></code> attribute won't change value in the
+      meantime). Either way, once the element is <a href="/breakup/specs/core-algorithms/#insert-an-element-into-a-document" id="the-script-element:insert-an-element-into-a-document-2">inserted into the document</a>, the load must have started as described in this
+      step. If the UA performs such prefetching, but the element is never inserted in the document,
+      or the <code id="the-script-element:attr-script-src-14"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute is dynamically changed, or the <code id="the-script-element:attr-script-crossorigin-5"><a href="/breakup/specs/html-scripting/#attr-script-crossorigin">crossorigin</a></code> attribute is dynamically changed, then the
+      user agent will not execute the script so obtained, and the fetching process will have been
+      effectively wasted.</p>
+
+     </li></ol>
+
+   </li><li>
+
+    <p>Then, the first of the following options that describes the situation must be followed:</p>
+
+    <dl class="switch"><dt id="script-processing-defer">If the element has a <code id="the-script-element:attr-script-src-15"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code>
+     attribute, and the element has a <code id="the-script-element:attr-script-defer-8"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> attribute, and
+     the element has been flagged as <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-7">"parser-inserted"</a>, and the element does not have
+     an <code id="the-script-element:attr-script-async-11"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> attribute</dt><dd>
+
+      <p>The element must be added to the end of the <dfn id="list-of-scripts-that-will-execute-when-the-document-has-finished-parsing">list of scripts that will execute when the
+      document has finished parsing</dfn> associated with the <code id="the-script-element:document-4"><a href="/breakup/specs/browser-dom/#document">Document</a></code> of the parser
+      that created the element.</p>
+
+      <p>The <a href="/breakup/specs/browser-dom/#concept-task" id="the-script-element:concept-task">task</a> that the <a href="/breakup/specs/browser-dom/#networking-task-source" id="the-script-element:networking-task-source">networking task source</a>
+      places on the <a href="/breakup/specs/browser-dom/#task-queue" id="the-script-element:task-queue">task queue</a> once the <a href="/breakup/specs/core-algorithms/#fetch" id="the-script-element:fetch">fetching algorithm</a>
+      has completed must set the element's <a href="/breakup/specs/html-scripting/#ready-to-be-parser-executed" id="the-script-element:ready-to-be-parser-executed">"ready to be parser-executed"</a> flag. The
+      parser will handle executing the script.</p>
+
+     </dd><dt id="script-processing-parser-inserted">If the element has a <code id="the-script-element:attr-script-src-16"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute, and the element has been flagged as
+     <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-8">"parser-inserted"</a>, and the element does not have an <code id="the-script-element:attr-script-async-12"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> attribute</dt><dd>
+
+      <p>The element is the <a href="/breakup/specs/html-scripting/#pending-parsing-blocking-script" id="the-script-element:pending-parsing-blocking-script">pending parsing-blocking script</a> of the
+      <code id="the-script-element:document-5"><a href="/breakup/specs/browser-dom/#document">Document</a></code> of the parser that created the element. (There can only be one such
+      script per <code id="the-script-element:document-6"><a href="/breakup/specs/browser-dom/#document">Document</a></code> at a time.)</p>
+
+      <p>The <a href="/breakup/specs/browser-dom/#concept-task" id="the-script-element:concept-task-2">task</a> that the <a href="/breakup/specs/browser-dom/#networking-task-source" id="the-script-element:networking-task-source-2">networking task source</a>
+      places on the <a href="/breakup/specs/browser-dom/#task-queue" id="the-script-element:task-queue-2">task queue</a> once the <a href="/breakup/specs/core-algorithms/#fetch" id="the-script-element:fetch-2">fetching algorithm</a>
+      has completed must set the element's <a href="/breakup/specs/html-scripting/#ready-to-be-parser-executed" id="the-script-element:ready-to-be-parser-executed-2">"ready to be parser-executed"</a> flag. The
+      parser will handle executing the script.</p>
+
+     </dd><dt id="script-processing-style-delayed">If the element does not have a <code id="the-script-element:attr-script-src-17"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute, and the element has been flagged as
+     <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-9">"parser-inserted"</a>, and either the parser that created the <code id="the-script-element:the-script-element-40"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> is
+     an <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="the-script-element:xml-parser-3">XML parser</a> or it's an <a href="/breakup/specs/html-syntax/#html-parser" id="the-script-element:html-parser-3">HTML parser</a> whose <a href="/breakup/specs/html-syntax/#script-nesting-level" id="the-script-element:script-nesting-level">script nesting
+     level</a> is not greater than one, and the <code id="the-script-element:document-7"><a href="/breakup/specs/browser-dom/#document">Document</a></code> of the <a href="/breakup/specs/html-syntax/#html-parser" id="the-script-element:html-parser-4">HTML
+     parser</a> or <a href="/breakup/specs/xhtml-syntax/#xml-parser" id="the-script-element:xml-parser-4">XML parser</a> that created the <code id="the-script-element:the-script-element-41"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element <a href="/breakup/specs/html-styling/#has-a-style-sheet-that-is-blocking-scripts" id="the-script-element:has-a-style-sheet-that-is-blocking-scripts">has
+     a style sheet that is blocking scripts</a></dt><dd>
+
+      <p>The element is the <a href="/breakup/specs/html-scripting/#pending-parsing-blocking-script" id="the-script-element:pending-parsing-blocking-script-2">pending parsing-blocking script</a> of the
+      <code id="the-script-element:document-8"><a href="/breakup/specs/browser-dom/#document">Document</a></code> of the parser that created the element. (There can only be one such
+      script per <code id="the-script-element:document-9"><a href="/breakup/specs/browser-dom/#document">Document</a></code> at a time.)</p>
+
+      <p>Set the element's <a href="/breakup/specs/html-scripting/#ready-to-be-parser-executed" id="the-script-element:ready-to-be-parser-executed-3">"ready to be parser-executed"</a> flag. The parser will handle
+      executing the script.</p>
+
+     </dd><dt id="script-processing-src-sync">If the element has a <code id="the-script-element:attr-script-src-18"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute, does not have an <code id="the-script-element:attr-script-async-13"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> attribute, and does not have the
+     <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking-5">"non-blocking"</a> flag set</dt><dd>
+
+      <p>The element must be added to the end of the <dfn id="list-of-scripts-that-will-execute-in-order-as-soon-as-possible">list of scripts that will execute in order
+      as soon as possible</dfn> associated with the <a id="the-script-element:node-document-4" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> of the <code id="the-script-element:the-script-element-42"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code>
+      element at the time the <a href="/breakup/specs/html-scripting/#prepare-a-script" id="the-script-element:prepare-a-script-2">prepare a script</a> algorithm started.</p>
+
+      <p>The <a href="/breakup/specs/browser-dom/#concept-task" id="the-script-element:concept-task-3">task</a> that the <a href="/breakup/specs/browser-dom/#networking-task-source" id="the-script-element:networking-task-source-3">networking task source</a>
+      places on the <a href="/breakup/specs/browser-dom/#task-queue" id="the-script-element:task-queue-3">task queue</a> once the <a href="/breakup/specs/core-algorithms/#fetch" id="the-script-element:fetch-3">fetching algorithm</a>
+      has completed must run the following steps:</p>
+
+      <ol><li><p>If the element is not now the first element in the <a href="/breakup/specs/html-scripting/#list-of-scripts-that-will-execute-in-order-as-soon-as-possible" id="the-script-element:list-of-scripts-that-will-execute-in-order-as-soon-as-possible">list of scripts that will
+       execute in order as soon as possible</a> to which it was added above, then mark the
+       element as ready but abort these steps without executing the script yet.</p></li><li><p><i>Execution</i>: <a href="/breakup/specs/html-scripting/#execute-the-script-block" id="the-script-element:execute-the-script-block">Execute the script block</a> corresponding to the first
+       script element in this <a href="/breakup/specs/html-scripting/#list-of-scripts-that-will-execute-in-order-as-soon-as-possible" id="the-script-element:list-of-scripts-that-will-execute-in-order-as-soon-as-possible-2">list of scripts that will execute in order as soon as
+       possible</a>.</p></li><li><p>Remove the first element from this <a href="/breakup/specs/html-scripting/#list-of-scripts-that-will-execute-in-order-as-soon-as-possible" id="the-script-element:list-of-scripts-that-will-execute-in-order-as-soon-as-possible-3">list of scripts that will execute in order as
+       soon as possible</a>.</p></li><li><p>If this <a href="/breakup/specs/html-scripting/#list-of-scripts-that-will-execute-in-order-as-soon-as-possible" id="the-script-element:list-of-scripts-that-will-execute-in-order-as-soon-as-possible-4">list of scripts that will execute in order as soon as possible</a> is
+       still not empty and the first entry has already been marked as ready, then jump back to the
+       step labeled <i>execution</i>.</p></li></ol>
+
+     </dd><dt id="script-processing-src">If the element has a <code id="the-script-element:attr-script-src-19"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code>
+     attribute</dt><dd>
+
+      <p>The element must be added to the <dfn id="set-of-scripts-that-will-execute-as-soon-as-possible">set of scripts that will execute as soon as
+      possible</dfn> of the <a id="the-script-element:node-document-5" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> of the <code id="the-script-element:the-script-element-43"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element at the time the
+      <a href="/breakup/specs/html-scripting/#prepare-a-script" id="the-script-element:prepare-a-script-3">prepare a script</a> algorithm started.</p>
+
+      <p>The <a href="/breakup/specs/browser-dom/#concept-task" id="the-script-element:concept-task-4">task</a> that the <a href="/breakup/specs/browser-dom/#networking-task-source" id="the-script-element:networking-task-source-4">networking task source</a>
+      places on the <a href="/breakup/specs/browser-dom/#task-queue" id="the-script-element:task-queue-4">task queue</a> once the <a href="/breakup/specs/core-algorithms/#fetch" id="the-script-element:fetch-4">fetching algorithm</a>
+      has completed must <a href="/breakup/specs/html-scripting/#execute-the-script-block" id="the-script-element:execute-the-script-block-2">execute the script block</a> and then remove the element from the
+      <a href="/breakup/specs/html-scripting/#set-of-scripts-that-will-execute-as-soon-as-possible" id="the-script-element:set-of-scripts-that-will-execute-as-soon-as-possible">set of scripts that will execute as soon as possible</a>.</p>
+
+     </dd><dt id="script-processing-inline">Otherwise</dt><dd>The user agent must <a href="/breakup/specs/core-algorithms/#immediately" id="the-script-element:immediately-2">immediately</a> <a href="/breakup/specs/html-scripting/#execute-the-script-block" id="the-script-element:execute-the-script-block-3">execute the script block</a>, even if other
+     scripts are already executing.</dd></dl>
+
+   </li></ol>
+
+  
+  <p>Fetching an external script must <a href="/breakup/specs/html-syntax/#delay-the-load-event" id="the-script-element:delay-the-load-event">delay the load event</a> of the element's <a id="the-script-element:node-document-6" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>
+  until the <a href="/breakup/specs/browser-dom/#concept-task" id="the-script-element:concept-task-5">task</a> that is <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-script-element:queue-a-task-3">queued</a>
+  by the <a href="/breakup/specs/browser-dom/#networking-task-source" id="the-script-element:networking-task-source-5">networking task source</a> once the resource has been <a href="/breakup/specs/core-algorithms/#fetch" id="the-script-element:fetch-5">fetched</a> (defined above) has been run.</p>
+
+  <p>The <dfn id="pending-parsing-blocking-script">pending parsing-blocking script</dfn> of a <code id="the-script-element:document-10"><a href="/breakup/specs/browser-dom/#document">Document</a></code> is used by the
+  <code id="the-script-element:document-11"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s parser(s).</p>
+
+  <p class="note">If a <code id="the-script-element:the-script-element-44"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element that blocks a parser gets moved to another
+  <code id="the-script-element:document-12"><a href="/breakup/specs/browser-dom/#document">Document</a></code> before it would normally have stopped blocking that parser, it nonetheless
+  continues blocking that parser until the condition that causes it to be blocking the parser no
+  longer applies (e.g. if the script is a <a href="/breakup/specs/html-scripting/#pending-parsing-blocking-script" id="the-script-element:pending-parsing-blocking-script-3">pending parsing-blocking script</a> because there
+  was <a href="/breakup/specs/html-styling/#a-style-sheet-that-is-blocking-scripts" id="the-script-element:a-style-sheet-that-is-blocking-scripts">a style sheet that is blocking scripts</a> when it was parsed, but then the script is
+  moved to another <code id="the-script-element:document-13"><a href="/breakup/specs/browser-dom/#document">Document</a></code> before the style sheet loads, the script still blocks the
+  parser until the style sheets are all loaded, at which time the script executes and the parser is
+  unblocked).</p>
+
+  
+
+  <p>When the user agent is required to <dfn id="execute-the-script-block">execute a script
+  block</dfn>, it must run the following steps:</p>
+
+  <ol><li>
+
+    <p>If the element is flagged as <a href="/breakup/specs/html-scripting/#parser-inserted" id="the-script-element:parser-inserted-10">"parser-inserted"</a>, but the element's
+    <a id="the-script-element:node-document-7" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> is not the <code id="the-script-element:document-14"><a href="/breakup/specs/browser-dom/#document">Document</a></code> of the parser that created the element,
+    then abort these steps.</p>
+
+   </li><li>
+
+    <p>Jump to the appropriate set of steps from the list below:</p>
+
+    <dl class="switch"><dt>If the load resulted in an error (for example a DNS error, or an HTTP 404 error)</dt><dd><p>Executing the script block must just consist of <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-script-element:fire-a-simple-event-3">firing
+     a simple event</a> named <code id="the-script-element:event-error-3"><a href="/breakup/specs/html/#event-error">error</a></code> at the element.</p></dd><dt>If the load was successful</dt><dd>
+
+      <p>Executing the script block must consist of running the following steps. For the purposes of
+      these steps, the script is considered to be from an <i>external file</i> if, while the
+      <a href="/breakup/specs/html-scripting/#prepare-a-script" id="the-script-element:prepare-a-script-4">prepare a script</a> algorithm above was running for this script, the
+      <code id="the-script-element:the-script-element-45"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element had a <code id="the-script-element:attr-script-src-20"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute
+      specified.</p>
+
+      <ol><li id="establish-script-block-source">
+
+        <p>Initialise <dfn id="concept-script-source"><var>the script block's source</var></dfn>
+        as follows:</p>
+
+        <dl class="switch"><dt>If the script is from an external file and <var id="the-script-element:concept-script-type-5"><a href="/breakup/specs/html-scripting/#concept-script-type">the script
+         block's type</a></var> is a text-based language</dt><dd>
+
+          <p>The contents of that file, interpreted as a Unicode string, are the script source.</p>
+
+          <p>To obtain the Unicode string, the user agent run the following steps:</p>
+
+          <ol><li><p>If the resource's <a href="/breakup/specs/core-algorithms/#content-type" id="the-script-element:content-type-2">Content Type metadata</a>, if any,
+           specifies a character encoding, and the user agent supports that encoding, then let <var>character encoding</var> be that encoding, and jump to the bottom step in this
+           series of steps.</p></li><li><p>If the algorithm above set <var id="the-script-element:concept-script-encoding-2"><a href="/breakup/specs/html-scripting/#concept-script-encoding">the script
+           block's character encoding</a></var>, then let <var>character encoding</var> be
+           that encoding, and jump to the bottom step in this series of steps.</p></li><li><p>Let <var>character encoding</var> be <var id="the-script-element:concept-script-fallback-encoding-2"><a href="/breakup/specs/html-scripting/#concept-script-fallback-encoding">the script block's fallback character
+           encoding</a></var>.</p></li><li>
+
+            <p>If the specification for <var id="the-script-element:concept-script-type-6"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's
+            type</a></var> gives specific rules for decoding files in that format to Unicode, follow
+            them, using <var>character encoding</var> as the character encoding specified by
+            higher-level protocols, if necessary.</p> 
+
+            <p>Otherwise, <a href="/breakup/specs/core-algorithms/#decode" id="the-script-element:decode">decode</a> the file to Unicode, using <var>character
+            encoding</var> as the fallback encoding.</p>
+
+            <p class="note">The <a href="/breakup/specs/core-algorithms/#decode" id="the-script-element:decode-2">decode</a> algorithm overrides <var>character
+            encoding</var> if the file contains a BOM.</p>
+
+           </li></ol>
+
+         </dd><dt>If the script is from an external file and <var id="the-script-element:concept-script-type-7"><a href="/breakup/specs/html-scripting/#concept-script-type">the script
+         block's type</a></var> is an XML-based language</dt><dd>
+
+          <p>The external file is the script source. When it is later executed, it must be
+          interpreted in a manner consistent with the specification defining the language given by
+          <var id="the-script-element:concept-script-type-8"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's type</a></var>.</p>
+
+         </dd><dt>If the script is inline and <var id="the-script-element:concept-script-type-9"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's
+         type</a></var> is a text-based language</dt><dd>
+
+          <p>The value of the <code id="the-script-element:dom-script-text-2"><a href="/breakup/specs/html-scripting/#dom-script-text">text</a></code> IDL attribute at the time
+          the element's <a href="/breakup/specs/html-scripting/#already-started" id="the-script-element:already-started-3">"already started"</a> flag was last set is the script source.</p>
+
+         </dd><dt>If the script is inline and <var id="the-script-element:concept-script-type-10"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's
+         type</a></var> is an XML-based language</dt><dd>
+
+          <p>The child nodes of the <code id="the-script-element:the-script-element-46"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element at the time the element's
+          <a href="/breakup/specs/html-scripting/#already-started" id="the-script-element:already-started-4">"already started"</a> flag was last set are the script source.</p>
+
+         </dd></dl>
+
+       </li><li>
+
+        <p><a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-script-element:fire-a-simple-event-4">Fire a simple event</a> named <code id="the-script-element:event-beforescriptexecute"><a href="/breakup/specs/html/#event-beforescriptexecute">beforescriptexecute</a></code> that bubbles and is cancelable
+        at the <code id="the-script-element:the-script-element-47"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element.</p>
+
+        <p>If the event is canceled, then abort these steps.</p>
+
+       </li><li>
+
+        <p>If the script is from an external file, then increment the
+        <a href="/breakup/specs/browser-dom/#ignore-destructive-writes-counter" id="the-script-element:ignore-destructive-writes-counter">ignore-destructive-writes counter</a> of the <code id="the-script-element:the-script-element-48"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element's
+        <a id="the-script-element:node-document-8" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>. Let <var>neutralised doc</var> be that
+        <code id="the-script-element:document-15"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</p>
+
+       </li><li>
+
+        <p>Let <var>old script element</var> be the value to which the <code id="the-script-element:the-script-element-49"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code>
+        element's <a id="the-script-element:node-document-9" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <code id="the-script-element:dom-document-currentscript"><a href="/breakup/specs/browser-dom/#dom-document-currentscript">currentScript</a></code> object was most recently
+        initialised.</p>
+
+       </li><li>
+
+        <p>Initialise the <code id="the-script-element:the-script-element-50"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element's <a id="the-script-element:node-document-10" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <code id="the-script-element:dom-document-currentscript-2"><a href="/breakup/specs/browser-dom/#dom-document-currentscript">currentScript</a></code> object to the <code id="the-script-element:the-script-element-51"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code>
+        element.</p>
+
+       </li><li>
+
+        <p><a href="/breakup/specs/browser-dom/#create-a-script" id="the-script-element:create-a-script">Create a script</a>, using <var id="the-script-element:concept-script-source"><a href="/breakup/specs/html-scripting/#concept-script-source">the script
+        block's source</a></var>, the <a href="/breakup/specs/core-algorithms/#url" id="the-script-element:url">URL</a> from which the script was obtained, <var id="the-script-element:concept-script-type-11"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's type</a></var> as the scripting language, and
+        the <a href="/breakup/specs/browser-dom/#environment-settings-object" id="the-script-element:environment-settings-object">environment settings object</a> of the <code id="the-script-element:the-script-element-52"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element's
+        <a id="the-script-element:node-document-11" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <code id="the-script-element:window"><a href="/breakup/specs/browser-dom/#window">Window</a></code> object.</p>
+
+        <p>If the script came from a resource that was <a href="/breakup/specs/core-algorithms/#fetch" id="the-script-element:fetch-6">fetched</a> in the
+        steps above, and the resource was <a href="/breakup/specs/core-algorithms/#cors-cross-origin" id="the-script-element:cors-cross-origin-2">CORS-cross-origin</a>, then pass the <var>muted errors</var> flag to the <a href="/breakup/specs/browser-dom/#create-a-script" id="the-script-element:create-a-script-2">create a script</a> algorithm as well.</p>
+
+        <p class="note">This is where the script is compiled and actually executed.</p>
+
+       </li><li>
+
+        <p>Initialise the <code id="the-script-element:the-script-element-53"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element's <a id="the-script-element:node-document-12" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>'s <code id="the-script-element:dom-document-currentscript-3"><a href="/breakup/specs/browser-dom/#dom-document-currentscript">currentScript</a></code> object to <var>old script
+        element</var>.</p>
+
+       </li><li>
+
+        <p>Decrement the <a href="/breakup/specs/browser-dom/#ignore-destructive-writes-counter" id="the-script-element:ignore-destructive-writes-counter-2">ignore-destructive-writes counter</a> of <var>neutralised doc</var>, if it was incremented in the earlier step.</p>
+
+       </li><li>
+
+        <p><a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-script-element:fire-a-simple-event-5">Fire a simple event</a> named <code id="the-script-element:event-afterscriptexecute"><a href="/breakup/specs/html/#event-afterscriptexecute">afterscriptexecute</a></code> that bubbles (but is not
+        cancelable) at the <code id="the-script-element:the-script-element-54"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element.</p>
+
+       </li><li>
+
+        <p>If the script is from an external file, <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-script-element:fire-a-simple-event-6">fire a simple event</a> named <code id="the-script-element:event-load"><a href="/breakup/specs/html/#event-load">load</a></code> at the <code id="the-script-element:the-script-element-55"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element.</p>
+
+        <p>Otherwise, the script is internal; <a href="/breakup/specs/browser-dom/#queue-a-task" id="the-script-element:queue-a-task-4">queue a task</a> to <a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="the-script-element:fire-a-simple-event-7">fire a simple
+        event</a> named <code id="the-script-element:event-load-2"><a href="/breakup/specs/html/#event-load">load</a></code> at the <code id="the-script-element:the-script-element-56"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code>
+        element.</p>
+
+       </li></ol>
+
+     </dd></dl>
+
+   </li></ol>
+
+  <p>The IDL attributes <dfn id="dom-script-src"><code>src</code></dfn>, <dfn id="dom-script-type"><code>type</code></dfn>, <dfn id="dom-script-charset"><code>charset</code></dfn>, <dfn id="dom-script-defer"><code>defer</code></dfn>, each must <a href="/breakup/specs/core-algorithms/#reflect" id="the-script-element:reflect">reflect</a> the respective
+  content attributes of the same name.</p>
+
+  <p>The <dfn id="dom-script-crossorigin"><code>crossOrigin</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-script-element:reflect-2">reflect</a> the <code id="the-script-element:attr-script-crossorigin-6"><a href="/breakup/specs/html-scripting/#attr-script-crossorigin">crossorigin</a></code> content attribute.</p>
+
+  <p>The <dfn id="dom-script-async"><code>async</code></dfn> IDL attribute controls whether the
+  element will execute asynchronously or not. If the element's <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking-6">"non-blocking"</a> flag is
+  set, then, on getting, the <code id="the-script-element:dom-script-async-2"><a href="/breakup/specs/html-scripting/#dom-script-async">async</a></code> IDL attribute must return
+  true, and on setting, the <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking-7">"non-blocking"</a> flag must first be unset, and then the
+  content attribute must be removed if the IDL attribute's new value is false, and must be set to
+  the empty string if the IDL attribute's new value is true. If the element's
+  <a href="/breakup/specs/html-scripting/#non-blocking" id="the-script-element:non-blocking-8">"non-blocking"</a> flag is <em>not</em> set, the IDL attribute must <a href="/breakup/specs/core-algorithms/#reflect" id="the-script-element:reflect-3">reflect</a>
+  the <code id="the-script-element:attr-script-async-14"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> content attribute.</p>
+
+  
+
+
+  <dl class="domintro"><dt><var>script</var> . <code id="the-script-element:dom-script-text-3"><a href="/breakup/specs/html-scripting/#dom-script-text">text</a></code> [ = <var>value</var> ]</dt><dd>
+
+    <p>Returns the contents of the element, ignoring child nodes that aren't <code id="the-script-element:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code>
+    nodes.</p>
+
+    <p>Can be set, to replace the element's children with the given value.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The IDL attribute <dfn id="dom-script-text"><code>text</code></dfn> must return a
+  concatenation of the contents of all the <code id="the-script-element:text-3"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes that are children of the
+  <code id="the-script-element:the-script-element-57"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element (ignoring any other nodes such as comments or elements), in tree
+  order. On setting, it must act the same way as the <code id="the-script-element:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute.</p>
+
+  
+
+
+  <p class="note">When inserted using the <code id="the-script-element:dom-document-write-2"><a href="/breakup/specs/browser-dom/#dom-document-write">document.write()</a></code>
+  method, <code id="the-script-element:the-script-element-58"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements execute (typically blocking further script execution or HTML parsing), but when inserted using
+  <code id="the-script-element:dom-innerhtml"><a href="/breakup/specs/core-algorithms/#dom-innerhtml">innerHTML</a></code> and <code id="the-script-element:dom-outerhtml"><a href="/breakup/specs/core-algorithms/#dom-outerhtml">outerHTML</a></code>
+  attributes, they do not execute at all.</p>
+
+  <div class="example">
+
+   <p>In this example, two <code id="the-script-element:the-script-element-59"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements are used. One embeds an external script, and
+   the other includes some data.</p>
+
+   <pre>&lt;script src="game-engine.js"&gt;&lt;/script&gt;
+&lt;script type="text/x-game-map"&gt;
+........U.........e
+o............A....e
+.....A.....AAA....e
+.A..AAA...AAAAA...e
+&lt;/script&gt;</pre>
+
+   <p>The data in this case might be used by the script to generate the map of a video game. The
+   data doesn't have to be used that way, though; maybe the map data is actually embedded in other
+   parts of the page's markup, and the data block here is just used by the site's search engine to
+   help users who are looking for particular features in their game maps.</p>
+
+  </div>
+
+  <div class="example">
+
+   <p>The following sample shows how a script element can be used to define a function that is then
+   used by other parts of the document. It also shows how a <code id="the-script-element:the-script-element-60"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element can be used
+   to invoke script while the document is being parsed, in this case to initialise the form's
+   output.</p>
+
+   <pre>&lt;script&gt;
+ function calculate(form) {
+   var price = 52000;
+   if (form.elements.brakes.checked)
+     price += 1000;
+   if (form.elements.radio.checked)
+     price += 2500;
+   if (form.elements.turbo.checked)
+     price += 5000;
+   if (form.elements.sticker.checked)
+     price += 250;
+   form.elements.result.value = price;
+ }
+&lt;/script&gt;
+&lt;form name="pricecalc" onsubmit="return false" onchange="calculate(this)"&gt;
+ &lt;fieldset&gt;
+  &lt;legend&gt;Work out the price of your car&lt;/legend&gt;
+  &lt;p&gt;Base cost: £52000.&lt;/p&gt;
+  &lt;p&gt;Select additional options:&lt;/p&gt;
+  &lt;ul&gt;
+   &lt;li&gt;&lt;label&gt;&lt;input type=checkbox name=brakes&gt; Ceramic brakes (£1000)&lt;/label&gt;&lt;/li&gt;
+   &lt;li&gt;&lt;label&gt;&lt;input type=checkbox name=radio&gt; Satellite radio (£2500)&lt;/label&gt;&lt;/li&gt;
+   &lt;li&gt;&lt;label&gt;&lt;input type=checkbox name=turbo&gt; Turbo charger (£5000)&lt;/label&gt;&lt;/li&gt;
+   &lt;li&gt;&lt;label&gt;&lt;input type=checkbox name=sticker&gt; "XZ" sticker (£250)&lt;/label&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;Total: £&lt;output name=result&gt;&lt;/output&gt;&lt;/p&gt;
+ &lt;/fieldset&gt;
+ &lt;script&gt;
+  calculate(document.forms.pricecalc);
+ &lt;/script&gt;
+&lt;/form&gt;</pre>
+
+  </div>
+
+
+
+  <section><h2>Scripting languages</h2>
+
+  
+
+  <p>A user agent is said to <dfn id="support-the-scripting-language">support the scripting language</dfn> if each component of <var id="scriptingLanguages:concept-script-type"><a href="/breakup/specs/html-scripting/#concept-script-type">the script block's type</a></var> is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="scriptingLanguages:ascii-case-insensitive">ASCII
+  case-insensitive</a> match for the corresponding component in the <a href="/breakup/specs/core-algorithms/#mime-type" id="scriptingLanguages:mime-type">MIME type</a> string
+  of a scripting language that the user agent implements.</p>
+
+  
+
+  <p>The following lists the <a href="/breakup/specs/core-algorithms/#mime-type" id="scriptingLanguages:mime-type-2">MIME type</a> strings that user agents must recognize, and the
+  languages to which they refer:</p>
+
+  <dl><dt><code id="scriptingLanguages:application/ecmascript"><a href="#application/ecmascript">application/ecmascript</a></code></dt><dt><code id="scriptingLanguages:application/javascript"><a href="#application/javascript">application/javascript</a></code></dt><dt><code id="scriptingLanguages:application/x-ecmascript"><a href="#application/x-ecmascript">application/x-ecmascript</a></code></dt><dt><code id="scriptingLanguages:application/x-javascript"><a href="#application/x-javascript">application/x-javascript</a></code></dt><dt><code id="scriptingLanguages:text/ecmascript"><a href="#text/ecmascript">text/ecmascript</a></code></dt><dt><code id="scriptingLanguages:text/javascript"><a href="#text/javascript">text/javascript</a></code></dt><dt><code id="scriptingLanguages:text/javascript1.0"><a href="#text/javascript1.0">text/javascript1.0</a></code></dt><dt><code id="scriptingLanguages:text/javascript1.1"><a href="#text/javascript1.1">text/javascript1.1</a></code></dt><dt><code id="scriptingLanguages:text/javascript1.2"><a href="#text/javascript1.2">text/javascript1.2</a></code></dt><dt><code id="scriptingLanguages:text/javascript1.3"><a href="#text/javascript1.3">text/javascript1.3</a></code></dt><dt><code id="scriptingLanguages:text/javascript1.4"><a href="#text/javascript1.4">text/javascript1.4</a></code></dt><dt><code id="scriptingLanguages:text/javascript1.5"><a href="#text/javascript1.5">text/javascript1.5</a></code></dt><dt><code id="scriptingLanguages:text/jscript"><a href="#text/jscript">text/jscript</a></code></dt><dt><code id="scriptingLanguages:text/livescript"><a href="#text/livescript">text/livescript</a></code></dt><dt><code id="scriptingLanguages:text/x-ecmascript"><a href="#text/x-ecmascript">text/x-ecmascript</a></code></dt><dt><code id="scriptingLanguages:text/x-javascript"><a href="#text/x-javascript">text/x-javascript</a></code></dt><dd>JavaScript. [[!ECMA262]]</dd></dl>
+
+  
+
+  <p>User agents may support other <a href="/breakup/specs/core-algorithms/#mime-type" id="scriptingLanguages:mime-type-3">MIME types</a> for other languages,
+  but must not support other <a href="/breakup/specs/core-algorithms/#mime-type" id="scriptingLanguages:mime-type-4">MIME types</a> for the languages in the list
+  above. User agents are not required to support the languages listed above.</p>
+
+  <p>The following <a href="/breakup/specs/core-algorithms/#mime-type" id="scriptingLanguages:mime-type-5">MIME types</a> (with or without parameters) must not
+  be interpreted as scripting languages:</p>
+
+  <ul class="brief"><li><code id="scriptingLanguages:text/plain"><a data-x-internal="text/plain" href="http://tools.ietf.org/html/rfc2046#section-4.1.3">text/plain</a></code>
+   </li><li><code id="scriptingLanguages:text/xml"><a href="#text/xml">text/xml</a></code>
+   
+   </li><li><code id="scriptingLanguages:application/octet-stream"><a data-x-internal="application/octet-stream" href="http://tools.ietf.org/html/rfc2046#section-4.5.1">application/octet-stream</a></code>
+   </li><li><code id="scriptingLanguages:application/xml"><a href="#application/xml">application/xml</a></code>
+   
+   
+
+   
+
+  </li></ul>
+
+  <p class="note">These types are explicitly listed here because they are poorly-defined types that
+  are nonetheless likely to be used as formats for data blocks, and it would be problematic if they
+  were suddenly to be interpreted as script by a user agent.</p>
+
+  
+
+  <p>When examining types to determine if they represent supported languages, user agents must not
+  ignore MIME parameters. Types are to be compared including all parameters.</p> 
+
+  <p class="note">For example, types that include the <code>charset</code> parameter will
+  not be recognised as referencing any of the scripting languages listed above.</p></section>
+
+  
+
+
+  <section><h2><dfn>Restrictions for contents of <code>script</code> elements</dfn></h2>
+
+  <p class="note">The easiest and safest way to avoid the rather strange restrictions described in
+  this section is to always escape "<code>&lt;!--</code>" as "<code>&lt;\!--</code>", "<code>&lt;script</code>" as "<code>&lt;\script</code>", and "<code>&lt;/script</code>" as "<code>&lt;\/script</code>" when these sequences appear in literals in scripts (e.g. in
+  strings, regular expressions, or comments), and to avoid writing code that uses such constructs in
+  expressions. Doing so avoids the pitfalls that the restrictions in this section are prone to
+  triggering: namely, that, for historical reasons, parsing of <code id="restrictions-for-contents-of-script-elements:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> blocks in HTML is
+  a strange and exotic practice that acts unintuitively in the face of these sequences.</p>
+
+  <p>The <code id="restrictions-for-contents-of-script-elements:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> of a <code id="restrictions-for-contents-of-script-elements:the-script-element-2"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element must match the <code>script</code> production in the following ABNF, the character set for which is Unicode.
+  [[!ABNF]]</p>
+
+  <pre>script        = outer *( comment-open inner comment-close outer )
+
+outer         = &lt; any string that doesn't contain a substring that matches not-in-outer &gt;
+not-in-outer  = comment-open
+inner         = &lt; any string that doesn't contain a substring that matches not-in-inner &gt;
+not-in-inner  = comment-close / script-open
+
+comment-open  = "&lt;!--"
+comment-close = "--&gt;"
+script-open   = "&lt;" s c r i p t tag-end
+
+s             =  %x0053 ; U+0053 LATIN CAPITAL LETTER S
+s             =/ %x0073 ; U+0073 LATIN SMALL LETTER S
+c             =  %x0043 ; U+0043 LATIN CAPITAL LETTER C
+c             =/ %x0063 ; U+0063 LATIN SMALL LETTER C
+r             =  %x0052 ; U+0052 LATIN CAPITAL LETTER R
+r             =/ %x0072 ; U+0072 LATIN SMALL LETTER R
+i             =  %x0049 ; U+0049 LATIN CAPITAL LETTER I
+i             =/ %x0069 ; U+0069 LATIN SMALL LETTER I
+p             =  %x0050 ; U+0050 LATIN CAPITAL LETTER P
+p             =/ %x0070 ; U+0070 LATIN SMALL LETTER P
+t             =  %x0054 ; U+0054 LATIN CAPITAL LETTER T
+t             =/ %x0074 ; U+0074 LATIN SMALL LETTER T
+
+tag-end       =  %x0009 ; U+0009 CHARACTER TABULATION (tab)
+tag-end       =/ %x000A ; U+000A LINE FEED (LF)
+tag-end       =/ %x000C ; U+000C FORM FEED (FF)
+tag-end       =/ %x0020 ; U+0020 SPACE
+tag-end       =/ %x002F ; U+002F SOLIDUS (/)
+tag-end       =/ %x003E ; U+003E GREATER-THAN SIGN (&gt;)</pre>
+
+  <p>When a <code id="restrictions-for-contents-of-script-elements:the-script-element-3"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element contains <a href="/breakup/specs/html-scripting/#inline-documentation-for-external-scripts" id="restrictions-for-contents-of-script-elements:inline-documentation-for-external-scripts">script documentation</a>, there are
+  further restrictions on the contents of the element, as described in the section below.</p>
+
+  <div class="example">
+
+   <p>The following script illustrates this issue. Suppose you have a script that contains a string,
+   as in:</p>
+
+   <pre>var example = 'Consider this string: &lt;!-- &lt;script&gt;';
+console.log(example);</pre>
+
+   <p>If one were to put this string directly in a <code id="restrictions-for-contents-of-script-elements:the-script-element-4"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> block, it would violate the
+   restrictions above:</p>
+
+   <pre>&lt;script&gt;
+  var example = 'Consider this string: &lt;!-- &lt;script&gt;';
+  console.log(example);
+&lt;/script&gt;</pre>
+
+   <p>The bigger problem, though, and the reason why it would violate those restrictions, is that
+   actually the script would get parsed weirdly: <em>the script block above is not terminated</em>.
+   That is, what looks like a "<code>&lt;/script&gt;</code>" end tag in this snippet is
+   actually still part of the <code id="restrictions-for-contents-of-script-elements:the-script-element-5"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> block. The script doesn't execute (since it's not
+   terminated); if it somehow were to execute, as it might if the markup looked as follows, it would
+   fail because the script (highlighted here) is not valid JavaScript:</p>
+
+   <pre>&lt;script&gt;<mark>
+  var example = 'Consider this string: &lt;!-- &lt;script&gt;';
+  console.log(example);
+&lt;/script&gt;
+&lt;!-- despite appearances, this is actually part of the script still! --&gt;
+&lt;script&gt;
+ ... // this is the same script block still...
+</mark>&lt;/script&gt;</pre>
+
+   <p>What is going on here is that for legacy reasons, "<code>&lt;!--</code>" and "<code>&lt;script</code>" strings in <code id="restrictions-for-contents-of-script-elements:the-script-element-6"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements in HTML need to be balanced
+   in order for the parser to consider closing the block.</p>
+
+   <p>By escaping the problematic strings as mentioned at the top of this section, the problem is
+   avoided entirely:</p>
+
+   <pre>&lt;script&gt;<mark>
+  var example = 'Consider this string: &lt;\!-- &lt;\script&gt;';
+  console.log(example);
+</mark>&lt;/script&gt;
+&lt;!-- this is just a comment between script blocks --&gt;
+&lt;script&gt;<mark>
+ ... // this is a new script block
+</mark>&lt;/script&gt;</pre>
+
+   <p>It is possible for these sequences to naturally occur in script expressions, as in the
+   following examples:</p>
+
+   <pre>if (x&lt;!--y) { ... }
+if ( player&lt;script ) { ... }</pre>
+
+   <p>In such cases the characters cannot be escaped, but the expressions can be rewritten so that
+   the sequences don't occur, as in:</p>
+
+   <pre>if (x &lt; !--y) { ... }
+if (!--y &gt; x) { ... }
+if (!(--y) &gt; x) { ... }
+if (player &lt; script) { ... }
+if (script &gt; player) { ... }</pre>
+
+   <p>Doing this also avoids a different pitfall as well: for related historical reasons, the string
+   "&lt;!--" in JavaScript is actually treated as a line comment start, just like "//".</p>
+
+  </div></section>
+
+
+  <section><h2><dfn>Inline documentation for external scripts</dfn></h2>
+
+  <p>If a <code id="inline-documentation-for-external-scripts:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element's <code id="inline-documentation-for-external-scripts:attr-script-src"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute is
+  specified, then the contents of the <code id="inline-documentation-for-external-scripts:the-script-element-2"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element, if any, must be such that the
+  value of the <code id="inline-documentation-for-external-scripts:dom-script-text"><a href="/breakup/specs/html-scripting/#dom-script-text">text</a></code> IDL attribute, which is derived from the
+  element's contents, matches the <code>documentation</code> production in the following
+  ABNF, the character set for which is Unicode. [[!ABNF]]</p>
+
+  <pre>documentation = *( *( space / tab / comment ) [ line-comment ] newline )
+comment       = slash star *( not-star / star not-slash ) 1*star slash
+line-comment  = slash slash *not-newline
+
+; characters
+tab           = %x0009 ; U+0009 CHARACTER TABULATION (tab)
+newline       = %x000A ; U+000A LINE FEED (LF)
+space         = %x0020 ; U+0020 SPACE
+star          = %x002A ; U+002A ASTERISK (*)
+slash         = %x002F ; U+002F SOLIDUS (/)
+not-newline   = %x0000-0009 / %x000B-10FFFF
+                ; a <a href="/breakup/specs/core-algorithms/#unicode-character" id="inline-documentation-for-external-scripts:unicode-character">Unicode character</a> other than U+000A LINE FEED (LF)
+not-star      = %x0000-0029 / %x002B-10FFFF
+                ; a <a href="/breakup/specs/core-algorithms/#unicode-character" id="inline-documentation-for-external-scripts:unicode-character-2">Unicode character</a> other than U+002A ASTERISK (*)
+not-slash     = %x0000-002E / %x0030-10FFFF
+                ; a <a href="/breakup/specs/core-algorithms/#unicode-character" id="inline-documentation-for-external-scripts:unicode-character-3">Unicode character</a> other than U+002F SOLIDUS (/)</pre>
+
+  <p class="note">This corresponds to putting the contents of the element in JavaScript
+  comments.</p>
+
+  <p class="note">This requirement is in addition to the earlier restrictions on the syntax of
+  contents of <code id="inline-documentation-for-external-scripts:the-script-element-3"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements.</p>
+
+  <div class="example">
+
+   <p>This allows authors to include documentation, such as license information or API information,
+   inside their documents while still referring to external script files. The syntax is constrained
+   so that authors don't accidentally include what looks like valid script while also providing a
+   <code id="inline-documentation-for-external-scripts:attr-script-src-2"><a href="/breakup/specs/html-scripting/#attr-script-src">src</a></code> attribute.</p>
+
+   <pre>&lt;script src="cool-effects.js"&gt;
+ // create new instances using:
+ //    var e = new Effect();
+ // start the effect using .play, stop using .stop:
+ //    e.play();
+ //    e.stop();
+&lt;/script&gt;</pre>
+
+  </div></section>
+
+
+  
+
+  <section><h2>Interaction of <code id="scriptTagXSLT:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements and XSLT</h2>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <p>This specification does not define how XSLT interacts with the <code id="scriptTagXSLT:the-script-element-2"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element.
+  However, in the absence of another specification actually defining this, here are some guidelines
+  for implementors, based on existing implementations:</p>
+
+  <ul><li><p>When an XSLT transformation program is triggered by an <code>&lt;?xml-stylesheet?&gt;</code> processing instruction and the browser implements a
+   direct-to-DOM transformation, <code id="scriptTagXSLT:the-script-element-3"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements created by the XSLT processor need to
+   be marked <a href="/breakup/specs/html-scripting/#parser-inserted" id="scriptTagXSLT:parser-inserted">"parser-inserted"</a> and run in document order (modulo scripts marked <code id="scriptTagXSLT:attr-script-defer"><a href="/breakup/specs/html-scripting/#attr-script-defer">defer</a></code> or <code id="scriptTagXSLT:attr-script-async"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code>),
+   <a href="/breakup/specs/core-algorithms/#immediately" id="scriptTagXSLT:immediately">immediately</a>, as the transformation is occurring.</p></li><li><p>The <code id="scriptTagXSLT:dom-xsltprocessor-transformtodocument"><a href="/breakup/specs/core-algorithms/#dom-xsltprocessor-transformtodocument">XSLTProcessor.transformToDocument()</a></code> method
+   adds elements to a <code id="scriptTagXSLT:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that is not in a <a href="/breakup/specs/browser-dom/#browsing-context" id="scriptTagXSLT:browsing-context">browsing context</a>, and,
+   accordingly, any <code id="scriptTagXSLT:the-script-element-4"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements they create need to have their <a href="/breakup/specs/html-scripting/#already-started" id="scriptTagXSLT:already-started">"already
+   started"</a> flag set in the <a href="/breakup/specs/html-scripting/#prepare-a-script" id="scriptTagXSLT:prepare-a-script">prepare a script</a> algorithm and never get executed
+   (<a href="/breakup/specs/browser-dom/#concept-bc-noscript" id="scriptTagXSLT:concept-bc-noscript">scripting is disabled</a>). Such <code id="scriptTagXSLT:the-script-element-5"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code>
+   elements still need to be marked <a href="/breakup/specs/html-scripting/#parser-inserted" id="scriptTagXSLT:parser-inserted-2">"parser-inserted"</a>, though, such that their <code id="scriptTagXSLT:dom-script-async"><a href="/breakup/specs/html-scripting/#dom-script-async">async</a></code> IDL attribute will return false in the absence of an <code id="scriptTagXSLT:attr-script-async-2"><a href="/breakup/specs/html-scripting/#attr-script-async">async</a></code> content attribute.</p></li><li><p>The <code id="scriptTagXSLT:dom-xsltprocessor-transformtofragment"><a href="/breakup/specs/core-algorithms/#dom-xsltprocessor-transformtofragment">XSLTProcessor.transformToFragment()</a></code> method
+   needs to create a fragment that is equivalent to one built manually by creating the elements
+   using <code id="scriptTagXSLT:dom-document-createelementns"><a href="/breakup/specs/core-algorithms/#dom-document-createelementns">document.createElementNS()</a></code>. For instance,
+   it needs to create <code id="scriptTagXSLT:the-script-element-6"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements that aren't <a href="/breakup/specs/html-scripting/#parser-inserted" id="scriptTagXSLT:parser-inserted-3">"parser-inserted"</a> and
+   that don't have their <a href="/breakup/specs/html-scripting/#already-started" id="scriptTagXSLT:already-started-2">"already started"</a> flag set, so that they will execute when the
+   fragment is inserted into a document.</p></li></ul>
+
+  <p>The main distinction between the first two cases and the last case is that the first two
+  operate on <code id="scriptTagXSLT:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code>s and the last operates on a fragment.</p></section></section><section><h2>The <dfn><code>noscript</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-noscript-element:concept-element-categories">Categories</a>:</dt><dd><a href="#metadata-content-2" id="the-noscript-element:metadata-content-2">Metadata content</a>.</dd><dd><a href="#flow-content-2" id="the-noscript-element:flow-content-2">Flow content</a>.</dd><dd><a href="#phrasing-content-2" id="the-noscript-element:phrasing-content-2">Phrasing content</a>.</dd><dt><a href="#concept-element-contexts" id="the-noscript-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>In a <code id="the-noscript-element:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element of an <a href="/breakup/specs/core-algorithms/#html-documents" id="the-noscript-element:html-documents">HTML document</a>, if there are no ancestor <code id="the-noscript-element:the-noscript-element"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> elements.</dd><dd>Where <a href="#phrasing-content-2" id="the-noscript-element:phrasing-content-2-2">phrasing content</a> is expected in <a href="/breakup/specs/core-algorithms/#html-documents" id="the-noscript-element:html-documents-2">HTML documents</a>, if there are no ancestor <code id="the-noscript-element:the-noscript-element-2"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> elements.</dd><dt><a href="#concept-element-content-model" id="the-noscript-element:concept-element-content-model">Content model</a>:</dt><dd>When <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-noscript-element:concept-n-noscript">scripting is disabled</a>, in a <code id="the-noscript-element:the-head-element-2"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element: in any order, zero or more <code id="the-noscript-element:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements, zero or more <code id="the-noscript-element:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> elements, and zero or more <code id="the-noscript-element:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> elements.</dd><dd>When <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-noscript-element:concept-n-noscript-2">scripting is disabled</a>, not in a <code id="the-noscript-element:the-head-element-3"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element: <a href="#transparent" id="the-noscript-element:transparent">transparent</a>, but there must be no <code id="the-noscript-element:the-noscript-element-3"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element descendants.</dd><dd>Otherwise: text that conforms to the requirements given in the prose.</dd><dt><a href="#concept-element-tag-omission" id="the-noscript-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-noscript-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-noscript-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-noscript-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-noscript-element:htmlelement"><a href="#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-noscript-element:the-noscript-element-4"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element <a href="#represents" id="the-noscript-element:represents">represents</a> nothing if <a href="/breakup/specs/browser-dom/#concept-n-script" id="the-noscript-element:concept-n-script">scripting is enabled</a>, and <a href="#represents" id="the-noscript-element:represents-2">represents</a> its children if
+  <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-noscript-element:concept-n-noscript-3">scripting is disabled</a>. It is used to present different
+  markup to user agents that support scripting and those that don't support scripting, by affecting
+  how the document is parsed.</p>
+
+  <p>When used in <a href="/breakup/specs/core-algorithms/#html-documents" id="the-noscript-element:html-documents-3">HTML documents</a>, the allowed content model is as follows:</p>
+
+  <dl><dt>In a <code id="the-noscript-element:the-head-element-4"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element, if <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-noscript-element:concept-n-noscript-4">scripting is
+   disabled</a> for the <code id="the-noscript-element:the-noscript-element-5"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element</dt><dd><p>The <code id="the-noscript-element:the-noscript-element-6"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element must contain only <code id="the-noscript-element:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="the-noscript-element:the-style-element-2"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code>,
+   and <code id="the-noscript-element:the-meta-element-2"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> elements.</p></dd><dt>In a <code id="the-noscript-element:the-head-element-5"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element, if <a href="/breakup/specs/browser-dom/#concept-n-script" id="the-noscript-element:concept-n-script-2">scripting is enabled</a>
+   for the <code id="the-noscript-element:the-noscript-element-7"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element</dt><dd><p>The <code id="the-noscript-element:the-noscript-element-8"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element must contain only text, except that invoking the
+   <a href="/breakup/specs/html-syntax/#html-fragment-parsing-algorithm" id="the-noscript-element:html-fragment-parsing-algorithm">HTML fragment parsing algorithm</a>  with
+   the <code id="the-noscript-element:the-noscript-element-9"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element as the <var id="the-noscript-element:concept-frag-parse-context"><a href="/breakup/specs/html-syntax/#concept-frag-parse-context">context</a></var>
+   element and the text contents as the <var>input</var> must result in a list of nodes
+   that consists only of <code id="the-noscript-element:the-link-element-3"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="the-noscript-element:the-style-element-3"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code>, and <code id="the-noscript-element:the-meta-element-3"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> elements that
+   would be conforming if they were children of the <code id="the-noscript-element:the-noscript-element-10"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element, and no <a href="/breakup/specs/html-syntax/#parse-error" id="the-noscript-element:parse-error">parse errors</a>.</p></dd><dt>Outside of <code id="the-noscript-element:the-head-element-6"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> elements, if <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-noscript-element:concept-n-noscript-5">scripting is
+   disabled</a> for the <code id="the-noscript-element:the-noscript-element-11"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element</dt><dd><p>The <code id="the-noscript-element:the-noscript-element-12"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element's content model is <a href="#transparent" id="the-noscript-element:transparent-2">transparent</a>, with the
+   additional restriction that a <code id="the-noscript-element:the-noscript-element-13"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element must not have a <code id="the-noscript-element:the-noscript-element-14"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code>
+   element as an ancestor (that is, <code id="the-noscript-element:the-noscript-element-15"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> can't be nested).</p></dd><dt>Outside of <code id="the-noscript-element:the-head-element-7"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> elements, if <a href="/breakup/specs/browser-dom/#concept-n-script" id="the-noscript-element:concept-n-script-3">scripting is
+   enabled</a> for the <code id="the-noscript-element:the-noscript-element-16"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element</dt><dd>
+
+    <p>The <code id="the-noscript-element:the-noscript-element-17"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element must contain only text, except that the text must be such
+    that running the following algorithm results in a conforming document with no
+    <code id="the-noscript-element:the-noscript-element-18"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> elements and no <code id="the-noscript-element:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> elements, and such that no step in the
+    algorithm throws an exception or causes an <a href="/breakup/specs/html-syntax/#html-parser" id="the-noscript-element:html-parser">HTML parser</a> to flag a <a href="/breakup/specs/html-syntax/#parse-error" id="the-noscript-element:parse-error-2">parse
+    error</a>:</p>
+    
+    
+    <ol><li>Remove every <code id="the-noscript-element:the-script-element-2"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element from the document.</li><li>Make a list of every <code id="the-noscript-element:the-noscript-element-19"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element in the document. For every
+     <code id="the-noscript-element:the-noscript-element-20"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element in that list, perform the following steps:
+
+      <ol><li>Let <var>s</var> be the concatenation of all the <code id="the-noscript-element:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node
+       children of the <code id="the-noscript-element:the-noscript-element-21"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element.</li><li>Set the <code id="the-noscript-element:dom-outerhtml"><a href="/breakup/specs/core-algorithms/#dom-outerhtml">outerHTML</a></code> attribute of the
+       <code id="the-noscript-element:the-noscript-element-22"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element to the value of <var>s</var>. (This, as a
+       side-effect, causes the <code id="the-noscript-element:the-noscript-element-23"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element to be removed from the document.) [[!DOMPARSING]]</li></ol>
+
+     </li></ol>
+
+   </dd></dl>
+
+  <p class="note">All these contortions are required because, for historical reasons, the
+  <code id="the-noscript-element:the-noscript-element-24"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element is handled differently by the <a href="/breakup/specs/html-syntax/#html-parser" id="the-noscript-element:html-parser-2">HTML parser</a> based on
+  whether <a href="/breakup/specs/html-syntax/#scripting-flag" id="the-noscript-element:scripting-flag">scripting was enabled or not</a> when the parser was
+  invoked.</p>
+
+  <p>The <code id="the-noscript-element:the-noscript-element-25"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element must not be used in <a href="/breakup/specs/core-algorithms/#xml-documents" id="the-noscript-element:xml-documents">XML documents</a>.</p>
+
+  <p class="note">The <code id="the-noscript-element:the-noscript-element-26"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element is only effective in <a href="#syntax" id="the-noscript-element:syntax">the HTML
+  syntax</a>, it has no effect in <a href="#the-xhtml-syntax" id="the-noscript-element:the-xhtml-syntax">the XHTML syntax</a>. This is because the way it works
+  is by essentially "turning off" the parser when scripts are enabled, so that the contents of the
+  element are treated as pure text and not as real elements. XML does not define a mechanism by
+  which to do this.</p>
+
+  
+
+  <p>The <code id="the-noscript-element:the-noscript-element-27"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element has no other requirements. In particular, children of the
+  <code id="the-noscript-element:the-noscript-element-28"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element are not exempt from <a href="/breakup/specs/html-forms/#form-submission-2" id="the-noscript-element:form-submission-2">form submission</a>, scripting, and so
+  forth, even when <a href="/breakup/specs/browser-dom/#concept-n-script" id="the-noscript-element:concept-n-script-4">scripting is enabled</a> for the element.</p>
+
+  
+
+  <div class="example">
+
+   <p>In the following example, a <code id="the-noscript-element:the-noscript-element-29"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element is
+   used to provide fallback for a script.</p>
+
+   <pre>&lt;form action="calcSquare.php"&gt;
+ &lt;p&gt;
+  &lt;label for=x&gt;Number&lt;/label&gt;:
+  &lt;input id="x" name="x" type="number"&gt;
+ &lt;/p&gt;
+ &lt;script&gt;
+  var x = document.getElementById('x');
+  var output = document.createElement('p');
+  output.textContent = 'Type a number; it will be squared right then!';
+  x.form.appendChild(output);
+  x.form.onsubmit = function () { return false; }
+  x.oninput = function () {
+    var v = x.valueAsNumber;
+    output.textContent = v + ' squared is ' + v * v;
+  };
+ &lt;/script&gt;
+ &lt;noscript&gt;
+  &lt;input type=submit value="Calculate Square"&gt;
+ &lt;/noscript&gt;
+&lt;/form&gt;</pre>
+
+   <p>When script is disabled, a button appears to do the calculation on the server side. When
+   script is enabled, the value is computed on-the-fly instead.</p>
+
+   <p>The <code id="the-noscript-element:the-noscript-element-30"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> element is a blunt instrument. Sometimes, scripts might be enabled,
+   but for some reason the page's script might fail. For this reason, it's generally better to avoid
+   using <code id="the-noscript-element:the-noscript-element-31"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code>, and to instead design the script to change the page from being a
+   scriptless page to a scripted page on the fly, as in the next example:</p>
+
+   <pre>&lt;form action="calcSquare.php"&gt;
+ &lt;p&gt;
+  &lt;label for=x&gt;Number&lt;/label&gt;:
+  &lt;input id="x" name="x" type="number"&gt;
+ &lt;/p&gt;
+ <strong>&lt;input id="submit" type=submit value="Calculate Square"&gt;</strong>
+ &lt;script&gt;
+  var x = document.getElementById('x');
+  var output = document.createElement('p');
+  output.textContent = 'Type a number; it will be squared right then!';
+  x.form.appendChild(output);
+  x.form.onsubmit = function () { return false; }
+  x.oninput = function () {
+    var v = x.valueAsNumber;
+    output.textContent = v + ' squared is ' + v * v;
+  };
+<strong>  var submit = document.getElementById('submit');
+  submit.parentNode.removeChild(submit);</strong>
+ &lt;/script&gt;
+&lt;/form&gt;</pre>
+
+   <p>The above technique is also useful in XHTML, since <code id="the-noscript-element:the-noscript-element-32"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code> is not supported in
+   <a href="#the-xhtml-syntax" id="the-noscript-element:the-xhtml-syntax-2">the XHTML syntax</a>.</p>
+
+  </div></section></body></html>

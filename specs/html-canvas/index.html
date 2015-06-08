@@ -1,0 +1,628 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Canvas</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-canvas"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        An element and API that enables drawing surfaces.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn id="canvas"><code>canvas</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-canvas-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-canvas-element:flow-content-2">Flow content</a>.</dd><dd><a href="#phrasing-content-2" id="the-canvas-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="#embedded-content-category" id="the-canvas-element:embedded-content-category">Embedded content</a>.</dd><dd><a href="#palpable-content-2" id="the-canvas-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-canvas-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#embedded-content-category" id="the-canvas-element:embedded-content-category-2">embedded content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-canvas-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#transparent" id="the-canvas-element:transparent">Transparent</a>, but with no <a href="#interactive-content-2" id="the-canvas-element:interactive-content-2">interactive content</a> descendants except for <code id="the-canvas-element:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> elements, <code id="the-canvas-element:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements with <code id="the-canvas-element:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attributes, <code id="the-canvas-element:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code> elements, <code id="the-canvas-element:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements whose <code id="the-canvas-element:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute are in the <a href="/breakup/specs/html-forms/#checkbox-state-(type=checkbox)" id="the-canvas-element:checkbox-state-(type=checkbox)">Checkbox</a> or <a href="/breakup/specs/html-forms/#radio-button-state-(type=radio)" id="the-canvas-element:radio-button-state-(type=radio)">Radio Button</a> states, <code id="the-canvas-element:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements that are <a href="/breakup/specs/html-forms/#concept-button" id="the-canvas-element:concept-button">buttons</a>, <code id="the-canvas-element:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code> elements with a <code id="the-canvas-element:attr-select-multiple"><a href="/breakup/specs/html-forms/#attr-select-multiple">multiple</a></code> attribute or a <a href="/breakup/specs/html-forms/#concept-select-size" id="the-canvas-element:concept-select-size">display size</a> greater than 1, <a href="/breakup/specs/sortable-tables/#sorting-interface-th-element" id="the-canvas-element:sorting-interface-th-element">sorting interface <code>th</code> elements</a>, and elements that would not be <a href="#interactive-content-2" id="the-canvas-element:interactive-content-2-2">interactive content</a> except for having the <code id="the-canvas-element:attr-tabindex"><a href="/breakup/specs/html-interacton-attr/#attr-tabindex">tabindex</a></code> attribute specified.</dd><dt><a href="#concept-element-tag-omission" id="the-canvas-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-canvas-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-canvas-element:global-attributes">Global attributes</a></dd><dd><code id="the-canvas-element:attr-canvas-width"><a href="/breakup/specs/html-canvas/#attr-canvas-width">width</a></code> — Horizontal dimension</dd><dd><code id="the-canvas-element:attr-canvas-height"><a href="/breakup/specs/html-canvas/#attr-canvas-height">height</a></code> — Vertical dimension</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-canvas-element:concept-element-dom">DOM interface</a>:</dt><dd>
+    <pre class="idl">typedef (<a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d" id="the-canvas-element:canvasrenderingcontext2d">CanvasRenderingContext2D</a> or <a href="/breakup/specs/core-algorithms/#webglrenderingcontext" id="the-canvas-element:webglrenderingcontext">WebGLRenderingContext</a>) <dfn id="renderingcontext">RenderingContext</dfn>;
+
+interface <dfn id="htmlcanvaselement">HTMLCanvasElement</dfn> : <a href="#htmlelement" id="the-canvas-element:htmlelement">HTMLElement</a> {
+  attribute unsigned long <a href="/breakup/specs/html-canvas/#dom-canvas-width" id="the-canvas-element:dom-canvas-width">width</a>;
+  attribute unsigned long <a href="/breakup/specs/html-canvas/#dom-canvas-height" id="the-canvas-element:dom-canvas-height">height</a>;
+
+  <a href="/breakup/specs/html-canvas/#renderingcontext" id="the-canvas-element:renderingcontext">RenderingContext</a>? <a href="/breakup/specs/html-canvas/#dom-canvas-getcontext" id="the-canvas-element:dom-canvas-getcontext">getContext</a>(DOMString contextId, any... arguments);
+  boolean <a href="/breakup/specs/html-canvas/#dom-canvas-probablysupportscontext" id="the-canvas-element:dom-canvas-probablysupportscontext">probablySupportsContext</a>(DOMString contextId, any... arguments);
+
+  void <a href="/breakup/specs/html-canvas/#dom-canvas-setcontext" id="the-canvas-element:dom-canvas-setcontext">setContext</a>(<a href="/breakup/specs/html-canvas/#renderingcontext" id="the-canvas-element:renderingcontext-2">RenderingContext</a> context);
+  <a href="/breakup/specs/html-canvas/#canvasproxy" id="the-canvas-element:canvasproxy">CanvasProxy</a> <a href="/breakup/specs/html-canvas/#dom-canvas-transfercontroltoproxy" id="the-canvas-element:dom-canvas-transfercontroltoproxy">transferControlToProxy</a>();
+
+  DOMString <a href="/breakup/specs/html-canvas/#dom-canvas-todataurl" id="the-canvas-element:dom-canvas-todataurl">toDataURL</a>(optional DOMString type, any... arguments);
+  void <a href="/breakup/specs/html-canvas/#dom-canvas-toblob" id="the-canvas-element:dom-canvas-toblob">toBlob</a>(<a href="/breakup/specs/core-algorithms/#filecallback" id="the-canvas-element:filecallback">FileCallback</a>? _callback, optional DOMString type, any... arguments);
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-canvas-element:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element provides scripts with a resolution-dependent bitmap canvas,
+  which can be used for rendering graphs, game graphics, art, or other visual images on the fly.</p>
+
+  <p>Authors should not use the <code id="the-canvas-element:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element in a document when a more suitable
+  element is available. For example, it is inappropriate to use a <code id="the-canvas-element:the-canvas-element-3"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element to
+  render a page heading: if the desired presentation of the heading is graphically intense, it
+  should be marked up using appropriate elements (typically <code id="the-canvas-element:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>) and then styled using
+  CSS and supporting technologies such as Web Components.</p>
+
+  <p>When authors use the <code id="the-canvas-element:the-canvas-element-4"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, they must also provide content that, when
+  presented to the user, conveys essentially the same function or purpose as the
+  <code id="the-canvas-element:the-canvas-element-5"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code>' bitmap. This content may be placed as content of the <code id="the-canvas-element:the-canvas-element-6"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code>
+  element. The contents of the <code id="the-canvas-element:the-canvas-element-7"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, if any, are the element's <a href="#fallback-content" id="the-canvas-element:fallback-content">fallback
+  content</a>.</p>
+
+  <hr>
+
+  <p>In interactive visual media, if <a href="/breakup/specs/browser-dom/#concept-n-script" id="the-canvas-element:concept-n-script">scripting is enabled</a> for
+  the <code id="the-canvas-element:the-canvas-element-8"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, and if support for <code id="the-canvas-element:the-canvas-element-9"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements has been enabled,
+  the <code id="the-canvas-element:the-canvas-element-10"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element <a href="#represents" id="the-canvas-element:represents">represents</a> <a href="#embedded-content-category" id="the-canvas-element:embedded-content-category-3">embedded content</a> consisting
+  of a dynamically created image, the element's bitmap.</p>
+
+  <p>In non-interactive, static, visual media, if the <code id="the-canvas-element:the-canvas-element-11"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element has been
+  previously associated with a rendering context (e.g. if the page was viewed in an interactive
+  visual medium and is now being printed, or if some script that ran during the page layout process
+  painted on the element), then the <code id="the-canvas-element:the-canvas-element-12"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element <a href="#represents" id="the-canvas-element:represents-2">represents</a>
+  <a href="#embedded-content-category" id="the-canvas-element:embedded-content-category-4">embedded content</a> with the element's current bitmap and size. Otherwise, the element
+  represents its <a href="#fallback-content" id="the-canvas-element:fallback-content-2">fallback content</a> instead.</p>
+
+  <p>In non-visual media, and in visual media if <a href="/breakup/specs/browser-dom/#concept-n-noscript" id="the-canvas-element:concept-n-noscript">scripting is
+  disabled</a> for the <code id="the-canvas-element:the-canvas-element-13"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element or if support for <code id="the-canvas-element:the-canvas-element-14"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements
+  has been disabled, the <code id="the-canvas-element:the-canvas-element-15"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element <a href="#represents" id="the-canvas-element:represents-3">represents</a> its <a href="#fallback-content" id="the-canvas-element:fallback-content-3">fallback
+  content</a> instead.</p>
+
+  
+  <p>When a <code id="the-canvas-element:the-canvas-element-16"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element <a href="#represents" id="the-canvas-element:represents-4">represents</a> <a href="#embedded-content-category" id="the-canvas-element:embedded-content-category-5">embedded content</a>, the
+  user can still focus descendants of the <code id="the-canvas-element:the-canvas-element-17"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element (in the <a href="#fallback-content" id="the-canvas-element:fallback-content-4">fallback
+  content</a>). When an element is <a href="/breakup/specs/html-interacton-attr/#focused" id="the-canvas-element:focused">focused</a>, it is the target of keyboard interaction
+  events (even though the element itself is not visible). This allows authors to make an interactive
+  canvas keyboard-accessible: authors should have a one-to-one mapping of interactive regions to <i id="the-canvas-element:focusable-area"><a href="/breakup/specs/html-interacton-attr/#focusable-area">focusable areas</a></i> in the <a href="#fallback-content" id="the-canvas-element:fallback-content-5">fallback content</a>. (Focus has no
+  effect on mouse interaction events.) [[!DOMEVENTS]]</p> 
+
+  <p>An element whose nearest <code id="the-canvas-element:the-canvas-element-18"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element ancestor is <a href="/breakup/specs/rendering-html/#being-rendered" id="the-canvas-element:being-rendered">being rendered</a>
+  and <a href="#represents" id="the-canvas-element:represents-5">represents</a> <a href="#embedded-content-category" id="the-canvas-element:embedded-content-category-6">embedded content</a> is an element that is <dfn id="being-used-as-relevant-canvas-fallback-content">being used as
+  relevant canvas fallback content</dfn>.</p>
+
+  <hr>
+
+  <p>The <code id="the-canvas-element:the-canvas-element-19"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element has two attributes to control the size of the element's bitmap:
+  <dfn id="attr-canvas-width"><code>width</code></dfn> and <dfn id="attr-canvas-height"><code>height</code></dfn>. These attributes, when specified, must have
+  values that are <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="the-canvas-element:valid-non-negative-integer">valid non-negative integers</a>. The <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="the-canvas-element:rules-for-parsing-non-negative-integers">rules for parsing non-negative integers</a> must be used to obtain their
+  numeric values. If an attribute is missing, or if parsing its value returns an error, then the
+  default value must be used instead. The <code id="the-canvas-element:attr-canvas-width-2"><a href="/breakup/specs/html-canvas/#attr-canvas-width">width</a></code>
+  attribute defaults to 300, and the <code id="the-canvas-element:attr-canvas-height-2"><a href="/breakup/specs/html-canvas/#attr-canvas-height">height</a></code> attribute
+  defaults to 150.</p>
+
+  <p>The intrinsic dimensions of the <code id="the-canvas-element:the-canvas-element-20"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element when it <a href="#represents" id="the-canvas-element:represents-6">represents</a>
+  <a href="#embedded-content-category" id="the-canvas-element:embedded-content-category-7">embedded content</a> are equal to the dimensions of the element's bitmap.</p>
+
+  <p>The user agent must use a square pixel density consisting of one pixel of image data per
+  coordinate space unit for the bitmaps of a <code id="the-canvas-element:the-canvas-element-21"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> and its rendering contexts.</p>
+
+  <p class="note">A <code id="the-canvas-element:the-canvas-element-22"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element can be sized arbitrarily by a style sheet, its
+  bitmap is then subject to the 'object-fit' CSS property. [[!CSSIMAGES]]</p>
+
+  
+
+  <hr>
+
+
+  <p>The bitmaps of <code id="the-canvas-element:the-canvas-element-23"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements, as well as some of the bitmaps of rendering
+  contexts, such as those described in the section on the <code id="the-canvas-element:canvasrenderingcontext2d-2"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code>
+  object below, have an <dfn id="concept-canvas-origin-clean">origin-clean</dfn> flag, which can
+  be set to true or false. Initially, when the <code id="the-canvas-element:the-canvas-element-24"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element is created, its bitmap's
+  <a href="/breakup/specs/html-canvas/#concept-canvas-origin-clean" id="the-canvas-element:concept-canvas-origin-clean">origin-clean</a> flag must be set to true.</p>
+
+
+  <p>A <code id="the-canvas-element:the-canvas-element-25"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> bitmap can also have a <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#hit-region-list" id="the-canvas-element:hit-region-list">hit region list</a>, as described in the
+  <code id="the-canvas-element:canvasrenderingcontext2d-3"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code> section below.</p>
+
+  <p>A <code id="the-canvas-element:the-canvas-element-26"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element can have a rendering context bound to it. Initially, it does not
+  have a bound rendering context. To keep track of whether it has a rendering context or not, and
+  what kind of rendering context it is, a <code id="the-canvas-element:the-canvas-element-27"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> also has a <dfn id="concept-canvas-context-mode">canvas context mode</dfn>, which is initially <dfn id="concept-canvas-none">none</dfn> but can be changed to either <dfn id="concept-canvas-direct-2d">direct-2d</dfn>, <dfn id="concept-canvas-direct-webgl">direct-webgl</dfn>, <dfn id="concept-canvas-indirect">indirect</dfn>, or <dfn id="concept-canvas-proxied">proxied</dfn> by algorithms defined in this specification.</p>
+
+  <p>When its <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="the-canvas-element:concept-canvas-context-mode">canvas context mode</a> is <a href="/breakup/specs/html-canvas/#concept-canvas-none" id="the-canvas-element:concept-canvas-none">none</a>, a <code id="the-canvas-element:the-canvas-element-28"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element has no rendering context,
+  and its bitmap must be fully transparent black with an intrinsic width equal to the numeric value
+  of the element's <code id="the-canvas-element:attr-canvas-width-3"><a href="/breakup/specs/html-canvas/#attr-canvas-width">width</a></code> attribute and an intrinsic height
+  equal to the numeric value of the element's <code id="the-canvas-element:attr-canvas-height-3"><a href="/breakup/specs/html-canvas/#attr-canvas-height">height</a></code>
+  attribute, those values being interpreted in CSS pixels, and being updated as the attributes are
+  set, changed, or removed.</p>
+
+  <p>When a <code id="the-canvas-element:the-canvas-element-29"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element represents <a href="#embedded-content-category" id="the-canvas-element:embedded-content-category-8">embedded content</a>, it <a href="/breakup/specs/core-algorithms/#provides-a-paint-source" id="the-canvas-element:provides-a-paint-source">provides
+  a paint source</a> whose width is the element's intrinsic width, whose height is the element's
+  intrinsic height, and whose appearance is the element's bitmap.</p>
+
+  <p>Whenever the <code id="the-canvas-element:attr-canvas-width-4"><a href="/breakup/specs/html-canvas/#attr-canvas-width">width</a></code> and <code id="the-canvas-element:attr-canvas-height-4"><a href="/breakup/specs/html-canvas/#attr-canvas-height">height</a></code> content attributes are set, removed, changed, or
+  redundantly set to the value they already have, if the <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="the-canvas-element:concept-canvas-context-mode-2">canvas context mode</a> is <a href="/breakup/specs/html-canvas/#concept-canvas-direct-2d" id="the-canvas-element:concept-canvas-direct-2d">direct-2d</a>, the user agent must <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#concept-canvas-set-bitmap-dimensions" id="the-canvas-element:concept-canvas-set-bitmap-dimensions">set bitmap dimensions</a> to the numeric values of
+  the <code id="the-canvas-element:attr-canvas-width-5"><a href="/breakup/specs/html-canvas/#attr-canvas-width">width</a></code> and <code id="the-canvas-element:attr-canvas-height-5"><a href="/breakup/specs/html-canvas/#attr-canvas-height">height</a></code> content attributes.</p>
+
+  <p>The <dfn id="dom-canvas-width"><code>width</code></dfn> and <dfn id="dom-canvas-height"><code>height</code></dfn> IDL attributes must <a href="/breakup/specs/core-algorithms/#reflect" id="the-canvas-element:reflect">reflect</a> the
+  respective content attributes of the same name, with the same defaults.</p>
+
+  
+
+  <hr>
+
+  
+  <dl class="domintro"><dt><var>context</var> = <var>canvas</var> . <code id="the-canvas-element:dom-canvas-getcontext-2"><a href="/breakup/specs/html-canvas/#dom-canvas-getcontext">getContext</a></code>(<var>contextId</var> [, ... ] )</dt><dd>
+
+    <p>Returns an object that exposes an API for drawing on the canvas. The first argument specifies
+    the desired API, either "<code id="the-canvas-element:canvas-context-2d"><a href="/breakup/specs/html-canvas/#canvas-context-2d">2d</a></code>" or "<code id="the-canvas-element:canvas-context-webgl"><a href="/breakup/specs/html-canvas/#canvas-context-webgl">webgl</a></code>". Subsequent arguments are handled by that API.</p>
+
+    <p>This specification defines the "<code id="the-canvas-element:canvas-context-2d-2"><a href="/breakup/specs/html-canvas/#canvas-context-2d">2d</a></code>" context below.
+    There is also a specification that defines a "<code id="the-canvas-element:canvas-context-webgl-2"><a href="/breakup/specs/html-canvas/#canvas-context-webgl">webgl</a></code>"
+    context. [[!WEBGL]]</p>
+
+    <p>Returns null if the given context ID is not supported, if the canvas has already been
+    initialised with the other context type (e.g. trying to get a "<code id="the-canvas-element:canvas-context-2d-3"><a href="/breakup/specs/html-canvas/#canvas-context-2d">2d</a></code>" context after getting a "<code id="the-canvas-element:canvas-context-webgl-3"><a href="/breakup/specs/html-canvas/#canvas-context-webgl">webgl</a></code>" context).</p>
+
+    <p>Throws an <code id="the-canvas-element:invalidstateerror"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception if the <code id="the-canvas-element:dom-canvas-setcontext-2"><a href="/breakup/specs/html-canvas/#dom-canvas-setcontext">setContext()</a></code> or <code id="the-canvas-element:dom-canvas-transfercontroltoproxy-2"><a href="/breakup/specs/html-canvas/#dom-canvas-transfercontroltoproxy">transferControlToProxy()</a></code> methods have been
+    used.</p>
+
+   </dd><dt><var>supported</var> = <var>canvas</var> . <code id="the-canvas-element:dom-canvas-probablysupportscontext-2"><a href="/breakup/specs/html-canvas/#dom-canvas-probablysupportscontext">probablySupportsContext</a></code>(<var>contextId</var> [, ... ] )</dt><dd>
+
+    <p>Returns false if calling <code id="the-canvas-element:dom-canvas-getcontext-3"><a href="/breakup/specs/html-canvas/#dom-canvas-getcontext">getContext()</a></code> with the
+    same arguments would definitely return null, and true otherwise.</p>
+
+    <p>This return value is not a guarantee that <code id="the-canvas-element:dom-canvas-getcontext-4"><a href="/breakup/specs/html-canvas/#dom-canvas-getcontext">getContext()</a></code> will or will not return an object, as
+    conditions (e.g. availability of system resources) can vary over time.</p>
+
+    <p>Throws an <code id="the-canvas-element:invalidstateerror-2"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception if the <code id="the-canvas-element:dom-canvas-setcontext-3"><a href="/breakup/specs/html-canvas/#dom-canvas-setcontext">setContext()</a></code> or <code id="the-canvas-element:dom-canvas-transfercontroltoproxy-3"><a href="/breakup/specs/html-canvas/#dom-canvas-transfercontroltoproxy">transferControlToProxy()</a></code> methods have been
+    used.</p>
+
+   </dd><dt><var>canvas</var> . <code id="the-canvas-element:dom-canvas-setcontext-4"><a href="/breakup/specs/html-canvas/#dom-canvas-setcontext">setContext</a></code>(<var>context</var>)</dt><dd>
+
+    <p>Sets the <code id="the-canvas-element:the-canvas-element-30"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code>' rendering context to the given object.</p>
+
+    <p>Throws an <code id="the-canvas-element:invalidstateerror-3"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception if the <code id="the-canvas-element:dom-canvas-getcontext-5"><a href="/breakup/specs/html-canvas/#dom-canvas-getcontext">getContext()</a></code> or <code id="the-canvas-element:dom-canvas-transfercontroltoproxy-4"><a href="/breakup/specs/html-canvas/#dom-canvas-transfercontroltoproxy">transferControlToProxy()</a></code> methods have been
+    used.</p>
+
+   </dd></dl>
+
+  
+
+  <p>There are two ways for a <code id="the-canvas-element:the-canvas-element-31"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element to acquire a rendering context: the
+  <code id="the-canvas-element:the-canvas-element-32"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element can provide one via the <code id="the-canvas-element:dom-canvas-getcontext-6"><a href="/breakup/specs/html-canvas/#dom-canvas-getcontext">getContext()</a></code> method, and one can be assigned to it via the
+  <code id="the-canvas-element:dom-canvas-setcontext-5"><a href="/breakup/specs/html-canvas/#dom-canvas-setcontext">setContext()</a></code> method. In addition, the whole issue of a
+  rendering context can be taken out of the <code id="the-canvas-element:the-canvas-element-33"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's hands and passed to a
+  <code id="the-canvas-element:canvasproxy-2"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object, which itself can then be assigned a rendering context using its
+  <code id="the-canvas-element:dom-canvasproxy-setcontext"><a href="/breakup/specs/html-canvas/#dom-canvasproxy-setcontext">setContext()</a></code> method.</p>
+
+  <p>These three methods are mutually exclusive; calling any of the three makes the other two start
+  throwing <code id="the-canvas-element:invalidstateerror-4"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exceptions when called.</p>
+
+  <p>Each rendering context has a <dfn id="concept-canvas-context-bitmap-mode">context bitmap
+  mode</dfn>, which is one of <dfn id="concept-canvas-fixed">fixed</dfn>, <dfn id="concept-canvas-unbound">unbound</dfn>, or <dfn id="concept-canvas-bound">bound</dfn>.
+  Initially, rendering contexts must be in the <a href="/breakup/specs/html-canvas/#concept-canvas-bound" id="the-canvas-element:concept-canvas-bound">unbound</a>
+  mode.</p>
+
+  <hr>
+
+  <p>The <dfn id="dom-canvas-getcontext"><code>getContext(<var>contextId</var>, <var>arguments...</var>)</code></dfn> method of the <code id="the-canvas-element:the-canvas-element-34"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, when invoked,
+  must run the steps in the cell of the following table whose column header describes the
+  <code id="the-canvas-element:the-canvas-element-35"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="the-canvas-element:concept-canvas-context-mode-3">canvas context mode</a>
+  and whose row header describes the method's first argument.</p>
+
+  <table><thead><tr><td>
+     </td><th><a href="/breakup/specs/html-canvas/#concept-canvas-none" id="the-canvas-element:concept-canvas-none-2">none</a>
+     </th><th><a href="/breakup/specs/html-canvas/#concept-canvas-direct-2d" id="the-canvas-element:concept-canvas-direct-2d-2">direct-2d</a>
+     </th><th><a href="/breakup/specs/html-canvas/#concept-canvas-direct-webgl" id="the-canvas-element:concept-canvas-direct-webgl">direct-webgl</a>
+     </th><th><a href="/breakup/specs/html-canvas/#concept-canvas-indirect" id="the-canvas-element:concept-canvas-indirect">indirect</a>
+     </th><th><a href="/breakup/specs/html-canvas/#concept-canvas-proxied" id="the-canvas-element:concept-canvas-proxied">proxied</a>
+   </th></tr></thead><tbody><tr><th>"<dfn id="canvas-context-2d"><code>2d</code></dfn>"
+     </th><td>
+
+      Follow the <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#2d-context-creation-algorithm" id="the-canvas-element:2d-context-creation-algorithm">2D
+      context creation algorithm</a> defined in the section below, passing it the
+      <code id="the-canvas-element:the-canvas-element-36"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element and the method's <var>arguments...</var>, to obtain a <code id="the-canvas-element:canvasrenderingcontext2d-4"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code> object;
+      if this does not throw an exception, then 
+      set the <code id="the-canvas-element:the-canvas-element-37"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="the-canvas-element:concept-canvas-context-mode-4">context
+      mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-direct-2d" id="the-canvas-element:concept-canvas-direct-2d-3">direct-2d</a>, set
+      the <code id="the-canvas-element:canvasrenderingcontext2d-5"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code> object's <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="the-canvas-element:concept-canvas-context-bitmap-mode">context bitmap mode</a> to
+      <a href="/breakup/specs/html-canvas/#concept-canvas-fixed" id="the-canvas-element:concept-canvas-fixed">fixed</a>, and return the
+      <code id="the-canvas-element:canvasrenderingcontext2d-6"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code> object
+
+     </td><td>
+      Return the same object as was return the last time the method was invoked with this same
+      first argument.
+     </td><td>
+      Return null.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-5"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-6"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+
+    </td></tr><tr><th>"<dfn id="canvas-context-webgl"><code>webgl</code></dfn>", if the user agent supports the WebGL feature in its current configuration
+     </th><td>
+
+      Follow the instructions given in the WebGL specification's <i>Context Creation</i> section to
+      obtain either a <code id="the-canvas-element:webglrenderingcontext-2"><a href="/breakup/specs/core-algorithms/#webglrenderingcontext">WebGLRenderingContext</a></code> or null; if the returned value is null,
+      then return null and abort these steps, otherwise, set the <code id="the-canvas-element:the-canvas-element-38"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="the-canvas-element:concept-canvas-context-mode-5">context mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-direct-webgl" id="the-canvas-element:concept-canvas-direct-webgl-2">direct-webgl</a>, set the new
+      <code id="the-canvas-element:webglrenderingcontext-3"><a href="/breakup/specs/core-algorithms/#webglrenderingcontext">WebGLRenderingContext</a></code> object's <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="the-canvas-element:concept-canvas-context-bitmap-mode-2">context bitmap mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-fixed" id="the-canvas-element:concept-canvas-fixed-2">fixed</a>, and return the <code id="the-canvas-element:webglrenderingcontext-4"><a href="/breakup/specs/core-algorithms/#webglrenderingcontext">WebGLRenderingContext</a></code>
+      object [[!WEBGL]]
+
+     </td><td>
+      Return null.
+     </td><td>
+      Return the same object as was return the last time the method was invoked with this same
+      first argument.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-7"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-8"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+
+    </td></tr><tr><th>A vendor-specific extension*
+     </th><td>
+      Behave as defined for the extension.
+     </td><td>
+      Behave as defined for the extension.
+     </td><td>
+      Behave as defined for the extension.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-9"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-10"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+
+    </td></tr><tr><th>An unsupported value†
+     </th><td>
+      Return null.
+     </td><td>
+      Return null.
+     </td><td>
+      Return null.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-11"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+     </td><td>
+      Throw an <code id="the-canvas-element:invalidstateerror-12"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception.
+
+  </td></tr></tbody></table>
+
+  <p class="tablenote"><small>* Vendors may define experimental contexts using the syntax <code><var>vendorname</var>-<var>context</var></code>, for example, <code>moz-3d</code>.</small></p>
+
+  <p class="tablenote"><small>† For example, the "<code id="the-canvas-element:canvas-context-webgl-4"><a href="/breakup/specs/html-canvas/#canvas-context-webgl">webgl</a></code>" value in the case of a user agent having exhausted the
+  graphics hardware's abilities and having no software fallback implementation.</small></p>
+
+  <hr>
+
+  <p>The <dfn id="dom-canvas-probablysupportscontext"><code>probablySupportsContext(<var>contextId</var>,
+  <var>arguments...</var>)</code></dfn> method of the <code id="the-canvas-element:the-canvas-element-39"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, when
+  invoked, must return false if calling <code id="the-canvas-element:dom-canvas-getcontext-7"><a href="/breakup/specs/html-canvas/#dom-canvas-getcontext">getContext()</a></code> on
+  the same object and with the same arguments would definitely return null at this time, and true
+  otherwise.</p>
+
+  <hr>
+
+  <p>The <dfn id="dom-canvas-setcontext"><code>setContext(<var>context</var>)</code></dfn> method of the <code id="the-canvas-element:the-canvas-element-40"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, when invoked, must
+  run the following steps:</p>
+
+  <ol><li><p>If the <code id="the-canvas-element:the-canvas-element-41"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="the-canvas-element:concept-canvas-context-mode-6">canvas
+   context mode</a> is neither <a href="/breakup/specs/html-canvas/#concept-canvas-none" id="the-canvas-element:concept-canvas-none-3">none</a> nor <a href="/breakup/specs/html-canvas/#concept-canvas-indirect" id="the-canvas-element:concept-canvas-indirect-2">indirect</a>, throw an <code id="the-canvas-element:invalidstateerror-13"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code>
+   exception and abort these steps.</p></li><li><p>If <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="the-canvas-element:concept-canvas-context-bitmap-mode-3">context
+   bitmap mode</a> is <a href="/breakup/specs/html-canvas/#concept-canvas-fixed" id="the-canvas-element:concept-canvas-fixed-3">fixed</a>, then throw an
+   <code id="the-canvas-element:invalidstateerror-14"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>If <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="the-canvas-element:concept-canvas-context-bitmap-mode-4">context
+   bitmap mode</a> is <a href="/breakup/specs/html-canvas/#concept-canvas-bound" id="the-canvas-element:concept-canvas-bound-2">bound</a>, then run <var>context</var>'s <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#concept-canvas-unbinding-steps" id="the-canvas-element:concept-canvas-unbinding-steps">unbinding steps</a> and
+   set its <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="the-canvas-element:concept-canvas-context-bitmap-mode-5">context
+   bitmap mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-unbound" id="the-canvas-element:concept-canvas-unbound">unbound</a>.</p></li><li><p>Run <var>context</var>'s <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#concept-canvas-binding-steps" id="the-canvas-element:concept-canvas-binding-steps">binding
+   steps</a> to bind it to this <code id="the-canvas-element:the-canvas-element-42"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element.</p></li><li><p>Set the <code id="the-canvas-element:the-canvas-element-43"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="the-canvas-element:concept-canvas-context-mode-7">context
+   mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-indirect" id="the-canvas-element:concept-canvas-indirect-3">indirect</a> and the <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="the-canvas-element:concept-canvas-context-bitmap-mode-6">context bitmap
+   mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-bound" id="the-canvas-element:concept-canvas-bound-3">bound</a>.</p></li></ol>
+
+  <hr>
+
+  
+
+  <dl class="domintro"><dt><var>url</var> = <var>canvas</var> . <code id="the-canvas-element:dom-canvas-todataurl-2"><a href="/breakup/specs/html-canvas/#dom-canvas-todataurl">toDataURL</a></code>( [ <var>type</var>, ... ] )</dt><dd>
+
+    <p>Returns a <a href="http://tools.ietf.org/html/rfc2397#section-2" id="the-canvas-element:data-protocol" data-x-internal="data-protocol"><code>data:</code> URL</a> for the image in the
+    canvas.</p>
+
+    <p>The first argument, if provided, controls the type of the image to be returned (e.g. PNG or
+    JPEG). The default is <code>image/png</code>; that type is also used if the given type
+    isn't supported. The other arguments are specific to the type, and control the way that the
+    image is generated, as given <a href="/breakup/specs/html-canvas/#canvas-serialisation-arguments">in the table
+    below</a>.</p>
+
+    <p>When trying to use types other than "<code id="the-canvas-element:image/png"><a href="#image/png">image/png</a></code>", authors can check if the image
+    was really returned in the requested format by checking to see if the returned string starts
+    with one of the exact strings "<code>data:image/png,</code>" or "<code>data:image/png;</code>". If it does, the image is PNG, and thus the requested type was
+    not supported. (The one exception to this is if the canvas has either no height or no width, in
+    which case the result might simply be "<code>data:,</code>".)</p>
+
+   </dd><dt><var>canvas</var> . <code id="the-canvas-element:dom-canvas-toblob-2"><a href="/breakup/specs/html-canvas/#dom-canvas-toblob">toBlob</a></code>(<var>callback</var> [, <var>type</var>, ... ] )</dt><dd>
+
+    <p>Creates a <code id="the-canvas-element:blob"><a href="/breakup/specs/core-algorithms/#blob">Blob</a></code> object representing a file containing the image in the canvas,
+    and invokes a callback with a handle to that object.</p>
+
+    <p>The second argument, if provided, controls the type of the image to be returned (e.g. PNG or
+    JPEG). The default is <code>image/png</code>; that type is also used if the given type
+    isn't supported. The other arguments are specific to the type, and control the way that the
+    image is generated, as given <a href="/breakup/specs/html-canvas/#canvas-serialisation-arguments">in the table
+    below</a>.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-canvas-todataurl"><code>toDataURL()</code></dfn> method must run the
+  following steps:</p>
+
+  <ol><li><p>If the <code id="the-canvas-element:the-canvas-element-44"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's bitmap's <a href="/breakup/specs/html-canvas/#concept-canvas-origin-clean" id="the-canvas-element:concept-canvas-origin-clean-2">origin-clean</a> flag is set to false, throw a
+   <code id="the-canvas-element:securityerror"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception and abort these steps.</p>
+
+
+   </li><li><p>If the <code id="the-canvas-element:the-canvas-element-45"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's bitmap has no pixels (i.e. either its horizontal
+   dimension or its vertical dimension is zero) then return the string "<code>data:,</code>" and abort these steps. (This is the shortest <a href="http://tools.ietf.org/html/rfc2397#section-2" id="the-canvas-element:data-protocol-2" data-x-internal="data-protocol"><code>data:</code> URL</a>; it represents the empty string in a <code>text/plain</code> resource.)</p></li><li><p>Let <var>file</var> be <a href="/breakup/specs/html-canvas/#a-serialisation-of-the-bitmap-as-a-file" id="the-canvas-element:a-serialisation-of-the-bitmap-as-a-file">a
+   serialisation of the <code>canvas</code> element's bitmap as a file</a>, using the method's
+   arguments (if any) as the <var>arguments</var>.</p></li><li><p>Return a <a href="http://tools.ietf.org/html/rfc2397#section-2" id="the-canvas-element:data-protocol-3" data-x-internal="data-protocol"><code>data:</code> URL</a> representing
+   <var>file</var>. [[!RFC2397]]</p>
+
+   
+
+  </li></ol>
+
+  <p>The <dfn id="dom-canvas-toblob"><code>toBlob()</code></dfn> method must run the following
+  steps:</p>
+
+  <ol><li><p>If the <code id="the-canvas-element:the-canvas-element-46"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's bitmap's <a href="/breakup/specs/html-canvas/#concept-canvas-origin-clean" id="the-canvas-element:concept-canvas-origin-clean-3">origin-clean</a> flag is set to false, throw a
+   <code id="the-canvas-element:securityerror-2"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception and abort these steps.</p>
+
+
+   </li><li><p>Let <var>callback</var> be the first argument.</p></li><li><p>Let <var>arguments</var> be the second and subsequent arguments to the method, if
+   any.</p></li><li>
+
+    <p>If the <code id="the-canvas-element:the-canvas-element-47"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's bitmap has no pixels (i.e. either its horizontal
+    dimension or its vertical dimension is zero) then let <var>result</var> be null.</p>
+
+    <p>Otherwise, let <var>result</var> be a <code id="the-canvas-element:blob-2"><a href="/breakup/specs/core-algorithms/#blob">Blob</a></code> object representing <a href="/breakup/specs/html-canvas/#a-serialisation-of-the-bitmap-as-a-file" id="the-canvas-element:a-serialisation-of-the-bitmap-as-a-file-2">a serialisation of the <code>canvas</code> element's
+    bitmap as a file</a>, using <var>arguments</var>. [[!FILEAPI]] </p>
+
+   </li><li><p>Return, but continue running these steps <a href="/breakup/specs/core-algorithms/#in-parallel" id="the-canvas-element:in-parallel">in parallel</a>.</p></li><li><p>If <var>callback</var> is null, abort these steps.</p></li><li><p><a href="/breakup/specs/browser-dom/#queue-a-task" id="the-canvas-element:queue-a-task">Queue a task</a> to invoke the <code id="the-canvas-element:filecallback-2"><a href="/breakup/specs/core-algorithms/#filecallback">FileCallback</a></code> <var>callback</var> with
+   <var>result</var> as its argument. The <a href="/breakup/specs/browser-dom/#task-source" id="the-canvas-element:task-source">task source</a> for this task is the <dfn id="canvas-blob-serialisation-task-source">canvas
+   blob serialisation task source</dfn>.</p></li></ol>
+
+  
+  
+
+
+  
+  <section><h2>Proxying canvases to workers</h2>
+
+  <p>Since DOM nodes cannot be accessed across worker boundaries, a proxy object is needed to enable
+  workers to render to <code id="proxying-canvases-to-workers:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements in <code id="proxying-canvases-to-workers:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>s.</p>
+
+  <pre class="idl">[Exposed=(Window,Worker)]
+interface <dfn id="canvasproxy">CanvasProxy</dfn> {
+  void <a href="/breakup/specs/html-canvas/#dom-canvasproxy-setcontext" id="proxying-canvases-to-workers:dom-canvasproxy-setcontext">setContext</a>(<a href="/breakup/specs/html-canvas/#renderingcontext" id="proxying-canvases-to-workers:renderingcontext">RenderingContext</a> context);
+};
+// <a href="/breakup/specs/html-canvas/#canvasproxy" id="proxying-canvases-to-workers:canvasproxy">CanvasProxy</a> implements <a href="/breakup/specs/core-algorithms/#transferable" id="proxying-canvases-to-workers:transferable">Transferable</a>;</pre>
+
+  <dl class="domintro"><dt><var>canvasProxy</var> = <var>canvas</var> . <code id="proxying-canvases-to-workers:dom-canvas-transfercontroltoproxy"><a href="/breakup/specs/html-canvas/#dom-canvas-transfercontroltoproxy">transferControlToProxy</a></code>()</dt><dd>
+
+    <p>Returns a <code id="proxying-canvases-to-workers:canvasproxy-2"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object that can be used to transfer control for this
+    canvas over to another document (e.g. an <code id="proxying-canvases-to-workers:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> from another <a href="/breakup/specs/browser-dom/#origin-2" id="proxying-canvases-to-workers:origin-2">origin</a>)
+    or to a worker.</p>
+
+    <p>Throws an <code id="proxying-canvases-to-workers:invalidstateerror"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception if the <code id="proxying-canvases-to-workers:dom-canvas-getcontext"><a href="/breakup/specs/html-canvas/#dom-canvas-getcontext">getContext()</a></code> or <code id="proxying-canvases-to-workers:dom-canvas-setcontext"><a href="/breakup/specs/html-canvas/#dom-canvas-setcontext">setContext()</a></code> methods have been used.</p>
+
+   </dd><dt><var>canvasProxy</var> . <code id="proxying-canvases-to-workers:dom-canvasproxy-setcontext-2"><a href="/breakup/specs/html-canvas/#dom-canvasproxy-setcontext">setContext</a></code>(<var>context</var>)</dt><dd>
+
+    <p>Sets the <code id="proxying-canvases-to-workers:canvasproxy-3"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object's <code id="proxying-canvases-to-workers:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's rendering context to
+    the given object.</p>
+
+    <p>Throws an <code id="proxying-canvases-to-workers:invalidstateerror-2"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception if the <code id="proxying-canvases-to-workers:canvasproxy-4"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> has been
+    <a href="/breakup/specs/core-algorithms/#transfer-a-transferable-object" id="proxying-canvases-to-workers:transfer-a-transferable-object">transfered</a>.</p>
+
+   </dd></dl>
+
+  <hr>
+
+  <p>The <dfn id="dom-canvas-transfercontroltoproxy"><code>transferControlToProxy()</code></dfn>
+  method of the <code id="proxying-canvases-to-workers:the-canvas-element-3"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element, when invoked, must run the following steps:</p>
+
+  <ol><li><p>If the <code id="proxying-canvases-to-workers:the-canvas-element-4"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="proxying-canvases-to-workers:concept-canvas-context-mode">canvas
+   context mode</a> is not <a href="/breakup/specs/html-canvas/#concept-canvas-none" id="proxying-canvases-to-workers:concept-canvas-none">none</a>, throw an
+   <code id="proxying-canvases-to-workers:invalidstateerror-3"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>Set the <code id="proxying-canvases-to-workers:the-canvas-element-5"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element's <a href="/breakup/specs/html-canvas/#concept-canvas-context-mode" id="proxying-canvases-to-workers:concept-canvas-context-mode-2">context
+   mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-proxied" id="proxying-canvases-to-workers:concept-canvas-proxied">proxied</a>.</p></li><li><p>Return a <code id="proxying-canvases-to-workers:canvasproxy-5"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object bound to this <code id="proxying-canvases-to-workers:the-canvas-element-6"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code>
+   element.</p></li></ol>
+
+  <p>A <code id="proxying-canvases-to-workers:canvasproxy-6"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object can be <a href="/breakup/specs/core-algorithms/#concept-transferable-neutered" id="proxying-canvases-to-workers:concept-transferable-neutered">neutered</a> (like any <code id="proxying-canvases-to-workers:transferable-2"><a href="/breakup/specs/core-algorithms/#transferable">Transferable</a></code> object),
+  meaning it can no longer be <a href="/breakup/specs/core-algorithms/#transfer-a-transferable-object" id="proxying-canvases-to-workers:transfer-a-transferable-object-2">transferred</a>, and
+  can be <dfn id="concept-canvasproxy-disabled">disabled</dfn>, meaning it can no longer be bound
+  to rendering contexts. When first created, a <code id="proxying-canvases-to-workers:canvasproxy-7"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object must be neither.</p>
+
+  <p>A <code id="proxying-canvases-to-workers:canvasproxy-8"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> is created with a link to a <code id="proxying-canvases-to-workers:the-canvas-element-7"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element. A
+  <code id="proxying-canvases-to-workers:canvasproxy-9"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object that has not been <a href="/breakup/specs/html-canvas/#concept-canvasproxy-disabled" id="proxying-canvases-to-workers:concept-canvasproxy-disabled">disabled</a> must have a strong reference to its canvas
+  element.</p>
+
+  <p>The <dfn id="dom-canvasproxy-setcontext"><code>setContext(<var>context</var>)</code></dfn> method of <code id="proxying-canvases-to-workers:canvasproxy-10"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> objects, when invoked,
+  must run the following steps:</p>
+
+  <ol><li><p>If the <code id="proxying-canvases-to-workers:canvasproxy-11"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object has been <a href="/breakup/specs/html-canvas/#concept-canvasproxy-disabled" id="proxying-canvases-to-workers:concept-canvasproxy-disabled-2">disabled</a>, throw an <code id="proxying-canvases-to-workers:invalidstateerror-4"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code>
+   exception and abort these steps.</p></li><li><p>If the <code id="proxying-canvases-to-workers:canvasproxy-12"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object has not been <a href="/breakup/specs/core-algorithms/#concept-transferable-neutered" id="proxying-canvases-to-workers:concept-transferable-neutered-2">neutered</a>, then <a href="/breakup/specs/core-algorithms/#concept-transferable-neutered" id="proxying-canvases-to-workers:concept-transferable-neutered-3">neuter</a> it.</p></li><li><p>If <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="proxying-canvases-to-workers:concept-canvas-context-bitmap-mode">context
+   bitmap mode</a> is <a href="/breakup/specs/html-canvas/#concept-canvas-fixed" id="proxying-canvases-to-workers:concept-canvas-fixed">fixed</a>, then throw an
+   <code id="proxying-canvases-to-workers:invalidstateerror-5"><a href="/breakup/specs/core-algorithms/#invalidstateerror">InvalidStateError</a></code> exception and abort these steps.</p></li><li><p>If <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="proxying-canvases-to-workers:concept-canvas-context-bitmap-mode-2">context
+   bitmap mode</a> is <a href="/breakup/specs/html-canvas/#concept-canvas-bound" id="proxying-canvases-to-workers:concept-canvas-bound">bound</a>, then run <var>context</var>'s <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#concept-canvas-unbinding-steps" id="proxying-canvases-to-workers:concept-canvas-unbinding-steps">unbinding steps</a> and
+   set its <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="proxying-canvases-to-workers:concept-canvas-context-bitmap-mode-3">context
+   bitmap mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-unbound" id="proxying-canvases-to-workers:concept-canvas-unbound">unbound</a>.</p></li><li><p>Run <var>context</var>'s <a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#concept-canvas-binding-steps" id="proxying-canvases-to-workers:concept-canvas-binding-steps">binding
+   steps</a> to bind it to this <code id="proxying-canvases-to-workers:canvasproxy-13"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object's <code id="proxying-canvases-to-workers:the-canvas-element-8"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code>
+   element.</p></li><li><p>Set the <var>context</var>'s <a href="/breakup/specs/html-canvas/#concept-canvas-context-bitmap-mode" id="proxying-canvases-to-workers:concept-canvas-context-bitmap-mode-4">context bitmap mode</a> to <a href="/breakup/specs/html-canvas/#concept-canvas-bound" id="proxying-canvases-to-workers:concept-canvas-bound-2">bound</a>.</p></li></ol>
+
+  <p id="transferCanvasProxy">To <a href="/breakup/specs/core-algorithms/#transfer-a-transferable-object" id="proxying-canvases-to-workers:transfer-a-transferable-object-3">transfer</a> a
+  <code id="proxying-canvases-to-workers:canvasproxy-14"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object <var>old</var> to a new owner <var>owner</var>,
+  a user agent must create a new <code id="proxying-canvases-to-workers:canvasproxy-15"><a href="/breakup/specs/html-canvas/#canvasproxy">CanvasProxy</a></code> object linked to the same
+  <code id="proxying-canvases-to-workers:the-canvas-element-9"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element as <var>old</var>, thus obtaining <var>new</var>,
+  must <a href="/breakup/specs/core-algorithms/#concept-transferable-neutered" id="proxying-canvases-to-workers:concept-transferable-neutered-4">neuter</a> and <a href="/breakup/specs/html-canvas/#concept-canvasproxy-disabled" id="proxying-canvases-to-workers:concept-canvasproxy-disabled-3">disable</a> the <var>old</var> object, and must
+  finally return <var>new</var>.</p>
+
+  <div class="example">
+
+   <p>Here is a clock implemented on a worker. First, the main page:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;title&gt;Clock&lt;/title&gt;
+&lt;canvas&gt;&lt;/canvas&gt; 
+&lt;script&gt;
+  var canvas = document.getElementsByTagName('canvas')[0];
+  var proxy = canvas.transferControlToProxy();
+  var worker = new Worker('clock.js');
+  worker.postMessage(proxy, [proxy]);
+&lt;/script&gt;</pre>
+
+   <p>Second, the worker:</p>
+
+   <pre>onmessage = function (event) {
+  var context = new CanvasRenderingContext2D();
+  event.data.setContext(context); // event.data is the CanvasProxy object
+  setInterval(function () {
+    context.clearRect(0, 0, context.width, context.height);
+    context.fillText(new Date(), 0, 100);
+    context.commit();
+  }, 1000);
+};</pre>
+
+  </div></section>
+
+  
+
+
+  
+
+
+
+
+  
+
+  <section><h2>Colour spaces and colour correction</h2>
+
+  <p>The <code id="colour-spaces-and-colour-correction:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> APIs must perform colour correction at only two points: when rendering
+  images with their own gamma correction and colour space information onto a bitmap, to convert the
+  image to the colour space used by the bitmaps (e.g. using the 2D Context's <code id="colour-spaces-and-colour-correction:dom-context-2d-drawimage"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#dom-context-2d-drawimage">drawImage()</a></code> method with an <code id="colour-spaces-and-colour-correction:htmlimageelement"><a href="/breakup/specs/html-images/#htmlimageelement">HTMLImageElement</a></code>
+  object), and when rendering the actual canvas bitmap to the output device.</p>
+
+  <p class="note">Thus, in the 2D context, colours used to draw shapes onto the canvas will exactly
+  match colours obtained through the <code id="colour-spaces-and-colour-correction:dom-context-2d-getimagedata"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#dom-context-2d-getimagedata">getImageData()</a></code> method.</p>
+
+  <p>The <code id="colour-spaces-and-colour-correction:dom-canvas-todataurl"><a href="/breakup/specs/html-canvas/#dom-canvas-todataurl">toDataURL()</a></code> method must not include colour space
+  information in the resources they return. Where the output format allows it, the colour of pixels
+  in resources created by <code id="colour-spaces-and-colour-correction:dom-canvas-todataurl-2"><a href="/breakup/specs/html-canvas/#dom-canvas-todataurl">toDataURL()</a></code> must match those
+  returned by the <code id="colour-spaces-and-colour-correction:dom-context-2d-getimagedata-2"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#dom-context-2d-getimagedata">getImageData()</a></code> method.</p>
+
+  <p>In user agents that support CSS, the colour space used by a <code id="colour-spaces-and-colour-correction:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element must
+  match the colour space used for processing any colours for that element in CSS.</p>
+
+  <p>The gamma correction and colour space information of images must be handled in such a way that
+  an image rendered directly using an <code id="colour-spaces-and-colour-correction:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element would use the same colours as one
+  painted on a <code id="colour-spaces-and-colour-correction:the-canvas-element-3"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element that is then itself rendered. Furthermore, the rendering
+  of images that have no colour correction information (such as those returned by the <code id="colour-spaces-and-colour-correction:dom-canvas-todataurl-3"><a href="/breakup/specs/html-canvas/#dom-canvas-todataurl">toDataURL()</a></code> method) must be rendered with no colour
+  correction.</p>
+
+  <p class="note">Thus, in the 2D context, calling the <code id="colour-spaces-and-colour-correction:dom-context-2d-drawimage-2"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#dom-context-2d-drawimage">drawImage()</a></code> method to render the output of the <code id="colour-spaces-and-colour-correction:dom-canvas-todataurl-4"><a href="/breakup/specs/html-canvas/#dom-canvas-todataurl">toDataURL()</a></code> method to the canvas, given the appropriate
+  dimensions, has no visible effect.</p></section>
+
+  
+
+
+
+  <section><h2>Serialising bitmaps to a file</h2>
+
+  
+
+  <p>When a user agent is to create <dfn id="a-serialisation-of-the-bitmap-as-a-file">a serialisation of the bitmap as a file</dfn>, optionally
+  with some given <var>arguments</var>, and optionally with a <var>native</var> flag set, it must
+  create an image file in the format given by the first value of <var>arguments</var>, or, if there
+  are no <var>arguments</var>, in the PNG format. [[!PNG]]</p>
+
+  <p>If the <var>native</var> flag is set, or if the bitmap has one pixel per coordinate space unit,
+  then the image file must have the same pixel data (before compression, if applicable) as the
+  bitmap, and if the file format used supports encoding resolution metadata, the resolution of that
+  bitmap (device pixels per coordinate space units being interpreted as image pixels per CSS pixel)
+  must be given as well.</p>
+
+  <p>Otherwise, the image file's pixel data must be the bitmap's pixel data scaled to one image
+  pixel per coordinate space unit, and if the file format used supports encoding resolution
+  metadata, the resolution must be given as 96dpi (one image pixel per CSS pixel).</p>
+
+  <p>If <var>arguments</var> is not empty, the first value must be interpreted as a <a href="/breakup/specs/core-algorithms/#mime-type" id="serialising-bitmaps-to-a-file:mime-type">MIME type</a> giving the format to use. If the type has any parameters, it
+  must be treated as not supported.</p>
+
+  <p class="example">For example, the value "<code id="serialising-bitmaps-to-a-file:image/png"><a href="#image/png">image/png</a></code>" would mean to generate a PNG
+  image, the value "<code id="serialising-bitmaps-to-a-file:image/jpeg"><a href="#image/jpeg">image/jpeg</a></code>" would mean to generate a JPEG image, and the value
+  "<code id="serialising-bitmaps-to-a-file:image/svg+xml"><a href="#image/svg+xml">image/svg+xml</a></code>" would mean to generate an SVG image (which would require that the
+  user agent track how the bitmap was generated, an unlikely, though potentially awesome,
+  feature).</p>
+
+  <p>User agents must support PNG ("<code id="serialising-bitmaps-to-a-file:image/png-2"><a href="#image/png">image/png</a></code>"). User agents may support other types.
+  If the user agent does not support the requested type, it must create the file using the PNG
+  format. [[!PNG]]</p>
+
+  <p>User agents must <a href="/breakup/specs/core-algorithms/#converted-to-ascii-lowercase" id="serialising-bitmaps-to-a-file:converted-to-ascii-lowercase">convert the provided type to ASCII
+  lowercase</a> before establishing if they support that type.</p>
+
+  <p>For image types that do not support an alpha channel, the serialised image must be the bitmap
+  image composited onto a solid black background using the source-over operator.</p>
+
+  <p>If the first argument in <var>arguments</var> gives a type corresponding to one of the
+  types given in the first column of the following table, and the user agent supports that type,
+  then the subsequent arguments, if any, must be treated as described in the second cell of that
+  row.</p>
+
+  
+
+  <table id="canvas-serialisation-arguments"><caption>Arguments for serialisation methods</caption><thead><tr><th> Type </th><th> Other arguments </th><th> Reference
+   </th></tr></thead><tbody><tr><td> <code id="serialising-bitmaps-to-a-file:image/jpeg-2"><a href="#image/jpeg">image/jpeg</a></code>
+     </td><td> The second argument, if it is a number in the range 0.0 to 1.0
+     inclusive, must be treated as the desired quality level. If it is not a number or is outside that range, the user agent must use its
+     default value, as if the argument had been omitted.
+     </td><td> [[!JPEG]]
+  </td></tr></tbody></table>
+
+  
+
+  <p>For the purposes of these rules, an argument is considered to be a number if it is converted to
+  an IDL double value by the rules for handling arguments of type <code>any</code> in the
+  Web IDL specification. [[!WEBIDL]]</p>
+
+  <p>Other arguments must be ignored and must not cause the user agent to throw an exception. A
+  future version of this specification will probably define other parameters to be passed to these
+  methods to allow authors to more carefully control compression settings, image metadata, etc.</p></section>
+
+  
+
+
+
+  
+
+  <section><h2>Security with <code id="security-with-canvas-elements:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements</h2>
+
+  <p><i>This section is non-normative.</i></p>
+
+  <p><strong>Information leakage</strong> can occur if scripts from one <a href="/breakup/specs/browser-dom/#origin-2" id="security-with-canvas-elements:origin-2">origin</a> can
+  access information (e.g. read pixels) from images from another origin (one that isn't the <a href="/breakup/specs/browser-dom/#same-origin" id="security-with-canvas-elements:same-origin">same</a>).</p>
+
+  <p>To mitigate this, bitmaps used with <code id="security-with-canvas-elements:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements are defined to have a flag
+  indicating whether they are <a href="/breakup/specs/html-canvas/#concept-canvas-origin-clean" id="security-with-canvas-elements:concept-canvas-origin-clean">origin-clean</a>. All
+  bitmaps start with their <a href="/breakup/specs/html-canvas/#concept-canvas-origin-clean" id="security-with-canvas-elements:concept-canvas-origin-clean-2">origin-clean</a> set to
+  true. The flag is set to false when cross-origin images or fonts are used.</p>
+
+  <p>The <code id="security-with-canvas-elements:dom-canvas-todataurl"><a href="/breakup/specs/html-canvas/#dom-canvas-todataurl">toDataURL()</a></code>, <code id="security-with-canvas-elements:dom-canvas-toblob"><a href="/breakup/specs/html-canvas/#dom-canvas-toblob">toBlob()</a></code>, and <code id="security-with-canvas-elements:dom-context-2d-getimagedata"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#dom-context-2d-getimagedata">getImageData()</a></code> methods check the flag and will
+  throw a <code id="security-with-canvas-elements:securityerror"><a href="/breakup/specs/core-algorithms/#securityerror">SecurityError</a></code> exception rather than leak cross-origin data.</p>
+
+  <p>The flag can be reset in certain situations; for example, when a
+  <code id="security-with-canvas-elements:canvasrenderingcontext2d"><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#canvasrenderingcontext2d">CanvasRenderingContext2D</a></code> is bound to a new <code id="security-with-canvas-elements:the-canvas-element-3"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code>, the bitmap is cleared
+  and its flag reset.</p></section></section></body></html>

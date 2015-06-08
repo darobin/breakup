@@ -1,0 +1,823 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Core Attributes of HTML</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-attributes"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        A set of attributes available globally in HTML and reusable in other languages.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2><dfn>Global attributes</dfn></h2>
+
+  <p>The following attributes are common to and may be specified on all <a href="/breakup/specs/core-algorithms/#html-elements" id="global-attributes:html-elements">HTML
+  elements</a> (even those not defined in this specification):</p>
+
+  <ul class="brief"><li><code id="global-attributes:the-accesskey-attribute"><a href="/breakup/specs/html-interacton-attr/#the-accesskey-attribute">accesskey</a></code></li><li><code id="global-attributes:classes"><a href="/breakup/specs/html-attributes/#classes">class</a></code></li><li><code id="global-attributes:attr-contenteditable"><a href="/breakup/specs/html-editing/#attr-contenteditable">contenteditable</a></code></li><li><code id="global-attributes:attr-contextmenu"><a href="#attr-contextmenu">contextmenu</a></code></li><li><code id="global-attributes:the-dir-attribute"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code></li><li><code id="global-attributes:the-draggable-attribute"><a href="/breakup/specs/dnd/#the-draggable-attribute">draggable</a></code></li><li><code id="global-attributes:the-dropzone-attribute"><a href="/breakup/specs/dnd/#the-dropzone-attribute">dropzone</a></code></li><li><code id="global-attributes:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code></li><li><code id="global-attributes:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code></li><li><code id="global-attributes:attr-itemid"><a href="http://www.w3.org/TR/microdata/#attr-itemid">itemid</a></code></li><li><code id="global-attributes:names:-the-itemprop-attribute"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop</a></code></li><li><code id="global-attributes:attr-itemref"><a href="http://www.w3.org/TR/microdata/#attr-itemref">itemref</a></code></li><li><code id="global-attributes:attr-itemscope"><a href="http://www.w3.org/TR/microdata/#attr-itemscope">itemscope</a></code></li><li><code id="global-attributes:attr-itemtype"><a href="http://www.w3.org/TR/microdata/#attr-itemtype">itemtype</a></code></li><li><code id="global-attributes:attr-lang"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code></li><li><code id="global-attributes:attr-spellcheck"><a href="/breakup/specs/html-editing/#attr-spellcheck">spellcheck</a></code></li><li><code id="global-attributes:the-style-attribute"><a href="/breakup/specs/html-attributes/#the-style-attribute">style</a></code></li><li><code id="global-attributes:attr-tabindex"><a href="/breakup/specs/html-interacton-attr/#attr-tabindex">tabindex</a></code></li><li><code id="global-attributes:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code></li><li><code id="global-attributes:attr-translate"><a href="/breakup/specs/html-attributes/#attr-translate">translate</a></code></li></ul>
+
+  
+
+  <p>These attributes are only defined by this specification as attributes for <a href="/breakup/specs/core-algorithms/#html-elements" id="global-attributes:html-elements-2">HTML
+  elements</a>. When this specification refers to elements having these attributes, elements from
+  namespaces that are not defined as having these attributes must not be considered as being
+  elements with these attributes.</p>
+
+  <div class="example">
+
+   <p>For example, in the following XML fragment, the "<code>bogus</code>" element does not
+   have a <code id="global-attributes:the-dir-attribute-2"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute as defined in this specification, despite
+   having an attribute with the literal name "<code>dir</code>". Thus, <a href="/breakup/specs/html-attributes/#the-directionality" id="global-attributes:the-directionality">the
+   directionality</a> of the inner-most <code id="global-attributes:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code> element is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="global-attributes:concept-rtl">rtl</a>', inherited from the <code id="global-attributes:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element indirectly through
+   the "<code>bogus</code>" element.</p>
+
+   <pre class="bad">&lt;div xmlns="http://www.w3.org/1999/xhtml" dir="rtl"&gt;
+ &lt;bogus xmlns="http://example.net/ns" dir="ltr"&gt;
+  &lt;span xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;/span&gt;
+ &lt;/bogus&gt;
+&lt;/div&gt;</pre>
+
+  </div>
+
+  
+
+  <hr>
+
+  <p>To enable assistive technology products to expose a more fine-grained interface than is
+  otherwise possible with HTML elements and attributes, a set of <a href="#wai-aria">annotations
+  for assistive technology products</a> can be specified (the ARIA <code id="global-attributes:attr-aria-role"><a href="/breakup/specs/core-algorithms/#attr-aria-role">role</a></code> and <code id="global-attributes:attr-aria-*"><a href="/breakup/specs/core-algorithms/#attr-aria-*">aria-*</a></code> attributes). [[!ARIA]]</p>
+
+  <hr>
+
+  <p>The following <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="global-attributes:event-handler-content-attributes">event handler content attributes</a> may be specified on any <a href="/breakup/specs/core-algorithms/#html-elements" id="global-attributes:html-elements-3">HTML element</a>:</p>
+
+  <ul class="brief"><li><code id="global-attributes:handler-onabort"><a href="/breakup/specs/browser-dom/#handler-onabort">onabort</a></code></li><li><code id="global-attributes:handler-onautocomplete"><a href="/breakup/specs/browser-dom/#handler-onautocomplete">onautocomplete</a></code></li><li><code id="global-attributes:handler-onautocompleteerror"><a href="/breakup/specs/browser-dom/#handler-onautocompleteerror">onautocompleteerror</a></code></li><li><code id="global-attributes:handler-onblur"><a href="/breakup/specs/browser-dom/#handler-onblur">onblur</a></code>*</li><li><code id="global-attributes:handler-oncancel"><a href="/breakup/specs/browser-dom/#handler-oncancel">oncancel</a></code></li><li><code id="global-attributes:handler-oncanplay"><a href="/breakup/specs/browser-dom/#handler-oncanplay">oncanplay</a></code></li><li><code id="global-attributes:handler-oncanplaythrough"><a href="/breakup/specs/browser-dom/#handler-oncanplaythrough">oncanplaythrough</a></code></li><li><code id="global-attributes:handler-onchange"><a href="/breakup/specs/browser-dom/#handler-onchange">onchange</a></code></li><li><code id="global-attributes:handler-onclick"><a href="/breakup/specs/browser-dom/#handler-onclick">onclick</a></code></li><li><code id="global-attributes:handler-onclose"><a href="/breakup/specs/browser-dom/#handler-onclose">onclose</a></code></li><li><code id="global-attributes:handler-oncontextmenu"><a href="/breakup/specs/browser-dom/#handler-oncontextmenu">oncontextmenu</a></code></li><li><code id="global-attributes:handler-oncuechange"><a href="/breakup/specs/browser-dom/#handler-oncuechange">oncuechange</a></code></li><li><code id="global-attributes:handler-ondblclick"><a href="/breakup/specs/browser-dom/#handler-ondblclick">ondblclick</a></code></li><li><code id="global-attributes:handler-ondrag"><a href="/breakup/specs/browser-dom/#handler-ondrag">ondrag</a></code></li><li><code id="global-attributes:handler-ondragend"><a href="/breakup/specs/browser-dom/#handler-ondragend">ondragend</a></code></li><li><code id="global-attributes:handler-ondragenter"><a href="/breakup/specs/browser-dom/#handler-ondragenter">ondragenter</a></code></li><li><code id="global-attributes:handler-ondragexit"><a href="/breakup/specs/browser-dom/#handler-ondragexit">ondragexit</a></code></li><li><code id="global-attributes:handler-ondragleave"><a href="/breakup/specs/browser-dom/#handler-ondragleave">ondragleave</a></code></li><li><code id="global-attributes:handler-ondragover"><a href="/breakup/specs/browser-dom/#handler-ondragover">ondragover</a></code></li><li><code id="global-attributes:handler-ondragstart"><a href="/breakup/specs/browser-dom/#handler-ondragstart">ondragstart</a></code></li><li><code id="global-attributes:handler-ondrop"><a href="/breakup/specs/browser-dom/#handler-ondrop">ondrop</a></code></li><li><code id="global-attributes:handler-ondurationchange"><a href="/breakup/specs/browser-dom/#handler-ondurationchange">ondurationchange</a></code></li><li><code id="global-attributes:handler-onemptied"><a href="/breakup/specs/browser-dom/#handler-onemptied">onemptied</a></code></li><li><code id="global-attributes:handler-onended"><a href="/breakup/specs/browser-dom/#handler-onended">onended</a></code></li><li><code id="global-attributes:handler-onerror"><a href="/breakup/specs/browser-dom/#handler-onerror">onerror</a></code>*</li><li><code id="global-attributes:handler-onfocus"><a href="/breakup/specs/browser-dom/#handler-onfocus">onfocus</a></code>*</li><li><code id="global-attributes:handler-oninput"><a href="/breakup/specs/browser-dom/#handler-oninput">oninput</a></code></li><li><code id="global-attributes:handler-oninvalid"><a href="/breakup/specs/browser-dom/#handler-oninvalid">oninvalid</a></code></li><li><code id="global-attributes:handler-onkeydown"><a href="/breakup/specs/browser-dom/#handler-onkeydown">onkeydown</a></code></li><li><code id="global-attributes:handler-onkeypress"><a href="/breakup/specs/browser-dom/#handler-onkeypress">onkeypress</a></code></li><li><code id="global-attributes:handler-onkeyup"><a href="/breakup/specs/browser-dom/#handler-onkeyup">onkeyup</a></code></li><li><code id="global-attributes:handler-onload"><a href="/breakup/specs/browser-dom/#handler-onload">onload</a></code>*</li><li><code id="global-attributes:handler-onloadeddata"><a href="/breakup/specs/browser-dom/#handler-onloadeddata">onloadeddata</a></code></li><li><code id="global-attributes:handler-onloadedmetadata"><a href="/breakup/specs/browser-dom/#handler-onloadedmetadata">onloadedmetadata</a></code></li><li><code id="global-attributes:handler-onloadstart"><a href="/breakup/specs/browser-dom/#handler-onloadstart">onloadstart</a></code></li><li><code id="global-attributes:handler-onmousedown"><a href="/breakup/specs/browser-dom/#handler-onmousedown">onmousedown</a></code></li><li><code id="global-attributes:handler-onmouseenter"><a href="/breakup/specs/browser-dom/#handler-onmouseenter">onmouseenter</a></code></li><li><code id="global-attributes:handler-onmouseleave"><a href="/breakup/specs/browser-dom/#handler-onmouseleave">onmouseleave</a></code></li><li><code id="global-attributes:handler-onmousemove"><a href="/breakup/specs/browser-dom/#handler-onmousemove">onmousemove</a></code></li><li><code id="global-attributes:handler-onmouseout"><a href="/breakup/specs/browser-dom/#handler-onmouseout">onmouseout</a></code></li><li><code id="global-attributes:handler-onmouseover"><a href="/breakup/specs/browser-dom/#handler-onmouseover">onmouseover</a></code></li><li><code id="global-attributes:handler-onmouseup"><a href="/breakup/specs/browser-dom/#handler-onmouseup">onmouseup</a></code></li><li><code id="global-attributes:handler-onmousewheel"><a href="/breakup/specs/browser-dom/#handler-onmousewheel">onmousewheel</a></code></li><li><code id="global-attributes:handler-onpause"><a href="/breakup/specs/browser-dom/#handler-onpause">onpause</a></code></li><li><code id="global-attributes:handler-onplay"><a href="/breakup/specs/browser-dom/#handler-onplay">onplay</a></code></li><li><code id="global-attributes:handler-onplaying"><a href="/breakup/specs/browser-dom/#handler-onplaying">onplaying</a></code></li><li><code id="global-attributes:handler-onprogress"><a href="/breakup/specs/browser-dom/#handler-onprogress">onprogress</a></code></li><li><code id="global-attributes:handler-onratechange"><a href="/breakup/specs/browser-dom/#handler-onratechange">onratechange</a></code></li><li><code id="global-attributes:handler-onreset"><a href="/breakup/specs/browser-dom/#handler-onreset">onreset</a></code></li><li><code id="global-attributes:handler-onresize"><a href="/breakup/specs/browser-dom/#handler-onresize">onresize</a></code>*</li><li><code id="global-attributes:handler-onscroll"><a href="/breakup/specs/browser-dom/#handler-onscroll">onscroll</a></code>*</li><li><code id="global-attributes:handler-onseeked"><a href="/breakup/specs/browser-dom/#handler-onseeked">onseeked</a></code></li><li><code id="global-attributes:handler-onseeking"><a href="/breakup/specs/browser-dom/#handler-onseeking">onseeking</a></code></li><li><code id="global-attributes:handler-onselect"><a href="/breakup/specs/browser-dom/#handler-onselect">onselect</a></code></li><li><code id="global-attributes:handler-onshow"><a href="/breakup/specs/browser-dom/#handler-onshow">onshow</a></code></li><li><code id="global-attributes:handler-onsort"><a href="/breakup/specs/browser-dom/#handler-onsort">onsort</a></code></li><li><code id="global-attributes:handler-onstalled"><a href="/breakup/specs/browser-dom/#handler-onstalled">onstalled</a></code></li><li><code id="global-attributes:handler-onsubmit"><a href="/breakup/specs/browser-dom/#handler-onsubmit">onsubmit</a></code></li><li><code id="global-attributes:handler-onsuspend"><a href="/breakup/specs/browser-dom/#handler-onsuspend">onsuspend</a></code></li><li><code id="global-attributes:handler-ontimeupdate"><a href="/breakup/specs/browser-dom/#handler-ontimeupdate">ontimeupdate</a></code></li><li><code id="global-attributes:handler-ontoggle"><a href="/breakup/specs/browser-dom/#handler-ontoggle">ontoggle</a></code></li><li><code id="global-attributes:handler-onvolumechange"><a href="/breakup/specs/browser-dom/#handler-onvolumechange">onvolumechange</a></code></li><li><code id="global-attributes:handler-onwaiting"><a href="/breakup/specs/browser-dom/#handler-onwaiting">onwaiting</a></code></li></ul>
+
+  <p class="note">The attributes marked with an asterisk have a different meaning when specified on
+  <code id="global-attributes:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> elements as those elements expose <a href="/breakup/specs/browser-dom/#event-handlers" id="global-attributes:event-handlers">event handlers</a> of the
+  <code id="global-attributes:window"><a href="/breakup/specs/browser-dom/#window">Window</a></code> object with the same names.</p>
+
+  <p class="note">While these attributes apply to all elements, they are not useful on all elements.
+  For example, only <a href="#media-element" id="global-attributes:media-element">media elements</a> will ever receive a <code id="global-attributes:event-media-volumechange"><a href="#event-media-volumechange">volumechange</a></code> event fired by the user agent.</p>
+
+  <hr>
+
+  <p><a href="/breakup/specs/html-attributes/#custom-data-attribute" id="global-attributes:custom-data-attribute">Custom data attributes</a> (e.g. <code>data-foldername</code> or <code>data-msgid</code>) can be specified on any <a href="/breakup/specs/core-algorithms/#html-elements" id="global-attributes:html-elements-4">HTML element</a>, to store custom data specific to the page.</p>
+
+  <hr>
+
+  <p>In <a href="/breakup/specs/core-algorithms/#html-documents" id="global-attributes:html-documents">HTML documents</a>, elements in the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="global-attributes:html-namespace-2">HTML namespace</a> may have an <code>xmlns</code> attribute specified, if, and only if, it has the exact value "<code>http://www.w3.org/1999/xhtml</code>". This does not apply to <a href="/breakup/specs/core-algorithms/#xml-documents" id="global-attributes:xml-documents">XML
+  documents</a>.</p>
+
+  <p class="note">In HTML, the <code>xmlns</code> attribute has absolutely no effect. It
+  is basically a talisman. It is allowed merely to make migration to and from XHTML mildly easier.
+  When parsed by an <a href="/breakup/specs/html-syntax/#html-parser" id="global-attributes:html-parser">HTML parser</a>, the attribute ends up in no namespace, not the "<code>http://www.w3.org/2000/xmlns/</code>" namespace like namespace declaration attributes in
+  XML do.</p>
+
+  <p class="note">In XML, an <code>xmlns</code> attribute is part of the namespace
+  declaration mechanism, and an element cannot actually have an <code>xmlns</code>
+  attribute in no namespace specified.</p>
+
+  <hr>
+
+  <p>The XML specification also allows the use of the <code id="global-attributes:attr-xml-space"><a href="/breakup/specs/core-algorithms/#attr-xml-space">xml:space</a></code>
+  attribute in the <a href="/breakup/specs/core-algorithms/#xml-namespace" id="global-attributes:xml-namespace">XML namespace</a> on any element in an <a href="/breakup/specs/core-algorithms/#xml-documents" id="global-attributes:xml-documents-2">XML
+  document</a>. This attribute has no effect on <a href="/breakup/specs/core-algorithms/#html-elements" id="global-attributes:html-elements-5">HTML elements</a>, as the default
+  behaviour in HTML is to preserve whitespace. [[!XML]]</p>
+
+  <p class="note">There is no way to serialise the <code id="global-attributes:attr-xml-space-2"><a href="/breakup/specs/core-algorithms/#attr-xml-space">xml:space</a></code>
+  attribute on <a href="/breakup/specs/core-algorithms/#html-elements" id="global-attributes:html-elements-6">HTML elements</a> in the <code id="global-attributes:text/html"><a href="#text/html">text/html</a></code> syntax.</p>
+
+
+  <section><h2>The <dfn><code>id</code></dfn> attribute</h2>
+
+  <p>The <code id="the-id-attribute:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute specifies its element's <a href="/breakup/specs/core-algorithms/#concept-id" id="the-id-attribute:concept-id">unique identifier (ID)</a>. [[!DOM]]</p>
+
+  <p>The value must be unique amongst all the <a href="/breakup/specs/core-algorithms/#concept-id" id="the-id-attribute:concept-id-2">IDs</a> in the element's
+  <a href="/breakup/specs/core-algorithms/#home-subtree" id="the-id-attribute:home-subtree">home subtree</a> and must contain at least one character. The value must not contain any
+  <a href="/breakup/specs/core-algorithms/#space-character" id="the-id-attribute:space-character">space characters</a>.</p>
+
+  
+
+  <p class="note">There are no other restrictions on what form an ID can take; in particular, IDs
+  can consist of just digits, start with a digit, start with an underscore, consist of just
+  punctuation, etc.</p>
+
+  <p class="note">An element's <a href="/breakup/specs/core-algorithms/#concept-id" id="the-id-attribute:concept-id-3">unique identifier</a> can be used for a
+  variety of purposes, most notably as a way to link to specific parts of a document using fragment
+  identifiers, as a way to target an element when scripting, and as a way to style a specific
+  element from CSS.</p>
+
+  
+
+  <p>Identifiers are opaque strings. Particular meanings should not be derived from the value of the
+  <code id="the-id-attribute:the-id-attribute-2"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute.</p></section>
+
+  
+
+
+  <section><h2>The <code id="the-title-attribute:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute</h2>
+
+  <p>The <dfn id="attr-title"><code>title</code></dfn> attribute <a href="#represents" id="the-title-attribute:represents">represents</a> advisory
+  information for the element, such as would be appropriate for a tooltip. On a link, this could be
+  the title or a description of the target resource; on an image, it could be the image credit or a
+  description of the image; on a paragraph, it could be a footnote or commentary on the text; on a
+  citation, it could be further information about the source; on <a href="#interactive-content-2" id="the-title-attribute:interactive-content-2">interactive content</a>,
+  it could be a label for, or instructions for, use of the element; and so forth. The value is
+  text.</p>
+
+  
+  <p class="note">Relying on the <code id="the-title-attribute:attr-title-2"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute is currently
+  discouraged as many user agents do not expose the attribute in an accessible manner as required by
+  this specification (e.g. requiring a pointing device such as a mouse to cause a tooltip to appear,
+  which excludes keyboard-only users and touch-only users, such as anyone with a modern phone or
+  tablet).</p>
+
+  <p>If this attribute is omitted from an element, then it implies that the <code id="the-title-attribute:attr-title-3"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute of the nearest ancestor <a href="/breakup/specs/core-algorithms/#html-elements" id="the-title-attribute:html-elements">HTML
+  element</a> with a <code id="the-title-attribute:attr-title-4"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute set is also relevant to this
+  element. Setting the attribute overrides this, explicitly stating that the advisory information of
+  any ancestors is not relevant to this element. Setting the attribute to the empty string indicates
+  that the element has no advisory information.</p>
+
+  <p>If the <code id="the-title-attribute:attr-title-5"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute's value contains U+000A LINE FEED (LF)
+  characters, the content is split into multiple lines. Each U+000A LINE FEED (LF) character
+  represents a line break.</p>
+
+  <div class="example">
+
+   <p>Caution is advised with respect to the use of newlines in <code id="the-title-attribute:attr-title-6"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attributes.</p>
+
+   <p>For instance, the following snippet actually defines an abbreviation's expansion <em>with a
+   line break in it</em>:</p>
+
+   <pre class="bad">&lt;p&gt;My logs show that there was some interest in &lt;abbr title="Hypertext
+Transport Protocol"&gt;HTTP&lt;/abbr&gt; today.&lt;/p&gt;</pre> 
+
+  </div>
+
+  <p>Some elements, such as <code id="the-title-attribute:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="the-title-attribute:the-abbr-element"><a href="/breakup/specs/html-text/#the-abbr-element">abbr</a></code>, and <code id="the-title-attribute:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>, define
+  additional semantics for the <code id="the-title-attribute:attr-title-7"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute beyond the semantics
+  described above.</p> 
+
+  
+
+  <p>The <dfn id="advisory-information">advisory information</dfn> of an element is the value that the following algorithm
+  returns, with the algorithm being aborted once a value is returned. When the algorithm returns the
+  empty string, then there is no advisory information.</p>
+
+  <ol><li><p>If the element is a <code id="the-title-attribute:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="the-title-attribute:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code>, <code id="the-title-attribute:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code>,
+   <code id="the-title-attribute:the-abbr-element-2"><a href="/breakup/specs/html-text/#the-abbr-element">abbr</a></code>, or <code id="the-title-attribute:the-menuitem-element"><a href="#the-menuitem-element">menuitem</a></code> element, then: if the element has a <code>title</code> attribute,  return the value of that attribute,
+   otherwise, return the empty string.</p></li><li><p>Otherwise, if the element has a <code id="the-title-attribute:attr-title-8"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute, then
+   return its value.</p></li><li><p>Otherwise, if the element has a parent element, then return the parent element's
+   <a href="/breakup/specs/html-attributes/#advisory-information" id="the-title-attribute:advisory-information">advisory information</a>.</p></li><li><p>Otherwise, return the empty string.</p></li></ol>
+
+  <p>User agents should inform the user when elements have <a href="/breakup/specs/html-attributes/#advisory-information" id="the-title-attribute:advisory-information-2">advisory information</a>,
+  otherwise the information would not be discoverable.</p>
+
+  <hr>
+
+  <p>The <dfn id="dom-title"><code>title</code></dfn> IDL attribute must <a href="/breakup/specs/core-algorithms/#reflect" id="the-title-attribute:reflect">reflect</a> the
+  <code id="the-title-attribute:attr-title-9"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> content attribute.</p></section>
+
+  
+
+
+
+  <section><h2>The <code id="the-lang-and-xml:lang-attributes:attr-lang"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> and <code id="the-lang-and-xml:lang-attributes:attr-xml-lang"><a href="/breakup/specs/html-attributes/#attr-xml-lang">xml:lang</a></code> attributes</h2>
+
+  <p>The <dfn id="attr-lang"><code>lang</code></dfn> attribute (in no namespace) specifies the
+  primary language for the element's contents and for any of the element's attributes that contain
+  text. Its value must be a valid BCP 47 language tag, or the empty string. Setting the attribute to
+  the empty string indicates that the primary language is unknown. [[!BCP47]]</p>
+
+  <p>The <dfn id="attr-xml-lang"><code>lang</code></dfn> attribute in the <a href="/breakup/specs/core-algorithms/#xml-namespace" id="the-lang-and-xml:lang-attributes:xml-namespace">XML
+  namespace</a> is defined in XML. [[!XML]]</p>
+
+  <p>If these attributes are omitted from an element, then the language of this element is the same
+  as the language of its parent element, if any.</p>
+
+  <p>The <code id="the-lang-and-xml:lang-attributes:attr-lang-2"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> attribute in no namespace may be used on any <a href="/breakup/specs/core-algorithms/#html-elements" id="the-lang-and-xml:lang-attributes:html-elements">HTML element</a>.</p>
+
+  <p>The <a href="/breakup/specs/html-attributes/#attr-xml-lang" id="the-lang-and-xml:lang-attributes:attr-xml-lang-2"><code>lang</code> attribute in the <span>XML
+  namespace</span></a> may be used on <a href="/breakup/specs/core-algorithms/#html-elements" id="the-lang-and-xml:lang-attributes:html-elements-2">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#xml-documents" id="the-lang-and-xml:lang-attributes:xml-documents">XML documents</a>,
+  as well as elements in other namespaces if the relevant specifications allow it (in particular,
+  MathML and SVG allow <a href="/breakup/specs/html-attributes/#attr-xml-lang" id="the-lang-and-xml:lang-attributes:attr-xml-lang-3"><code>lang</code> attributes in the
+  <span>XML namespace</span></a> to be specified on their elements). If both the <code id="the-lang-and-xml:lang-attributes:attr-lang-3"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> attribute in no namespace and the <a href="/breakup/specs/html-attributes/#attr-xml-lang" id="the-lang-and-xml:lang-attributes:attr-xml-lang-4"><code>lang</code> attribute in the <span>XML namespace</span></a> are specified on the same
+  element, they must have exactly the same value when compared in an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="the-lang-and-xml:lang-attributes:ascii-case-insensitive">ASCII
+  case-insensitive</a> manner.</p>
+
+  <p>Authors must not use the <a href="/breakup/specs/html-attributes/#attr-xml-lang" id="the-lang-and-xml:lang-attributes:attr-xml-lang-5"><code>lang</code> attribute in
+  the <span>XML namespace</span></a> on <a href="/breakup/specs/core-algorithms/#html-elements" id="the-lang-and-xml:lang-attributes:html-elements-3">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#html-documents" id="the-lang-and-xml:lang-attributes:html-documents">HTML
+  documents</a>. To ease migration to and from XHTML, authors may specify an attribute in no
+  namespace with no prefix and with the literal localname "<code>xml:lang</code>" on
+  <a href="/breakup/specs/core-algorithms/#html-elements" id="the-lang-and-xml:lang-attributes:html-elements-4">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#html-documents" id="the-lang-and-xml:lang-attributes:html-documents-2">HTML documents</a>, but such attributes must only be
+  specified if a <code id="the-lang-and-xml:lang-attributes:attr-lang-4"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> attribute in no namespace is also specified,
+  and both attributes must have the same value when compared in an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="the-lang-and-xml:lang-attributes:ascii-case-insensitive-2">ASCII
+  case-insensitive</a> manner.</p>
+
+  <p class="note">The attribute in no namespace with no prefix and with the literal localname "<code>xml:lang</code>" has no effect on language processing.</p>
+
+  
+
+  <hr>
+
+  <p>To determine the <dfn id="language">language</dfn> of a node, user agents must look at the nearest ancestor
+  element (including the element itself if the node is an element) that has a <a href="/breakup/specs/html-attributes/#attr-xml-lang" id="the-lang-and-xml:lang-attributes:attr-xml-lang-6"><code>lang</code> attribute in the <span>XML
+  namespace</span></a> set or is an <a href="/breakup/specs/core-algorithms/#html-elements" id="the-lang-and-xml:lang-attributes:html-elements-5">HTML element</a> and has a
+  <code id="the-lang-and-xml:lang-attributes:attr-lang-5"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> in no namespace attribute set. That attribute specifies the
+  language of the node (regardless of its value).</p>
+
+  <p>If both the <code id="the-lang-and-xml:lang-attributes:attr-lang-6"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> attribute in no namespace and the <a href="/breakup/specs/html-attributes/#attr-xml-lang" id="the-lang-and-xml:lang-attributes:attr-xml-lang-7"><code>lang</code> attribute in the <span>XML
+  namespace</span></a> are set on an element, user agents must use the <a href="/breakup/specs/html-attributes/#attr-xml-lang" id="the-lang-and-xml:lang-attributes:attr-xml-lang-8"><code>lang</code> attribute in the <span>XML
+  namespace</span></a>, and the <code id="the-lang-and-xml:lang-attributes:attr-lang-7"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> attribute in no namespace
+  must be <a href="/breakup/specs/core-algorithms/#ignore" id="the-lang-and-xml:lang-attributes:ignore">ignored</a> for the purposes of determining the element's
+  language.</p>
+
+  <p>If neither the node nor any of the node's ancestors, including the <a href="/breakup/specs/core-algorithms/#root-element" id="the-lang-and-xml:lang-attributes:root-element">root element</a>,
+  have either attribute set, but there is a <a href="/breakup/specs/html-metadata/#pragma-set-default-language" id="the-lang-and-xml:lang-attributes:pragma-set-default-language">pragma-set default language</a> set, then that
+  is the language of the node. If there is no <a href="/breakup/specs/html-metadata/#pragma-set-default-language" id="the-lang-and-xml:lang-attributes:pragma-set-default-language-2">pragma-set default language</a> set, then
+  language information from a higher-level protocol (such as HTTP), if any, must be used as the
+  final fallback language instead. In the absence of any such language information, and in cases
+  where the higher-level protocol reports multiple languages, the language of the node is unknown,
+  and the corresponding language tag is the empty string.</p>
+
+  <p>If the resulting value is not a recognised language tag, then it must be treated as an unknown
+  language having the given language tag, distinct from all other languages. For the purposes of
+  round-tripping or communicating with other services that expect language tags, user agents should
+  pass unknown language tags through unmodified, and tagged as being BCP 47 language tags, so that
+  subsequent services do not interpret the data as another type of language description. [[!BCP47]]</p>
+
+  <p class="example">Thus, for instance, an element with <code>lang="xyzzy"</code> would be
+  matched by the selector <code>:lang(xyzzy)</code> (e.g. in CSS), but it would not be
+  matched by <code>:lang(abcde)</code>, even though both are equally invalid. Similarly, if
+  a Web browser and screen reader working in unison communicated about the language of the element,
+  the browser would tell the screen reader that the language was "xyzzy", even if it knew it was
+  invalid, just in case the screen reader actually supported a language with that tag after all.
+  Even if the screen reader supported both BCP 47 and another syntax for encoding language names,
+  and in that other syntax the string "xyzzy" was a way to denote the Belarusian language, it would
+  be <em>incorrect</em> for the screen reader to then start treating text as Belarusian, because
+  "xyzzy" is not how Belarusian is described in BCP 47 codes (BCP 47 uses the code "be" for
+  Belarusian).</p>
+
+  <p>If the resulting value is the empty string, then it must be interpreted as meaning that the
+  language of the node is explicitly unknown.</p>
+
+  <hr>
+
+  <p>User agents may use the element's language to determine proper processing or rendering (e.g. in
+  the selection of appropriate fonts or pronunciations, for dictionary selection, or for the user
+  interfaces of form controls such as date pickers). </p>
+
+  
+
+  <hr>
+
+  <p>The <dfn id="dom-lang"><code>lang</code></dfn> IDL attribute must <a href="/breakup/specs/core-algorithms/#reflect" id="the-lang-and-xml:lang-attributes:reflect">reflect</a> the
+  <code id="the-lang-and-xml:lang-attributes:attr-lang-8"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> content attribute in no namespace.</p></section>
+
+  
+
+
+
+  <section><h2>The <code id="the-translate-attribute:attr-translate"><a href="/breakup/specs/html-attributes/#attr-translate">translate</a></code> attribute</h2>
+
+  
+
+  <p>The <dfn id="attr-translate"><code>translate</code></dfn> attribute is an <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="the-translate-attribute:enumerated-attribute">enumerated
+  attribute</a> that is used to specify whether an element's attribute values and the values of
+  its <code id="the-translate-attribute:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node children are to be translated when the page is localized, or whether to
+  leave them unchanged.</p>
+
+  <p>The attribute's keywords are the empty string, <code>yes</code>, and <code>no</code>. The empty string and the <code>yes</code> keyword map to the
+  <i>yes</i> state. The <code>no</code> keyword maps to the <i>no</i> state. In addition,
+  there is a third state, the <i>inherit</i> state, which is the <i id="the-translate-attribute:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i> (and
+  the <i id="the-translate-attribute:invalid-value-default"><a href="/breakup/specs/core-algorithms/#invalid-value-default">invalid value default</a></i>).</p>
+
+  <p>Each element (even non-HTML elements) has a <dfn id="translation-mode">translation mode</dfn>, which is in either the
+  <a href="/breakup/specs/html-attributes/#translate-enabled" id="the-translate-attribute:translate-enabled">translate-enabled</a> state or the <a href="/breakup/specs/html-attributes/#no-translate" id="the-translate-attribute:no-translate">no-translate</a> state. If an <a href="/breakup/specs/core-algorithms/#html-elements" id="the-translate-attribute:html-elements">HTML element</a>'s <code id="the-translate-attribute:attr-translate-2"><a href="/breakup/specs/html-attributes/#attr-translate">translate</a></code>
+  attribute is in the <i>yes</i> state, then the element's <a href="/breakup/specs/html-attributes/#translation-mode" id="the-translate-attribute:translation-mode">translation mode</a> is in the
+  <a href="/breakup/specs/html-attributes/#translate-enabled" id="the-translate-attribute:translate-enabled-2">translate-enabled</a> state; otherwise, if the element's <code id="the-translate-attribute:attr-translate-3"><a href="/breakup/specs/html-attributes/#attr-translate">translate</a></code> attribute is in the <i>no</i> state, then the element's
+  <a href="/breakup/specs/html-attributes/#translation-mode" id="the-translate-attribute:translation-mode-2">translation mode</a> is in the <a href="/breakup/specs/html-attributes/#no-translate" id="the-translate-attribute:no-translate-2">no-translate</a> state. Otherwise, either the
+  element's <code id="the-translate-attribute:attr-translate-4"><a href="/breakup/specs/html-attributes/#attr-translate">translate</a></code> attribute is in the <i>inherit</i> state,
+  or the element is not an <a href="/breakup/specs/core-algorithms/#html-elements" id="the-translate-attribute:html-elements-2">HTML element</a> and thus does not have a
+  <code id="the-translate-attribute:attr-translate-5"><a href="/breakup/specs/html-attributes/#attr-translate">translate</a></code> attribute; in either case, the element's
+  <a href="/breakup/specs/html-attributes/#translation-mode" id="the-translate-attribute:translation-mode-3">translation mode</a> is in the same state as its parent element's, if any, or in the
+  <a href="/breakup/specs/html-attributes/#translate-enabled" id="the-translate-attribute:translate-enabled-3">translate-enabled</a> state, if the element is a <a href="/breakup/specs/core-algorithms/#root-element" id="the-translate-attribute:root-element">root element</a>.</p>
+
+  <p>When an element is in the <dfn id="translate-enabled">translate-enabled</dfn> state, the element's <a href="/breakup/specs/html-attributes/#translatable-attributes" id="the-translate-attribute:translatable-attributes">translatable
+  attributes</a> and the values of its <code id="the-translate-attribute:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node children are to be translated when
+  the page is localized.</p>
+
+  <p>When an element is in the <dfn id="no-translate">no-translate</dfn> state, the element's attribute values and the
+  values of its <code id="the-translate-attribute:text-3"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node children are to be left as-is when the page is localized,
+  e.g. because the element contains a person's name or a the name of a computer program.</p>
+
+  <p>The following attributes are <dfn id="translatable-attributes">translatable attributes</dfn>:</p>
+
+  <ul class="brief"><li><code id="the-translate-attribute:attr-th-abbr"><a href="/breakup/specs/html-tables/#attr-th-abbr">abbr</a></code> on <code id="the-translate-attribute:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements</li><li><code>alt</code> on <code id="the-translate-attribute:attr-area-alt"><a href="/breakup/specs/html-linking/#attr-area-alt">area</a></code>,
+                                     <code id="the-translate-attribute:attr-img-alt"><a href="/breakup/specs/html-images/#attr-img-alt">img</a></code>, and
+                                     <code id="the-translate-attribute:attr-input-alt"><a href="/breakup/specs/html-forms/#attr-input-alt">input</a></code> elements</li><li><code id="the-translate-attribute:attr-meta-content"><a href="/breakup/specs/html-metadata/#attr-meta-content">content</a></code> on <code id="the-translate-attribute:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> elements, if the <code id="the-translate-attribute:attr-meta-name"><a href="/breakup/specs/html-metadata/#attr-meta-name">name</a></code> attribute specifies a metadata name whose value is known to be translatable</li><li><code id="the-translate-attribute:attr-hyperlink-download"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> on <code id="the-translate-attribute:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+                                                                 <code id="the-translate-attribute:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements</li><li><code>label</code> on <code id="the-translate-attribute:attr-menuitem-label"><a href="#attr-menuitem-label">menuitem</a></code>,
+                                       <code id="the-translate-attribute:attr-menu-label"><a href="#attr-menu-label">menu</a></code>,
+                                       <code id="the-translate-attribute:attr-optgroup-label"><a href="/breakup/specs/html-forms/#attr-optgroup-label">optgroup</a></code>,
+                                       <code id="the-translate-attribute:attr-option-label"><a href="/breakup/specs/html-forms/#attr-option-label">option</a></code>, and
+                                       <code id="the-translate-attribute:attr-track-label"><a href="#attr-track-label">track</a></code> elements</li><li><code id="the-translate-attribute:attr-lang"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> on <a href="/breakup/specs/core-algorithms/#html-elements" id="the-translate-attribute:html-elements-3">HTML elements</a>; must be "translated" to match the language used in the translation</li><li><code>placeholder</code> on <code id="the-translate-attribute:attr-input-placeholder"><a href="/breakup/specs/html-forms/#attr-input-placeholder">input</a></code> and
+                                             <code id="the-translate-attribute:attr-textarea-placeholder"><a href="/breakup/specs/html-forms/#attr-textarea-placeholder">textarea</a></code> elements</li><li><code id="the-translate-attribute:attr-iframe-srcdoc"><a href="#attr-iframe-srcdoc">srcdoc</a></code> on <code id="the-translate-attribute:the-iframe-element"><a href="#the-iframe-element">iframe</a></code> elements; must be parsed and recursively processed</li><li><code id="the-translate-attribute:the-style-attribute"><a href="/breakup/specs/html-attributes/#the-style-attribute">style</a></code> on <a href="/breakup/specs/core-algorithms/#html-elements" id="the-translate-attribute:html-elements-4">HTML elements</a>; must be parsed and recursively processed (e.g. for the values of 'content' properties)</li><li><code id="the-translate-attribute:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> on all <a href="/breakup/specs/core-algorithms/#html-elements" id="the-translate-attribute:html-elements-5">HTML elements</a></li><li><code id="the-translate-attribute:attr-input-value"><a href="/breakup/specs/html-forms/#attr-input-value">value</a></code> on <code id="the-translate-attribute:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> elements with a
+       <code id="the-translate-attribute:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute in the <a href="/breakup/specs/html-forms/#button-state-(type=button)" id="the-translate-attribute:button-state-(type=button)">Button</a> state
+       or the <a href="/breakup/specs/html-forms/#reset-button-state-(type=reset)" id="the-translate-attribute:reset-button-state-(type=reset)">Reset Button</a> state</li></ul>
+
+  <p>Other specifications may define other attributes that are also <a href="/breakup/specs/html-attributes/#translatable-attributes" id="the-translate-attribute:translatable-attributes-2">translatable
+  attributes</a>. For example, ARIA would define the <code id="the-translate-attribute:attr-aria-label"><a data-x-internal="attr-aria-label" href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-label">aria-label</a></code> attribute as translatable.</p>
+
+  
+
+  <hr>
+
+  <p>The <dfn id="dom-translate"><code>translate</code></dfn> IDL attribute must, on getting,
+  return true if the element's <a href="/breakup/specs/html-attributes/#translation-mode" id="the-translate-attribute:translation-mode-4">translation mode</a> is <a href="/breakup/specs/html-attributes/#translate-enabled" id="the-translate-attribute:translate-enabled-4">translate-enabled</a>, and
+  false otherwise. On setting, it must set the content attribute's value to "<code>yes</code>" if the new value is true, and set the content attribute's value to "<code>no</code>" otherwise.</p>
+
+  
+
+  <div class="example">
+
+   <p>In this example, everything in the document is to be translated when the page is localized,
+   except the sample keyboard input and sample program output:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt; &lt;!-- default on the root element is translate=yes --&gt;
+ &lt;head&gt;
+  &lt;title&gt;The Bee Game&lt;/title&gt; &lt;!-- implied translate=yes inherited from ancestors --&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;p&gt;The Bee Game is a text adventure game in English.&lt;/p&gt;
+  &lt;p&gt;When the game launches, the first thing you should do is type
+  &lt;kbd <strong>translate=no</strong>&gt;eat honey&lt;/kbd&gt;. The game will respond with:&lt;/p&gt;
+  &lt;pre&gt;&lt;samp <strong>translate=no</strong>&gt;Yum yum! That was some good honey!&lt;/samp&gt;&lt;/pre&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div></section>
+
+
+
+  <section><h2>The <dfn><code>xml:base</code></dfn> attribute (XML only)</h2>
+
+  <p>The <code id="the-xml:base-attribute-(xml-only):the-xml:base-attribute-(xml-only)"><a href="/breakup/specs/html-attributes/#the-xml:base-attribute-(xml-only)">xml:base</a></code> attribute is defined in XML Base. [[!XMLBASE]]</p>
+
+  <p>The <code id="the-xml:base-attribute-(xml-only):the-xml:base-attribute-(xml-only)-2"><a href="/breakup/specs/html-attributes/#the-xml:base-attribute-(xml-only)">xml:base</a></code> attribute may be used on <a href="/breakup/specs/core-algorithms/#html-elements" id="the-xml:base-attribute-(xml-only):html-elements">HTML
+  elements</a> of <a href="/breakup/specs/core-algorithms/#xml-documents" id="the-xml:base-attribute-(xml-only):xml-documents">XML documents</a>. Authors must not use the <code id="the-xml:base-attribute-(xml-only):the-xml:base-attribute-(xml-only)-3"><a href="/breakup/specs/html-attributes/#the-xml:base-attribute-(xml-only)">xml:base</a></code> attribute on <a href="/breakup/specs/core-algorithms/#html-elements" id="the-xml:base-attribute-(xml-only):html-elements-2">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#html-documents" id="the-xml:base-attribute-(xml-only):html-documents">HTML
+  documents</a>.</p></section>
+
+
+  <section><h2>The <dfn><code>dir</code></dfn> attribute</h2>
+
+  <p>The <code id="the-dir-attribute:the-dir-attribute"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute specifies the element's text directionality.
+  The attribute is an <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="the-dir-attribute:enumerated-attribute">enumerated attribute</a> with the following keywords and states:</p>
+
+  <dl><dt>The <dfn id="attr-dir-ltr"><code>ltr</code></dfn> keyword, which maps to the <dfn id="attr-dir-ltr-state">ltr</dfn> state</dt><dd>
+
+    <p>Indicates that the contents of the element are explicitly directionally isolated
+    left-to-right text.</p>
+
+   </dd><dt>The <dfn id="attr-dir-rtl"><code>rtl</code></dfn> keyword, which maps to the <dfn id="attr-dir-rtl-state">rtl</dfn> state</dt><dd>
+
+    <p>Indicates that the contents of the element are explicitly directionally isolated
+    right-to-left text.</p>
+
+   </dd><dt>The <dfn id="attr-dir-auto"><code>auto</code></dfn> keyword, which maps to the <dfn id="attr-dir-auto-state">auto</dfn> state</dt><dd>
+
+    <p>Indicates that the contents of the element are explicitly directionally isolated text, but
+    that the direction is to be determined programmatically using the contents of the element (as
+    described below).</p>
+
+    <p class="note">The heuristic used by this state is very crude (it just looks at the first
+    character with a strong directionality, in a manner analogous to the Paragraph Level
+    determination in the bidirectional algorithm). Authors are urged to only use this value as a
+    last resort when the direction of the text is truly unknown and no better server-side heuristic
+    can be applied. [[!BIDI]]</p>
+
+    <p class="note">For <code id="the-dir-attribute:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> and <code id="the-dir-attribute:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code> elements, the heuristic is
+    applied on a per-paragraph level.</p>
+
+   </dd></dl>
+
+  <p>The attribute has no <i id="the-dir-attribute:invalid-value-default"><a href="/breakup/specs/core-algorithms/#invalid-value-default">invalid value default</a></i> and no <i id="the-dir-attribute:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i>.</p>
+
+  <hr>
+
+  <p><dfn id="the-directionality">The directionality</dfn> of an element (any element, not just an <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements">HTML element</a>) is either '<dfn id="concept-ltr">ltr</dfn>' or '<dfn id="concept-rtl">rtl</dfn>', and is determined as per the first appropriate set of steps from
+  the following list:</p>
+
+  <dl class="switch"><dt>If the element's <code id="the-dir-attribute:the-dir-attribute-2"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-ltr-state" id="the-dir-attribute:attr-dir-ltr-state">ltr</a> state</dt><dt>If the element is a <a href="/breakup/specs/core-algorithms/#root-element" id="the-dir-attribute:root-element">root element</a> and the <code id="the-dir-attribute:the-dir-attribute-3"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is not in a defined state (i.e. it is not present or has an invalid value)</dt><dt>If the element is an <code id="the-dir-attribute:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="the-dir-attribute:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#telephone-state-(type=tel)" id="the-dir-attribute:telephone-state-(type=tel)">Telephone</a> state, and the <code id="the-dir-attribute:the-dir-attribute-4"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is not in a defined state (i.e. it is not present or has an invalid value)</dt><dd><p><a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality">The directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr">ltr</a>'.</p></dd><dt>If the element's <code id="the-dir-attribute:the-dir-attribute-5"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-rtl-state" id="the-dir-attribute:attr-dir-rtl-state">rtl</a> state</dt><dd><p><a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-2">The directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl">rtl</a>'.</p></dd><dt>If the element is an <code id="the-dir-attribute:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="the-dir-attribute:attr-input-type-2"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#text-(type=text)-state-and-search-state-(type=search)" id="the-dir-attribute:text-(type=text)-state-and-search-state-(type=search)">Text</a>, <a href="/breakup/specs/html-forms/#text-(type=text)-state-and-search-state-(type=search)" id="the-dir-attribute:text-(type=text)-state-and-search-state-(type=search)-2">Search</a>,
+   <a href="/breakup/specs/html-forms/#telephone-state-(type=tel)" id="the-dir-attribute:telephone-state-(type=tel)-2">Telephone</a>, <a href="/breakup/specs/html-forms/#url-state-(type=url)" id="the-dir-attribute:url-state-(type=url)">URL</a>, or <a href="/breakup/specs/html-forms/#e-mail-state-(type=email)" id="the-dir-attribute:e-mail-state-(type=email)">E-mail</a>
+   state, and the <code id="the-dir-attribute:the-dir-attribute-6"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state">auto</a> state</dt><dt>If the element is a <code id="the-dir-attribute:the-textarea-element-2"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> element and the <code id="the-dir-attribute:the-dir-attribute-7"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state-2">auto</a> state</dt><dd>
+
+    <p>If the element's <a href="/breakup/specs/html-forms/#concept-fe-value" id="the-dir-attribute:concept-fe-value">value</a> contains a character of
+    bidirectional character type AL or R, and there is no character of bidirectional character type
+    L anywhere before it in the element's <a href="/breakup/specs/html-forms/#concept-fe-value" id="the-dir-attribute:concept-fe-value-2">value</a>, then
+    <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-3">the directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl-2">rtl</a>'. [[!BIDI]]</p>
+
+    <p>Otherwise, if the element's <a href="/breakup/specs/html-forms/#concept-fe-value" id="the-dir-attribute:concept-fe-value-3">value</a> is not the empty
+    string, or if the element is a <a href="/breakup/specs/core-algorithms/#root-element" id="the-dir-attribute:root-element-2">root element</a>, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-4">the directionality</a> of the
+    element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-2">ltr</a>'.</p>
+
+    <p>Otherwise, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-5">the directionality</a> of the element is the same as the element's parent
+    element's <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-6">directionality</a>.</p>
+
+   </dd><dt>If the element's <code id="the-dir-attribute:the-dir-attribute-8"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state-3">auto</a> state</dt><dt>If the element is a <code id="the-dir-attribute:the-bdi-element"><a href="/breakup/specs/html-text/#the-bdi-element">bdi</a></code> element and the <code id="the-dir-attribute:the-dir-attribute-9"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is not in a defined state (i.e. it is not present or has an invalid value)</dt><dd>
+
+    <p>Find the first character in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-dir-attribute:tree-order">tree order</a> that matches the following criteria:</p>
+
+    <ul><li><p>The character is from a <code id="the-dir-attribute:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node that is a descendant of the element whose
+     <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-7">directionality</a> is being determined.</p></li><li><p>The character is of bidirectional character type L, AL, or R. [[!BIDI]]</p></li><li>
+
+      <p>The character is not in a <code id="the-dir-attribute:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node that has an ancestor element that is a
+      descendant of the element whose <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-8">directionality</a> is
+      being determined and that is either:</p>
+
+      <ul class="brief"><li>A <code id="the-dir-attribute:the-bdi-element-2"><a href="/breakup/specs/html-text/#the-bdi-element">bdi</a></code> element.
+       </li><li>A <code id="the-dir-attribute:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element.
+       </li><li>A <code id="the-dir-attribute:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element.
+       </li><li>A <code id="the-dir-attribute:the-textarea-element-3"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> element.
+       </li><li>An element with a <code id="the-dir-attribute:the-dir-attribute-10"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute in a defined state.
+      </li></ul>
+
+     </li></ul>
+
+    <p>If such a character is found and it is of bidirectional character type AL or R, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-9">the
+    directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl-3">rtl</a>'.</p>
+
+    <p>If such a character is found and it is of bidirectional character type L, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-10">the
+    directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-3">ltr</a>'.</p>
+
+    <p>Otherwise, if the element is a <a href="/breakup/specs/core-algorithms/#root-element" id="the-dir-attribute:root-element-3">root element</a>, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-11">the directionality</a> of
+    the element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-4">ltr</a>'.</p>
+
+    <p>Otherwise, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-12">the directionality</a> of the element the same as the element's parent
+    element's <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-13">directionality</a>.</p>
+
+   </dd><dt>If the element has a parent element and the <code id="the-dir-attribute:the-dir-attribute-11"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is
+   not in a defined state (i.e. it is not present or has an invalid value)</dt><dd><p><a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-14">The directionality</a> of the element is the same as the element's parent
+   element's <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-15">directionality</a>.</p></dd></dl>
+
+  <p class="note">Since the <code id="the-dir-attribute:the-dir-attribute-12"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is only defined for
+  <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements-2">HTML elements</a>, it cannot be present on elements from other namespaces. Thus, elements
+  from other namespaces always just inherit their <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-16">directionality</a> from their parent element, or, if they don't have one,
+  default to '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-5">ltr</a>'.</p>
+
+  
+
+  <p class="note">This attribute <a href="#bidireq">has rendering requirements involving the
+  bidirectional algorithm</a>.</p>
+
+  
+
+  <hr>
+
+  <p>The <dfn id="directionality-of-the-attribute">directionality of an attribute</dfn> of an
+  <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements-3">HTML element</a>, which is used when the text of that attribute is
+  to be included in the rendering in some manner, is determined as per the first appropriate set of
+  steps from the following list:</p>
+
+  <dl class="switch"><dt>If the attribute is a <a href="/breakup/specs/html-attributes/#directionality-capable-attribute" id="the-dir-attribute:directionality-capable-attribute">directionality-capable attribute</a> and the element's <code id="the-dir-attribute:the-dir-attribute-13"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state-4">auto</a>
+   state</dt><dd>
+
+    <p>Find the first character (in logical order) of the attribute's value that is of bidirectional
+    character type L, AL, or R. [[!BIDI]]</p>
+
+    <p>If such a character is found and it is of bidirectional character type AL or R, the
+    <a href="/breakup/specs/html-attributes/#directionality-of-the-attribute" id="the-dir-attribute:directionality-of-the-attribute">directionality of the attribute</a> is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl-4">rtl</a>'.</p>
+
+    <p>Otherwise, the <a href="/breakup/specs/html-attributes/#directionality-of-the-attribute" id="the-dir-attribute:directionality-of-the-attribute-2">directionality of the attribute</a> is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-6">ltr</a>'.</p>
+
+   </dd><dt>Otherwise</dt><dd>The <a href="/breakup/specs/html-attributes/#directionality-of-the-attribute" id="the-dir-attribute:directionality-of-the-attribute-3">directionality of the attribute</a> is the same as <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-17">the element's directionality</a>.</dd></dl>
+
+  <p>The following attributes are <dfn id="directionality-capable-attribute">directionality-capable attributes</dfn>:</p>
+
+  <ul class="brief"><li><code id="the-dir-attribute:attr-th-abbr"><a href="/breakup/specs/html-tables/#attr-th-abbr">abbr</a></code> on <code id="the-dir-attribute:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements</li><li><code>alt</code> on <code id="the-dir-attribute:attr-area-alt"><a href="/breakup/specs/html-linking/#attr-area-alt">area</a></code>,
+                                    <code id="the-dir-attribute:attr-img-alt"><a href="/breakup/specs/html-images/#attr-img-alt">img</a></code>, and
+                                    <code id="the-dir-attribute:attr-input-alt"><a href="/breakup/specs/html-forms/#attr-input-alt">input</a></code> elements</li><li><code id="the-dir-attribute:attr-meta-content"><a href="/breakup/specs/html-metadata/#attr-meta-content">content</a></code> on <code id="the-dir-attribute:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> elements, if the <code id="the-dir-attribute:attr-meta-name"><a href="/breakup/specs/html-metadata/#attr-meta-name">name</a></code> attribute specifies a metadata name whose value is primarily intended to be human-readable rather than machine-readable</li><li><code>label</code> on <code id="the-dir-attribute:attr-menuitem-label"><a href="#attr-menuitem-label">menuitem</a></code>,
+                                      <code id="the-dir-attribute:attr-menu-label"><a href="#attr-menu-label">menu</a></code>,
+                                      <code id="the-dir-attribute:attr-optgroup-label"><a href="/breakup/specs/html-forms/#attr-optgroup-label">optgroup</a></code>,
+                                      <code id="the-dir-attribute:attr-option-label"><a href="/breakup/specs/html-forms/#attr-option-label">option</a></code>, and
+                                      <code id="the-dir-attribute:attr-track-label"><a href="#attr-track-label">track</a></code> elements</li><li><code>placeholder</code> on <code id="the-dir-attribute:attr-input-placeholder"><a href="/breakup/specs/html-forms/#attr-input-placeholder">input</a></code> and
+                                            <code id="the-dir-attribute:attr-textarea-placeholder"><a href="/breakup/specs/html-forms/#attr-textarea-placeholder">textarea</a></code> elements</li><li><code id="the-dir-attribute:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> on all <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements-4">HTML elements</a></li></ul>
+
+  <hr>
+
+  <dl class="domintro"><dt><var>document</var> . <code id="the-dir-attribute:dom-dir"><a href="/breakup/specs/html-attributes/#dom-dir">dir</a></code> [ = <var>value</var> ]</dt><dd>
+    <p>Returns <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2">the <code>html</code> element</a>'s <code id="the-dir-attribute:the-dir-attribute-14"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute's value, if any.</p>
+    <p>Can be set, to either "<code>ltr</code>", "<code>rtl</code>", or "<code>auto</code>" to replace <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2-2">the <code>html</code> element</a>'s <code id="the-dir-attribute:the-dir-attribute-15"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute's value.</p>
+    <p>If there is no <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2-3"><code>html</code> element</a>, returns the empty string and ignores new values.</p>
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-dir"><code>dir</code></dfn> IDL attribute on an element must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-dir-attribute:reflect">reflect</a> the <code id="the-dir-attribute:the-dir-attribute-16"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> content attribute of that element,
+  <a href="/breakup/specs/core-algorithms/#limited-to-only-known-values" id="the-dir-attribute:limited-to-only-known-values">limited to only known values</a>.</p>
+
+  <p>The <dfn id="dom-document-dir"><code>dir</code></dfn> IDL attribute on <code id="the-dir-attribute:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>
+  objects must <a href="/breakup/specs/core-algorithms/#reflect" id="the-dir-attribute:reflect-2">reflect</a> the <code id="the-dir-attribute:the-dir-attribute-17"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> content attribute of
+  <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2-4">the <code>html</code> element</a>, if any, <a href="/breakup/specs/core-algorithms/#limited-to-only-known-values" id="the-dir-attribute:limited-to-only-known-values-2">limited to only known values</a>. If
+  there is no such element, then the attribute must return the empty string and do nothing on
+  setting.</p>
+
+  
+
+  <p class="note">Authors are strongly encouraged to use the <code id="the-dir-attribute:the-dir-attribute-18"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+  attribute to indicate text direction rather than using CSS, since that way their documents will
+  continue to render correctly even in the absence of CSS (e.g. as interpreted by search
+  engines).</p>
+
+  <div class="example">
+
+   <p>This markup fragment is of an IM conversation.</p>
+
+   <pre>&lt;p dir=auto class="u1"&gt;&lt;b&gt;&lt;bdi&gt;Student&lt;/bdi&gt;:&lt;/b&gt; How do you write "What's your name?" in Arabic?&lt;/p&gt;
+&lt;p dir=auto class="u2"&gt;&lt;b&gt;&lt;bdi&gt;Teacher&lt;/bdi&gt;:&lt;/b&gt; ما اسمك؟&lt;/p&gt;
+&lt;p dir=auto class="u1"&gt;&lt;b&gt;&lt;bdi&gt;Student&lt;/bdi&gt;:&lt;/b&gt; Thanks.&lt;/p&gt;
+&lt;p dir=auto class="u2"&gt;&lt;b&gt;&lt;bdi&gt;Teacher&lt;/bdi&gt;:&lt;/b&gt; That's written "شكرًا".&lt;/p&gt;
+&lt;p dir=auto class="u2"&gt;&lt;b&gt;&lt;bdi&gt;Teacher&lt;/bdi&gt;:&lt;/b&gt; Do you know how to write "Please"?&lt;/p&gt;
+&lt;p dir=auto class="u1"&gt;&lt;b&gt;&lt;bdi&gt;Student&lt;/bdi&gt;:&lt;/b&gt; "من فضلك", right?&lt;/p&gt;</pre>
+
+
+
+   <p>Given a suitable style sheet and the default alignment styles for the <code id="the-dir-attribute:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element,
+   namely to align the text to the <i>start edge</i> of the paragraph, the resulting rendering could
+   be as follows:</p>
+
+   <p><img width="366" src="img/im.png" height="157" alt="Each paragraph rendered as a separate block, with the paragraphs left-aligned except the second paragraph and the last one, which would  be right aligned, with the usernames ('Student' and 'Teacher' in this example) flush right, with a colon to their left, and the text first to the left of that."></p>
+
+   <p>As noted earlier, the <code id="the-dir-attribute:attr-dir-auto"><a href="/breakup/specs/html-attributes/#attr-dir-auto">auto</a></code> value is not a panacea. The
+   final paragraph in this example is misinterpreted as being right-to-left text, since it begins
+   with an Arabic character, which causes the "right?" to be to the left of the Arabic text.</p>
+
+  </div></section>
+
+
+
+  <section><h2>The <dfn><code>class</code></dfn> attribute</h2>
+
+  <p>Every <a href="/breakup/specs/core-algorithms/#html-elements" id="classes:html-elements">HTML element</a> may have a <code id="classes:classes"><a href="/breakup/specs/html-attributes/#classes">class</a></code> attribute specified.</p>
+
+  <p>The attribute, if specified, must have a value that is a <a href="/breakup/specs/core-algorithms/#set-of-space-separated-tokens" id="classes:set-of-space-separated-tokens">set of space-separated
+  tokens</a> representing the various classes that the element belongs to.</p>
+
+  
+
+  <p>The classes that an <a href="/breakup/specs/core-algorithms/#html-elements" id="classes:html-elements-2">HTML element</a> has assigned to it consists
+  of all the classes returned when the value of the <code id="classes:classes-2"><a href="/breakup/specs/html-attributes/#classes">class</a></code> attribute
+  is <a href="/breakup/specs/core-algorithms/#split-a-string-on-spaces" id="classes:split-a-string-on-spaces">split on spaces</a>. (Duplicates are ignored.)</p>
+
+  
+
+  <p class="note">Assigning classes to an element affects class matching in selectors in CSS, the
+  <code id="classes:dom-document-getelementsbyclassname"><a href="/breakup/specs/core-algorithms/#dom-document-getelementsbyclassname">getElementsByClassName()</a></code> method in the
+  DOM, and other such features.</p>
+
+  <p>There are no additional restrictions on the tokens authors can use in the <code id="classes:classes-3"><a href="/breakup/specs/html-attributes/#classes">class</a></code> attribute, but authors are encouraged to use values that describe
+  the nature of the content, rather than values that describe the desired presentation of the
+  content.</p>
+
+  
+
+  <hr>
+
+  <p class="note">The <dfn id="dom-classname"><code>className</code></dfn> and <dfn id="dom-classlist"><code>classList</code></dfn> IDL attributes, defined in the DOM
+  specification, <a href="/breakup/specs/core-algorithms/#reflect" id="classes:reflect">reflect</a> the <code id="classes:classes-4"><a href="/breakup/specs/html-attributes/#classes">class</a></code> content attribute.
+  [[!DOM]]</p></section>
+
+  
+
+
+
+  <section><h2>The <dfn><code>style</code></dfn> attribute</h2>
+
+  <p>All <a href="/breakup/specs/core-algorithms/#html-elements" id="the-style-attribute:html-elements">HTML elements</a> may have the <code id="the-style-attribute:the-style-attribute"><a href="/breakup/specs/html-attributes/#the-style-attribute">style</a></code> content
+  attribute set. This is a <a href="/breakup/specs/core-algorithms/#css-styling-attribute" id="the-style-attribute:css-styling-attribute">CSS styling attribute</a> as defined by the CSS Styling
+  Attribute Syntax specification. [[!CSSATTR]]</p>
+
+  
+
+  <p>In user agents that support CSS, the attribute's value must be parsed when the attribute is
+  added or has its value changed,
+  according to the rules given for <a href="/breakup/specs/core-algorithms/#css-styling-attribute" id="the-style-attribute:css-styling-attribute-2">CSS styling
+  attributes</a>. [[!CSSATTR]]</p>
+
+  
+
+  <p>Documents that use <code id="the-style-attribute:the-style-attribute-2"><a href="/breakup/specs/html-attributes/#the-style-attribute">style</a></code> attributes on any of their elements
+  must still be comprehensible and usable if those attributes were removed.</p>
+
+  <p class="note">In particular, using the <code id="the-style-attribute:the-style-attribute-3"><a href="/breakup/specs/html-attributes/#the-style-attribute">style</a></code> attribute to hide
+  and show content, or to convey meaning that is otherwise not included in the document, is
+  non-conforming. (To hide and show content, use the <code id="the-style-attribute:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code>
+  attribute.)</p>
+
+  <hr>
+
+  <dl class="domintro"><dt><var>element</var> . <code id="the-style-attribute:dom-style"><a href="/breakup/specs/html-attributes/#dom-style">style</a></code></dt><dd>
+    <p>Returns a <code id="the-style-attribute:cssstyledeclaration"><a href="/breakup/specs/core-algorithms/#cssstyledeclaration">CSSStyleDeclaration</a></code> object for the element's <code id="the-style-attribute:the-style-attribute-4"><a href="/breakup/specs/html-attributes/#the-style-attribute">style</a></code> attribute.</p>
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-style"><code>style</code></dfn> IDL attribute is defined in the CSS Object
+  Model (CSSOM) specification. [[!CSSOM]]</p>
+
+  
+
+  <div class="example">
+
+   <p>In the following example, the words that refer to colours are marked up using the
+   <code id="the-style-attribute:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code> element and the <code id="the-style-attribute:the-style-attribute-5"><a href="/breakup/specs/html-attributes/#the-style-attribute">style</a></code> attribute to make those
+   words show up in the relevant colours in visual media.</p>
+
+   <pre>&lt;p&gt;My sweat suit is &lt;span style="color: green; background:
+transparent"&gt;green&lt;/span&gt; and my eyes are &lt;span style="color: blue;
+background: transparent"&gt;blue&lt;/span&gt;.&lt;/p&gt;</pre>
+
+  </div></section>
+
+
+
+  <section><h2><dfn>Embedding custom non-visible data</dfn> with the <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:attr-data-*"><a href="/breakup/specs/html-attributes/#attr-data-*">data-*</a></code> attributes</h2>
+
+  <p>A <dfn id="custom-data-attribute">custom data attribute</dfn> is an attribute in no namespace whose name starts with the
+  string "<dfn id="attr-data-*"><code>data-</code></dfn>", has at least one character after the
+  hyphen, is <a href="/breakup/specs/core-algorithms/#xml-compatible" id="embedding-custom-non-visible-data-with-the-data-*-attributes:xml-compatible">XML-compatible</a>, and contains no <a href="/breakup/specs/core-algorithms/#uppercase-ascii-letters" id="embedding-custom-non-visible-data-with-the-data-*-attributes:uppercase-ascii-letters">uppercase ASCII letters</a>.</p>
+
+  <p class="note">All attribute names on <a href="/breakup/specs/core-algorithms/#html-elements" id="embedding-custom-non-visible-data-with-the-data-*-attributes:html-elements">HTML elements</a> in <a href="/breakup/specs/core-algorithms/#html-documents" id="embedding-custom-non-visible-data-with-the-data-*-attributes:html-documents">HTML documents</a>
+  get ASCII-lowercased automatically, so the restriction on ASCII uppercase letters doesn't affect
+  such documents.</p>
+
+  <p><a href="/breakup/specs/html-attributes/#custom-data-attribute" id="embedding-custom-non-visible-data-with-the-data-*-attributes:custom-data-attribute">Custom data attributes</a> are intended to store custom
+  data private to the page or application, for which there are no more appropriate attributes or
+  elements.</p>
+
+  <p>These attributes are not intended for use by software that is not known to the administrators
+  of the site that uses the attributes. For generic extensions that are to be used by multiple
+  independent tools, either this specification should be extended to provide the feature explicitly,
+  or a technology like <a href="http://www.w3.org/TR/microdata/#microdata" id="embedding-custom-non-visible-data-with-the-data-*-attributes:microdata">microdata</a> should be used (with a standardised vocabulary).</p>
+
+  <div class="example">
+
+   <p>For instance, a site about music could annotate list items representing tracks in an album
+   with custom data attributes containing the length of each track. This information could then be
+   used by the site itself to allow the user to sort the list by track length, or to filter the list
+   for tracks of certain lengths.</p>
+
+   <pre>&lt;ol&gt;
+ &lt;li data-length="2m11s"&gt;Beyond The Sea&lt;/li&gt;
+ ...
+&lt;/ol&gt;</pre>
+
+   <p>It would be inappropriate, however, for the user to use generic software not associated with
+   that music site to search for tracks of a certain length by looking at this data.</p>
+
+   <p>This is because these attributes are intended for use by the site's own scripts, and are not a
+   generic extension mechanism for publicly-usable metadata.</p>
+
+  </div>
+
+  <div class="example">
+
+   <p>Similarly, a page author could write markup that provides information for a translation tool
+   that they are intending to use:</p>
+
+   <pre>&lt;p&gt;The third &lt;span data-mytrans-de="Anspruch"&gt;claim&lt;/span&gt; covers the case of &lt;span
+translate="no"&gt;HTML&lt;/span&gt; markup.&lt;/p&gt;</pre>
+
+   <p>In this example, the "<code>data-mytrans-de</code>" attribute gives specific text
+   for the MyTrans product to use when translating the phrase "claim" to German. However, the
+   standard <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:attr-translate"><a href="/breakup/specs/html-attributes/#attr-translate">translate</a></code> attribute is used to tell it that in all
+   languages, "HTML" is to remain unchanged. When a standard attribute is available, there is no
+   need for a <a href="/breakup/specs/html-attributes/#custom-data-attribute" id="embedding-custom-non-visible-data-with-the-data-*-attributes:custom-data-attribute-2">custom data attribute</a> to be used.</p>
+
+  </div>
+
+  <p>Every <a href="/breakup/specs/core-algorithms/#html-elements" id="embedding-custom-non-visible-data-with-the-data-*-attributes:html-elements-2">HTML element</a> may have any number of <a href="/breakup/specs/html-attributes/#custom-data-attribute" id="embedding-custom-non-visible-data-with-the-data-*-attributes:custom-data-attribute-3">custom data attributes</a> specified, with any value.</p>
+
+  <hr>
+
+  <dl class="domintro"><dt><var>element</var> . <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:dom-dataset"><a href="/breakup/specs/html-attributes/#dom-dataset">dataset</a></code></dt><dd>
+
+    <p>Returns a <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:domstringmap"><a href="/breakup/specs/core-algorithms/#domstringmap">DOMStringMap</a></code> object for the element's <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:attr-data-*-2"><a href="/breakup/specs/html-attributes/#attr-data-*">data-*</a></code> attributes.</p>
+
+    <p>Hyphenated names become camel-cased. For example, <code>data-foo-bar=""</code>
+    becomes <code>element.dataset.fooBar</code>.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-dataset"><code>dataset</code></dfn> IDL attribute provides convenient
+  accessors for all the <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:attr-data-*-3"><a href="/breakup/specs/html-attributes/#attr-data-*">data-*</a></code> attributes on an element. On
+  getting, the <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:dom-dataset-2"><a href="/breakup/specs/html-attributes/#dom-dataset">dataset</a></code> IDL attribute must return a
+  <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:domstringmap-2"><a href="/breakup/specs/core-algorithms/#domstringmap">DOMStringMap</a></code> object, associated with the following algorithms, which expose these
+  attributes on their element:</p>
+
+  <dl><dt>The algorithm for getting the list of name-value pairs</dt><dd>
+    <ol><li>Let <var>list</var> be an empty list of name-value
+     pairs.</li><li>For each content attribute on the element whose first five characters are the string "<code>data-</code>" and whose remaining characters (if any) do not include any
+     <a href="/breakup/specs/core-algorithms/#uppercase-ascii-letters" id="embedding-custom-non-visible-data-with-the-data-*-attributes:uppercase-ascii-letters-2">uppercase ASCII letters</a>, in the order that those attributes are listed in the
+     element's <a href="/breakup/specs/core-algorithms/#attribute-list" id="embedding-custom-non-visible-data-with-the-data-*-attributes:attribute-list">attribute list</a>, add a name-value pair to <var>list</var> whose
+     name is the attribute's name with the first five characters removed and whose value is the
+     attribute's value.</li><li>For each name in <var>list</var>, for each U+002D HYPHEN-MINUS character (-) in the
+     name that is followed by a <a href="/breakup/specs/core-algorithms/#lowercase-ascii-letters" id="embedding-custom-non-visible-data-with-the-data-*-attributes:lowercase-ascii-letters">lowercase ASCII letter</a>,
+     remove the U+002D HYPHEN-MINUS character (-) and replace the character that followed it by the
+     same character <a href="/breakup/specs/core-algorithms/#converted-to-ascii-uppercase" id="embedding-custom-non-visible-data-with-the-data-*-attributes:converted-to-ascii-uppercase">converted to ASCII uppercase</a>.</li><li>Return <var>list</var>.</li></ol>
+   </dd><dt>The algorithm for setting names to certain values</dt><dd>
+    <ol><li>Let <var>name</var> be the name passed to the algorithm.</li><li>Let <var>value</var> be the value passed to the algorithm.</li><li>If <var>name</var> contains a U+002D HYPHEN-MINUS character (-) followed by a
+     <a href="/breakup/specs/core-algorithms/#lowercase-ascii-letters" id="embedding-custom-non-visible-data-with-the-data-*-attributes:lowercase-ascii-letters-2">lowercase ASCII letter</a>, throw a
+     <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:syntaxerror"><a href="/breakup/specs/core-algorithms/#syntaxerror">SyntaxError</a></code> exception and abort these steps.</li><li>For each <a href="/breakup/specs/core-algorithms/#uppercase-ascii-letters" id="embedding-custom-non-visible-data-with-the-data-*-attributes:uppercase-ascii-letters-3">uppercase ASCII letter</a> in <var>name</var>, insert a U+002D HYPHEN-MINUS character (-) before the character and
+     replace the character with the same character <a href="/breakup/specs/core-algorithms/#converted-to-ascii-lowercase" id="embedding-custom-non-visible-data-with-the-data-*-attributes:converted-to-ascii-lowercase">converted to ASCII lowercase</a>.</li><li>Insert the string <code>data-</code> at the front of <var>name</var>.</li><li>Set the value of the attribute with the name <var>name</var>, to the value <var>value</var>, replacing any previous value if the attribute already existed. If <code>setAttribute()</code> would have thrown an exception when setting an attribute with
+     the name <var>name</var>, then this must throw the same exception.</li></ol>
+   </dd><dt>The algorithm for deleting names</dt><dd>
+    <ol><li>Let <var>name</var> be the name passed to the algorithm.</li><li>For each <a href="/breakup/specs/core-algorithms/#uppercase-ascii-letters" id="embedding-custom-non-visible-data-with-the-data-*-attributes:uppercase-ascii-letters-4">uppercase ASCII letter</a> in <var>name</var>, insert a U+002D HYPHEN-MINUS character (-) before the character and
+     replace the character with the same character <a href="/breakup/specs/core-algorithms/#converted-to-ascii-lowercase" id="embedding-custom-non-visible-data-with-the-data-*-attributes:converted-to-ascii-lowercase-2">converted to ASCII lowercase</a>.</li><li>Insert the string <code>data-</code> at the front of <var>name</var>.</li><li>Remove the attribute with the name <var>name</var>, if such an attribute exists.
+     Do nothing otherwise.</li></ol>
+
+    <p class="note">This algorithm will only get invoked by the Web IDL specification for names that
+    are given by the earlier algorithm for getting the list of name-value pairs. [[!WEBIDL]]</p>
+
+   </dd></dl>
+
+  
+
+  <div class="example">
+
+   <p>If a Web page wanted an element to represent a space ship, e.g. as part of a game, it would
+   have to use the <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:classes"><a href="/breakup/specs/html-attributes/#classes">class</a></code> attribute along with <code id="embedding-custom-non-visible-data-with-the-data-*-attributes:attr-data-*-4"><a href="/breakup/specs/html-attributes/#attr-data-*">data-*</a></code> attributes:</p>
+
+   <pre>&lt;div class="spaceship" data-ship-id="92432"
+     data-weapons="laser 2" data-shields="50%"
+     data-x="30" data-y="10" data-z="90"&gt;
+ &lt;button class="fire"
+         onclick="spaceships[this.parentNode.dataset.shipId].fire()"&gt;
+  Fire
+ &lt;/button&gt;
+&lt;/div&gt;</pre>
+
+   <p>Notice how the hyphenated attribute name becomes camel-cased in the API.</p>
+
+  </div>
+
+  <p>Authors should carefully design such extensions so that when the attributes are ignored and any
+  associated CSS dropped, the page is still usable.</p>
+
+  
+
+  <p>User agents must not derive any implementation behaviour from these attributes or values.
+  Specifications intended for user agents must not define these attributes to have any meaningful
+  values.</p>
+
+  
+
+  <p>JavaScript libraries may use the <a href="/breakup/specs/html-attributes/#custom-data-attribute" id="embedding-custom-non-visible-data-with-the-data-*-attributes:custom-data-attribute-4">custom data
+  attributes</a>, as they are considered to be part of the page on which they are used. Authors
+  of libraries that are reused by many authors are encouraged to include their name in the attribute
+  names, to reduce the risk of clashes. Where it makes sense, library authors are also encouraged to
+  make the exact name used in the attribute names customizable, so that libraries whose authors
+  unknowingly picked the same name can be used on the same page, and so that multiple versions of a
+  particular library can be used on the same page even when those versions are not mutually
+  compatible.</p>
+
+  <div class="example">
+
+   <p>For example, a library called "DoQuery" could use attribute names like <code>data-doquery-range</code>, and a library called "jJo" could use attributes names like
+   <code>data-jjo-range</code>. The jJo library could also provide an API to set which
+   prefix to use (e.g. <code>J.setDataPrefix('j2')</code>, making the attributes have names
+   like <code>data-j2-range</code>).</p>
+
+  </div></section></section></body></html>

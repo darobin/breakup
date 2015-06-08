@@ -1,0 +1,1696 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Linking</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-linking"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Links.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>a</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-a-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-a-element:flow-content-2">Flow content</a>.</dd><dd><a href="#phrasing-content-2" id="the-a-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="#interactive-content-2" id="the-a-element:interactive-content-2">Interactive content</a>.</dd><dd><a href="#palpable-content-2" id="the-a-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-a-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#phrasing-content-2" id="the-a-element:phrasing-content-2-2">phrasing content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-a-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#transparent" id="the-a-element:transparent">Transparent</a>, but there must be no <a href="#interactive-content-2" id="the-a-element:interactive-content-2-2">interactive content</a> descendant.</dd><dt><a href="#concept-element-tag-omission" id="the-a-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-a-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-a-element:global-attributes">Global attributes</a></dd><dd><code id="the-a-element:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> — Address of the <a href="/breakup/specs/html-linking/#hyperlink" id="the-a-element:hyperlink">hyperlink</a></dd><dd><code id="the-a-element:attr-hyperlink-target"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> — <a href="/breakup/specs/browser-dom/#browsing-context" id="the-a-element:browsing-context">Browsing context</a> for <a href="/breakup/specs/html-linking/#hyperlink" id="the-a-element:hyperlink-2">hyperlink</a> <a href="/breakup/specs/browsing/#navigate" id="the-a-element:navigate">navigation</a></dd><dd><code id="the-a-element:attr-hyperlink-download"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> — Whether to download the resource instead of navigating to it, and its file name if so</dd><dd><code id="the-a-element:attr-hyperlink-rel"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> — Relationship between the document containing the hyperlink and the destination resource</dd><dd><code id="the-a-element:attr-hyperlink-hreflang"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code> — Language of the linked resource</dd><dd><code id="the-a-element:attr-hyperlink-type"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> — Hint for the type of the referenced resource</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-link"><code title="">link</code></a> (default - <a href="#aria-usage-note"><em>do not set</em></a>), <a href="#index-aria-button"><code title="">button</code></a>, <a href="#index-aria-checkbox"><code title="">checkbox</code></a>, <a href="#index-aria-menuitem"><code title="">menuitem</code></a>, <a href="#index-aria-menuitemcheckbox"><code title="">menuitemcheckbox</code></a>, <a href="#index-aria-menuitemradio"><code title="">menuitemradio</code></a>, <a href="#index-aria-tab"><code title="">tab</code></a> or <a href="#index-aria-treeitem"><code title="">treeitem</code></a></dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-a-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlanchorelement">HTMLAnchorElement</dfn> : <a href="#htmlelement" id="the-a-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-a-target" id="the-a-element:dom-a-target">target</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-a-download" id="the-a-element:dom-a-download">download</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-a-rel" id="the-a-element:dom-a-rel">rel</a>;
+  readonly attribute <a href="/breakup/specs/core-algorithms/#domtokenlist" id="the-a-element:domtokenlist">DOMTokenList</a> <a href="/breakup/specs/html-linking/#dom-a-rellist" id="the-a-element:dom-a-rellist">relList</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-a-hreflang" id="the-a-element:dom-a-hreflang">hreflang</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-a-type" id="the-a-element:dom-a-type">type</a>;
+
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-a-text" id="the-a-element:dom-a-text">text</a>;
+
+  // <a href="#HTMLAnchorElement-partial">also has obsolete members</a>
+};
+<a href="/breakup/specs/html-linking/#htmlanchorelement" id="the-a-element:htmlanchorelement">HTMLAnchorElement</a> implements <a href="/breakup/specs/core-algorithms/#urlutils" id="the-a-element:urlutils">URLUtils</a>;</pre>
+   </dd></dl>
+
+  <p>If the <code id="the-a-element:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element has an <code id="the-a-element:attr-hyperlink-href-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute,
+  then it <a href="#represents" id="the-a-element:represents">represents</a> a <a href="/breakup/specs/html-linking/#hyperlink" id="the-a-element:hyperlink-3">hyperlink</a> (a hypertext anchor) labeled by its
+  contents.</p>
+
+  
+
+  <p>If the <code id="the-a-element:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element has no <code id="the-a-element:attr-hyperlink-href-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute,
+  then the element <a href="#represents" id="the-a-element:represents-2">represents</a> a placeholder for where a link might otherwise have been
+  placed, if it had been relevant, consisting of just the element's contents.</p>
+
+  <p>The <code id="the-a-element:attr-hyperlink-target-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code>, <code id="the-a-element:attr-hyperlink-download-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code>,
+  <code id="the-a-element:attr-hyperlink-rel-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code>, <code id="the-a-element:attr-hyperlink-hreflang-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code>, and <code id="the-a-element:attr-hyperlink-type-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code>
+  attributes must be omitted if the <code id="the-a-element:attr-hyperlink-href-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute is not
+  present.</p>
+
+  <p>If the <code id="the-a-element:names:-the-itemprop-attribute"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop</a></code> attribute is specified on an <code id="the-a-element:the-a-element-3"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element,
+  then the <code id="the-a-element:attr-hyperlink-href-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute must also be specified.</p>
+
+  <div class="example">
+
+   <p>If a site uses a consistent navigation toolbar on every page, then the link that would
+   normally link to the page itself could be marked up using an <code id="the-a-element:the-a-element-4"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element:</p>
+
+   <pre>&lt;nav&gt;
+ &lt;ul&gt;
+  &lt;li&gt; &lt;a href="/"&gt;Home&lt;/a&gt; &lt;/li&gt;
+  &lt;li&gt; &lt;a href="/news"&gt;News&lt;/a&gt; &lt;/li&gt;
+  &lt;li&gt; &lt;a&gt;Examples&lt;/a&gt; &lt;/li&gt;
+  &lt;li&gt; &lt;a href="/legal"&gt;Legal&lt;/a&gt; &lt;/li&gt;
+ &lt;/ul&gt;
+&lt;/nav&gt;</pre>
+
+  </div>
+
+  
+
+  <p>The <code id="the-a-element:attr-hyperlink-href-6"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code>, <code id="the-a-element:attr-hyperlink-target-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code>, <code id="the-a-element:attr-hyperlink-download-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> 
+  attributes affect what happens when users <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="the-a-element:following-hyperlinks-2">follow
+  hyperlinks</a> or <a href="/breakup/specs/html-linking/#downloading-hyperlinks" id="the-a-element:downloading-hyperlinks">download hyperlinks</a> created using
+  the <code id="the-a-element:the-a-element-5"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element. The <code id="the-a-element:attr-hyperlink-rel-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code>, <code id="the-a-element:attr-hyperlink-hreflang-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code>, and <code id="the-a-element:attr-hyperlink-type-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code>
+  attributes may be used to indicate to the user the likely nature of the target resource before the
+  user follows the link.</p>
+
+  <p>The <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="the-a-element:activation-behaviour">activation behaviour</a> of <code id="the-a-element:the-a-element-6"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> elements that create <a href="/breakup/specs/html-linking/#hyperlink" id="the-a-element:hyperlink-4">hyperlinks</a> is to run the following steps:</p>
+
+  <ol><li><p>If the <code id="the-a-element:the-a-element-7"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element's <a id="the-a-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> is not <a href="/breakup/specs/browser-dom/#fully-active" id="the-a-element:fully-active">fully active</a>, then abort these steps.</p></li><li>
+
+    <p>If either the <code id="the-a-element:the-a-element-8"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element has a <code id="the-a-element:attr-hyperlink-download-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute and the algorithm is not <a href="/breakup/specs/browser-dom/#allowed-to-show-a-popup" id="the-a-element:allowed-to-show-a-popup">allowed
+    to show a popup</a>; or, if the user has not indicated a specific <a href="/breakup/specs/browser-dom/#browsing-context" id="the-a-element:browsing-context-2">browsing context</a> for following the link, and the element's <code id="the-a-element:attr-hyperlink-target-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code>
+    attribute is present, and applying <a href="/breakup/specs/browser-dom/#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name" id="the-a-element:the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">the rules for choosing a browsing context given a
+    browsing context name</a>, using the value of the <code id="the-a-element:attr-hyperlink-target-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> attribute as the browsing context name, would result
+    in there not being a chosen browsing context, then run these substeps:</p>
+
+    <ol><li><p>If there is an <a href="/breakup/specs/browser-dom/#entry-settings-object" id="the-a-element:entry-settings-object">entry settings object</a>, throw an
+     <code id="the-a-element:invalidaccesserror"><a href="/breakup/specs/core-algorithms/#invalidaccesserror">InvalidAccessError</a></code> exception.</p></li><li><p>Abort these steps without following the hyperlink.</p></li></ol>
+
+   </li><li><p>If the target of the <code id="the-a-element:event-click"><a href="/breakup/specs/core-algorithms/#event-click">click</a></code> event is an <code id="the-a-element:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>
+   element with an <code id="the-a-element:attr-img-ismap"><a href="/breakup/specs/html-images/#attr-img-ismap">ismap</a></code> attribute specified, then server-side
+   image map processing must be performed, as follows:</p>
+
+    <ol><li>If the <code id="the-a-element:event-click-2"><a href="/breakup/specs/core-algorithms/#event-click">click</a></code> event was a real pointing-device-triggered
+     <code id="the-a-element:event-click-3"><a href="/breakup/specs/core-algorithms/#event-click">click</a></code> event on the <code id="the-a-element:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element, then let <var>x</var> be the distance in CSS pixels from the left edge of the image's left border,
+     if it has one, or the left edge of the image otherwise, to the location of the click, and let
+     <var>y</var> be the distance in CSS pixels from the top edge of the image's top
+     border, if it has one, or the top edge of the image otherwise, to the location of the click.
+     Otherwise, let <var>x</var> and <var>y</var> be zero.</li><li>Let the <dfn id="hyperlink-suffix"><var>hyperlink suffix</var></dfn> be a U+003F QUESTION MARK character, the
+     value of <var>x</var> expressed as a base-ten integer using <a href="/breakup/specs/core-algorithms/#ascii-digits" id="the-a-element:ascii-digits">ASCII digits</a>,
+     a U+002C COMMA character (,), and the value of <var>y</var> expressed as a base-ten
+     integer using <a href="/breakup/specs/core-algorithms/#ascii-digits" id="the-a-element:ascii-digits-2">ASCII digits</a>.</li></ol>
+
+   </li><li><p>Finally, the user agent must <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="the-a-element:following-hyperlinks-2-2">follow the
+   hyperlink</a> or <a href="/breakup/specs/html-linking/#downloading-hyperlinks" id="the-a-element:downloading-hyperlinks-2">download the hyperlink</a> created
+   by the <code id="the-a-element:the-a-element-9"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element, as determined by the <code id="the-a-element:attr-hyperlink-download-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute and any expressed user preference. If
+   the steps above defined a <var id="the-a-element:hyperlink-suffix"><a href="/breakup/specs/html-linking/#hyperlink-suffix">hyperlink suffix</a></var>, then take that
+   into account when following or downloading the hyperlink.</p></li></ol>
+
+  
+
+
+  <dl class="domintro"><dt><var>a</var> . <code id="the-a-element:dom-a-text-2"><a href="/breakup/specs/html-linking/#dom-a-text">text</a></code></dt><dd>
+
+    <p>Same as <code id="the-a-element:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code>.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The IDL attributes <dfn id="dom-a-download"><code>download</code></dfn>, <dfn id="dom-a-target"><code>target</code></dfn>,
+  <dfn id="dom-a-rel"><code>rel</code></dfn>, <dfn id="dom-a-hreflang"><code>hreflang</code></dfn>, and <dfn id="dom-a-type"><code>type</code></dfn>, must <a href="/breakup/specs/core-algorithms/#reflect" id="the-a-element:reflect">reflect</a> the respective content
+  attributes of the same name.</p>
+
+  <p>The IDL attribute <dfn id="dom-a-rellist"><code>relList</code></dfn> must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-a-element:reflect-2">reflect</a> the <code id="the-a-element:attr-hyperlink-rel-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> content attribute.</p>
+
+  <p>The <dfn id="dom-a-text"><code>text</code></dfn> IDL attribute, on getting, must return the
+  same value as the <code id="the-a-element:textcontent-2"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute on the element, and on setting, must act
+  as if the <code id="the-a-element:textcontent-3"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code> IDL attribute on the element had been set to the new value.</p>
+
+  <hr>
+
+  <p>The <code id="the-a-element:the-a-element-10"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element also supports the <code id="the-a-element:urlutils-2"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface. [[!URL]]</p>
+
+  <p>When the element is created, and whenever the element's <code id="the-a-element:attr-hyperlink-href-7"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> content attribute is set, changed, or removed, the user
+  agent must invoke the element's <code id="the-a-element:urlutils-3"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface's <a href="/breakup/specs/core-algorithms/#concept-uu-set-the-input" id="the-a-element:concept-uu-set-the-input">set the input</a> algorithm with the value of the <code id="the-a-element:attr-hyperlink-href-8"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> content attribute, if any, or the null value otherwise,
+  as the given value.</p>
+
+  <p>The element's <code id="the-a-element:urlutils-4"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface's <a href="/breakup/specs/core-algorithms/#concept-uu-get-the-base" id="the-a-element:concept-uu-get-the-base">get the
+  base</a> algorithm must simply return <a href="/breakup/specs/core-algorithms/#the-element's-base-url" id="the-a-element:the-element's-base-url">the element's base URL</a>.</p>
+
+  <p>The element's <code id="the-a-element:urlutils-5"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface's <a href="/breakup/specs/core-algorithms/#concept-uu-query-encoding" id="the-a-element:concept-uu-query-encoding">query
+  encoding</a> is the <a href="/breakup/specs/core-algorithms/#document's-character-encoding" id="the-a-element:document's-character-encoding">document's character encoding</a>.</p>
+
+  <p>When the element's <code id="the-a-element:urlutils-6"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface invokes its <a href="/breakup/specs/core-algorithms/#concept-uu-update" id="the-a-element:concept-uu-update">update steps</a> with a string <var>value</var>, the user
+  agent must set the element's <code id="the-a-element:attr-hyperlink-href-9"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> content attribute to
+  the string <var>value</var>.</p>
+
+  
+
+
+  <div class="example">
+
+   <p>The <code id="the-a-element:the-a-element-11"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element may be wrapped around entire paragraphs, lists, tables, and so
+   forth, even entire sections, so long as there is no interactive content within (e.g. buttons or
+   other links). This example shows how this can be used to make an entire advertising block into a
+   link:</p>
+
+   <pre>&lt;aside class="advertising"&gt;
+ &lt;h1&gt;Advertising&lt;/h1&gt;
+ &lt;a href="http://ad.example.com/?adid=1929&amp;amp;pubid=1422"&gt;
+  &lt;section&gt;
+   &lt;h1&gt;Mellblomatic 9000!&lt;/h1&gt;
+   &lt;p&gt;Turn all your widgets into mellbloms!&lt;/p&gt;
+   &lt;p&gt;Only $9.99 plus shipping and handling.&lt;/p&gt;
+  &lt;/section&gt;
+ &lt;/a&gt;
+ &lt;a href="http://ad.example.com/?adid=375&amp;amp;pubid=1422"&gt;
+  &lt;section&gt;
+   &lt;h1&gt;The Mellblom Browser&lt;/h1&gt;
+   &lt;p&gt;Web browsing at the speed of light.&lt;/p&gt;
+   &lt;p&gt;No other browser goes faster!&lt;/p&gt;
+  &lt;/section&gt;
+ &lt;/a&gt;
+&lt;/aside&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>base</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-base-element:concept-element-categories">Categories</a>:</dt><dd><a href="#metadata-content-2" id="the-base-element:metadata-content-2">Metadata content</a>.</dd><dt><a href="#concept-element-contexts" id="the-base-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>In a <code id="the-base-element:the-head-element"><a href="/breakup/specs/html-structure/#the-head-element">head</a></code> element containing no other <code id="the-base-element:the-base-element"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> elements.</dd><dt><a href="#concept-element-content-model" id="the-base-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#concept-content-nothing" id="the-base-element:concept-content-nothing">Nothing</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-base-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>No <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-base-element:syntax-end-tag">end tag</a>.</dd><dt><a href="#concept-element-attributes" id="the-base-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-base-element:global-attributes">Global attributes</a></dd><dd><code id="the-base-element:attr-base-href"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> — <a href="/breakup/specs/core-algorithms/#document-base-url" id="the-base-element:document-base-url">Document base URL</a></dd><dd><code id="the-base-element:attr-base-target"><a href="/breakup/specs/html-linking/#attr-base-target">target</a></code> — Default <a href="/breakup/specs/browser-dom/#browsing-context" id="the-base-element:browsing-context">browsing context</a> for <a href="/breakup/specs/html-linking/#hyperlink" id="the-base-element:hyperlink">hyperlink</a> <a href="/breakup/specs/browsing/#navigate" id="the-base-element:navigate">navigation</a> and <a href="/breakup/specs/html-forms/#form-submission-2" id="the-base-element:form-submission-2">form submission</a></dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a>.</dd><dt><a href="#concept-element-dom" id="the-base-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlbaseelement">HTMLBaseElement</dfn> : <a href="#htmlelement" id="the-base-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-base-href" id="the-base-element:dom-base-href">href</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-base-target" id="the-base-element:dom-base-target">target</a>;
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-base-element:the-base-element-2"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element allows authors to specify the <a href="/breakup/specs/core-algorithms/#document-base-url" id="the-base-element:document-base-url-2">document base URL</a> for
+  the purposes of <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="the-base-element:resolve-a-url">resolving relative URLs</a>, and the name of the
+  default <a href="/breakup/specs/browser-dom/#browsing-context" id="the-base-element:browsing-context-2">browsing context</a> for the purposes of <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="the-base-element:following-hyperlinks-2">following hyperlinks</a>. The
+  element does not <a href="#represents" id="the-base-element:represents">represent</a> any content beyond this
+  information.</p>
+
+  <p>There must be no more than one <code id="the-base-element:the-base-element-3"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element per document.</p>
+
+  <p>A <code id="the-base-element:the-base-element-4"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element must have either an <code id="the-base-element:attr-base-href-2"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code>
+  attribute, a <code id="the-base-element:attr-base-target-2"><a href="/breakup/specs/html-linking/#attr-base-target">target</a></code> attribute, or both.</p>
+
+  <p>The <dfn id="attr-base-href"><code>href</code></dfn> content attribute, if specified, must
+  contain a <a href="/breakup/specs/core-algorithms/#valid-url-potentially-surrounded-by-spaces" id="the-base-element:valid-url-potentially-surrounded-by-spaces">valid URL potentially surrounded by spaces</a>.</p>
+
+  <p>A <code id="the-base-element:the-base-element-5"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element, if it has an <code id="the-base-element:attr-base-href-3"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> attribute,
+  must come before any other elements in the tree that have attributes defined as taking <a href="/breakup/specs/core-algorithms/#url" id="the-base-element:url">URLs</a>, except the <code id="the-base-element:the-html-element"><a href="/breakup/specs/html-structure/#the-html-element">html</a></code> element (its <code id="the-base-element:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code> attribute isn't affected by <code id="the-base-element:the-base-element-6"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code>
+  elements).</p>
+
+  
+
+  <p class="note">If there are multiple <code id="the-base-element:the-base-element-7"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> elements with <code id="the-base-element:attr-base-href-4"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> attributes, all but the first are ignored.</p>
+
+  
+
+  <p>The <dfn id="attr-base-target"><code>target</code></dfn> attribute, if specified, must
+  contain a <a href="/breakup/specs/browser-dom/#valid-browsing-context-name-or-keyword" id="the-base-element:valid-browsing-context-name-or-keyword">valid browsing context name or keyword</a>, which specifies which
+  <a href="/breakup/specs/browser-dom/#browsing-context" id="the-base-element:browsing-context-3">browsing context</a> is to be used as the default when <a href="/breakup/specs/html-linking/#hyperlink" id="the-base-element:hyperlink-2">hyperlinks</a> and <a href="/breakup/specs/html-forms/#the-form-element" id="the-base-element:the-form-element">forms</a> in the
+  <code id="the-base-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> cause <a href="/breakup/specs/browsing/#navigate" id="the-base-element:navigate-2">navigation</a>.</p>
+
+  <p>A <code id="the-base-element:the-base-element-8"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element, if it has a <code id="the-base-element:attr-base-target-3"><a href="/breakup/specs/html-linking/#attr-base-target">target</a></code>
+  attribute, must come before any elements in the tree that represent <a href="/breakup/specs/html-linking/#hyperlink" id="the-base-element:hyperlink-3">hyperlinks</a>.</p>
+
+  
+
+  <p class="note">If there are multiple <code id="the-base-element:the-base-element-9"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> elements with <code id="the-base-element:attr-base-target-4"><a href="/breakup/specs/html-linking/#attr-base-target">target</a></code> attributes, all but the first are ignored.</p>
+
+  <p>A <code id="the-base-element:the-base-element-10"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element that is the first <code id="the-base-element:the-base-element-11"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element with an <code id="the-base-element:attr-base-href-5"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> content attribute in a particular <code id="the-base-element:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> has a
+  <dfn id="frozen-base-url">frozen base URL</dfn>. The <a href="/breakup/specs/html-linking/#frozen-base-url" id="the-base-element:frozen-base-url">frozen base URL</a> must be <a href="/breakup/specs/core-algorithms/#immediately" id="the-base-element:immediately">immediately</a> <a href="/breakup/specs/html-linking/#set-the-frozen-base-url" id="the-base-element:set-the-frozen-base-url">set</a> whenever any of the following situations occur:</p>
+
+  <ul class="brief"><li>The <code id="the-base-element:the-base-element-12"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element becomes the first <code id="the-base-element:the-base-element-13"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-base-element:tree-order">tree
+   order</a> with an <code id="the-base-element:attr-base-href-6"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> content attribute in its
+   <code id="the-base-element:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code>.</li><li>The <code id="the-base-element:the-base-element-14"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element is the first <code id="the-base-element:the-base-element-15"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-base-element:tree-order-2">tree
+   order</a> with an <code id="the-base-element:attr-base-href-7"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> content attribute in its
+   <code id="the-base-element:document-4"><a href="/breakup/specs/browser-dom/#document">Document</a></code>, and its <code id="the-base-element:attr-base-href-8"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> content attribute is
+   changed.</li></ul>
+
+  <p>To <dfn id="set-the-frozen-base-url">set the frozen base URL</dfn>, <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="the-base-element:resolve-a-url-2">resolve</a> the value of
+  the element's <code id="the-base-element:attr-base-href-9"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> content attribute relative to the
+  <code id="the-base-element:document-5"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/core-algorithms/#fallback-base-url" id="the-base-element:fallback-base-url">fallback base URL</a>; if this is successful, set the
+  <a href="/breakup/specs/html-linking/#frozen-base-url" id="the-base-element:frozen-base-url-2">frozen base URL</a> to the <a href="/breakup/specs/core-algorithms/#resulting-absolute-url" id="the-base-element:resulting-absolute-url">resulting absolute URL</a>, otherwise, set the
+  <a href="/breakup/specs/html-linking/#frozen-base-url" id="the-base-element:frozen-base-url-3">frozen base URL</a> to the <a href="/breakup/specs/core-algorithms/#fallback-base-url" id="the-base-element:fallback-base-url-2">fallback base URL</a>.</p>
+
+  <p>The <dfn id="dom-base-href"><code>href</code></dfn> IDL attribute, on getting, must return
+  the result of running the following algorithm:
+
+  </p><ol><li><p>If the <code id="the-base-element:the-base-element-16"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element has no <code id="the-base-element:attr-base-href-10"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> content
+   attribute, then return the <a href="/breakup/specs/core-algorithms/#document-base-url" id="the-base-element:document-base-url-3">document base URL</a> and abort these steps.</p></li><li><p>Let <var>fallback base url</var> be the <code id="the-base-element:document-6"><a href="/breakup/specs/browser-dom/#document">Document</a></code>'s <a href="/breakup/specs/core-algorithms/#fallback-base-url" id="the-base-element:fallback-base-url-3">fallback
+   base URL</a>.</p></li><li><p>Let <var>url</var> be the value of the <code id="the-base-element:attr-base-href-11"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code>
+   attribute of the <code id="the-base-element:the-base-element-17"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element.</p></li><li><p><a href="/breakup/specs/core-algorithms/#resolve-a-url" id="the-base-element:resolve-a-url-3">Resolve</a> <var>url</var> relative to <var>fallback base url</var> (thus, the <code id="the-base-element:the-base-element-18"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> <code id="the-base-element:attr-base-href-12"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> attribute isn't affected by <code id="the-base-element:the-xml:base-attribute-(xml-only)"><a href="/breakup/specs/html-attributes/#the-xml:base-attribute-(xml-only)">xml:base</a></code> attributes or <code id="the-base-element:the-base-element-19"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> elements).</p></li><li><p>If the previous step was successful, return the resulting <a href="/breakup/specs/core-algorithms/#absolute-url" id="the-base-element:absolute-url">absolute URL</a> and
+   abort these steps.</p></li><li><p>Otherwise, return the empty string.</p></li></ol>
+
+  <p>The <code id="the-base-element:dom-base-href-2"><a href="/breakup/specs/html-linking/#dom-base-href">href</a></code> IDL attribute, on setting, must set the <code id="the-base-element:attr-base-href-13"><a href="/breakup/specs/html-linking/#attr-base-href">href</a></code> content attribute to the given new value.</p>
+
+  <p>The <dfn id="dom-base-target"><code>target</code></dfn> IDL attribute must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-base-element:reflect">reflect</a> the content attribute of the same name.</p>
+
+  
+
+  <div class="example">
+
+   <p>In this example, a <code id="the-base-element:the-base-element-20"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element is used to set the <a href="/breakup/specs/core-algorithms/#document-base-url" id="the-base-element:document-base-url-4">document base
+   URL</a>:</p>
+
+   <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;This is an example for the &amp;lt;base&amp;gt; element&lt;/title&gt;
+        &lt;base href="http://www.example.com/news/index.html"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;p&gt;Visit the &lt;a href="archives.html"&gt;archives&lt;/a&gt;.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+   <p>The link in the above example would be a link to "<code>http://www.example.com/news/archives.html</code>".</p>
+
+  </div></section><section><h2>The <dfn><code>map</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-map-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-map-element:flow-content-2">Flow content</a>.</dd><dd><a href="#phrasing-content-2" id="the-map-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="#palpable-content-2" id="the-map-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="#concept-element-contexts" id="the-map-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#phrasing-content-2" id="the-map-element:phrasing-content-2-2">phrasing content</a> is expected.</dd><dt><a href="#concept-element-content-model" id="the-map-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#transparent" id="the-map-element:transparent">Transparent</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-map-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="#concept-element-attributes" id="the-map-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-map-element:global-attributes">Global attributes</a></dd><dd><code id="the-map-element:attr-map-name"><a href="/breakup/specs/html-linking/#attr-map-name">name</a></code> — Name of <a href="/breakup/specs/html-linking/#image-map" id="the-map-element:image-map">image map</a> to reference from the <code id="the-map-element:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dt><a href="#concept-element-dom" id="the-map-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlmapelement">HTMLMapElement</dfn> : <a href="#htmlelement" id="the-map-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-map-name" id="the-map-element:dom-map-name">name</a>;
+  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-map-element:htmlcollection">HTMLCollection</a> <a href="/breakup/specs/html-linking/#dom-map-areas" id="the-map-element:dom-map-areas">areas</a>;
+  readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-map-element:htmlcollection-2">HTMLCollection</a> <a href="/breakup/specs/html-linking/#dom-map-images" id="the-map-element:dom-map-images">images</a>;
+};</pre>
+   </dd></dl>
+
+  <p>The <code id="the-map-element:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element, in conjunction with an <code id="the-map-element:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element and any
+  <code id="the-map-element:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element descendants, defines an <a href="/breakup/specs/html-linking/#image-map" id="the-map-element:image-map-2">image map</a>. The element
+  <a href="#represents" id="the-map-element:represents">represents</a> its children.</p>
+
+  <p>The <dfn id="attr-map-name"><code>name</code></dfn> attribute gives the map a name so that
+  it can be referenced. The attribute must be present and must have a non-empty value with no <a href="/breakup/specs/core-algorithms/#space-character" id="the-map-element:space-character">space characters</a>. The value of the <code id="the-map-element:attr-map-name-2"><a href="/breakup/specs/html-linking/#attr-map-name">name</a></code> attribute must not be a <a href="/breakup/specs/core-algorithms/#compatibility-caseless" id="the-map-element:compatibility-caseless">compatibility-caseless</a> match for the value of the <code id="the-map-element:attr-map-name-3"><a href="/breakup/specs/html-linking/#attr-map-name">name</a></code> attribute of another <code id="the-map-element:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element in the same
+  document. If the <code id="the-map-element:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> attribute is also specified, both attributes must
+  have the same value.</p>
+
+
+  <dl class="domintro"><dt><var>map</var> . <code id="the-map-element:dom-map-areas-2"><a href="/breakup/specs/html-linking/#dom-map-areas">areas</a></code></dt><dd>
+
+    <p>Returns an <code id="the-map-element:htmlcollection-3"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-map-element:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements in the
+    <code id="the-map-element:the-map-element-3"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>.</p>
+
+   </dd><dt><var>map</var> . <code id="the-map-element:dom-map-images-2"><a href="/breakup/specs/html-linking/#dom-map-images">images</a></code></dt><dd>
+
+    <p>Returns an <code id="the-map-element:htmlcollection-4"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> of the <code id="the-map-element:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="the-map-element:the-object-element"><a href="#the-object-element">object</a></code>
+    elements that use the <code id="the-map-element:the-map-element-4"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-map-areas"><code>areas</code></dfn> attribute must return an
+  <code id="the-map-element:htmlcollection-5"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the <code id="the-map-element:the-map-element-5"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element, whose filter matches only
+  <code id="the-map-element:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements.</p>
+
+  <p>The <dfn id="dom-map-images"><code>images</code></dfn> attribute must return an
+  <code id="the-map-element:htmlcollection-6"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> rooted at the <code id="the-map-element:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> node, whose filter matches only
+  <code id="the-map-element:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="the-map-element:the-object-element-2"><a href="#the-object-element">object</a></code> elements that are associated with this <code id="the-map-element:the-map-element-6"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>
+  element according to the <a href="/breakup/specs/html-linking/#image-map" id="the-map-element:image-map-3">image map</a> processing model.</p>
+
+  <p>The IDL attribute <dfn id="dom-map-name"><code>name</code></dfn> must <a href="/breakup/specs/core-algorithms/#reflect" id="the-map-element:reflect">reflect</a>
+  the content attribute of the same name.</p>
+
+  
+
+
+  <div class="example">
+
+   <p>Image maps can be defined in conjunction with other content on the page, to ease maintenance.
+   This example is of a page with an image map at the top of the page and a corresponding set of
+   text links at the bottom.</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;TITLE&gt;Babies™: Toys&lt;/TITLE&gt;
+&lt;HEADER&gt;
+ &lt;H1&gt;Toys&lt;/H1&gt;
+ &lt;IMG SRC="/images/menu.gif"
+      ALT="Babies™ navigation menu. Select a department to go to its page."
+      USEMAP="#NAV"&gt;
+&lt;/HEADER&gt;
+ ...
+&lt;FOOTER&gt;
+ &lt;MAP NAME="NAV"&gt;
+  &lt;P&gt;
+   &lt;A HREF="/clothes/"&gt;Clothes&lt;/A&gt;
+   &lt;AREA ALT="Clothes" COORDS="0,0,100,50" HREF="/clothes/"&gt; |
+   &lt;A HREF="/toys/"&gt;Toys&lt;/A&gt;
+   &lt;AREA ALT="Toys" COORDS="100,0,200,50" HREF="/toys/"&gt; |
+   &lt;A HREF="/food/"&gt;Food&lt;/A&gt;
+   &lt;AREA ALT="Food" COORDS="200,0,300,50" HREF="/food/"&gt; |
+   &lt;A HREF="/books/"&gt;Books&lt;/A&gt;
+   &lt;AREA ALT="Books" COORDS="300,0,400,50" HREF="/books/"&gt;
+  &lt;/P&gt;
+ &lt;/MAP&gt;
+&lt;/FOOTER&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>area</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="#concept-element-categories" id="the-area-element:concept-element-categories">Categories</a>:</dt><dd><a href="#flow-content-2" id="the-area-element:flow-content-2">Flow content</a>.</dd><dd><a href="#phrasing-content-2" id="the-area-element:phrasing-content-2">Phrasing content</a>.</dd><dt><a href="#concept-element-contexts" id="the-area-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="#phrasing-content-2" id="the-area-element:phrasing-content-2-2">phrasing content</a> is expected, but only if there is a <code id="the-area-element:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element ancestor or a <code id="the-area-element:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code> element ancestor.</dd><dt><a href="#concept-element-content-model" id="the-area-element:concept-element-content-model">Content model</a>:</dt><dd><a href="#concept-content-nothing" id="the-area-element:concept-content-nothing">Nothing</a>.</dd><dt><a href="#concept-element-tag-omission" id="the-area-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>No <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-area-element:syntax-end-tag">end tag</a>.</dd><dt><a href="#concept-element-attributes" id="the-area-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-area-element:global-attributes">Global attributes</a></dd><dd><code id="the-area-element:attr-area-alt"><a href="/breakup/specs/html-linking/#attr-area-alt">alt</a></code> — Replacement text for use when images are not available</dd><dd><code id="the-area-element:attr-area-coords"><a href="/breakup/specs/html-linking/#attr-area-coords">coords</a></code> — Coordinates for the shape to be created in an <a href="/breakup/specs/html-linking/#image-map" id="the-area-element:image-map">image map</a></dd><dd><code id="the-area-element:attr-area-shape"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> — The kind of shape to be created in an <a href="/breakup/specs/html-linking/#image-map" id="the-area-element:image-map-2">image map</a></dd><dd><code id="the-area-element:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> — Address of the <a href="/breakup/specs/html-linking/#hyperlink" id="the-area-element:hyperlink">hyperlink</a></dd><dd><code id="the-area-element:attr-hyperlink-target"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> — <a href="/breakup/specs/browser-dom/#browsing-context" id="the-area-element:browsing-context">Browsing context</a> for <a href="/breakup/specs/html-linking/#hyperlink" id="the-area-element:hyperlink-2">hyperlink</a> <a href="/breakup/specs/browsing/#navigate" id="the-area-element:navigate">navigation</a></dd><dd><code id="the-area-element:attr-hyperlink-download"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> — Whether to download the resource instead of navigating to it, and its file name if so</dd><dd><code id="the-area-element:attr-hyperlink-rel"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> — Relationship between the document containing the hyperlink and the destination resource</dd><dd><code id="the-area-element:attr-hyperlink-hreflang"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code> — Language of the linked resource</dd><dd><code id="the-area-element:attr-hyperlink-type"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> — Hint for the type of the referenced resource</dd><dt>Allowed <a href="#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="#index-aria-link"><code title="">link</code></a> role (default - <a href="#aria-usage-note"><em>do not set</em></a>).</dd><dt>Allowed <a href="#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="#concept-element-dom" id="the-area-element:concept-element-dom">DOM interface</a>:</dt><dd>
+<pre class="idl">interface <dfn id="htmlareaelement">HTMLAreaElement</dfn> : <a href="#htmlelement" id="the-area-element:htmlelement">HTMLElement</a> {
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-alt" id="the-area-element:dom-area-alt">alt</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-coords" id="the-area-element:dom-area-coords">coords</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-shape" id="the-area-element:dom-area-shape">shape</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-target" id="the-area-element:dom-area-target">target</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-download" id="the-area-element:dom-area-download">download</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-rel" id="the-area-element:dom-area-rel">rel</a>;
+  readonly attribute <a href="/breakup/specs/core-algorithms/#domtokenlist" id="the-area-element:domtokenlist">DOMTokenList</a> <a href="/breakup/specs/html-linking/#dom-area-rellist" id="the-area-element:dom-area-rellist">relList</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-hreflang" id="the-area-element:dom-area-hreflang">hreflang</a>;
+  attribute DOMString <a href="/breakup/specs/html-linking/#dom-area-type" id="the-area-element:dom-area-type">type</a>;
+
+  // <a href="#HTMLAreaElement-partial">also has obsolete members</a>
+};
+<a href="/breakup/specs/html-linking/#htmlareaelement" id="the-area-element:htmlareaelement">HTMLAreaElement</a> implements <a href="/breakup/specs/core-algorithms/#urlutils" id="the-area-element:urlutils">URLUtils</a>;</pre>
+   </dd></dl>
+
+  <p>The <code id="the-area-element:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element <a href="#represents" id="the-area-element:represents">represents</a> either a hyperlink with some text and a
+  corresponding area on an <a href="/breakup/specs/html-linking/#image-map" id="the-area-element:image-map-3">image map</a>, or a dead area on an image map.</p>
+
+  <p>An <code id="the-area-element:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element with a parent node must have a <code id="the-area-element:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element ancestor
+  or a <code id="the-area-element:the-template-element-2"><a href="/breakup/specs/html-template/#the-template-element">template</a></code> element ancestor.</p>
+
+  <p>If the <code id="the-area-element:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element has an <code id="the-area-element:attr-hyperlink-href-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code>
+  attribute, then the <code id="the-area-element:the-area-element-4"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element represents a <a href="/breakup/specs/html-linking/#hyperlink" id="the-area-element:hyperlink-3">hyperlink</a>. In this case,
+  the <dfn id="attr-area-alt"><code>alt</code></dfn> attribute must be present. It specifies the
+  text of the hyperlink. Its value must be text that, when presented with the texts specified for
+  the other hyperlinks of the <a href="/breakup/specs/html-linking/#image-map" id="the-area-element:image-map-4">image map</a>, and with the alternative text of the image,
+  but without the image itself, provides the user with the same kind of choice as the hyperlink
+  would when used without its text but with its shape applied to the image. The <code id="the-area-element:attr-area-alt-2"><a href="/breakup/specs/html-linking/#attr-area-alt">alt</a></code> attribute may be left blank if there is another <code id="the-area-element:the-area-element-5"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>
+  element in the same <a href="/breakup/specs/html-linking/#image-map" id="the-area-element:image-map-5">image map</a> that points to the same resource and has a non-blank
+  <code id="the-area-element:attr-area-alt-3"><a href="/breakup/specs/html-linking/#attr-area-alt">alt</a></code> attribute.</p>
+
+  <p>If the <code id="the-area-element:the-area-element-6"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element has no <code id="the-area-element:attr-hyperlink-href-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code>
+  attribute, then the area represented by the element cannot be selected, and the <code id="the-area-element:attr-area-alt-4"><a href="/breakup/specs/html-linking/#attr-area-alt">alt</a></code> attribute must be omitted.</p>
+
+  <p>In both cases, the <code id="the-area-element:attr-area-shape-2"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> and <code id="the-area-element:attr-area-coords-2"><a href="/breakup/specs/html-linking/#attr-area-coords">coords</a></code> attributes specify the area.</p>
+
+  <p>The <dfn id="attr-area-shape"><code>shape</code></dfn> attribute is an <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="the-area-element:enumerated-attribute">enumerated
+  attribute</a>. The following table lists the keywords defined for this attribute. The states
+  given in the first cell of the rows with keywords give the states to which those keywords map.
+  Some of the keywords are non-conforming, as noted in the last
+  column.</p>
+
+  <table><thead><tr><th>State
+     </th><th>Keywords
+     </th><th>Notes
+   </th></tr></thead><tbody><tr><td rowspan="2"><a href="/breakup/specs/html-linking/#attr-area-shape-circle" id="the-area-element:attr-area-shape-circle">Circle state</a>
+     </td><td><dfn id="attr-area-shape-keyword-circle"><code>circle</code></dfn>
+     </td><td>
+    </td></tr><tr><td><dfn id="attr-area-shape-keyword-circ"><code>circ</code></dfn>
+     </td><td>Non-conforming
+    </td></tr><tr><td><a href="/breakup/specs/html-linking/#attr-area-shape-default" id="the-area-element:attr-area-shape-default">Default state</a>
+     </td><td><dfn id="attr-area-shape-keyword-default"><code>default</code></dfn>
+     </td><td>
+    </td></tr><tr><td rowspan="2"><a href="/breakup/specs/html-linking/#attr-area-shape-poly" id="the-area-element:attr-area-shape-poly">Polygon state</a>
+     </td><td><dfn id="attr-area-shape-keyword-poly"><code>poly</code></dfn>
+     </td><td>
+    </td></tr><tr><td><dfn id="attr-area-shape-keyword-polygon"><code>polygon</code></dfn>
+     </td><td>Non-conforming
+    </td></tr><tr><td rowspan="2"><a href="/breakup/specs/html-linking/#attr-area-shape-rect" id="the-area-element:attr-area-shape-rect">Rectangle state</a>
+     </td><td><dfn id="attr-area-shape-keyword-rect"><code>rect</code></dfn>
+     </td><td>
+    </td></tr><tr><td><dfn id="attr-area-shape-keyword-rectangle"><code>rectangle</code></dfn>
+     </td><td>Non-conforming
+  </td></tr></tbody></table>
+
+  <p>The attribute may be omitted. The <i id="the-area-element:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i> is the <a href="/breakup/specs/html-linking/#attr-area-shape-rect" id="the-area-element:attr-area-shape-rect-2">rectangle</a> state.</p>
+
+  <p>The <dfn id="attr-area-coords"><code>coords</code></dfn> attribute must, if specified,
+  contain a <a href="/breakup/specs/core-algorithms/#valid-list-of-integers" id="the-area-element:valid-list-of-integers">valid list of integers</a>. This attribute gives the coordinates for the shape
+  described by the <code id="the-area-element:attr-area-shape-3"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> attribute. The
+  processing for this attribute is described as part of the <a href="/breakup/specs/html-linking/#image-map" id="the-area-element:image-map-6">image map</a> processing
+  model.</p>
+
+  
+
+  <p>In the <dfn id="attr-area-shape-circle">circle state</dfn>, <code id="the-area-element:the-area-element-7"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements must
+  have a <code id="the-area-element:attr-area-coords-3"><a href="/breakup/specs/html-linking/#attr-area-coords">coords</a></code> attribute present, with three integers, the
+  last of which must be non-negative. The first integer must be the distance in CSS pixels from the
+  left edge of the image to the center of the circle, the second integer must be the distance in CSS
+  pixels from the top edge of the image to the center of the circle, and the third integer must be
+  the radius of the circle, again in CSS pixels.</p>
+
+  <p>In the <dfn id="attr-area-shape-default">default state</dfn> state, <code id="the-area-element:the-area-element-8"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>
+  elements must not have a <code id="the-area-element:attr-area-coords-4"><a href="/breakup/specs/html-linking/#attr-area-coords">coords</a></code> attribute. (The area is the
+  whole image.)</p>
+
+  <p>In the <dfn id="attr-area-shape-poly">polygon state</dfn>, <code id="the-area-element:the-area-element-9"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements must
+  have a <code id="the-area-element:attr-area-coords-5"><a href="/breakup/specs/html-linking/#attr-area-coords">coords</a></code> attribute with at least six integers, and the
+  number of integers must be even. Each pair of integers must represent a coordinate given as the
+  distances from the left and the top of the image in CSS pixels respectively, and all the
+  coordinates together must represent the points of the polygon, in order.</p>
+
+  <p>In the <dfn id="attr-area-shape-rect">rectangle state</dfn>, <code id="the-area-element:the-area-element-10"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements must
+  have a <code id="the-area-element:attr-area-coords-6"><a href="/breakup/specs/html-linking/#attr-area-coords">coords</a></code> attribute with exactly four integers, the
+  first of which must be less than the third, and the second of which must be less than the fourth.
+  The four points must represent, respectively, the distance from the left edge of the image to the
+  left side of the rectangle, the distance from the top edge to the top side, the distance from the
+  left edge to the right side, and the distance from the top edge to the bottom side, all in CSS
+  pixels.</p>
+
+  
+
+  <p>When user agents allow users to <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="the-area-element:following-hyperlinks-2">follow hyperlinks</a> or
+  <a href="/breakup/specs/html-linking/#downloading-hyperlinks" id="the-area-element:downloading-hyperlinks">download hyperlinks</a> created using the
+  <code id="the-area-element:the-area-element-11"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element, as described in the next section, the <code id="the-area-element:attr-hyperlink-href-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code>, <code id="the-area-element:attr-hyperlink-target-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code>, <code id="the-area-element:attr-hyperlink-download-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> 
+  attributes decide how the link is followed. The <code id="the-area-element:attr-hyperlink-rel-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code>, <code id="the-area-element:attr-hyperlink-hreflang-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code>, and <code id="the-area-element:attr-hyperlink-type-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code>
+  attributes may be used to indicate to the user the likely nature of the target resource before the
+  user follows the link.</p>
+
+  
+
+  <p>The <code id="the-area-element:attr-hyperlink-target-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code>, <code id="the-area-element:attr-hyperlink-download-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code>,
+  <code id="the-area-element:attr-hyperlink-rel-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code>, <code id="the-area-element:attr-hyperlink-hreflang-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code>, and <code id="the-area-element:attr-hyperlink-type-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code>
+  attributes must be omitted if the <code id="the-area-element:attr-hyperlink-href-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute is not
+  present.</p>
+
+  <p>If the <code id="the-area-element:names:-the-itemprop-attribute"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop</a></code> attribute is specified on an
+  <code id="the-area-element:the-area-element-12"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element, then the <code id="the-area-element:attr-hyperlink-href-6"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute must
+  also be specified.</p>
+
+  
+
+  <p>The <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="the-area-element:activation-behaviour">activation behaviour</a> of <code id="the-area-element:the-area-element-13"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements is to run the following
+  steps:</p>
+
+  <ol><li><p>If the <code id="the-area-element:the-area-element-14"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element's <a id="the-area-element:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> is not <a href="/breakup/specs/browser-dom/#fully-active" id="the-area-element:fully-active">fully active</a>,
+   then abort these steps.</p></li><li>
+
+    <p>If the <code id="the-area-element:the-area-element-15"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element has a <code id="the-area-element:attr-hyperlink-download-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code>
+    attribute and the algorithm is not <a href="/breakup/specs/browser-dom/#allowed-to-show-a-popup" id="the-area-element:allowed-to-show-a-popup">allowed to show a popup</a>; or, if the user has not indicated a specific <a href="/breakup/specs/browser-dom/#browsing-context" id="the-area-element:browsing-context-2">browsing context</a> for following the link, and the element's <code id="the-area-element:attr-hyperlink-target-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> attribute is present, and applying <a href="/breakup/specs/browser-dom/#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name" id="the-area-element:the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">the rules
+    for choosing a browsing context given a browsing context name</a>, using the value of the
+    <code id="the-area-element:attr-hyperlink-target-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> attribute as the browsing context name, would
+    result in there not being a chosen browsing context, then run these substeps:</p>
+
+    <ol><li><p>If there is an <a href="/breakup/specs/browser-dom/#entry-settings-object" id="the-area-element:entry-settings-object">entry settings object</a>, throw an
+     <code id="the-area-element:invalidaccesserror"><a href="/breakup/specs/core-algorithms/#invalidaccesserror">InvalidAccessError</a></code> exception.</p></li><li><p>Abort these steps without following the hyperlink.</p></li></ol>
+
+   </li><li><p>Otherwise, the user agent must <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="the-area-element:following-hyperlinks-2-2">follow the
+   hyperlink</a> or <a href="/breakup/specs/html-linking/#downloading-hyperlinks" id="the-area-element:downloading-hyperlinks-2">download the hyperlink</a> created
+   by the <code id="the-area-element:the-area-element-16"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element, if any, and as determined by the <code id="the-area-element:attr-hyperlink-download-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute and any expressed user
+   preference.</p></li></ol>
+
+  <p>The IDL attributes <dfn id="dom-area-alt"><code>alt</code></dfn>, <dfn id="dom-area-coords"><code>coords</code></dfn>, <dfn id="dom-area-target"><code>target</code></dfn>, <dfn id="dom-area-download"><code>download</code></dfn>, <dfn id="dom-area-rel"><code>rel</code></dfn>,
+  <dfn id="dom-area-hreflang"><code>hreflang</code></dfn>, and <dfn id="dom-area-type"><code>type</code></dfn>, each must <a href="/breakup/specs/core-algorithms/#reflect" id="the-area-element:reflect">reflect</a> the respective
+  content attributes of the same name.</p>
+
+  <p>The IDL attribute <dfn id="dom-area-shape"><code>shape</code></dfn> must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-area-element:reflect-2">reflect</a> the <code id="the-area-element:attr-area-shape-4"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> content attribute.</p>
+
+  <p>The IDL attribute <dfn id="dom-area-rellist"><code>relList</code></dfn> must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-area-element:reflect-3">reflect</a> the <code id="the-area-element:attr-hyperlink-rel-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> content attribute.</p>
+
+  <hr>
+
+  <p>The <code id="the-area-element:the-area-element-17"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element also supports the <code id="the-area-element:urlutils-2"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface. [[!URL]]</p>
+
+  <p>When the element is created, and whenever the element's <code id="the-area-element:attr-hyperlink-href-7"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> content attribute is set, changed, or removed, the user
+  agent must invoke the element's <code id="the-area-element:urlutils-3"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface's <a href="/breakup/specs/core-algorithms/#concept-uu-set-the-input" id="the-area-element:concept-uu-set-the-input">set the input</a> algorithm with the value of the <code id="the-area-element:attr-hyperlink-href-8"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> content attribute, if any, or the null value otherwise,
+  as the given value.</p>
+
+  <p>The element's <code id="the-area-element:urlutils-4"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface's <a href="/breakup/specs/core-algorithms/#concept-uu-get-the-base" id="the-area-element:concept-uu-get-the-base">get the
+  base</a> algorithm must simply return <a href="/breakup/specs/core-algorithms/#the-element's-base-url" id="the-area-element:the-element's-base-url">the element's base URL</a>.</p>
+
+  <p>The element's <code id="the-area-element:urlutils-5"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface's <a href="/breakup/specs/core-algorithms/#concept-uu-query-encoding" id="the-area-element:concept-uu-query-encoding">query
+  encoding</a> is the <a href="/breakup/specs/core-algorithms/#document's-character-encoding" id="the-area-element:document's-character-encoding">document's character encoding</a>.</p>
+
+  <p>When the element's <code id="the-area-element:urlutils-6"><a href="/breakup/specs/core-algorithms/#urlutils">URLUtils</a></code> interface invokes its <a href="/breakup/specs/core-algorithms/#concept-uu-update" id="the-area-element:concept-uu-update">update steps</a> with a string <var>value</var>, the user
+  agent must set the element's <code id="the-area-element:attr-hyperlink-href-9"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> content attribute to
+  the string <var>value</var>.</p></section><section><h2>Image maps</h2>
+
+  
+
+  
+
+  <section><h2>Authoring</h2>
+
+  
+
+  <p>An <dfn id="image-map">image map</dfn> allows geometric areas on an image to be associated with <a href="/breakup/specs/html-linking/#hyperlink" id="authoring:hyperlink">hyperlinks</a>.</p>
+
+  <p>An image, in the form of an <code id="authoring:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element or an <code id="authoring:the-object-element"><a href="#the-object-element">object</a></code> element
+  representing an image, may be associated with an image map (in the form of a <code id="authoring:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>
+  element) by specifying a <dfn id="attr-hyperlink-usemap"><code>usemap</code></dfn> attribute on
+  the <code id="authoring:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> or <code id="authoring:the-object-element-2"><a href="#the-object-element">object</a></code> element. The <code id="authoring:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute, if specified, must be a <a href="/breakup/specs/core-algorithms/#valid-hash-name-reference" id="authoring:valid-hash-name-reference">valid
+  hash-name reference</a> to a <code id="authoring:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element.</p>
+
+  <div class="example">
+
+   <p>Consider an image that looks as follows:</p>
+
+   <p><img src="img/sample-usemap.png" width="600" alt="A line with four shapes in it, equally spaced: a red hollow box, a green circle, a blue triangle, and a yellow four-pointed star." height="150"></p>
+
+   <p>If we wanted just the coloured areas to be clickable, we could do it as follows:</p>
+
+   <pre>&lt;p&gt;
+ Please select a shape:
+ &lt;img src="shapes.png" usemap="#shapes"
+      alt="Four shapes are available: a red hollow box, a green circle, a blue triangle, and a yellow four-pointed star."&gt;
+ &lt;map name="shapes"&gt;
+  &lt;area shape=rect coords="50,50,100,100"&gt; &lt;!-- the hole in the red box --&gt;
+  &lt;area shape=rect coords="25,25,125,125" href="red.html" alt="Red box."&gt;
+  &lt;area shape=circle coords="200,75,50" href="green.html" alt="Green circle."&gt;
+  &lt;area shape=poly coords="325,25,262,125,388,125" href="blue.html" alt="Blue triangle."&gt;
+  &lt;area shape=poly coords="450,25,435,60,400,75,435,90,450,125,465,90,500,75,465,60"
+        href="yellow.html" alt="Yellow star."&gt;
+ &lt;/map&gt;
+&lt;/p&gt;</pre>
+
+  </div></section>
+
+  
+
+  <section><h2>Processing model</h2>
+
+  <p>If an <code id="processing-model-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element or an <code id="processing-model-2:the-object-element"><a href="#the-object-element">object</a></code> element representing an image has a
+  <code id="processing-model-2:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute specified, user agents must process it
+  as follows:</p>
+
+  <ol><li><p>Parse the attribute's value using the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-a-hash-name-reference" id="processing-model-2:rules-for-parsing-a-hash-name-reference">rules for parsing a hash-name reference</a> to a <code id="processing-model-2:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element, with the element's <a id="processing-model-2:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> as the context node.
+   This will return either an element (the <var>map</var>) or
+   null.</p></li><li><p>If that returned null, then abort these steps. The image is not associated with an image
+   map after all.</p></li><li><p>Otherwise, the user agent must collect all the <code id="processing-model-2:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements that are
+   descendants of the <var>map</var>. Let those be the <var>areas</var>.</p></li></ol>
+
+  <p>Having obtained the list of <code id="processing-model-2:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements that form the image map (the <var>areas</var>), interactive user agents must process the list in one of two ways.</p>
+
+  <p>If the user agent intends to show the text that the <code id="processing-model-2:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element represents, then
+  it must use the following steps.</p>
+
+  <p class="note">In user agents that do not support images, or that have images disabled,
+  <code id="processing-model-2:the-object-element-2"><a href="#the-object-element">object</a></code> elements cannot represent images, and thus this section never applies (the
+  <a href="#fallback-content" id="processing-model-2:fallback-content">fallback content</a> is shown instead). The following steps therefore only apply to
+  <code id="processing-model-2:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements.</p>
+
+  <ol><li><p>Remove all the <code id="processing-model-2:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements in <var>areas</var> that have no <code id="processing-model-2:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute.</p></li><li><p>Remove all the <code id="processing-model-2:the-area-element-4"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements in <var>areas</var> that have no <code id="processing-model-2:attr-area-alt"><a href="/breakup/specs/html-linking/#attr-area-alt">alt</a></code> attribute, or whose <code id="processing-model-2:attr-area-alt-2"><a href="/breakup/specs/html-linking/#attr-area-alt">alt</a></code>
+   attribute's value is the empty string, <em>if</em> there is another <code id="processing-model-2:the-area-element-5"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element in
+   <var>areas</var> with the same value in the <code id="processing-model-2:attr-hyperlink-href-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute and with a non-empty <code id="processing-model-2:attr-area-alt-3"><a href="/breakup/specs/html-linking/#attr-area-alt">alt</a></code> attribute.</p></li><li><p>Each remaining <code id="processing-model-2:the-area-element-6"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element in <var>areas</var> represents a
+   <a href="/breakup/specs/html-linking/#hyperlink" id="processing-model-2:hyperlink">hyperlink</a>. Those hyperlinks should all be made available to the user in a manner
+   associated with the text of the <code id="processing-model-2:the-img-element-4"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>.</p>
+
+   <p>In this context, user agents may represent <code id="processing-model-2:the-area-element-7"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> and <code id="processing-model-2:the-img-element-5"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements
+   with no specified <code>alt</code> attributes, or whose <code>alt</code>
+   attributes are the empty string or some other non-visible text, in a user-agent-defined fashion
+   intended to indicate the lack of suitable author-provided text.</p></li></ol>
+
+  <p>If the user agent intends to show the image and allow interaction with the image to select
+  hyperlinks, then the image must be associated with a set of layered shapes, taken from the
+  <code id="processing-model-2:the-area-element-8"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements in <var>areas</var>, in reverse <a href="/breakup/specs/core-algorithms/#tree-order" id="processing-model-2:tree-order">tree order</a> (so the last
+  specified <code id="processing-model-2:the-area-element-9"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element in the <var>map</var> is the bottom-most shape, and
+  the first element in the <var>map</var>, in <a href="/breakup/specs/core-algorithms/#tree-order" id="processing-model-2:tree-order-2">tree order</a>, is the top-most shape).</p>
+
+  <p>Each <code id="processing-model-2:the-area-element-10"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element in <var>areas</var> must be processed as follows to
+  obtain a shape to layer onto the image:</p>
+
+  <ol><li><p>Find the state that the element's <code id="processing-model-2:attr-area-shape"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> attribute
+   represents.</p></li><li><p>Use the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-a-list-of-integers" id="processing-model-2:rules-for-parsing-a-list-of-integers">rules for parsing a list of integers</a> to parse the element's <code id="processing-model-2:attr-area-coords"><a href="/breakup/specs/html-linking/#attr-area-coords">coords</a></code> attribute, if it is present, and let the result be the
+   <var>coords</var> list. If the attribute is absent, let the <var>coords</var>
+   list be the empty list.</p></li><li>
+
+    <p>If the number of items in the <var>coords</var> list is less than the minimum number
+    given for the <code id="processing-model-2:the-area-element-11"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element's current state, as per the following table, then the
+    shape is empty; abort these steps.</p>
+
+    <table><thead><tr><th>State
+       </th><th>Minimum number of items
+     </th></tr></thead><tbody><tr><td><a href="/breakup/specs/html-linking/#attr-area-shape-circle" id="processing-model-2:attr-area-shape-circle">Circle state</a>
+       </td><td>3
+      </td></tr><tr><td><a href="/breakup/specs/html-linking/#attr-area-shape-default" id="processing-model-2:attr-area-shape-default">Default state</a>
+       </td><td>0
+      </td></tr><tr><td><a href="/breakup/specs/html-linking/#attr-area-shape-poly" id="processing-model-2:attr-area-shape-poly">Polygon state</a>
+       </td><td>6
+      </td></tr><tr><td><a href="/breakup/specs/html-linking/#attr-area-shape-rect" id="processing-model-2:attr-area-shape-rect">Rectangle state</a>
+       </td><td>4
+    </td></tr></tbody></table>
+
+   </li><li>
+
+    <p>Check for excess items in the <var>coords</var> list as per the entry in the
+    following list corresponding to the <code id="processing-model-2:attr-area-shape-2"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> attribute's
+    state:</p>
+
+    <dl class="switch"><dt><a href="/breakup/specs/html-linking/#attr-area-shape-circle" id="processing-model-2:attr-area-shape-circle-2">Circle state</a></dt><dd>Drop any items in the list beyond the third.</dd><dt><a href="/breakup/specs/html-linking/#attr-area-shape-default" id="processing-model-2:attr-area-shape-default-2">Default state</a></dt><dd>Drop all items in the list.</dd><dt><a href="/breakup/specs/html-linking/#attr-area-shape-poly" id="processing-model-2:attr-area-shape-poly-2">Polygon state</a></dt><dd>Drop the last item if there's an odd number of items.</dd><dt><a href="/breakup/specs/html-linking/#attr-area-shape-rect" id="processing-model-2:attr-area-shape-rect-2">Rectangle state</a></dt><dd>Drop any items in the list beyond the fourth.</dd></dl>
+
+   </li><li><p>If the <code id="processing-model-2:attr-area-shape-3"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> attribute represents the <a href="/breakup/specs/html-linking/#attr-area-shape-rect" id="processing-model-2:attr-area-shape-rect-3">rectangle state</a>, and the first number in the list is
+   numerically less than the third number in the list, then swap those two numbers around.</p></li><li><p>If the <code id="processing-model-2:attr-area-shape-4"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> attribute represents the <a href="/breakup/specs/html-linking/#attr-area-shape-rect" id="processing-model-2:attr-area-shape-rect-4">rectangle state</a>, and the second number in the list is
+   numerically greater than the fourth number in the list, then swap those two numbers around.</p></li><li><p>If the <code id="processing-model-2:attr-area-shape-5"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> attribute represents the <a href="/breakup/specs/html-linking/#attr-area-shape-circle" id="processing-model-2:attr-area-shape-circle-3">circle state</a>, and the third number in the list is less than
+   or equal to zero, then the shape is empty; abort these steps.</p></li><li><p>Now, the shape represented by the element is the one described for the entry in the list
+   below corresponding to the state of the <code id="processing-model-2:attr-area-shape-6"><a href="/breakup/specs/html-linking/#attr-area-shape">shape</a></code> attribute:</p>
+
+    <dl class="switch"><dt><a href="/breakup/specs/html-linking/#attr-area-shape-circle" id="processing-model-2:attr-area-shape-circle-4">Circle state</a></dt><dd>
+
+      <p>Let <var>x</var> be the first number in <var>coords</var>, <var>y</var> be the second number, and <var>r</var> be the third number.</p>
+
+      <p>The shape is a circle whose center is <var>x</var> CSS pixels from the left edge
+      of the image and <var>y</var> CSS pixels from the top edge of the image, and whose
+      radius is <var>r</var> pixels.</p>
+
+     </dd><dt><a href="/breakup/specs/html-linking/#attr-area-shape-default" id="processing-model-2:attr-area-shape-default-3">Default state</a></dt><dd>
+
+      <p>The shape is a rectangle that exactly covers the entire image.</p>
+
+     </dd><dt><a href="/breakup/specs/html-linking/#attr-area-shape-poly" id="processing-model-2:attr-area-shape-poly-3">Polygon state</a></dt><dd>
+
+      <p>Let <var>x<sub><var>i</var></sub></var> be the <span>(2<var>i</var>)</span>th entry in <var>coords</var>, and <var>y<sub><var>i</var></sub></var> be the <span>(2<var>i</var>+1)</span>th entry in <var>coords</var> (the first entry in <var>coords</var> being the one with index 0).</p>
+
+      <p>Let <var>the coordinates</var> be (<var>x<sub><var>i</var></sub></var>, <var>y<sub><var>i</var></sub></var>),
+      interpreted in CSS pixels measured from the top left of the image, for all integer values of
+      <var>i</var> from 0 to <span>(<var>N</var>/2)-1</span>, where <var>N</var> is the number of items in <var>coords</var>.</p>
+
+      <p>The shape is a polygon whose vertices are given by <var>the coordinates</var>, and
+      whose interior is established using the even-odd rule. [[GRAPHICS]]</p>
+
+      
+
+     </dd><dt><a href="/breakup/specs/html-linking/#attr-area-shape-rect" id="processing-model-2:attr-area-shape-rect-5">Rectangle state</a></dt><dd>
+
+      <p>Let <var>x<sub>1</sub></var> be the first number in <var>coords</var>, <var>y<sub>1</sub></var> be the second number, <var>x<sub>2</sub></var> be the third number, and <var>y<sub>2</sub></var> be the fourth number.</p>
+
+      <p>The shape is a rectangle whose top-left corner is given by the coordinate (<var>x<sub>1</sub></var>, <var>y<sub>1</sub></var>) and whose
+      bottom right corner is given by the coordinate (<var>x<sub>2</sub></var>,
+      <var>y<sub>2</sub></var>), those coordinates being interpreted as CSS pixels
+      from the top left corner of the image.</p>
+
+     </dd></dl>
+
+    <p>For historical reasons, the coordinates must be interpreted relative to the
+    <em>displayed</em> image after any stretching caused by the CSS 'width' and 'height' properties
+    (or, for non-CSS browsers, the image element's <code>width</code> and <code>height</code> attributes — CSS browsers map those attributes to the
+    aforementioned CSS properties).</p>
+
+    <p class="note">Browser zoom features and transforms applied using CSS or SVG do not affect the
+    coordinates.</p>
+
+   </li></ol>
+
+  <p>Pointing device interaction with an image associated with a set of layered shapes per the above
+  algorithm must result in the relevant user interaction events being first fired to the top-most
+  shape covering the point that the pointing device indicated, if any, or to the image element
+  itself, if there is no shape covering that point. User agents may also allow individual
+  <code id="processing-model-2:the-area-element-12"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements representing <a href="/breakup/specs/html-linking/#hyperlink" id="processing-model-2:hyperlink-2">hyperlinks</a> to be selected
+  and activated (e.g. using a keyboard).</p>
+
+  <p class="note">Because a <code id="processing-model-2:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element (and its <code id="processing-model-2:the-area-element-13"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements) can be
+  associated with multiple <code id="processing-model-2:the-img-element-6"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> and <code id="processing-model-2:the-object-element-3"><a href="#the-object-element">object</a></code> elements, it is possible for an
+  <code id="processing-model-2:the-area-element-14"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element to correspond to multiple <i id="processing-model-2:focusable-area"><a href="/breakup/specs/html-interacton-attr/#focusable-area">focusable areas</a></i>
+  of the document.</p>
+
+  <p>Image maps are <a href="/breakup/specs/core-algorithms/#live" id="processing-model-2:live">live</a>; if the DOM is mutated, then the user agent must act as if it
+  had rerun the algorithms for image maps.</p></section></section><section><h2>Links</h2>
+
+  <section><h2>Introduction</h2>
+
+  <p>Links are a conceptual construct, created by <code id="introduction-2:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, <code id="introduction-2:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, and
+  <code id="introduction-2:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements, that <a href="#represents" id="introduction-2:represents">represent</a> a connection between
+  two resources, one of which is the current <code id="introduction-2:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>. There are two kinds of links in
+  HTML:</p>
+
+  <dl><dt><dfn id="external-resource-link">Links to external resources</dfn></dt><dd><p>These are links to resources that are to be used to augment the current document,
+   generally automatically processed by the user agent.</p></dd><dt><dfn id="hyperlink">Hyperlinks</dfn></dt><dd><p>These are links to other resources that are generally exposed to the user by the user
+   agent so that the user can cause the user agent to <a href="/breakup/specs/browsing/#navigate" id="introduction-2:navigate">navigate</a> to those resources, e.g.
+   to visit them in a browser or download them.</p></dd></dl>
+
+  <p>For <code id="introduction-2:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements with an <code id="introduction-2:attr-link-href"><a href="/breakup/specs/html-metadata/#attr-link-href">href</a></code> attribute and a
+  <code id="introduction-2:attr-link-rel"><a href="/breakup/specs/html-metadata/#attr-link-rel">rel</a></code> attribute, links must be created for the keywords of the
+  <code id="introduction-2:attr-link-rel-2"><a href="/breakup/specs/html-metadata/#attr-link-rel">rel</a></code> attribute, as defined for those keywords in the <a href="/breakup/specs/html-linking/#linkTypes">link types</a> section.</p>
+
+  <p>Similarly, for <code id="introduction-2:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="introduction-2:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements with an <code id="introduction-2:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute and a <code id="introduction-2:attr-hyperlink-rel"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> attribute, links must be created for the keywords of the
+  <code id="introduction-2:attr-hyperlink-rel-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> attribute as defined for those keywords in the <a href="/breakup/specs/html-linking/#linkTypes">link types</a> section. Unlike <code id="introduction-2:the-link-element-3"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements, however,
+  <code id="introduction-2:the-a-element-3"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="introduction-2:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element with an <code id="introduction-2:attr-hyperlink-href-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code>
+  attribute that either do not have a <code id="introduction-2:attr-hyperlink-rel-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> attribute, or
+  whose <code id="introduction-2:attr-hyperlink-rel-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> attribute has no keywords that are defined as
+  specifying <a href="/breakup/specs/html-linking/#hyperlink" id="introduction-2:hyperlink">hyperlinks</a>, must also create a <a href="/breakup/specs/html-linking/#hyperlink" id="introduction-2:hyperlink-2">hyperlink</a>.
+  This implied hyperlink has no special meaning (it has no <a href="/breakup/specs/html-linking/#linkTypes">link type</a>)
+  beyond linking the element's <a id="introduction-2:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a> to the resource given by the element's <code id="introduction-2:attr-hyperlink-href-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute.</p>
+
+  <p>A <a href="/breakup/specs/html-linking/#hyperlink" id="introduction-2:hyperlink-3">hyperlink</a> can have one or more <dfn id="hyperlink-annotation">hyperlink
+  annotations</dfn> that modify the processing semantics of that hyperlink.</p></section>
+
+
+  <section><h2>Links created by <code id="links-created-by-a-and-area-elements:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="links-created-by-a-and-area-elements:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements</h2>
+
+  <p>The <dfn id="attr-hyperlink-href"><code>href</code></dfn> attribute on <code id="links-created-by-a-and-area-elements:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+  <code id="links-created-by-a-and-area-elements:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements must have a value that is a <a href="/breakup/specs/core-algorithms/#valid-url-potentially-surrounded-by-spaces" id="links-created-by-a-and-area-elements:valid-url-potentially-surrounded-by-spaces">valid URL potentially surrounded by
+  spaces</a>.</p>
+
+  <p class="note">The <code id="links-created-by-a-and-area-elements:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute on <code id="links-created-by-a-and-area-elements:the-a-element-3"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+  <code id="links-created-by-a-and-area-elements:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements is not required; when those elements do not have <code id="links-created-by-a-and-area-elements:attr-hyperlink-href-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attributes they do not create hyperlinks.</p>
+
+  <p>The <dfn id="attr-hyperlink-target"><code>target</code></dfn> attribute, if present, must be
+  a <a href="/breakup/specs/browser-dom/#valid-browsing-context-name-or-keyword" id="links-created-by-a-and-area-elements:valid-browsing-context-name-or-keyword">valid browsing context name or keyword</a>. It gives the name of the <a href="/breakup/specs/browser-dom/#browsing-context" id="links-created-by-a-and-area-elements:browsing-context">browsing
+  context</a> that will be used. User agents use this name when
+  <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="links-created-by-a-and-area-elements:following-hyperlinks-2">following hyperlinks</a>.</p>
+
+  <p>When an <code id="links-created-by-a-and-area-elements:the-a-element-4"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> or <code id="links-created-by-a-and-area-elements:the-area-element-4"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element's <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="links-created-by-a-and-area-elements:activation-behaviour">activation behaviour</a> is
+  invoked, the user agent may allow the user to indicate a preference regarding whether the
+  hyperlink is to be used for <a href="/breakup/specs/browsing/#navigate" id="links-created-by-a-and-area-elements:navigate">navigation</a> or whether the resource it
+  specifies is to be downloaded.</p>
+
+  <p>In the absence of a user preference, the default should be navigation if the element has no
+  <code id="links-created-by-a-and-area-elements:attr-hyperlink-download"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute, and should be to download the
+  specified resource if it does.</p>
+
+  <p>Whether determined by the user's preferences or via the presence or absence of the attribute,
+  if the decision is to use the hyperlink for <a href="/breakup/specs/browsing/#navigate" id="links-created-by-a-and-area-elements:navigate-2">navigation</a> then the user
+  agent must <a href="/breakup/specs/html-linking/#following-hyperlinks-2" id="links-created-by-a-and-area-elements:following-hyperlinks-2-2">follow the hyperlink</a>, and if the decision is
+  to use the hyperlink to download a resource, the user agent must <a href="/breakup/specs/html-linking/#downloading-hyperlinks" id="links-created-by-a-and-area-elements:downloading-hyperlinks">download the hyperlink</a>. These terms are defined in subsequent sections
+  below.</p>
+
+  <p>The <dfn id="attr-hyperlink-download"><code>download</code></dfn> attribute, if present,
+  indicates that the author intends the hyperlink to be used for downloading a resource. The
+  attribute may have a value; the value, if any, specifies the default file name that the author
+  recommends for use in labeling the resource in a local file system. There are no restrictions on
+  allowed values, but authors are cautioned that most file systems have limitations with regard to
+  what punctuation is supported in file names, and user agents are likely to adjust file names
+  accordingly.</p>
+
+
+  
+
+  <p>The <dfn id="attr-hyperlink-rel"><code>rel</code></dfn> attribute on <code id="links-created-by-a-and-area-elements:the-a-element-5"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+  <code id="links-created-by-a-and-area-elements:the-area-element-5"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements controls what kinds of links the elements create. The attribute's value
+  must be a <a href="/breakup/specs/core-algorithms/#set-of-space-separated-tokens" id="links-created-by-a-and-area-elements:set-of-space-separated-tokens-2">set of space-separated tokens</a>. The <a href="/breakup/specs/html-linking/#linkTypes">allowed keywords
+  and their meanings</a> are defined below.</p>
+
+  <p>The <code id="links-created-by-a-and-area-elements:attr-hyperlink-rel"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> attribute has no default value. If the
+  attribute is omitted or if none of the values in the attribute are recognised by the user agent,
+  then the document has no particular relationship with the destination resource other than there
+  being a hyperlink between the two.</p>
+
+  <p>The <dfn id="attr-hyperlink-hreflang"><code>hreflang</code></dfn> attribute on
+  <code id="links-created-by-a-and-area-elements:the-a-element-6"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="links-created-by-a-and-area-elements:the-area-element-6"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements that create <a href="/breakup/specs/html-linking/#hyperlink" id="links-created-by-a-and-area-elements:hyperlink">hyperlinks</a>, if present, gives the language of the linked resource. It is
+  purely advisory. The value must be a valid BCP 47 language tag. [[!BCP47]]
+  User agents must not consider this attribute authoritative — upon
+  fetching the resource, user agents must use only language information associated with the resource
+  to determine its language, not metadata included in the link to the resource.</p>
+
+  <p>The <dfn id="attr-hyperlink-type"><code>type</code></dfn> attribute, if present, gives the
+  <a href="/breakup/specs/core-algorithms/#mime-type" id="links-created-by-a-and-area-elements:mime-type">MIME type</a> of the linked resource. It is purely advisory. The value must be a
+  <a href="/breakup/specs/core-algorithms/#valid-mime-type" id="links-created-by-a-and-area-elements:valid-mime-type">valid MIME type</a>. User agents must not consider the <code id="links-created-by-a-and-area-elements:attr-hyperlink-type"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> attribute authoritative — upon fetching the
+  resource, user agents must not use metadata included in the link to the resource to determine its
+  type.</p></section>
+
+
+  
+
+  <section><h2>Following hyperlinks</h2>
+
+  <p>When a user <dfn id="following-hyperlinks-2">follows a hyperlink</dfn> created by an element
+  <var>subject</var>, the user agent must run the following steps:</p>
+
+  <ol><li><p>Let <var>replace</var> be false.</p></li><li><p>Let <var>source</var> be the <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context">browsing context</a> that contains the
+   <code id="following-hyperlinks:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> object with which <var>subject</var> in question is
+   associated.</p></li><li>
+
+    <p>If the user indicated a specific <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-2">browsing context</a> when following the hyperlink,
+    or if the user agent is configured to follow hyperlinks by navigating a particular browsing
+    context, then let <var>target</var> be that <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-3">browsing context</a>. If this is a new
+    <a href="/breakup/specs/browser-dom/#top-level-browsing-context" id="following-hyperlinks:top-level-browsing-context">top-level browsing context</a> (e.g. when the user followed the hyperlink using "Open
+    in New Tab"), then <var>source</var> must be set as the new <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-4">browsing context</a>'s
+    <a href="/breakup/specs/browser-dom/#one-permitted-sandboxed-navigator" id="following-hyperlinks:one-permitted-sandboxed-navigator">one permitted sandboxed navigator</a>.</p>
+
+    <p>Otherwise, if <var>subject</var> is an <code id="following-hyperlinks:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> or <code id="following-hyperlinks:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element
+    that has a <code id="following-hyperlinks:attr-hyperlink-target"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> attribute, then let <var>target</var> be the <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-5">browsing context</a> that is chosen by applying <a href="/breakup/specs/browser-dom/#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name" id="following-hyperlinks:the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name">the
+    rules for choosing a browsing context given a browsing context name</a>, using the value of
+    the <code id="following-hyperlinks:attr-hyperlink-target-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> attribute as the browsing context name. If
+    these rules result in the creation of a new <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-6">browsing context</a>, set <var>replace</var> to true.</p>
+
+    
+
+    <p>Otherwise, if <var>target</var> is an <code id="following-hyperlinks:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> or <code id="following-hyperlinks:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element
+    with no <code id="following-hyperlinks:attr-hyperlink-target-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-target">target</a></code> attribute, but the
+    <code id="following-hyperlinks:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> contains a <code id="following-hyperlinks:the-base-element"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element with a <code id="following-hyperlinks:attr-base-target"><a href="/breakup/specs/html-linking/#attr-base-target">target</a></code> attribute, then let <var>target</var> be the
+    <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-7">browsing context</a> that is chosen by applying <a href="/breakup/specs/browser-dom/#the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name" id="following-hyperlinks:the-rules-for-choosing-a-browsing-context-given-a-browsing-context-name-2">the rules for choosing a browsing
+    context given a browsing context name</a>, using the value of the <code id="following-hyperlinks:attr-base-target-2"><a href="/breakup/specs/html-linking/#attr-base-target">target</a></code> attribute of the first such <code id="following-hyperlinks:the-base-element-2"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code> element as
+    the browsing context name. If these rules result in the creation of a new <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-8">browsing
+    context</a>, set <var>replace</var> to true.</p> 
+
+    <p>Otherwise, let <var>target</var> be the <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-9">browsing context</a> that <var>subject</var> itself is in.</p>
+
+   </li><li><p><a href="/breakup/specs/core-algorithms/#resolve-a-url" id="following-hyperlinks:resolve-a-url">Resolve</a> the <a href="/breakup/specs/core-algorithms/#url" id="following-hyperlinks:url">URL</a> given by the <code id="following-hyperlinks:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute of that element, relative to that
+   element.</p></li><li>
+
+    <p>If that is successful, let <var>URL</var> be the <a href="/breakup/specs/core-algorithms/#resulting-absolute-url" id="following-hyperlinks:resulting-absolute-url">resulting absolute
+    URL</a>.</p>
+
+    <p>Otherwise, if <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="following-hyperlinks:resolve-a-url-2">resolving</a> the <a href="/breakup/specs/core-algorithms/#url" id="following-hyperlinks:url-2">URL</a> failed, the
+    user agent may report the error to the user in a user-agent-specific manner, may <a href="/breakup/specs/browser-dom/#queue-a-task" id="following-hyperlinks:queue-a-task">queue a
+    task</a> to <a href="/breakup/specs/browsing/#navigate" id="following-hyperlinks:navigate">navigate</a> the <var>target</var>
+    <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-10">browsing context</a> to an error page to report the error, or may ignore the error and
+    do nothing. In any case, the user agent must then abort these steps.</p>
+
+   </li><li><p>In the case of server-side image maps, append the <var id="following-hyperlinks:hyperlink-suffix"><a href="/breakup/specs/html-linking/#hyperlink-suffix">hyperlink
+   suffix</a></var> to <var>URL</var>.</p></li><li>
+
+    <p><a href="/breakup/specs/browser-dom/#queue-a-task" id="following-hyperlinks:queue-a-task-2">Queue a task</a> to <a href="/breakup/specs/browsing/#navigate" id="following-hyperlinks:navigate-2">navigate</a> the <var>target</var> <a href="/breakup/specs/browser-dom/#browsing-context" id="following-hyperlinks:browsing-context-11">browsing context</a> to <var>URL</var>. If <var>replace</var> is true, the navigation must be performed with <a href="/breakup/specs/browsing/#replacement-enabled" id="following-hyperlinks:replacement-enabled">replacement
+    enabled</a>. The <a href="/breakup/specs/browsing/#source-browsing-context" id="following-hyperlinks:source-browsing-context">source browsing context</a> must be <var>source</var>.</p>
+
+   </li></ol>
+
+  <p>The <a href="/breakup/specs/browser-dom/#task-source" id="following-hyperlinks:task-source">task source</a> for the tasks mentioned above is the <a href="/breakup/specs/browser-dom/#dom-manipulation-task-source" id="following-hyperlinks:dom-manipulation-task-source">DOM manipulation task
+  source</a>.</p></section>
+
+  
+
+
+
+
+  <section><h2>Downloading resources</h2>
+
+  <p>In some cases, resources are intended for later use rather than immediate viewing. To indicate
+  that a resource is intended to be downloaded for use later, rather than immediately used, the
+  <code id="downloading-resources:attr-hyperlink-download"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute can be specified on the
+  <code id="downloading-resources:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> or <code id="downloading-resources:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element that creates the <a href="/breakup/specs/html-linking/#hyperlink" id="downloading-resources:hyperlink">hyperlink</a> to that
+  resource.</p>
+
+  <p>The attribute can furthermore be given a value, to specify the file name that user agents are
+  to use when storing the resource in a file system. This value can be overridden by the <code id="downloading-resources:http-content-disposition"><a href="/breakup/specs/core-algorithms/#http-content-disposition">Content-Disposition</a></code> HTTP header's filename parameters. [[!RFC6266]]</p>
+
+  <p>In cross-origin situations, the <code id="downloading-resources:attr-hyperlink-download-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute
+  has to be combined with the <code id="downloading-resources:http-content-disposition-2"><a href="/breakup/specs/core-algorithms/#http-content-disposition">Content-Disposition</a></code> HTTP
+  header, specifically with the <code>attachment</code> disposition type, to avoid the user
+  being warned of possibly nefarious activity. (This is to protect users from being made to download
+  sensitive personal or confidential information without their full understanding.)</p>
+
+  
+
+  <hr>
+
+  <p>When a user <dfn id="downloading-hyperlinks">downloads a hyperlink</dfn> created by an
+  element, the user agent must run the following steps:</p>
+
+  <ol><li><p><a href="/breakup/specs/core-algorithms/#resolve-a-url" id="downloading-resources:resolve-a-url">Resolve</a> the <a href="/breakup/specs/core-algorithms/#url" id="downloading-resources:url">URL</a> given by the <code id="downloading-resources:attr-hyperlink-href"><a href="/breakup/specs/html-linking/#attr-hyperlink-href">href</a></code> attribute of that element, relative to that
+   element.</p></li><li><p>If <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="downloading-resources:resolve-a-url-2">resolving</a> the <a href="/breakup/specs/core-algorithms/#url" id="downloading-resources:url-2">URL</a> fails, the user agent
+   may report the error to the user in a user-agent-specific manner, may
+   <a href="/breakup/specs/browsing/#navigate" id="downloading-resources:navigate">navigate</a> to an error page to report the error, or may
+   ignore the error and do nothing. In either case, the user agent must abort these steps.</p>
+
+   </li><li><p>Otherwise, let <var>URL</var> be the resulting <a href="/breakup/specs/core-algorithms/#absolute-url" id="downloading-resources:absolute-url">absolute
+   URL</a>.</p></li><li><p>In the case of server-side image maps, append the <var id="downloading-resources:hyperlink-suffix"><a href="/breakup/specs/html-linking/#hyperlink-suffix">hyperlink
+   suffix</a></var> to <var>URL</var>.</p></li><li><p>Return to whatever algorithm invoked these steps and continue
+   these steps <a href="/breakup/specs/core-algorithms/#in-parallel" id="downloading-resources:in-parallel">in parallel</a>.</p></li><li><p><a href="/breakup/specs/core-algorithms/#fetch" id="downloading-resources:fetch">Fetch</a> <var>URL</var> and handle the resulting resource
+   <a href="/breakup/specs/html-linking/#as-a-download" id="downloading-resources:as-a-download">as a download</a>.</p></li></ol>
+
+  <p>When a user agent is to handle a resource obtained from a <a href="/breakup/specs/core-algorithms/#fetch" id="downloading-resources:fetch-2">fetch</a> algorithm <dfn id="as-a-download">as
+  a download</dfn>, it should provide the user with a way to save the resource for later use, if a
+  resource is successfully obtained; or otherwise should report any problems downloading the file to
+  the user.</p>
+
+  <p>If the user agent needs a file name for a resource being handled <a href="/breakup/specs/html-linking/#as-a-download" id="downloading-resources:as-a-download-2">as a download</a>, it
+  should select one using the following algorithm.</p>
+
+  <p class="warning">This algorithm is intended to mitigate security dangers involved in downloading
+  files from untrusted sites, and user agents are strongly urged to follow it.</p> 
+
+  <ol><li><p>Let <var>filename</var> be the void value.</p></li><li><p>If the resource has a <code id="downloading-resources:http-content-disposition-3"><a href="/breakup/specs/core-algorithms/#http-content-disposition">Content-Disposition</a></code>
+   header, that header specifies the <code>attachment</code> disposition type, and the
+   header includes file name information, then let <var>filename</var> have the value
+   specified by the header, and jump to the step labeled <i>sanitize</i> below. [[!RFC6266]]</p></li><li><p>Let <var>interface origin</var> be the <a href="/breakup/specs/browser-dom/#origin-2" id="downloading-resources:origin-2">origin</a> of the
+   <code id="downloading-resources:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code> in which the <a href="/breakup/specs/html-linking/#downloading-hyperlinks" id="downloading-resources:downloading-hyperlinks">download</a> or
+   <a href="/breakup/specs/browsing/#navigate" id="downloading-resources:navigate-2">navigate</a> action resulting in the download was initiated, if any.</p></li><li><p>Let <var>resource origin</var> be the <a href="/breakup/specs/browser-dom/#origin-2" id="downloading-resources:origin-2-2">origin</a> of the URL of the
+   resource being downloaded, unless that URL's <a href="/breakup/specs/core-algorithms/#concept-url-scheme" id="downloading-resources:concept-url-scheme">scheme</a>
+   component is <code>data</code>, in which case let <var>resource origin</var> be
+   the same as the <var>interface origin</var>, if any.</p></li><li><p>If there is no <var>interface origin</var>, then let <var>trusted
+   operation</var> be true. Otherwise, let <var>trusted operation</var> be true if <var>resource origin</var> is the <a href="/breakup/specs/browser-dom/#same-origin" id="downloading-resources:same-origin">same origin</a> as <var>interface
+   origin</var>, and false otherwise.</p></li><li><p>If <var>trusted operation</var> is true and the resource has a <code id="downloading-resources:http-content-disposition-4"><a href="/breakup/specs/core-algorithms/#http-content-disposition">Content-Disposition</a></code> header and that header includes file
+   name information, then let <var>filename</var> have the value specified by the header,
+   and jump to the step labeled <i>sanitize</i> below. [[!RFC6266]]</p></li><li><p>If the download was not initiated from a <a href="/breakup/specs/html-linking/#hyperlink" id="downloading-resources:hyperlink-2">hyperlink</a> created by an
+   <code id="downloading-resources:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> or <code id="downloading-resources:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element, or if the element of the <a href="/breakup/specs/html-linking/#hyperlink" id="downloading-resources:hyperlink-3">hyperlink</a> from
+   which it was initiated did not have a <code id="downloading-resources:attr-hyperlink-download-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code>
+   attribute when the download was initiated, or if there was such an attribute but its value when
+   the download was initiated was the empty string, then jump to the step labeled <i>no proposed
+   file name</i>.</p></li><li><p>Let <var>proposed filename</var> have the value of the <code id="downloading-resources:attr-hyperlink-download-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute of the element of the
+   <a href="/breakup/specs/html-linking/#hyperlink" id="downloading-resources:hyperlink-4">hyperlink</a> that initiated the download at the time the download was
+   initiated.</p></li><li><p>If <var>trusted operation</var> is true, let <var>filename</var> have
+   the value of <var>proposed filename</var>, and jump to the step labeled <i>sanitize</i>
+   below.</p></li><li><p>If the resource has a <code id="downloading-resources:http-content-disposition-5"><a href="/breakup/specs/core-algorithms/#http-content-disposition">Content-Disposition</a></code>
+   header and that header specifies the <code>attachment</code> disposition type, let <var>filename</var> have the value of <var>proposed filename</var>, and jump to the
+   step labeled <i>sanitize</i> below. [[!RFC6266]]</p></li><li><p><i>No proposed file name</i>: If <var>trusted operation</var> is true, or if the
+   user indicated a preference for having the resource in question downloaded, let <var>filename</var> have a value derived from the <a href="/breakup/specs/core-algorithms/#url" id="downloading-resources:url-3">URL</a> of the resource in a
+   user-agent-defined manner, and jump to the step labeled <i>sanitize</i> below.</p></li><li>
+
+    <p>Act in a user-agent-defined manner to safeguard the user from a potentially hostile
+    cross-origin download. If the download is not to be aborted, then let <var>filename</var> be set to the user's preferred file name or to a file name selected by
+    the user agent, and jump to the step labeled <i>sanitize</i> below.</p>
+
+    <div class="warning">
+
+     <p>If the algorithm reaches this step, then a download was begun from a different origin than
+     the resource being downloaded, and the origin did not mark the file as suitable for
+     downloading, and the download was not initiated by the user. This could be because a <code id="downloading-resources:attr-hyperlink-download-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute was used to trigger the download, or
+     because the resource in question is not of a type that the user agent supports.</p>
+
+     <p>This could be dangerous, because, for instance, a hostile server could be trying to get a
+     user to unknowingly download private information and then re-upload it to the hostile server,
+     by tricking the user into thinking the data is from the hostile server.</p>
+
+     <p>Thus, it is in the user's interests that the user be somehow notified that the resource in
+     question comes from quite a different source, and to prevent confusion, any suggested file name
+     from the potentially hostile <var>interface origin</var> should be ignored.</p>
+
+    </div>
+
+   </li><li><p><i>Sanitize</i>: Optionally, allow the user to influence <var>filename</var>. For
+   example, a user agent could prompt the user for a file name, potentially providing the value of
+   <var>filename</var> as determined above as a default value.</p></li><li>
+
+    <p>Adjust <var>filename</var> to be suitable for the local file system.</p>
+
+    <p class="example">For example, this could involve removing characters that are not legal in
+    file names, or trimming leading and trailing whitespace.</p>
+
+   </li><li><p>If the platform conventions do not in any way use <a href="/breakup/specs/html-linking/#concept-extension" id="downloading-resources:concept-extension">extensions</a> to determine the types of file on the file system,
+   then return <var>filename</var> as the file name and abort these steps.</p></li><li><p>Let <var>claimed type</var> be the type given by the resource's <a href="/breakup/specs/core-algorithms/#content-type" id="downloading-resources:content-type">Content-Type metadata</a>, if any is known. Let <var>named
+   type</var> be the type given by <var>filename</var>'s <a href="/breakup/specs/html-linking/#concept-extension" id="downloading-resources:concept-extension-2">extension</a>, if any is known. For the purposes of this step, a
+   <i>type</i> is a mapping of a <a href="/breakup/specs/core-algorithms/#mime-type" id="downloading-resources:mime-type">MIME type</a> to an <a href="/breakup/specs/html-linking/#concept-extension" id="downloading-resources:concept-extension-3">extension</a>.</p></li><li><p>If <var>named type</var> is consistent with the user's preferences (e.g. because
+   the value of <var>filename</var> was determined by prompting the user), then return <var>filename</var> as the file name and abort these steps.</p></li><li><p>If <var>claimed type</var> and <var>named type</var> are the same type
+   (i.e. the type given by the resource's <a href="/breakup/specs/core-algorithms/#content-type" id="downloading-resources:content-type-2">Content-Type metadata</a> is
+   consistent with the type given by <var>filename</var>'s <a href="/breakup/specs/html-linking/#concept-extension" id="downloading-resources:concept-extension-4">extension</a>), then return <var>filename</var> as the file
+   name and abort these steps.</p></li><li>
+
+    <p>If the <var>claimed type</var> is known, then alter <var>filename</var> to
+    add an <a href="/breakup/specs/html-linking/#concept-extension" id="downloading-resources:concept-extension-5">extension</a> corresponding to <var>claimed
+    type</var>.</p>
+
+    <p>Otherwise, if <var>named type</var> is known to be potentially dangerous (e.g. it
+    will be treated by the platform conventions as a native executable, shell script, HTML
+    application, or executable-macro-capable document) then optionally alter <var>filename</var> to add a known-safe <a href="/breakup/specs/html-linking/#concept-extension" id="downloading-resources:concept-extension-6">extension</a>
+    (e.g. "<code>.txt</code>").</p>
+
+    <p class="note">This last step would make it impossible to download executables, which might not
+    be desirable. As always, implementors are forced to balance security and usability in this
+    matter.</p>
+
+   </li><li><p>Return <var>filename</var> as the file name.</p></li></ol>
+
+  <p>For the purposes of this algorithm, a file <dfn id="concept-extension">extension</dfn>
+  consists of any part of the file name that platform conventions dictate will be used for
+  identifying the type of the file. For example, many operating systems use the part of the file
+  name following the last dot ("<code>.</code>") in the file name to determine the type of
+  the file, and from that the manner in which the file is to be opened or executed.</p>
+
+  <p>User agents should ignore any directory or path information provided by the resource itself,
+  its <a href="/breakup/specs/core-algorithms/#url" id="downloading-resources:url-4">URL</a>, and any <code id="downloading-resources:attr-hyperlink-download-6"><a href="/breakup/specs/html-linking/#attr-hyperlink-download">download</a></code> attribute, in
+  deciding where to store the resulting file in the user's file system.</p>
+
+  
+
+
+
+
+  
+
+  </section>
+
+  
+
+
+
+  <section><h2>Link types</h2>
+
+  <p>The following table summarizes the link types that are defined by this specification. This
+  table is non-normative; the actual definitions for the link types are given in the next few
+  sections.</p>
+
+  <p>In this section, the term <i>referenced document</i> refers to the resource identified by the
+  element representing the link, and the term <i>current document</i> refers to the resource within
+  which the element representing the link finds itself.</p>
+
+  
+
+  <p>To determine which link types apply to a <code id="linkTypes:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="linkTypes:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, or
+  <code id="linkTypes:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element, the element's <code>rel</code> attribute must be <a href="/breakup/specs/core-algorithms/#split-a-string-on-spaces" id="linkTypes:split-a-string-on-spaces">split on spaces</a>. The resulting tokens are the link types
+  that apply to that element.</p>
+
+  
+
+  <p>Except where otherwise specified, a keyword must not be specified more than once per <code id="linkTypes:attr-hyperlink-rel"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> attribute.</p>
+
+  <p>Link types are always <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="linkTypes:ascii-case-insensitive">ASCII case-insensitive</a>, and must be
+  compared as such.</p>
+
+  <p class="example">Thus, <code>rel="next"</code> is the same as <code>rel="NEXT"</code>.</p>
+
+  <table><thead><tr><th rowspan="2">Link type</th><th colspan="2">Effect on...</th><th rowspan="2">Brief description</th></tr><tr><th><code id="linkTypes:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code></th><th><code id="linkTypes:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="linkTypes:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code></th></tr></thead><tbody><tr><td><code id="linkTypes:rel-alternate"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink">Hyperlink</a></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-2">Hyperlink</a></td><td>Gives alternate representations of the current document.</td></tr><tr><td><code id="linkTypes:link-type-author"><a href="/breakup/specs/html-linking/#link-type-author">author</a></code></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-3">Hyperlink</a></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-4">Hyperlink</a></td><td>Gives a link to the author of the current document or article.</td></tr><tr><td><code id="linkTypes:link-type-bookmark"><a href="/breakup/specs/html-linking/#link-type-bookmark">bookmark</a></code></td><td><em>not allowed</em></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-5">Hyperlink</a></td><td>Gives the permalink for the nearest ancestor section.</td></tr><tr><td><code id="linkTypes:link-type-help"><a href="/breakup/specs/html-linking/#link-type-help">help</a></code></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-6">Hyperlink</a></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-7">Hyperlink</a></td><td>Provides a link to context-sensitive help.</td></tr><tr><td><code id="linkTypes:rel-icon"><a href="/breakup/specs/html-linking/#rel-icon">icon</a></code></td><td><a href="/breakup/specs/html-linking/#external-resource-link" id="linkTypes:external-resource-link">External Resource</a></td><td><em>not allowed</em></td><td>Imports an icon to represent the current document.</td></tr><tr><td><code id="linkTypes:link-type-license"><a href="/breakup/specs/html-linking/#link-type-license">license</a></code></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-8">Hyperlink</a></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-9">Hyperlink</a></td><td>Indicates that the main content of the current document is covered by the copyright license described by the referenced document.</td></tr><tr><td><code id="linkTypes:link-type-next"><a href="/breakup/specs/html-linking/#link-type-next">next</a></code></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-10">Hyperlink</a></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-11">Hyperlink</a></td><td>Indicates that the current document is a part of a series, and that the next document in the series is the referenced document.</td></tr><tr><td><code id="linkTypes:link-type-nofollow"><a href="/breakup/specs/html-linking/#link-type-nofollow">nofollow</a></code></td><td><em>not allowed</em></td><td><a href="/breakup/specs/html-linking/#hyperlink-annotation" id="linkTypes:hyperlink-annotation-2">Annotation</a></td><td>Indicates that the current document's original author or publisher does not endorse the referenced document.</td></tr><tr><td><code id="linkTypes:link-type-noreferrer"><a href="/breakup/specs/html-linking/#link-type-noreferrer">noreferrer</a></code></td><td><em>not allowed</em></td><td><a href="/breakup/specs/html-linking/#hyperlink-annotation" id="linkTypes:hyperlink-annotation-3">Annotation</a></td><td>Requires that the user agent not send an HTTP <code id="linkTypes:http-referer"><a href="/breakup/specs/core-algorithms/#http-referer">Referer</a></code> (sic) header if the user follows the hyperlink.</td></tr><tr><td><code id="linkTypes:link-type-prefetch"><a href="/breakup/specs/html-linking/#link-type-prefetch">prefetch</a></code></td><td><a href="/breakup/specs/html-linking/#external-resource-link" id="linkTypes:external-resource-link-3">External Resource</a></td><td><a href="/breakup/specs/html-linking/#external-resource-link" id="linkTypes:external-resource-link-4">External Resource</a></td><td>Specifies that the target resource should be preemptively cached.</td></tr><tr><td><code id="linkTypes:link-type-prev"><a href="/breakup/specs/html-linking/#link-type-prev">prev</a></code></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-12">Hyperlink</a></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-13">Hyperlink</a></td><td>Indicates that the current document is a part of a series, and that the previous document in the series is the referenced document.</td></tr><tr><td><code id="linkTypes:link-type-search"><a href="/breakup/specs/html-linking/#link-type-search">search</a></code></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-14">Hyperlink</a></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-15">Hyperlink</a></td><td>Gives a link to a resource that can be used to search through the current document and its related pages.</td></tr><tr><td><code id="linkTypes:link-type-stylesheet"><a href="/breakup/specs/html-linking/#link-type-stylesheet">stylesheet</a></code></td><td><a href="/breakup/specs/html-linking/#external-resource-link" id="linkTypes:external-resource-link-5">External Resource</a></td><td><em>not allowed</em></td><td>Imports a stylesheet.</td></tr><tr><td><code id="linkTypes:link-type-tag"><a href="/breakup/specs/html-linking/#link-type-tag">tag</a></code></td><td><em>not allowed</em></td><td><a href="/breakup/specs/html-linking/#hyperlink" id="linkTypes:hyperlink-18">Hyperlink</a></td><td>Gives a tag (identified by the given address) that applies to the current document.</td></tr></tbody></table>
+
+  
+
+  <p>Some of the types described below list synonyms for these values. These are to be handled as specified by user agents, but must not be used
+  in documents.</p>
+
+  
+
+  
+
+
+  <section><h2>Link type "<dfn><code>alternate</code></dfn>"</h2>
+
+  <p>The <code id="rel-alternate:rel-alternate"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword may be used with <code id="rel-alternate:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="rel-alternate:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="rel-alternate:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements.</p>
+
+  <p>The meaning of this keyword depends on the values of the other attributes.</p>
+
+  <dl class="switch"><dt>If the element is a <code id="rel-alternate:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element and the <code id="rel-alternate:attr-link-rel"><a href="/breakup/specs/html-metadata/#attr-link-rel">rel</a></code>
+   attribute also contains the keyword <code id="rel-alternate:link-type-stylesheet"><a href="/breakup/specs/html-linking/#link-type-stylesheet">stylesheet</a></code></dt><dd>
+
+    <p>The <code id="rel-alternate:rel-alternate-2"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword modifies the meaning of the <code id="rel-alternate:link-type-stylesheet-2"><a href="/breakup/specs/html-linking/#link-type-stylesheet">stylesheet</a></code> keyword in the way described for that keyword. The
+    <code id="rel-alternate:rel-alternate-3"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword does not create a link of its own.</p>
+
+   </dd><dt>If the <code id="rel-alternate:rel-alternate-4"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword is used with the <code id="rel-alternate:attr-hyperlink-type"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> attribute set to the value <code>application/rss+xml</code> or the value <code>application/atom+xml</code></dt><dd>
+
+    <p>The keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="rel-alternate:hyperlink">hyperlink</a> referencing a syndication feed (though not
+    necessarily syndicating exactly the same content as the current page).</p>
+
+    
+
+    <p>The first <code id="rel-alternate:the-link-element-3"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="rel-alternate:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, or <code id="rel-alternate:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element in the document (in
+    <a href="/breakup/specs/core-algorithms/#tree-order" id="rel-alternate:tree-order">tree order</a>) with the <code id="rel-alternate:rel-alternate-5"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword used with the <code id="rel-alternate:attr-hyperlink-type-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> attribute set to the value <code>application/rss+xml</code> or the value <code>application/atom+xml</code> must
+    be treated as the default syndication feed for the purposes of feed autodiscovery.</p>
+
+    <div class="example">
+     <p>The following <code id="rel-alternate:the-link-element-4"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element gives the syndication
+     feed for the current page:</p>
+     <pre>&lt;link rel="alternate" type="application/atom+xml" href="data.xml"&gt;</pre>
+     <p>The following extract offers various different syndication
+     feeds:</p>
+     <pre>&lt;p&gt;You can access the planets database using Atom feeds:&lt;/p&gt;
+&lt;ul&gt;
+ &lt;li&gt;&lt;a href="recently-visited-planets.xml" rel="alternate" type="application/atom+xml"&gt;Recently Visited Planets&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="known-bad-planets.xml" rel="alternate" type="application/atom+xml"&gt;Known Bad Planets&lt;/a&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;a href="unexplored-planets.xml" rel="alternate" type="application/atom+xml"&gt;Unexplored Planets&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</pre>
+    </div>
+
+    
+
+   </dd><dt>Otherwise</dt><dd>
+
+    <p>The keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="rel-alternate:hyperlink-2">hyperlink</a> referencing an alternate representation of the
+    current document.</p>
+
+    <p>The nature of the referenced document is given by the <code id="rel-alternate:attr-hyperlink-hreflang"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code>, and <code id="rel-alternate:attr-hyperlink-type-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> attributes.</p>
+
+    <p>If the <code id="rel-alternate:rel-alternate-6"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword is used with the <code id="rel-alternate:attr-hyperlink-hreflang-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code> attribute, and that attribute's value differs
+    from the <a href="/breakup/specs/core-algorithms/#root-element" id="rel-alternate:root-element">root element</a>'s <a href="/breakup/specs/html-attributes/#language" id="rel-alternate:language">language</a>, it indicates that the referenced
+    document is a translation.</p>
+
+    <p>If the <code id="rel-alternate:rel-alternate-7"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword is used with the <code id="rel-alternate:attr-hyperlink-type-4"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> attribute, it indicates that the referenced document is
+    a reformulation of the current document in the specified format.</p>
+
+    <p>The <code id="rel-alternate:attr-hyperlink-hreflang-3"><a href="/breakup/specs/html-linking/#attr-hyperlink-hreflang">hreflang</a></code> and <code id="rel-alternate:attr-hyperlink-type-5"><a href="/breakup/specs/html-linking/#attr-hyperlink-type">type</a></code> attributes can be combined when specified with the <code id="rel-alternate:rel-alternate-8"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code> keyword.</p>
+
+    <div class="example">
+
+     <p>For example, the following link is a French translation that uses the PDF format:</p>
+
+     <pre>&lt;link rel=alternate type=application/pdf hreflang=fr href=manual-fr&gt;</pre>
+
+    </div>
+
+    <p>This relationship is transitive — that is, if a document links to two other documents
+    with the link type "<code id="rel-alternate:rel-alternate-9"><a href="/breakup/specs/html-linking/#rel-alternate">alternate</a></code>", then, in addition to implying
+    that those documents are alternative representations of the first document, it is also implying
+    that those two documents are alternative representations of each other.</p>
+
+   </dd></dl></section>
+
+
+
+  <section><h2>Link type "<dfn><code>author</code></dfn>"</h2>
+
+  <p>The <code id="link-type-author:link-type-author"><a href="/breakup/specs/html-linking/#link-type-author">author</a></code> keyword may be used with <code id="link-type-author:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="link-type-author:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-author:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-author:hyperlink">hyperlink</a>.</p>
+
+  <p>For <code id="link-type-author:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="link-type-author:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements, the <code id="link-type-author:link-type-author-2"><a href="/breakup/specs/html-linking/#link-type-author">author</a></code>
+  keyword indicates that the referenced document provides further information about the author of
+  the nearest <code id="link-type-author:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> element ancestor of the element defining the hyperlink, if there
+  is one, or of the page as a whole, otherwise.</p>
+
+  <p>For <code id="link-type-author:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements, the <code id="link-type-author:link-type-author-3"><a href="/breakup/specs/html-linking/#link-type-author">author</a></code> keyword indicates
+  that the referenced document provides further information about the author for the page as a
+  whole.</p>
+
+  <p class="note">The "referenced document" can be, and often is, a <code id="link-type-author:mailto-protocol"><a data-x-internal="mailto-protocol" href="http://tools.ietf.org/html/rfc6068#section-2">mailto:</a></code> URL giving the e-mail address of the author. [[MAILTO]]</p>
+
+  
+
+  <p><strong>Synonyms</strong>: For historical reasons, user agents must also treat
+  <code id="link-type-author:the-link-element-3"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="link-type-author:the-a-element-3"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-author:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements that have a <code>rev</code> attribute with the value "<code>made</code>" as having the <code id="link-type-author:link-type-author-4"><a href="/breakup/specs/html-linking/#link-type-author">author</a></code> keyword specified as a link relationship.</p></section>
+
+  
+
+
+  <section><h2>Link type "<dfn><code>bookmark</code></dfn>"</h2>
+
+  <p>The <code id="link-type-bookmark:link-type-bookmark"><a href="/breakup/specs/html-linking/#link-type-bookmark">bookmark</a></code> keyword may be used with <code id="link-type-bookmark:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+  <code id="link-type-bookmark:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-bookmark:hyperlink">hyperlink</a>.</p>
+
+  <p>The <code id="link-type-bookmark:link-type-bookmark-2"><a href="/breakup/specs/html-linking/#link-type-bookmark">bookmark</a></code> keyword gives a permalink for the nearest
+  ancestor <code id="link-type-bookmark:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> element of the linking element in question, or of <a href="/breakup/specs/html-sectioning/#associatedSection">the section the linking element is most closely associated with</a>, if
+  there are no ancestor <code id="link-type-bookmark:the-article-element-2"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> elements.</p>
+
+  <div class="example">
+
+   <p>The following snippet has three permalinks. A user agent could determine which permalink
+   applies to which part of the spec by looking at where the permalinks are given.</p>
+
+   <pre> ...
+ &lt;body&gt;
+  &lt;h1&gt;Example of permalinks&lt;/h1&gt;
+  &lt;div id="a"&gt;
+   &lt;h2&gt;First example&lt;/h2&gt;
+   &lt;p&gt;&lt;a href="a.html" rel="bookmark"&gt;This permalink applies to
+   only the content from the first H2 to the second H2&lt;/a&gt;. The DIV isn't
+   exactly that section, but it roughly corresponds to it.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;h2&gt;Second example&lt;/h2&gt;
+  &lt;article id="b"&gt;
+   &lt;p&gt;&lt;a href="b.html" rel="bookmark"&gt;This permalink applies to
+   the outer ARTICLE element&lt;/a&gt; (which could be, e.g., a blog post).&lt;/p&gt;
+   &lt;article id="c"&gt;
+    &lt;p&gt;&lt;a href="c.html" rel="bookmark"&gt;This permalink applies to
+    the inner ARTICLE element&lt;/a&gt; (which could be, e.g., a blog comment).&lt;/p&gt;
+   &lt;/article&gt;
+  &lt;/article&gt;
+ &lt;/body&gt;
+ ...</pre>
+
+  </div></section>
+
+
+  
+
+
+  <section><h2>Link type "<dfn><code>help</code></dfn>"</h2>
+
+  <p>The <code id="link-type-help:link-type-help"><a href="/breakup/specs/html-linking/#link-type-help">help</a></code> keyword may be used with <code id="link-type-help:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="link-type-help:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-help:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-help:hyperlink">hyperlink</a>.</p>
+
+  <p>For <code id="link-type-help:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="link-type-help:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements, the <code id="link-type-help:link-type-help-2"><a href="/breakup/specs/html-linking/#link-type-help">help</a></code>
+  keyword indicates that the referenced document provides further help information for the parent of
+  the element defining the hyperlink, and its children.</p>
+
+  <div class="example">
+
+   <p>In the following example, the form control has associated context-sensitive help. The user
+   agent could use this information, for example, displaying the referenced document if the user
+   presses the "Help" or "F1" key.</p>
+
+   <pre> &lt;p&gt;&lt;label&gt; Topic: &lt;input name=topic&gt; &lt;a href="help/topic.html" rel="help"&gt;(Help)&lt;/a&gt;&lt;/label&gt;&lt;/p&gt;</pre>
+
+  </div>
+
+  <p>For <code id="link-type-help:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements, the <code id="link-type-help:link-type-help-3"><a href="/breakup/specs/html-linking/#link-type-help">help</a></code> keyword indicates that
+  the referenced document provides help for the page as a whole.</p>
+
+  <p>For <code id="link-type-help:the-a-element-3"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="link-type-help:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements, on some browsers, the <code id="link-type-help:link-type-help-4"><a href="/breakup/specs/html-linking/#link-type-help">help</a></code> keyword causes the link to use a different cursor.</p></section>
+
+
+  <section><h2>Link type "<dfn><code>icon</code></dfn>"</h2>
+
+  <p>The <code id="rel-icon:rel-icon"><a href="/breakup/specs/html-linking/#rel-icon">icon</a></code> keyword may be used with <code id="rel-icon:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements.
+  This keyword creates an <a href="/breakup/specs/html-linking/#external-resource-link" id="rel-icon:external-resource-link">external resource link</a>.</p>
+
+  
+
+  <p>The specified resource is an icon representing the page or site, and should be used by the user
+  agent when representing the page in the user interface.</p>
+
+  
+
+  <p>Icons could be auditory icons, visual icons, or other kinds of icons. If
+  multiple icons are provided, the user agent must select the most appropriate icon according to the
+  <code id="rel-icon:attr-link-type"><a href="/breakup/specs/html-metadata/#attr-link-type">type</a></code>, <code id="rel-icon:attr-link-media"><a href="/breakup/specs/html-metadata/#attr-link-media">media</a></code>, and <code id="rel-icon:attr-link-sizes"><a href="/breakup/specs/html-linking/#attr-link-sizes">sizes</a></code> attributes. If there are multiple equally appropriate icons,
+  user agents must use the last one declared in <a href="/breakup/specs/core-algorithms/#tree-order" id="rel-icon:tree-order">tree order</a> at the time that the user
+  agent collected the list of icons. If the user agent tries to use an icon but that icon is
+  determined, upon closer examination, to in fact be inappropriate (e.g. because it uses an
+  unsupported format), then the user agent must try the next-most-appropriate icon as determined by
+  the attributes.</p>
+
+  
+
+  <p class="note">User agents are not required to update icons when the list of icons changes, but
+  are encouraged to do so.</p>
+
+  <p>There is no default type for resources given by the <code id="rel-icon:rel-icon-2"><a href="/breakup/specs/html-linking/#rel-icon">icon</a></code> keyword.
+  However, for the purposes of <a href="/breakup/specs/html-metadata/#concept-link-type-sniffing">determining the type of the
+  resource</a>, user agents must expect the resource to be an image.</p>
+
+  
+
+  <p>The <dfn id="attr-link-sizes"><code>sizes</code></dfn> attribute gives the sizes of icons
+  for visual media. Its value, if present, is merely advisory. User agents may use the value to
+  decide which icon(s) to use if multiple icons are available.</p>
+
+  <p>If specified, the attribute must have a value that is an <a href="/breakup/specs/core-algorithms/#unordered-set-of-unique-space-separated-tokens" id="rel-icon:unordered-set-of-unique-space-separated-tokens">unordered set of unique
+  space-separated tokens</a> which are <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="rel-icon:ascii-case-insensitive">ASCII case-insensitive</a>. Each value must be
+  either an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="rel-icon:ascii-case-insensitive-2">ASCII case-insensitive</a> match for the string "<code id="rel-icon:attr-link-sizes-any"><a href="/breakup/specs/html-linking/#attr-link-sizes-any">any</a></code>", or a value that consists of two <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="rel-icon:valid-non-negative-integer">valid non-negative integers</a> that do not have a leading U+0030 DIGIT
+  ZERO (0) character and that are separated by a single U+0078 LATIN SMALL LETTER X or U+0058 LATIN
+  CAPITAL LETTER X character.</p>
+
+  <p>The keywords represent icon sizes in raw pixels (as opposed to CSS pixels).</p>
+
+  <p class="note">An icon that is 50 CSS pixels wide intended for displays with a device pixel
+  density of two device pixels per CSS pixel (2x, 192dpi) would have a width of 100 raw pixels. This
+  feature does not support indicating that a different resource is to be used for small
+  high-resolution icons vs large low-resolution icons (e.g. 50×50 2x vs 100×100 1x).</p>
+
+  
+
+  <p>To parse and process the attribute's value, the user agent must first <a href="/breakup/specs/core-algorithms/#split-a-string-on-spaces" id="rel-icon:split-a-string-on-spaces">split the attribute's value on spaces</a>, and must then parse each resulting
+  keyword to determine what it represents.</p>
+
+  
+
+  <p>The <dfn id="attr-link-sizes-any"><code>any</code></dfn> keyword represents that the
+  resource contains a scalable icon, e.g. as provided by an SVG image.</p>
+
+  
+
+  <p>Other keywords must be further parsed as follows to determine what they represent:</p>
+
+  <ul><li><p>If the keyword doesn't contain exactly one U+0078 LATIN SMALL LETTER X or U+0058 LATIN
+   CAPITAL LETTER X character, then this keyword doesn't represent anything. Abort these steps for
+   that keyword.</p></li><li><p>Let <var>width string</var> be the string before the "<code>x</code>" or
+   "<code>X</code>".</p></li><li><p>Let <var>height string</var> be the string after the "<code>x</code>" or
+   "<code>X</code>".</p></li><li><p>If either <var>width string</var> or <var>height string</var> start with
+   a U+0030 DIGIT ZERO (0) character or contain any characters other than <a href="/breakup/specs/core-algorithms/#ascii-digits" id="rel-icon:ascii-digits">ASCII digits</a>,
+   then this keyword doesn't represent anything. Abort these steps for that keyword.</p></li><li><p>Apply the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="rel-icon:rules-for-parsing-non-negative-integers">rules for parsing non-negative integers</a> to <var>width
+   string</var> to obtain <var>width</var>.</p></li><li><p>Apply the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="rel-icon:rules-for-parsing-non-negative-integers-2">rules for parsing non-negative integers</a> to <var>height
+   string</var> to obtain <var>height</var>.</p></li><li><p>The keyword represents that the resource contains a bitmap icon with a width of <var>width</var> device pixels and a height of <var>height</var> device
+   pixels.</p></li></ul>
+
+  
+
+  <p>The keywords specified on the <code id="rel-icon:attr-link-sizes-2"><a href="/breakup/specs/html-linking/#attr-link-sizes">sizes</a></code> attribute must not
+  represent icon sizes that are not actually available in the linked resource.</p>
+
+  
+
+  <p>In the absence of a <code id="rel-icon:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> with the <code id="rel-icon:rel-icon-3"><a href="/breakup/specs/html-linking/#rel-icon">icon</a></code> keyword, for
+  <code id="rel-icon:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>s obtained over HTTP or HTTPS, user agents may instead attempt to
+  <a href="/breakup/specs/core-algorithms/#fetch" id="rel-icon:fetch">fetch</a> and use an icon with the <a href="/breakup/specs/core-algorithms/#absolute-url" id="rel-icon:absolute-url">absolute URL</a> obtained by
+  resolving the <a href="/breakup/specs/core-algorithms/#url" id="rel-icon:url">URL</a> "<code>/favicon.ico</code>" against <a id="rel-icon:the-document's-address" href="https://dom.spec.whatwg.org/#concept-document-url" data-x-internal="the-document's-address">the document's
+  address</a>, as if the page had declared that icon using the <code id="rel-icon:rel-icon-4"><a href="/breakup/specs/html-linking/#rel-icon">icon</a></code>
+  keyword.</p>
+
+  
+
+  <div class="example">
+
+   <p>The following snippet shows the top part of an application with several icons.</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;lsForums — Inbox&lt;/title&gt;
+  &lt;link rel=icon href=favicon.png sizes="16x16" type="image/png"&gt;
+  &lt;link rel=icon href=windows.ico sizes="32x32 48x48" type="image/vnd.microsoft.icon"&gt;
+  &lt;link rel=icon href=mac.icns sizes="128x128 512x512 8192x8192 32768x32768"&gt;
+  &lt;link rel=icon href=iphone.png sizes="57x57" type="image/png"&gt;
+  &lt;link rel=icon href=gnome.svg sizes="any" type="image/svg+xml"&gt;
+  &lt;link rel=stylesheet href=lsforums.css&gt;
+  &lt;script src=lsforums.js&gt;&lt;/script&gt;
+  &lt;meta name=application-name content="lsForums"&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  ...</pre>
+
+  </div>
+
+  <p>For historical reasons, the <code id="rel-icon:rel-icon-5"><a href="/breakup/specs/html-linking/#rel-icon">icon</a></code> keyword may be preceded by the
+  keyword "<code>shortcut</code>". If the "<code>shortcut</code>" keyword is
+  present, the <code id="rel-icon:attr-hyperlink-rel"><a href="/breakup/specs/html-linking/#attr-hyperlink-rel">rel</a></code> attribute's entire value must be an
+  <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="rel-icon:ascii-case-insensitive-3">ASCII case-insensitive</a> match for the string "<code>shortcut&nbsp;icon</code>" (with a single U+0020 SPACE character between the tokens and
+  no other <a href="/breakup/specs/core-algorithms/#space-character" id="rel-icon:space-character">space characters</a>).</p></section>
+
+
+  <section><h2>Link type "<dfn><code>license</code></dfn>"</h2>
+
+  <p>The <code id="link-type-license:link-type-license"><a href="/breakup/specs/html-linking/#link-type-license">license</a></code> keyword may be used with <code id="link-type-license:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="link-type-license:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-license:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-license:hyperlink">hyperlink</a>.</p>
+
+  <p>The <code id="link-type-license:link-type-license-2"><a href="/breakup/specs/html-linking/#link-type-license">license</a></code> keyword indicates that the referenced document
+  provides the copyright license terms under which the main content of the current document is
+  provided.</p>
+
+  <p>
+  This specification defines the main content of a document and content that 
+  is not deemed to be part of that main content via the <code><a href="/breakup/specs/html-sectioning/#the-main-element">main</a></code> element. 
+  The distinction should be made clear to the user.
+</p>
+<div class="example">
+
+   <p>Consider a photo sharing site. A page on that site might
+   describe and show a photograph, and the page might be marked up as
+   follows:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html lang="en"&gt;
+ &lt;head&gt;
+  &lt;title&gt;Exampl Pictures: Kissat&lt;/title&gt;
+  &lt;link rel="stylesheet" href="/style/default"&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;h1&gt;Kissat&lt;/h1&gt;
+  &lt;nav&gt;
+   &lt;a href="../"&gt;Return to photo index&lt;/a&gt;
+  &lt;/nav&gt;
+  <!--FORK-->
+  &lt;main&gt;
+  &lt;figure&gt;
+   &lt;img src="/pix/39627052_fd8dcd98b5.jpg"&gt;
+   &lt;figcaption&gt;Kissat&lt;/figcaption&gt;
+  &lt;/figure&gt;
+  &lt;p&gt;One of them has six toes!&lt;/p&gt;
+  &lt;p&gt;&lt;small&gt;This photograph is &lt;a rel="license" href="http://www.opensource.org/licenses/mit-license.php"&gt;MIT Licensed&lt;/a&gt;&lt;/small&gt;&lt;/p&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+   &lt;a href="/"&gt;Home&lt;/a&gt; | &lt;a href="../"&gt;Photo index&lt;/a&gt;
+   &lt;p&gt;&lt;small&gt;© copyright 2009 Exampl Pictures. All Rights Reserved.&lt;/small&gt;&lt;/p&gt;
+  &lt;/footer&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+   <p>In this case the <code><a href="/breakup/specs/html-linking/#link-type-license">license</a></code>
+   applies to just the photo (the main content of the document), not
+   the whole document. In particular not the design of the page
+   itself, which is covered by the copyright given at the bottom of
+   the document. This should be made clear in the text referencing the licensing 
+   link and could also be made clearer in the styling
+   (e.g. making the license link prominently positioned near the
+   photograph, while having the page copyright in small text at
+   the foot of the page, or adding a border to the <code><a href="/breakup/specs/html-sectioning/#the-main-element">main</a></code> element.)</p>
+</div>
+
+
+  
+
+  
+
+  <p><strong>Synonyms</strong>: For historical reasons, user agents must also treat the keyword
+  "<code>copyright</code>" like the <code id="link-type-license:link-type-license-4"><a href="/breakup/specs/html-linking/#link-type-license">license</a></code> keyword.</p></section>
+
+  
+
+
+  <section><h2>Link type "<dfn><code>nofollow</code></dfn>"</h2>
+
+  <p>The <code id="link-type-nofollow:link-type-nofollow"><a href="/breakup/specs/html-linking/#link-type-nofollow">nofollow</a></code> keyword may be used with <code id="link-type-nofollow:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+  <code id="link-type-nofollow:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword does not create a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-nofollow:hyperlink">hyperlink</a>, but <a href="/breakup/specs/html-linking/#hyperlink-annotation" id="link-type-nofollow:hyperlink-annotation">annotates</a> any other hyperlinks created by the element (the
+  implied hyperlink, if no other keywords create one).</p>
+
+  <p>The <code id="link-type-nofollow:link-type-nofollow-2"><a href="/breakup/specs/html-linking/#link-type-nofollow">nofollow</a></code> keyword indicates that the link is not endorsed
+  by the original author or publisher of the page, or that the link to the referenced document was
+  included primarily because of a commercial relationship between people affiliated with the two
+  pages.</p></section>
+
+
+  <section><h2>Link type "<dfn><code>noreferrer</code></dfn>"</h2>
+
+  <p>The <code id="link-type-noreferrer:link-type-noreferrer"><a href="/breakup/specs/html-linking/#link-type-noreferrer">noreferrer</a></code> keyword may be used with <code id="link-type-noreferrer:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+  <code id="link-type-noreferrer:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword does not create a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-noreferrer:hyperlink">hyperlink</a>, but <a href="/breakup/specs/html-linking/#hyperlink-annotation" id="link-type-noreferrer:hyperlink-annotation">annotates</a> any other hyperlinks created by the element (the
+  implied hyperlink, if no other keywords create one).</p>
+
+  <p>It indicates that no referrer information is to be leaked when following the link.</p>
+
+  
+
+  <p>If a user agent follows a link defined by an <code id="link-type-noreferrer:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> or <code id="link-type-noreferrer:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> element that
+  has the <code id="link-type-noreferrer:link-type-noreferrer-2"><a href="/breakup/specs/html-linking/#link-type-noreferrer">noreferrer</a></code> keyword, the user agent must not include a
+  <code id="link-type-noreferrer:http-referer"><a href="/breakup/specs/core-algorithms/#http-referer">Referer</a></code> (sic) HTTP header (<a href="/breakup/specs/core-algorithms/#concept-http-equivalent-headers" id="link-type-noreferrer:concept-http-equivalent-headers">or equivalent</a> for other protocols) in the
+  request.</p>
+
+  <p>This keyword also <a href="/breakup/specs/browser-dom/#noopener">causes the <code>opener</code>
+  attribute to remain null</a> if the hyperlink <a href="/breakup/specs/browser-dom/#creating-a-new-browsing-context" id="link-type-noreferrer:creating-a-new-browsing-context">creates</a> a new <a href="/breakup/specs/browser-dom/#browsing-context" id="link-type-noreferrer:browsing-context">browsing context</a>.</p></section>
+
+  
+
+  
+
+
+  
+
+
+  <section><h2>Link type "<dfn><code>prefetch</code></dfn>"</h2>
+
+  <p>The <code id="link-type-prefetch:link-type-prefetch"><a href="/breakup/specs/html-linking/#link-type-prefetch">prefetch</a></code> keyword may be used with <code id="link-type-prefetch:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="link-type-prefetch:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-prefetch:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates an <a href="/breakup/specs/html-linking/#external-resource-link" id="link-type-prefetch:external-resource-link">external resource link</a>.</p>
+
+  <p>The <code id="link-type-prefetch:link-type-prefetch-2"><a href="/breakup/specs/html-linking/#link-type-prefetch">prefetch</a></code> keyword indicates that preemptively fetching and
+  caching the specified resource is likely to be beneficial, as it is highly likely that the user
+  will require this resource.</p>
+
+  <p>There is no default type for resources given by the <code id="link-type-prefetch:link-type-prefetch-3"><a href="/breakup/specs/html-linking/#link-type-prefetch">prefetch</a></code>
+  keyword.</p></section>
+
+
+  <section><h2>Link type "<dfn><code>search</code></dfn>"</h2>
+
+  <p>The <code id="link-type-search:link-type-search"><a href="/breakup/specs/html-linking/#link-type-search">search</a></code> keyword may be used with <code id="link-type-search:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="link-type-search:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-search:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-search:hyperlink">hyperlink</a>.</p>
+
+  <p>The <code id="link-type-search:link-type-search-2"><a href="/breakup/specs/html-linking/#link-type-search">search</a></code> keyword indicates that the referenced document
+  provides an interface specifically for searching the document and its related resources.</p>
+
+  <p class="note">OpenSearch description documents can be used with <code id="link-type-search:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements and
+  the <code id="link-type-search:link-type-search-3"><a href="/breakup/specs/html-linking/#link-type-search">search</a></code> link type to enable user agents to autodiscover search
+  interfaces. [[!OPENSEARCH]]</p></section>
+
+
+  
+
+
+
+  
+
+  
+
+
+
+  <section><h2>Link type "<dfn><code>tag</code></dfn>"</h2>
+
+  <p>The <code id="link-type-tag:link-type-tag"><a href="/breakup/specs/html-linking/#link-type-tag">tag</a></code> keyword may be used with <code id="link-type-tag:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and
+  <code id="link-type-tag:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-tag:hyperlink">hyperlink</a>.</p>
+
+  <p>The <code id="link-type-tag:link-type-tag-2"><a href="/breakup/specs/html-linking/#link-type-tag">tag</a></code> keyword indicates that the <em>tag</em> that the
+  referenced document represents applies to the current document.</p>
+
+  <p class="note">Since it indicates that the tag <em>applies to the current document</em>, it would
+  be inappropriate to use this keyword in the markup of a <a href="#tag-cloud">tag cloud</a>, which
+  lists the popular tags across a set of pages.</p>
+
+  <div class="example">
+
+   <p>This document is about some gems, and so it is <i>tagged</i> with "<code>http://en.wikipedia.org/wiki/Gemstone</code>" to unambiguously categorise it as applying
+   to the "jewel" kind of gems, and not to, say, the towns in the US, the Ruby package format, or
+   the Swiss locomotive class:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;My Precious&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;header&gt;&lt;h1&gt;My precious&lt;/h1&gt; &lt;p&gt;Summer 2012&lt;/p&gt;&lt;/header&gt;
+  &lt;p&gt;Recently I managed to dispose of a red gem that had been
+  bothering me. I now have a much nicer blue sapphire.&lt;/p&gt;
+  &lt;p&gt;The red gem had been found in a bauxite stone while I was digging
+  out the office level, but nobody was willing to haul it away. The
+  same red gem stayed there for literally years.&lt;/p&gt;
+  &lt;footer&gt;
+   Tags: &lt;a rel=tag href="http://en.wikipedia.org/wiki/Gemstone"&gt;Gemstone&lt;/a&gt;
+  &lt;/footer&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In <em>this</em> document, there are two articles. The "<code id="link-type-tag:link-type-tag-3"><a href="/breakup/specs/html-linking/#link-type-tag">tag</a></code>"
+   link, however, applies to the whole page (and would do so wherever it was placed, including if it
+   was within the <code id="link-type-tag:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code> elements).</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;Gem 4/4&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;article&gt;
+   &lt;h1&gt;801: Steinbock&lt;/h1&gt;
+   &lt;p&gt;The number 801 Gem 4/4 electro-diesel has an ibex and was rebuilt in 2002.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article&gt;
+   &lt;h1&gt;802: Murmeltier&lt;/h1&gt;
+   &lt;figure&gt;
+    &lt;img src="http://upload.wikimedia.org/wikipedia/commons/b/b0/Trains_de_la_Bernina_en_hiver_2.jpg"
+         alt="The 802 was red with pantographs and tall vents on the side."&gt;
+    &lt;figcaption&gt;The 802 in the 1980s, above Lago Bianco.&lt;/figcaption&gt;
+   &lt;/figure&gt;
+   &lt;p&gt;The number 802 Gem 4/4 electro-diesel has a marmot and was rebuilt in 2003.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;p class="topic"&gt;&lt;a rel=tag href="http://en.wikipedia.org/wiki/Rhaetian_Railway_Gem_4/4"&gt;Gem 4/4&lt;/a&gt;&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div></section>
+
+
+
+  <section><h2>Sequential link types</h2>
+
+  <p>Some documents form part of a sequence of documents.</p>
+
+  <p>A sequence of documents is one where each document can have a <em>previous sibling</em> and a
+  <em>next sibling</em>. A document with no previous sibling is the start of its sequence, a
+  document with no next sibling is the end of its sequence.</p>
+
+  <p>A document may be part of multiple sequences.</p>
+
+
+  <section><h2>Link type "<dfn><code>next</code></dfn>"</h2>
+
+  <p>The <code id="link-type-next:link-type-next"><a href="/breakup/specs/html-linking/#link-type-next">next</a></code> keyword may be used with <code id="link-type-next:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="link-type-next:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-next:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-next:hyperlink">hyperlink</a>.</p>
+
+  <p>The <code id="link-type-next:link-type-next-2"><a href="/breakup/specs/html-linking/#link-type-next">next</a></code> keyword indicates that the document is part of a
+  sequence, and that the link is leading to the document that is the next logical document in the
+  sequence.</p></section>
+
+
+  <section><h2>Link type "<dfn><code>prev</code></dfn>"</h2>
+
+  <p>The <code id="link-type-prev:link-type-prev"><a href="/breakup/specs/html-linking/#link-type-prev">prev</a></code> keyword may be used with <code id="link-type-prev:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>,
+  <code id="link-type-prev:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="link-type-prev:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements. This keyword creates a <a href="/breakup/specs/html-linking/#hyperlink" id="link-type-prev:hyperlink">hyperlink</a>.</p>
+
+  <p>The <code id="link-type-prev:link-type-prev-2"><a href="/breakup/specs/html-linking/#link-type-prev">prev</a></code> keyword indicates that the document is part of a
+  sequence, and that the link is leading to the document that is the previous logical document in
+  the sequence.</p>
+
+  
+
+  <p><strong>Synonyms</strong>: For historical reasons, user agents must also treat the keyword
+  "<code>previous</code>" like the <code id="link-type-prev:link-type-prev-3"><a href="/breakup/specs/html-linking/#link-type-prev">prev</a></code> keyword.</p></section></section>
+
+  
+
+
+  <section><h2>Other link types</h2>
+
+  <p><dfn id="concept-rel-extensions">Extensions to the predefined set of link types</dfn> may be
+  registered in the <a href="http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions">microformats
+  wiki existing-rel-values page</a>. [[!MFREL]]</p>
+
+  <p>Anyone is free to edit the <span>microformats wiki existing-rel-values page</span> at
+  any time to add a type. Extension types must be specified with the following information:</p>
+
+  <dl><dt>Keyword</dt><dd>
+
+    <p>The actual value being defined. The value should not be confusingly similar to any other
+    defined value (e.g. differing only in case).</p>
+
+    <p>If the value contains a U+003A COLON character (:), it must also be an <a href="/breakup/specs/core-algorithms/#absolute-url" id="other-link-types:absolute-url">absolute
+    URL</a>.</p>
+
+   </dd><dt>Effect on... <code id="other-link-types:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code></dt><dd>
+
+    <p>One of the following:</p>
+
+    <dl><dt>Not allowed</dt><dd>The keyword must not be specified on <code id="other-link-types:the-link-element-2"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> elements.</dd><dt>Hyperlink</dt><dd>The keyword may be specified on a <code id="other-link-types:the-link-element-3"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element; it creates a
+     <a href="/breakup/specs/html-linking/#hyperlink" id="other-link-types:hyperlink">hyperlink</a>.</dd><dt>External Resource</dt><dd>The keyword may be specified on a <code id="other-link-types:the-link-element-4"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> element; it creates an <a href="/breakup/specs/html-linking/#external-resource-link" id="other-link-types:external-resource-link">external
+     resource link</a>.</dd></dl>
+
+   </dd><dt>Effect on... <code id="other-link-types:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="other-link-types:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code></dt><dd>
+
+    <p>One of the following:</p>
+
+    <dl><dt>Not allowed</dt><dd>The keyword must not be specified on <code id="other-link-types:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="other-link-types:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements.</dd><dt>Hyperlink</dt><dd>The keyword may be specified on <code id="other-link-types:the-a-element-3"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="other-link-types:the-area-element-3"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements; it creates a
+     <a href="/breakup/specs/html-linking/#hyperlink" id="other-link-types:hyperlink-2">hyperlink</a>.</dd><dt>External Resource</dt><dd>The keyword may be specified on <code id="other-link-types:the-a-element-4"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="other-link-types:the-area-element-4"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements; it creates
+     an <a href="/breakup/specs/html-linking/#external-resource-link" id="other-link-types:external-resource-link-2">external resource link</a>.</dd><dt>Hyperlink Annotation</dt><dd>The keyword may be specified on <code id="other-link-types:the-a-element-5"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> and <code id="other-link-types:the-area-element-5"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> elements; it <a href="/breakup/specs/html-linking/#hyperlink-annotation" id="other-link-types:hyperlink-annotation">annotates</a> other <a href="/breakup/specs/html-linking/#hyperlink" id="other-link-types:hyperlink-3">hyperlinks</a>
+     created by the element.</dd></dl>
+
+   </dd><dt>Brief description</dt><dd><p>A short non-normative description of what the keyword's meaning is.</p></dd><dt>Specification</dt><dd><p>A link to a more detailed description of the keyword's semantics and requirements. It
+   could be another page on the Wiki, or a link to an external page.</p></dd><dt>Synonyms</dt><dd><p>A list of other keyword values that have exactly the same processing requirements. Authors
+   should not use the values defined to be synonyms, they are only intended to allow user agents to
+   support legacy content. Anyone may remove synonyms that are not used in practice; only names that
+   need to be processed as synonyms for compatibility with legacy content are to be registered in
+   this way.</p></dd><dt>Status</dt><dd>
+
+    <p>One of the following:</p>
+
+    <dl><dt>Proposed</dt><dd>The keyword has not received wide peer review and approval. Someone has proposed it and is,
+     or soon will be, using it.</dd><dt>Ratified</dt><dd>The keyword has received wide peer review and approval. It has a specification that
+     unambiguously defines how to handle pages that use the keyword, including when they use it in
+     incorrect ways.</dd><dt>Discontinued</dt><dd>The keyword has received wide peer review and it has been found wanting. Existing pages are
+     using this keyword, but new pages should avoid it. The "brief description" and "specification"
+     entries will give details of what authors should use instead, if anything.</dd></dl>
+
+    <p>If a keyword is found to be redundant with existing values, it should be removed and listed
+    as a synonym for the existing value.</p>
+
+    <p>If a keyword is registered in the "proposed" state for a period of a month or more without
+    being used or specified, then it may be removed from the registry.</p>
+
+    <p>If a keyword is added with the "proposed" status and found to be redundant with existing
+    values, it should be removed and listed as a synonym for the existing value. If a keyword is
+    added with the "proposed" status and found to be harmful, then it should be changed to
+    "discontinued" status.</p>
+
+    <p>Anyone can change the status at any time, but should only do so in accordance with the
+    definitions above.</p>
+
+   </dd></dl>
+
+  
+
+  <p>Conformance checkers may use the information given on the microformats wiki
+  existing-rel-values page to establish if a value is allowed or not: values defined in this
+  specification or marked as "proposed" or "ratified" must be accepted when used on the elements for
+  which they apply as described in the "Effect on..." field, whereas values marked as "discontinued" or values not containing a U+003A
+COLON character but not listed in either this specification or on the aforementioned page must be
+rejected as invalid. The remaining values must be accepted as valid if they are absolute URLs
+containing US-ASCII characters only and rejected otherwise. Conformance checkers may cache this information (e.g. for performance reasons or to avoid
+  the use of unreliable network connectivity).</p><p class="note">
+  Note: Even URL-valued link types are compared ASCII-case-insensitively. Validators might choose to
+  warn about characters U+0041 (LATIN CAPITAL LETTER A) through U+005A (LATIN CAPITAL LETTER Z)
+  (inclusive) in the pre-case-folded form of link types that contain a colon.
+</p>
+
+  <p>When an author uses a new type not defined by either this specification or the Wiki page,
+  conformance checkers should offer to add the value to the Wiki, with the details described above,
+  with the "proposed" status.</p>
+
+  
+
+  <p>Types defined as extensions in the <a href="http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions">microformats
+  wiki existing-rel-values page</a> with the status "proposed" or "ratified" may be used with the
+  <code>rel</code> attribute on <code id="other-link-types:the-link-element-5"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>, <code id="other-link-types:the-a-element-6"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, and <code id="other-link-types:the-area-element-6"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>
+  elements in accordance to the "Effect on..." field. [[!MFREL]]</p></section></section></section></body></html>

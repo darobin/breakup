@@ -1,0 +1,952 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>Sortable Tables for HTML</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "sortable-tables"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        Additions to HTML tables that enable sorting.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2><dfn>Table sorting model</dfn></h2>
+
+  <p>The <dfn id="attr-table-sortable"><code>sortable</code></dfn> attribute on
+  <code id="table-sorting-model:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> elements is a <a href="/breakup/specs/core-algorithms/#boolean-attribute" id="table-sorting-model:boolean-attribute">boolean attribute</a>. When present, it indicates that
+  the user agent is to <a href="/breakup/specs/rendering-html/#sortable-ui">allow the user to sort</a> the <code id="table-sorting-model:the-table-element-2"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>.</p>
+
+  <p>To make a column sortable in a <code id="table-sorting-model:the-table-element-3"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> with a <code id="table-sorting-model:the-thead-element"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, the column needs
+  to have <code id="table-sorting-model:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element that does not <a href="/breakup/specs/html-tables/#attr-tdth-colspan" id="table-sorting-model:attr-tdth-colspan">span multiple
+  columns</a> in a <code id="table-sorting-model:the-thead-element-2"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> above any rows that it is to sort.</p>
+
+  <p>To make a column sortable in a <code id="table-sorting-model:the-table-element-4"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> without a <code id="table-sorting-model:the-thead-element-3"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, the column
+  needs to have <code id="table-sorting-model:the-th-element-2"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element that does not <a href="/breakup/specs/html-tables/#attr-tdth-colspan" id="table-sorting-model:attr-tdth-colspan-2">span multiple
+  columns</a> in the first <code id="table-sorting-model:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element of the <code id="table-sorting-model:the-table-element-5"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>, where that
+  <code id="table-sorting-model:the-tr-element-2"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element is not in a <code id="table-sorting-model:the-tfoot-element"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>.</p>
+
+  <p>When the user selects a column by which to sort, the user agent sets the <code id="table-sorting-model:the-th-element-3"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code>
+  element's <dfn id="attr-th-sorted"><code>sorted</code></dfn> attribute. This attribute can also
+  be set manually, to indicate that the table should be automatically sorted, even when scripts
+  modify the page on when the page is loaded.</p>
+
+  <p>The <code id="table-sorting-model:attr-th-sorted"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute, if specified, must have a value that
+  is a <a href="/breakup/specs/core-algorithms/#set-of-space-separated-tokens" id="table-sorting-model:set-of-space-separated-tokens">set of space-separated tokens</a> consisting of optionally a token whose value is an
+  <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="table-sorting-model:ascii-case-insensitive">ASCII case-insensitive</a> match for the string "<dfn id="attr-th-sorted-reversed"><code>reversed</code></dfn>", and optionally a token whose value
+  is a <a href="/breakup/specs/core-algorithms/#valid-non-negative-integer" id="table-sorting-model:valid-non-negative-integer">valid non-negative integer</a> greater than zero, in either order.</p>
+
+  <p class="note">In other words, ignoring spaces and case, the <code id="table-sorting-model:attr-th-sorted-2"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute's value can be empty, "<code>reversed</code>", "<code>1</code>", "<code>reversed 1</code>", or
+  "<code>1 reversed</code>", where "1" is any number equal to or greater than 1.</p>
+
+  <p>While one or more <code id="table-sorting-model:the-th-element-4"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements in the table have a <code id="table-sorting-model:attr-th-sorted-3"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute, the user agent will keep the table's data rows
+  sorted. The value of the attribute controls how the column is used in determining the sort order.
+  The <code id="table-sorting-model:attr-th-sorted-reversed"><a href="/breakup/specs/sortable-tables/#attr-th-sorted-reversed">reversed</a></code> keyword means that the <dfn id="column-sort-direction">column sort
+  direction</dfn> is <i>reversed</i>, rather than <i>normal</i>, which is the default if the keyword
+  is omitted. The number, if present, indicates the <dfn id="column-key-ordinality">column key ordinality</dfn>; if the number
+  is omitted, the column is the primary key, as if the value 1 had been specified.</p>
+
+  <p class="note">Thus, <code>sorted="1"</code> indicates the table's primary key, <code>sorted="2"</code> its secondary key, and so forth.</p>
+
+  <hr>
+
+  <p>A <dfn id="sorting-capable-th-element">sorting-capable <code>th</code> element</dfn> is a <code id="table-sorting-model:the-th-element-5"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element that matches
+  all the following conditions simultaneously:</p>
+
+  <ul><li><p>It corresponds to a <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell">cell</a> whose <i>width</i> is 1.
+   (Specifically, a <i>header cell</i>, since this is a <code id="table-sorting-model:the-th-element-6"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element.)</p></li><li><p>There is no <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-2">cell</a> that corresponds to another
+   <a href="/breakup/specs/sortable-tables/#sorting-capable-th-element" id="table-sorting-model:sorting-capable-th-element">sorting-capable <code>th</code> element</a> that covers slots in the same <a href="/breakup/specs/html-tables/#concept-column" id="table-sorting-model:concept-column">column</a> but on a higher (earlier) <a href="/breakup/specs/html-tables/#concept-row" id="table-sorting-model:concept-row">row</a>.</p></li><li>
+
+    <p>If the <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-3">cell</a>'s <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table">table</a> has
+    a <a href="/breakup/specs/html-tables/#concept-row-group" id="table-sorting-model:concept-row-group">row group</a> corresponding to a <code id="table-sorting-model:the-thead-element-4"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>
+    element, the <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-4">cell</a> is in a <a href="/breakup/specs/html-tables/#concept-row-group" id="table-sorting-model:concept-row-group-2">row
+    group</a> that corresponds to the <em>first</em> <code id="table-sorting-model:the-thead-element-5"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element of the <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-5">cell</a>'s <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table-2">table</a>.</p>
+
+    <p>Otherwise: the <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-6">cell</a> is not in a <a href="/breakup/specs/html-tables/#concept-row-group" id="table-sorting-model:concept-row-group-3">row group</a> corresponding to a <code id="table-sorting-model:the-tfoot-element-2"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code> element, and
+    the <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-7">cell</a> is in the first <a href="/breakup/specs/html-tables/#concept-row" id="table-sorting-model:concept-row-2">row</a>
+    of the <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table-3">table</a>.</p>
+
+   </li></ul>
+
+  <p class="note">In other words, each <a href="/breakup/specs/html-tables/#concept-column" id="table-sorting-model:concept-column-2">column</a> can have one
+  <a href="/breakup/specs/sortable-tables/#sorting-capable-th-element" id="table-sorting-model:sorting-capable-th-element-2">sorting-capable <code>th</code> element</a>; this will be the highest <code id="table-sorting-model:the-th-element-7"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> in
+  a <code id="table-sorting-model:the-thead-element-6"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> that spans no other columns, or, if there is no <code id="table-sorting-model:the-thead-element-7"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, the
+  <code id="table-sorting-model:the-th-element-8"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> in the first row (that is not in a <code id="table-sorting-model:the-tfoot-element-3"><a href="/breakup/specs/html-tables/#the-tfoot-element">tfoot</a></code>), assuming it spans no
+  columns.</p>
+
+  <p>The <dfn id="sorting-capable-th-elements-of-the-table-element">sorting-capable <code>th</code> elements of the <code>table</code> element</dfn> <var>table</var> are the <a href="/breakup/specs/sortable-tables/#sorting-capable-th-element" id="table-sorting-model:sorting-capable-th-element-3">sorting-capable
+  <code>th</code> elements</a> whose <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-8">cell</a>'s <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table-4">table</a> is <var>table</var>.</p>
+
+  <p>A <code id="table-sorting-model:the-table-element-6"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element <var>table</var> is a <dfn id="sorting-capable-table-element">sorting-capable
+  <code>table</code> element</dfn> if there are one or more <a href="/breakup/specs/sortable-tables/#sorting-capable-th-elements-of-the-table-element" id="table-sorting-model:sorting-capable-th-elements-of-the-table-element">sorting-capable <code>th</code>
+  elements of the <code>table</code> element</a> <var>table</var>.</p>
+
+  <p>A <code id="table-sorting-model:the-th-element-9"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element is a <dfn id="sorting-enabled-th-element">sorting-enabled <code>th</code> element</dfn> if it is a
+  <a href="/breakup/specs/sortable-tables/#sorting-capable-th-element" id="table-sorting-model:sorting-capable-th-element-4">sorting-capable <code>th</code> element</a> and it has a <code id="table-sorting-model:attr-th-sorted-4"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute.</p>
+
+  <p>The <dfn id="sorting-enabled-th-elements-of-the-table-element">sorting-enabled <code>th</code> elements of the <code>table</code> element</dfn> <var>table</var> are the <a href="/breakup/specs/sortable-tables/#sorting-enabled-th-element" id="table-sorting-model:sorting-enabled-th-element">sorting-enabled
+  <code>th</code> elements</a> whose <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-9">cell</a>'s <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table-5">table</a> is <var>table</var>.</p>
+
+  <p>A <code id="table-sorting-model:the-table-element-7"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element <var>table</var> is a <dfn id="sorting-enabled-table-element">sorting-enabled
+  <code>table</code> element</dfn> if there are one or more <a href="/breakup/specs/sortable-tables/#sorting-capable-th-elements-of-the-table-element" id="table-sorting-model:sorting-capable-th-elements-of-the-table-element-2">sorting-capable <code>th</code>
+  elements of the <code>table</code> element</a> <var>table</var>, and at least one of
+  them is a <a href="/breakup/specs/sortable-tables/#sorting-enabled-th-element" id="table-sorting-model:sorting-enabled-th-element-2">sorting-enabled <code>th</code> element</a> (i.e. at least one has a <code id="table-sorting-model:attr-th-sorted-5"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute).</p>
+
+  <p>A <code id="table-sorting-model:the-table-element-8"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element is a <dfn id="table-element-with-a-user-agent-exposed-sorting-interface"><code>table</code> element with a user-agent exposed
+  sorting interface</dfn> if it is a <a href="/breakup/specs/sortable-tables/#sorting-capable-table-element" id="table-sorting-model:sorting-capable-table-element">sorting-capable <code>table</code> element</a> and has
+  a <code id="table-sorting-model:attr-table-sortable"><a href="/breakup/specs/sortable-tables/#attr-table-sortable">sortable</a></code> attribute specified.</p>
+
+  <p>A <dfn id="sorting-interface-th-element">sorting interface <code>th</code> element</dfn> is a <a href="/breakup/specs/sortable-tables/#sorting-capable-th-element" id="table-sorting-model:sorting-capable-th-element-5">sorting-capable
+  <code>th</code> element</a> whose <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-10">cell</a>'s <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table-6">table</a> is a <a href="/breakup/specs/sortable-tables/#table-element-with-a-user-agent-exposed-sorting-interface" id="table-sorting-model:table-element-with-a-user-agent-exposed-sorting-interface"><code>table</code> element with a user-agent exposed
+  sorting interface</a>.</p>
+
+  <hr>
+
+  <p>Each <code id="table-sorting-model:the-table-element-9"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element has a <dfn id="currently-sorting-flag">currently-sorting flag</dfn>, which must initially
+  be false.</p>
+
+  <hr>
+
+  <p>The <code id="table-sorting-model:attr-th-sorted-6"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute must not be specified on
+  <code id="table-sorting-model:the-th-element-10"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements that are not <a href="/breakup/specs/sortable-tables/#sorting-capable-th-element" id="table-sorting-model:sorting-capable-th-element-6">sorting-capable
+  <code>th</code> elements</a>. The <code id="table-sorting-model:attr-table-sortable-2"><a href="/breakup/specs/sortable-tables/#attr-table-sortable">sortable</a></code> attribute
+  must not be specified on <code id="table-sorting-model:the-table-element-10"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> elements that are not <a href="/breakup/specs/sortable-tables/#sorting-capable-table-element" id="table-sorting-model:sorting-capable-table-element-2">sorting-capable <code>table</code> elements</a>.</p>
+
+  
+
+  <p>To determine a <code id="table-sorting-model:the-th-element-11"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element's <code id="table-sorting-model:attr-th-sorted-7"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute's
+  <a href="/breakup/specs/sortable-tables/#column-sort-direction" id="table-sorting-model:column-sort-direction">column sort direction</a> and <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality">column key ordinality</a>, user agents must use
+  the following algorithm:</p>
+
+  <ol><li><p>Let <var>direction</var> be <i>normal</i>.</p>
+
+   </li><li><p>Let <var>have explicit direction</var> be false.</p>
+
+   </li><li><p>Let <var>ordinality</var> be 1.</p>
+
+   </li><li><p>Let <var>have explicit ordinality</var> be false.</p>
+
+   </li><li><p>Let <var>tokens</var> be the result of <a href="/breakup/specs/core-algorithms/#split-a-string-on-spaces" id="table-sorting-model:split-a-string-on-spaces">splitting the attribute's value on spaces</a>.</p></li><li>
+
+    <p>For each token <var>token</var> in <var>tokens</var>, run the appropriate
+    steps from the following list:</p>
+
+    <dl class="switch"><dt>If <var>have explicit direction</var> is false and <var>token</var> is an
+     <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="table-sorting-model:ascii-case-insensitive-2">ASCII case-insensitive</a> match for the string "<code id="table-sorting-model:attr-th-sorted-reversed-2"><a href="/breakup/specs/sortable-tables/#attr-th-sorted-reversed">reversed</a></code>"</dt><dd>
+
+      <p>Let <var>direction</var> be <i>reversed</i> and <var>have explicit
+      direction</var> be true.</p>
+
+     </dd><dt>If <var>have explicit ordinality</var> is false</dt><dd>
+
+      <p><a href="/breakup/specs/core-algorithms/#rules-for-parsing-integers" id="table-sorting-model:rules-for-parsing-integers">Parse <var>token</var> as an
+      integer</a>. If this resulted in an error or the value zero, then ignore the token.
+      Otherwise, set <var>ordinality</var> to the parsed value, and set <var>have
+      explicit ordinality</var> to true.</p>
+
+     </dd><dt>Otherwise</dt><dd><p>Ignore the token.</p></dd></dl>
+
+   </li><li><p>The <a href="/breakup/specs/sortable-tables/#column-sort-direction" id="table-sorting-model:column-sort-direction-2">column sort direction</a> is the value of <var>direction</var>, and
+   the <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality-2">column key ordinality</a> is the value of <var>ordinality</var>.</p></li></ol>
+
+  
+
+  <p>A <code id="table-sorting-model:the-table-element-11"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> must not have two <code id="table-sorting-model:the-th-element-12"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements whose <code id="table-sorting-model:attr-th-sorted-8"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute have the same <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality-3">column key
+  ordinality</a>.</p>
+
+  
+
+  <hr>
+
+  <p>The <dfn id="table-sorting-algorithm">table sorting algorithm</dfn>, which is applied to a <code id="table-sorting-model:the-table-element-12"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>, is as
+  follows:</p>
+
+  <ol><li><p>Let <var>table</var> be the <code id="table-sorting-model:the-table-element-13"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element being sorted.</p></li><li><p>If <var>table</var>'s <a href="/breakup/specs/sortable-tables/#currently-sorting-flag" id="table-sorting-model:currently-sorting-flag">currently-sorting flag</a> is true, then abort
+   these steps.</p></li><li><p>Set <var>table</var>'s <a href="/breakup/specs/sortable-tables/#currently-sorting-flag" id="table-sorting-model:currently-sorting-flag-2">currently-sorting flag</a> to true.</p></li><li><p><a href="/breakup/specs/browser-dom/#fire-a-simple-event" id="table-sorting-model:fire-a-simple-event">Fire a simple event</a> named <code id="table-sorting-model:event-sort"><a href="/breakup/specs/html/#event-sort">sort</a></code> that is
+   cancelable at <var>table</var>.</p></li><li><p>If the event fired in the previous step was canceled, then jump to the step labeled
+   <i>end</i> below.</p></li><li>
+
+    <p>If <var>table</var> is not now a <a href="/breakup/specs/sortable-tables/#sorting-enabled-table-element" id="table-sorting-model:sorting-enabled-table-element">sorting-enabled <code>table</code>
+    element</a>, then jump to the step labeled <i>end</i> below.</p>
+
+    <p class="note">Even if <var>table</var> was a <a href="/breakup/specs/sortable-tables/#sorting-enabled-table-element" id="table-sorting-model:sorting-enabled-table-element-2">sorting-enabled <code>table</code>
+    element</a> when the algorithm was invoked, the DOM might have been entirely changed by the
+    event handlers for the <code id="table-sorting-model:event-sort-2"><a href="/breakup/specs/html/#event-sort">sort</a></code> event, so this has to be verified at
+    this stage, not earlier.</p>
+
+   </li><li><p>Let <var>key heading cells</var> be the <a href="/breakup/specs/sortable-tables/#sorting-enabled-th-elements-of-the-table-element" id="table-sorting-model:sorting-enabled-th-elements-of-the-table-element">sorting-enabled <code>th</code>
+   elements of the <code>table</code> element</a> <var>table</var>.</p></li><li><p>Sort <var>key heading cells</var> in ascending order of the <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality-4">column key
+   ordinality</a> of their <code id="table-sorting-model:attr-th-sorted-9"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attributes, with those
+   having the same <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality-5">column key ordinality</a> being sorted in <a href="/breakup/specs/core-algorithms/#tree-order" id="table-sorting-model:tree-order">tree order</a>.</p>
+
+   </li><li>
+
+    <p>Let <var>row collection cursor</var> be a pointer to an element, initially pointing
+    at the first child of <var>table</var> that is after <var>table</var>'s first
+    <code id="table-sorting-model:the-thead-element-8"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code>, if any, and that is either a <code id="table-sorting-model:the-tbody-element"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> or a <code id="table-sorting-model:the-tr-element-3"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+    element, assuming there is one. If there is no such child, then jump to the step labeled
+    <i>end</i> below.</p>
+
+   </li><li><p>If <var>table</var> has no <a href="/breakup/specs/html-tables/#concept-row-group" id="table-sorting-model:concept-row-group-4">row group</a>
+   corresponding to a <code id="table-sorting-model:the-thead-element-9"><a href="/breakup/specs/html-tables/#the-thead-element">thead</a></code> element, then set <var>ignore first group</var> to
+   true. Otherwise, set it to false.</p></li><li>
+
+    <p>Run these substeps:</p>
+
+    <ol><li><p><i>Row loop</i>: Let <var>rows</var> be an empty list of <code id="table-sorting-model:the-tr-element-4"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+     elements.</p></li><li>
+
+      <p>Run these substeps:</p>
+
+      <ol><li>
+
+        <p>Run the appropriate steps from the following list:</p>
+
+        <dl class="switch"><dt>If <var>row collection cursor</var> points to a <code id="table-sorting-model:the-tr-element-5"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element
+
+         </dt><dd>
+
+          <ol><li><p><i>Collect</i>: Append the element pointed to by <var>row collection
+           cursor</var> to <var>rows</var>.</p></li><li><p>If there are no <code id="table-sorting-model:the-tr-element-6"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> or <code id="table-sorting-model:the-tbody-element-2"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> children of <var>table</var> that are later siblings of the element pointed to by <var>row
+           collection cursor</var>, or if the next such child is a <code id="table-sorting-model:the-tbody-element-3"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element, then jump
+           to the step labeled <i>group</i> below.</p></li><li><p>Let <var>row collection cursor</var> point to the next <code id="table-sorting-model:the-tr-element-7"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> child
+           of <var>table</var> that is a later sibling of the element pointed to by <var>row collection cursor</var>.</p></li><li><p>Jump back to the step labeled <i>collect</i> above.</p></li></ol>
+
+         </dd><dt>If <var>row collection cursor</var> points to a <code id="table-sorting-model:the-tbody-element-4"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> element
+
+         </dt><dd>
+
+          <ol><li><p>Place all the <code id="table-sorting-model:the-tr-element-8"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element children of the element pointed to by <var>row collection cursor</var> into <var>rows</var>, in <a href="/breakup/specs/core-algorithms/#tree-order" id="table-sorting-model:tree-order-2">tree
+           order</a>.</p></li><li><p>If <var>rows</var> is empty, jump to the step labeled <i>increment loop</i>
+           below.</p></li></ol>
+
+         </dd></dl>
+
+       </li><li><p><i>Group</i>: Let <var>groups</var> be an empty list of groups of <code id="table-sorting-model:the-tr-element-9"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+       elements.</p></li><li><p>Let <var>group</var> be an empty group of <code id="table-sorting-model:the-tr-element-10"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements.</p></li><li><p>Let <var>group cursor</var> be a pointer to an element, initially pointing at the
+       first <code id="table-sorting-model:the-tr-element-11"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element in <var>rows</var>.</p></li><li>
+
+        <p>Run these substeps:</p>
+
+        <ol><li><p><i>Start group</i>: Let <var>pending rows in group</var> be 1.</p></li><li>
+
+          <p>Run these substeps:</p>
+
+          <ol><li><p><i>Group loop</i>: Append the <code id="table-sorting-model:the-tr-element-12"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element pointed to by <var>group
+           cursor</var> to <var>group</var>.</p></li><li><p>If there are any <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-11">cells</a> whose highest <a href="/breakup/specs/html-tables/#concept-row" id="table-sorting-model:concept-row-3">row</a>'s element is the one pointed to by <var>group
+           cursor</var>, then let <var>tallest height</var> be the number of rows covered by the
+           tallest such <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-12">cell</a>.</p></li><li><p>If <var>tallest height</var> is greater than <var>pending rows in
+           group</var> then set <var>pending rows in group</var> to <var>tallest
+           height</var>.</p></li><li><p>Decrement <var>pending rows in group</var> by one.</p></li><li><p>Let <var>group cursor</var> point to the next <code id="table-sorting-model:the-tr-element-13"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element in <var>rows</var>, if any; otherwise, let it be null.</p></li><li><p>If <var>group cursor</var> is not null and <var>pending rows in
+           group</var> is not zero, jump back to the step labeled <i>group loop</i>.</p></li></ol>
+
+         </li><li><p>Append a new group to <var>groups</var> consisting of the <code id="table-sorting-model:the-tr-element-14"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code>
+         elements in <var>group</var>.</p></li><li><p>Empty <var>group</var>.</p></li><li><p>If <var>group cursor</var> is not null, then jump back to the step labeled <i>start
+         group</i>.</p></li></ol>
+
+       </li><li><p>If <var>ignore first group</var> is true, then drop the first group in <var>groups</var> and set <var>ignore first group</var> to false.</p></li><li>
+
+        <p>Run these steps:</p>
+
+        <ol><li><p><i>Drop leading header groups</i>: If <var>groups</var> is now empty, jump to the
+         step labeled <i>increment loop</i> below.</p></li><li><p>If the first group of <var>groups</var> consists of <code id="table-sorting-model:the-tr-element-15"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements
+         whose element children are all <code id="table-sorting-model:the-th-element-13"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements, then drop the first group in <var>groups</var> and jump back to the previous step (labeled <i>drop leading header
+         groups</i>).</p></li></ol>
+
+       </li><li><p>Let <var>insertion point</var> be a placeholder in a DOM tree, which can be used
+       to reinsert nodes at a specific point in the DOM. Insert <var>insertion point</var> into
+       the parent of the first <code id="table-sorting-model:the-tr-element-16"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element of the first group in <var>groups</var>,
+       immediately before that <code id="table-sorting-model:the-tr-element-17"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> element.</p></li><li>
+
+        <p>Sort the groups in <var>groups</var>, using the following algorithm to decide the
+        relative order of any two groups <var>a</var> and <var>b</var> (the algorithm
+        either returns that <var>a</var> comes before <var>b</var>, or that <var>b</var> comes before <var>a</var>):</p>
+
+        <ol><li><p>Let <var>key index</var> be an index into <var>key heading
+         cells</var>, initially denoting the first element in the list.</p></li><li><p>Let <var>direction</var> be a sort direction, initially <i>ascending</i>. Its
+         other possible value is <i>descending</i>. When <var>direction</var> is
+         <i>toggled</i>, that means that if its value is <i>ascending</i>, it must be changed to
+         <i>descending</i>, and when its value is <i>descending</i>, it must be changed to
+         <i>ascending</i>.</p></li><li>
+
+          <p>Run these substeps:</p>
+
+          <ol><li><p><i>Column loop</i>: Let <var>th</var> be the <var>key index</var>th
+           <code id="table-sorting-model:the-th-element-14"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> in <var>key heading cells</var>.</p></li><li><p>If <var>th</var>'s <code id="table-sorting-model:attr-th-sorted-10"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute's
+           <a href="/breakup/specs/sortable-tables/#column-sort-direction" id="table-sorting-model:column-sort-direction-3">column sort direction</a> is <i>reversed</i>, then toggle <var>direction</var>.</p></li><li><p>Let <var>tentative order</var> be the result of <a href="/breakup/specs/sortable-tables/#comparing-two-row-groups-using-the-th-element" id="table-sorting-model:comparing-two-row-groups-using-the-th-element">comparing two row groups
+           using the <code>th</code> element</a> <var>th</var>, with <var>a</var> and
+           <var>b</var> as the rows.</p></li><li><p>If <var>tentative order</var> is not "equal", then jump to the step labeled
+           <i>return</i> below.</p></li><li><p>Increment <var>key index</var>.</p></li><li><p>If <var>key index</var> still denotes a <code id="table-sorting-model:the-th-element-15"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element in <var>key heading cells</var>, then jump back to the step above labeled <i>column
+           loop</i>.</p></li></ol>
+
+         </li><li><p>If <var>a</var>'s <code id="table-sorting-model:the-tr-element-18"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements precede <var>b</var>'s in
+         <a href="/breakup/specs/core-algorithms/#tree-order" id="table-sorting-model:tree-order-3">tree order</a>, then let <var>tentative order</var> be "a before b".
+         Otherwise, let <var>tentative order</var> be "b before a".</p></li><li><p><i>Return</i>: Return the relative order given by the matching option from the following
+         list:</p>
+
+          <dl class="switch"><dt>If <var>direction</var> is <i>ascending</i> and <var>tentative
+           order</var> is "a before b"</dt><dd>Return that <var>a</var> comes before <var>b</var>.</dd><dt>If <var>direction</var> is <i>ascending</i> and <var>tentative
+           order</var> is "b before a"</dt><dd>Return that <var>b</var> comes before <var>a</var>.</dd><dt>If <var>direction</var> is <i>descending</i> and <var>tentative
+           order</var> is "a before b"</dt><dd>Return that <var>b</var> comes before <var>a</var>.</dd><dt>If <var>direction</var> is <i>descending</i> and <var>tentative
+           order</var> is "b before a"</dt><dd>Return that <var>a</var> comes before <var>b</var>.</dd></dl>
+
+         </li></ol>
+
+        <p>When the user agent is required to <dfn id="comparing-two-row-groups-using-the-th-element">compare two row groups using the <code>th</code> element</dfn> <var>th</var>,
+        with <var>a</var> and <var>b</var> being the two row groups respectively, the
+        user agent must run the following steps:</p>
+
+        <ol><li><p>Let <var>x</var> be the <var>x</var>-coordinate of the slots that
+         <code id="table-sorting-model:the-th-element-16"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> covers in its <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table-7">table</a>.</p></li><li>
+
+          <p>Let <var>cell<sub>a</sub></var> be the element corresponding to the <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-13">cell</a> in the first <a href="/breakup/specs/html-tables/#concept-row" id="table-sorting-model:concept-row-4">row</a> of group
+          <var>a</var> that covers the slot in that <a href="/breakup/specs/html-tables/#concept-row" id="table-sorting-model:concept-row-5">row</a> whose
+          <var>x</var>-coordinate is <var>x</var>.</p>
+
+          <p>Let <var>cell<sub>b</sub></var> be the element corresponding to the <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-14">cell</a> in the first <a href="/breakup/specs/html-tables/#concept-row" id="table-sorting-model:concept-row-6">row</a> of group
+          <var>b</var> that covers the slot in that <a href="/breakup/specs/html-tables/#concept-row" id="table-sorting-model:concept-row-7">row</a> whose
+          <var>x</var>-coordinate is <var>x</var>.</p>
+
+          
+
+          <p>In either case, if there's no <a href="/breakup/specs/html-tables/#concept-cell" id="table-sorting-model:concept-cell-15">cell</a> that actually covers
+          the slot, then use the value <i>null</i> instead.</p>
+
+         </li><li>
+
+          <p>Let <var>type<sub>a</sub></var> and <var>value<sub>a</sub></var> be
+          the <a href="/breakup/specs/sortable-tables/#type-and-value-of-the-cell" id="table-sorting-model:type-and-value-of-the-cell">type and value of the cell</a> <var>cell<sub>a</sub></var>, as defined
+          below.</p>
+
+          <p>Let <var>type<sub>b</sub></var> and <var>value<sub>b</sub></var> be
+          the <a href="/breakup/specs/sortable-tables/#type-and-value-of-the-cell" id="table-sorting-model:type-and-value-of-the-cell-2">type and value of the cell</a> <var>cell<sub>b</sub></var>, as defined
+          below.</p>
+
+          <p>The <dfn id="type-and-value-of-the-cell">type and value of the cell</dfn> <var>cell</var> are computed as follows.</p>
+
+          <ol><li><p>If <var>cell</var> is <i>null</i>, then the type is "string" and the value is
+           the empty string; abort these steps.</p></li><li><p>If, ignoring <a href="#inter-element-whitespace" id="table-sorting-model:inter-element-whitespace">inter-element whitespace</a> and nodes other than
+           <a href="/breakup/specs/core-algorithms/#element" id="table-sorting-model:element">Element</a> and <a href="/breakup/specs/core-algorithms/#text" id="table-sorting-model:text">Text</a> nodes, <var>cell</var> has only one child
+           and that child is a <code id="table-sorting-model:the-data-element"><a href="/breakup/specs/html-text/#the-data-element">data</a></code> element, then the value is the value of that
+           <code id="table-sorting-model:the-data-element-2"><a href="/breakup/specs/html-text/#the-data-element">data</a></code> element's <code id="table-sorting-model:attr-data-value"><a href="/breakup/specs/html-text/#attr-data-value">value</a></code> attribute, if there is
+           one, or the empty string otherwise; the type is "string".</p>
+
+           </li><li><p>If, ignoring <a href="#inter-element-whitespace" id="table-sorting-model:inter-element-whitespace-2">inter-element whitespace</a> and nodes other than
+           <a href="/breakup/specs/core-algorithms/#element" id="table-sorting-model:element-2">Element</a> and <a href="/breakup/specs/core-algorithms/#text" id="table-sorting-model:text-2">Text</a> nodes, <var>cell</var> has only one child
+           and that child is a <code id="table-sorting-model:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code> element, then the value is the value of that
+           <code id="table-sorting-model:the-progress-element-2"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code> element's <code id="table-sorting-model:attr-progress-value"><a href="/breakup/specs/html-forms/#attr-progress-value">value</a></code> attribute, if
+           there is one, or the empty string otherwise; the type is "string".</p>
+
+           </li><li><p>If, ignoring <a href="#inter-element-whitespace" id="table-sorting-model:inter-element-whitespace-3">inter-element whitespace</a> and nodes other than
+           <a href="/breakup/specs/core-algorithms/#element" id="table-sorting-model:element-3">Element</a> and <a href="/breakup/specs/core-algorithms/#text" id="table-sorting-model:text-3">Text</a> nodes, <var>cell</var> has only one child
+           and that child is a <code id="table-sorting-model:the-meter-element"><a href="/breakup/specs/html-forms/#the-meter-element">meter</a></code> element, then the value is the value of that
+           <code id="table-sorting-model:the-meter-element-2"><a href="/breakup/specs/html-forms/#the-meter-element">meter</a></code> element's <code id="table-sorting-model:attr-meter-value"><a href="/breakup/specs/html-forms/#attr-meter-value">value</a></code> attribute, if there is
+           one, or the empty string otherwise; the type is "string".</p>
+
+           </li><li>
+
+            <p>If, ignoring <a href="#inter-element-whitespace" id="table-sorting-model:inter-element-whitespace-4">inter-element whitespace</a> and nodes other than
+            <a href="/breakup/specs/core-algorithms/#element" id="table-sorting-model:element-4">Element</a> and <a href="/breakup/specs/core-algorithms/#text" id="table-sorting-model:text-4">Text</a> nodes, <var>cell</var> has only one
+            child and that child is a <code id="table-sorting-model:the-time-element"><a href="/breakup/specs/html-text/#the-time-element">time</a></code> element, then the value is the
+            <a href="/breakup/specs/html-text/#machine-readable-equivalent-of-the-element's-contents" id="table-sorting-model:machine-readable-equivalent-of-the-element's-contents">machine-readable equivalent of the element's contents</a>, if any, and the type is
+            the kind of value that is thus obtained
+           (a <a href="/breakup/specs/core-algorithms/#concept-month" id="table-sorting-model:concept-month">month</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-date" id="table-sorting-model:concept-date">date</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-yearless-date" id="table-sorting-model:concept-yearless-date">yearless date</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-time" id="table-sorting-model:concept-time">time</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-datetime-local" id="table-sorting-model:concept-datetime-local">local date and time</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-timezone" id="table-sorting-model:concept-timezone">time-zone offset</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-datetime" id="table-sorting-model:concept-datetime">global date and time</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-week" id="table-sorting-model:concept-week">week</a>,
+            a year, or
+            a <a href="/breakup/specs/core-algorithms/#concept-duration" id="table-sorting-model:concept-duration">duration</a>);
+            abort these steps after completing this one.</p>
+
+            <p>If there is no machine-readable equivalent, then the type is "string" and the value is
+            the empty string.</p>
+
+            <p>If the type is
+            a <a href="/breakup/specs/core-algorithms/#concept-month" id="table-sorting-model:concept-month-2">month</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-date" id="table-sorting-model:concept-date-2">date</a>,
+            a <a href="/breakup/specs/core-algorithms/#concept-week" id="table-sorting-model:concept-week-2">week</a>, or
+            a year,
+            then change the value to be the instant in time (with no time zone) that describes the
+            earliest moment that the value represents, and change the type to be
+            a <a href="/breakup/specs/core-algorithms/#concept-datetime-local" id="table-sorting-model:concept-datetime-local-2">local date and time</a>.</p>
+
+            <p class="example">For example, if the cell was <code>&lt;td&gt;&lt;time&gt;2011-11&lt;/time&gt;</code> then for sorting purposes the value is
+            interpreted as "2011-11-01T00:00:00.000" and the type is treated as a <a href="/breakup/specs/core-algorithms/#concept-datetime-local" id="table-sorting-model:concept-datetime-local-3">local date and time</a> rather than a <a href="/breakup/specs/core-algorithms/#concept-month" id="table-sorting-model:concept-month-3">month</a>.</p>
+
+            <p class="example">Similarly, if the cell was <code>&lt;td&gt;&lt;time
+            datetime="2014"&gt;MMXIV&lt;/time&gt;</code> then for sorting purposes the value is interpreted as
+            "2014-01-01T00:00:00.000" and the type is treated as a <a href="/breakup/specs/core-algorithms/#concept-datetime-local" id="table-sorting-model:concept-datetime-local-4">local date and time</a> rather than a year.</p>
+
+           </li><li><p>The value is the element's <code id="table-sorting-model:textcontent"><a href="/breakup/specs/core-algorithms/#textcontent">textContent</a></code>. The type is "string".</p></li></ol>
+
+         </li><li>
+
+          <p>If <var>type<sub>a</sub></var> and <var>type<sub>b</sub></var> are not
+          equal, then: return "a before b" if <var>type<sub>a</sub></var> is earlier in the
+          following list than <var>type<sub>b</sub></var>, otherwise, return "b before a";
+          then, abort these steps.</p>
+
+          <ol class="brief"><li><a href="/breakup/specs/core-algorithms/#concept-time" id="table-sorting-model:concept-time-2">time</a></li><li><a href="/breakup/specs/core-algorithms/#concept-yearless-date" id="table-sorting-model:concept-yearless-date-2">yearless date</a></li><li><a href="/breakup/specs/core-algorithms/#concept-datetime-local" id="table-sorting-model:concept-datetime-local-5">local date and time</a></li><li><a href="/breakup/specs/core-algorithms/#concept-datetime" id="table-sorting-model:concept-datetime-2">global date and time</a></li><li><a href="/breakup/specs/core-algorithms/#concept-timezone" id="table-sorting-model:concept-timezone-2">time-zone offset</a></li><li><a href="/breakup/specs/core-algorithms/#concept-duration" id="table-sorting-model:concept-duration-2">duration</a></li><li>"string"</li></ol>
+
+         </li><li><p>If <var>value<sub>a</sub></var> and <var>value<sub>b</sub></var> are
+         equal, then return "equal" and abort these steps.</p></li><li>
+
+          <p>If <var>type<sub>a</sub></var> and <var>type<sub>b</sub></var> are not
+          "string", then: if <var>value<sub>a</sub></var> is earlier than <var>value<sub>b</sub></var> then return "a before b" and abort these steps, otherwise,
+          return "b before a" and abort these steps.</p>
+
+          <p>Values sort in their natural order, with the following additional constraints:</p>
+
+          <p>For <a href="/breakup/specs/core-algorithms/#concept-time" id="table-sorting-model:concept-time-3">time</a> values, 00:00:00.000 is the earliest value and
+          23:59:59.999 is the latest value.</p>
+
+          <p>For <a href="/breakup/specs/core-algorithms/#concept-yearless-date" id="table-sorting-model:concept-yearless-date-3">yearless date</a> values, 01-01 is the earliest
+          value and 12-31 is the latest value; 02-28 is earlier than 02-29 which is earlier than
+          03-01.</p>
+
+          <p>Values that are <a href="/breakup/specs/core-algorithms/#concept-datetime-local" id="table-sorting-model:concept-datetime-local-6">local date and time</a> compare as
+          if they were in the same time zone.</p>
+
+          
+
+          <p>For <a href="/breakup/specs/core-algorithms/#concept-timezone" id="table-sorting-model:concept-timezone-3">time-zone offset</a> values, -23:59 is the earliest
+          value and +23:59 is the latest value.</p>
+
+          
+
+         </li><li>
+
+          <p>Let <var>components<sub>a</sub></var> be the result of <a href="/breakup/specs/sortable-tables/#parsing-the-sort-key" id="table-sorting-model:parsing-the-sort-key">parsing the sort
+          key</a> <var>value<sub>a</sub></var>.</p>
+
+          <p>Let <var>components<sub>b</sub></var> be the result of <a href="/breakup/specs/sortable-tables/#parsing-the-sort-key" id="table-sorting-model:parsing-the-sort-key-2">parsing the sort
+          key</a> <var>value<sub>b</sub></var>.</p>
+
+          <p>As described below, <var>components<sub>a</sub></var> and <var>components<sub>b</sub></var> are tuples consisting of a list of <var>n</var>
+          <i>numbers</i>, a list of <var>n</var> <i>number strings</i>, a list of <var>n</var>+1 <i>non-numeric strings</i>, and a list of 2<var>n</var>+1 <i>raw
+          strings</i>, for any non-negative integer value of <var>n</var> (zero or more).</p>
+
+         </li><li>
+
+          <p>Let <var>order</var> be the result of a <a href="/breakup/specs/sortable-tables/#locale-specific-string-comparison" id="table-sorting-model:locale-specific-string-comparison">locale-specific string
+          comparison</a> of <var>components<sub>a</sub></var>'s first <i>non-numeric
+          string</i> and <var>components<sub>b</sub></var>'s first <i>non-numeric string</i>,
+          in the context of <var>th</var>.</p>
+
+          <p>If <var>order</var> is not "equal" then return <var>order</var> and abort
+          these steps.</p>
+
+         </li><li>
+
+          <p>If <var>components<sub>a</sub></var> and <var>components<sub>b</sub></var> both have exactly one <i>number</i>, then run these
+          substeps:</p>
+
+          <ol><li>
+
+            <p>If <var>components<sub>a</sub></var>'s <i>number</i> is less than <var>components<sub>b</sub></var>'s <i>number</i>, return "a before b".</p>
+
+            <p>If <var>components<sub>b</sub></var>'s <i>number</i> is less than <var>components<sub>a</sub></var>'s <i>number</i>, return "b before a".</p>
+
+           </li><li>
+
+            <p>Let <var>order</var> be the result of a <a href="/breakup/specs/sortable-tables/#locale-specific-string-comparison" id="table-sorting-model:locale-specific-string-comparison-2">locale-specific string
+            comparison</a> of <var>components<sub>a</sub></var>'s second <i>non-numeric
+            string</i> and <var>components<sub>b</sub></var>'s second <i>non-numeric
+            string</i>, in the context of <var>th</var>.</p>
+
+            <p>If <var>order</var> is not "equal" then return <var>order</var> and
+            abort these steps.</p>
+
+           </li><li>
+
+            <p>Let <var>order</var> be the result of a <a href="/breakup/specs/sortable-tables/#locale-specific-string-comparison" id="table-sorting-model:locale-specific-string-comparison-3">locale-specific string
+            comparison</a> of <var>components<sub>a</sub></var>'s <i>number string</i> and
+            <var>components<sub>b</sub></var>'s <i>number string</i>, in the context of <var>th</var>.</p>
+
+            <p>If <var>order</var> is not "equal" then return <var>order</var> and
+            abort these steps.</p>
+
+           </li></ol>
+
+          <p>Otherwise, run these substeps:</p>
+
+          <ol><li>
+
+            <p>If <var>components<sub>a</sub></var> has zero <i>numbers</i> but <var>components<sub>b</sub></var> has more than zero <i>numbers</i>, return "a before
+            b".</p>
+
+            <p>If <var>components<sub>b</sub></var> has zero <i>numbers</i> but <var>components<sub>a</sub></var> has more than zero <i>numbers</i>, return "b before
+            a".</p>
+
+           </li><li>
+
+            
+
+            <p>If <var>components<sub>a</sub></var> has one <i>number</i>, return "a before
+            b".</p>
+
+            <p>If <var>components<sub>b</sub></var> has one <i>number</i>, return "b before
+            a".</p>
+
+           </li><li>
+
+            
+
+            <p>If <var>components<sub>a</sub></var> and <var>components<sub>b</sub></var> have more than one <i>number</i>, run these substeps:</p>
+
+            <ol><li><p>Let <var>count</var> be the smaller of the number of <i>numbers</i> in <var>components<sub>a</sub></var> and the number of <i>numbers</i> in <var>components<sub>b</sub></var>.</p></li><li><p>For each <i>number</i> in <var>components<sub>a</sub></var> and <var>components<sub>b</sub></var> from the first to the <var>count</var>th, in
+             order: if <var>components<sub>a</sub></var>'s <i>number</i> is less than <var>components<sub>b</sub></var>'s <i>number</i>, then return "a before b" and abort
+             these steps; otherwise, if <var>components<sub>b</sub></var>'s <i>number</i> is
+             less than <var>components<sub>a</sub></var>'s <i>number</i>, return "b before a"
+             and abort these steps.</p></li><li>
+
+              <p>If <var>components<sub>a</sub></var> has fewer <i>numbers</i> than <var>components<sub>b</sub></var>, return "a before b" and abort these steps.</p>
+
+              <p>If <var>components<sub>b</sub></var> has fewer <i>numbers</i> than <var>components<sub>a</sub></var>, return "b before a" and abort these steps.</p>
+
+             </li><li><p>Let <var>index</var> be zero.</p></li><li>
+
+              <p><i>String loop</i>: Let <var>order</var> be the result of a <a href="/breakup/specs/sortable-tables/#locale-specific-string-comparison" id="table-sorting-model:locale-specific-string-comparison-4">locale-specific
+              string comparison</a> of <var>components<sub>a</sub></var>'s <var>index</var>th <i>number string</i> and <var>components<sub>b</sub></var>'s <var>index</var>th <i>number string</i>,
+              in the context of <var>th</var>.</p>
+
+              <p>If <var>order</var> is not "equal" then return <var>order</var> and
+              abort these steps.</p>
+
+             </li><li>
+
+              <p>Increment <var>index</var>.</p>
+
+             </li><li>
+
+              <p>Let <var>order</var> be the result of a <a href="/breakup/specs/sortable-tables/#locale-specific-string-comparison" id="table-sorting-model:locale-specific-string-comparison-5">locale-specific string
+              comparison</a> of <var>components<sub>a</sub></var>'s <var>index</var>th <i>separator string</i> and <var>components<sub>b</sub></var>'s <var>index</var>th <i>separator
+              string</i>, in the context of <var>th</var>.</p>
+
+              <p>If <var>order</var> is not "equal" then return <var>order</var> and
+              abort these steps.</p>
+
+             </li><li>
+
+              <p>If <var>index</var> is less than the number of <i>numbers</i> in <var>components<sub>a</sub></var> and <var>components<sub>b</sub></var>, jump back
+              to the step labeled <i>string loop</i>.</p>
+
+             </li></ol>
+
+           </li></ol>
+
+         </li><li>
+
+          
+
+          <p>Let <var>index</var> be zero.</p>
+
+         </li><li>
+
+          <p>Run these substeps:</p>
+
+          <ol><li>
+
+            <p><i>Final loop:</i> Let <var>order</var> be the result of a <a href="/breakup/specs/sortable-tables/#raw-string-comparison" id="table-sorting-model:raw-string-comparison">raw string
+            comparison</a> of <var>components<sub>a</sub></var>'s <var>n</var>th
+            <i>raw string</i> and <var>components<sub>b</sub></var>'s <var>n</var>th
+            <i>raw string</i>.</p>
+
+            <p>If <var>order</var> is not "equal" then return <var>order</var> and abort
+            these steps.</p>
+
+           </li><li>
+
+            <p>Increment <var>index</var>.</p>
+
+           </li><li>
+
+            <p>If <var>index</var> is less than the number of <i>raw strings</i> in <var>components<sub>a</sub></var> and <var>components<sub>b</sub></var>, jump back
+            to the step labeled <i>final loop</i>.</p>
+
+           </li></ol>
+
+         </li><li>
+
+          <p>Return "equal".</p>
+
+         </li></ol>
+
+       </li><li><p>Let <var>new order</var> be a list of <code id="table-sorting-model:the-tr-element-19"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements consisting of the
+       <code id="table-sorting-model:the-tr-element-20"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements of all the groups in the newly ordered <var>groups</var>, with
+       the <code id="table-sorting-model:the-tr-element-21"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements being in the same order as the groups to which they belong are in
+       <var>groups</var>, and the <code id="table-sorting-model:the-tr-element-22"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements within each such group themselves
+       being ordered in <a href="/breakup/specs/core-algorithms/#tree-order" id="table-sorting-model:tree-order-4">tree order</a>.</p></li><li><p><a href="/breakup/specs/core-algorithms/#concept-node-remove" id="table-sorting-model:concept-node-remove">Remove</a> all the <code id="table-sorting-model:the-tr-element-23"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements in <var>new order</var> from their parents, in <a href="/breakup/specs/core-algorithms/#tree-order" id="table-sorting-model:tree-order-5">tree order</a>.</p></li><li><p><a href="/breakup/specs/core-algorithms/#concept-node-insert" id="table-sorting-model:concept-node-insert">Insert</a> all the <code id="table-sorting-model:the-tr-element-24"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements in <var>new order</var> into the DOM at the location of <var>insertion point</var>, in
+       the order these elements are found in <var>new order</var>.</p></li><li><p>Remove <var>insertion point</var> from the DOM.</p></li></ol>
+
+     </li><li><p><i>Increment loop</i>: If there are no <code id="table-sorting-model:the-tr-element-25"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> or <code id="table-sorting-model:the-tbody-element-5"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> children of
+     <var>table</var> that are later siblings of the element pointed to by <var>row
+     collection cursor</var>, then jump to the step labeled <i>end</i> below.</p></li><li><p>Let <var>row collection cursor</var> point to the next <code id="table-sorting-model:the-tr-element-26"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> or
+     <code id="table-sorting-model:the-tbody-element-6"><a href="/breakup/specs/html-tables/#the-tbody-element">tbody</a></code> child of <var>table</var> that is a later sibling of the element
+     pointed to by <var>row collection cursor</var>.</p></li><li><p>Jump back to the step labeled <i>row loop</i> above.</p></li></ol>
+
+   </li><li><p><i>End</i>: Set <var>table</var>'s <a href="/breakup/specs/sortable-tables/#currently-sorting-flag" id="table-sorting-model:currently-sorting-flag-3">currently-sorting flag</a> to
+   false.</p></li></ol>
+
+  <p>When a user agent is to <dfn id="parsing-the-sort-key">parse the sort key</dfn> <var>value</var>, it must run the following steps. These return a tuple consisting of a list
+  of <var>n</var> <i>numbers</i>, a list of <var>n</var> <i>number strings</i>, a
+  list of <var>n</var>+1 <i>non-numeric strings</i>, and a list of 2<var>n</var>+1
+  <i>raw strings</i>, respectively, for any non-negative integer value of <var>n</var> (zero or
+  more).</p>
+
+  <ol><li>
+    <p>Let <var>raw strings</var> be a list of strings initially containing just one entry, an empty string.</p>
+   </li><li>
+    <p>Let <var>negatives prejudiced</var> be false.</p>
+    <p>Let <var>decimals prejudiced</var> be false.</p>
+    <p>Let <var>exponents prejudiced</var> be false.</p>
+   </li><li>
+    <p>Let <var>buffer</var> be the empty string.</p>
+    <p>Let <var>index</var> be zero.</p>
+    <p>Let <dfn id="sort-parser-mode"><var>mode</var></dfn> be "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-separator" id="table-sorting-model:sort-parser-mode:-separator">separator</a>".</p>
+
+    <p>When a subsequent step in this algorithm says to <dfn id="sort-parser-push-the-buffer">push the buffer</dfn>, the user agent must run the following substeps:</p>
+
+    <ol><li><p>Add an entry to <var>raw strings</var> that consists of the value of <var>buffer</var>.</p></li><li><p>Add an entry to <var>raw strings</var> that is the empty string.</p></li><li><p>Decrement <var>index</var> by one.</p></li><li><p>Set <var id="table-sorting-model:sort-parser-mode"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-separator" id="table-sorting-model:sort-parser-mode:-separator-2">separator</a>".</p></li></ol>
+
+   </li><li>
+    <p>Let <var>checkpoint buffer</var> be the empty string.</p> 
+    <p>Let <var>checkpoint index</var> be zero.</p> 
+
+    <p>When a subsequent step in this algorithm says to <dfn id="sort-parser-checkpoint">checkpoint</dfn>, the user agent must run the following substeps:</p>
+
+    <ol><li><p>Set the <var>checkpoint buffer</var> to the value of <var>buffer</var>.</p>
+     </li><li><p>Set the <var>checkpoint index</var> to the value of <var>index</var>.</p>
+    </li></ol>
+
+    <p>When a subsequent step in this algorithm says to <dfn id="sort-parser-push-the-checkpoint">push the checkpoint</dfn>, the user agent must run the following substeps:</p>
+
+    <ol><li><p>Add an entry to <var>raw strings</var> that consists of the value of <var>checkpoint buffer</var>.</p></li><li><p>Add an entry to <var>raw strings</var> that is the empty string.</p></li><li><p>Decrement <var>index</var> by one.</p></li><li><p>Set <var id="table-sorting-model:sort-parser-mode-2"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-separator" id="table-sorting-model:sort-parser-mode:-separator-3">separator</a>".</p></li></ol>
+
+   </li><li>
+
+    <p>Run through the following steps repeatedly until the condition in the last step is met.</p>
+
+    <ol><li>
+
+      <p><i>Top of loop</i>: If <var>index</var> is equal to or greater than the number of
+      characters in <var>value</var>, let <var>c</var> be EOF. Otherwise, let <var>c</var> be the <var>index</var>th character in <var>value</var>.</p>
+
+     </li><li>
+
+      <p>Run the appropriate steps from the following list:</p>
+
+      <dl class="switch"><dt>If <var id="table-sorting-model:sort-parser-mode-3"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-separator">separator</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a <a href="/breakup/specs/core-algorithms/#space-character" id="table-sorting-model:space-character">space character</a></dt><dd>
+          <p>Set <var>negatives prejudiced</var> to false.</p>
+          <p>Set <var>decimals prejudiced</var> to false.</p>
+          <p>Set <var>exponents prejudiced</var> to false.</p>
+          <p>Append <var>c</var> to the last entry in <var>raw strings</var>.</p>
+         </dd><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-) and <var>negatives prejudiced</var> is false</dt><dd>
+          <p>Set <var>buffer</var> to the value of <var>c</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-4"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-negative" id="table-sorting-model:sort-parser-mode:-negative">negative</a>".</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.) and <var>decimals prejudiced</var> is false</dt><dd>
+          <p>Set <var>buffer</var> to the value of <var>c</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-5"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-leading-decimal" id="table-sorting-model:sort-parser-mode:-leading-decimal">leading-decimal</a>".</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits">ASCII digit</a></dt><dd>
+          <p>Set <var>buffer</var> to the value of <var>c</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-6"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-integral" id="table-sorting-model:sort-parser-mode:-integral">integral</a>".</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#uppercase-ascii-letters" id="table-sorting-model:uppercase-ascii-letters">uppercase ASCII letter</a> or a <a href="/breakup/specs/core-algorithms/#lowercase-ascii-letters" id="table-sorting-model:lowercase-ascii-letters">lowercase ASCII letter</a></dt><dd>
+          <p>Set <var>exponents prejudiced</var> to true.</p>
+          <p>Append <var>c</var> to the last entry in <var>raw strings</var>.</p>
+         </dd><dt>If <var>c</var> is EOF</dt><dd>
+          <p>Do nothing.</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p>Append <var>c</var> to the last entry in <var>raw strings</var>.</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-7"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-negative">negative</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-)</dt><dd>
+          <p>Set <var>negatives prejudiced</var> to true.</p>
+          <p>Append <var>buffer</var> to the last entry in <var>raw strings</var>.</p>
+          <p>Append <var>c</var> to the last entry in <var>raw strings</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-8"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-separator" id="table-sorting-model:sort-parser-mode:-separator-4">separator</a>".</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.) and <var>decimals prejudiced</var> is false</dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-9"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-leading-decimal" id="table-sorting-model:sort-parser-mode:-leading-decimal-2">leading-decimal</a>".</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-2">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-10"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-integral" id="table-sorting-model:sort-parser-mode:-integral-2">integral</a>".</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p>Append <var>buffer</var> to the last entry in <var>raw strings</var>.</p>
+          <p>Decrement <var>index</var> by one.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-11"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-separator" id="table-sorting-model:sort-parser-mode:-separator-5">separator</a>".</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-12"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-integral">integral</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-)</dt><dd>
+          <p>Set <var>negatives prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer">Push the buffer</a>.</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.) and <var>decimals prejudiced</var> is false</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-checkpoint" id="table-sorting-model:sort-parser-checkpoint">Checkpoint</a>.</p>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-13"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-decimal" id="table-sorting-model:sort-parser-mode:-decimal">decimal</a>".</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-3">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to the last entry in <var>raw strings</var>.</p>
+         </dd><dt>If <var>c</var> is a U+0045 LATIN CAPITAL LETTER E character or a U+0065 LATIN SMALL LETTER E character and <var>exponents prejudiced</var> is false</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-checkpoint" id="table-sorting-model:sort-parser-checkpoint-2">Checkpoint</a>.</p>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-14"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-exponent" id="table-sorting-model:sort-parser-mode:-exponent">exponent</a>".</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer-2">Push the buffer</a>.</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-15"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-leading-decimal">leading-decimal</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-4">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-16"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-decimal" id="table-sorting-model:sort-parser-mode:-decimal-2">decimal</a>".</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p>Append <var>buffer</var> to the last entry in <var>raw strings</var>.</p>
+          <p>Decrement <var>index</var> by one.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-17"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-separator" id="table-sorting-model:sort-parser-mode:-separator-6">separator</a>".</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-18"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-decimal">decimal</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-)</dt><dd>
+          <p>Set <var>negatives prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer-3">Push the buffer</a>.</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.) and any of the characters in <var>value</var> past the <var>index</var>th character are <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-5">ASCII digits</a></dt><dd>
+          <p>Set <var>decimals prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint">Push the checkpoint</a>.</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.) and none of the characters in <var>value</var> past the <var>index</var>th character are <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-6">ASCII digits</a></dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer-4">Push the buffer</a>.</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-7">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+         </dd><dt>If <var>c</var> is a U+0045 LATIN CAPITAL LETTER E character or a U+0065 LATIN SMALL LETTER E character and <var>exponents prejudiced</var> is false</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-checkpoint" id="table-sorting-model:sort-parser-checkpoint-3">Checkpoint</a>.</p>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-19"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-exponent" id="table-sorting-model:sort-parser-mode:-exponent-2">exponent</a>".</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer-5">Push the buffer</a>.</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-20"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-exponent">exponent</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-) and <var>negatives prejudiced</var> is false</dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-21"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-exponent-negative" id="table-sorting-model:sort-parser-mode:-exponent-negative">exponent-negative</a>".</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.)</dt><dd>
+          <p>Set <var>decimals prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-2">Push the checkpoint</a>.</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-8">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-22"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-exponent-number" id="table-sorting-model:sort-parser-mode:-exponent-number">exponent-number</a>".</p>
+         </dd><dt>If <var>c</var> is a U+0045 LATIN CAPITAL LETTER E character or a U+0065 LATIN SMALL LETTER E character</dt><dd>
+          <p>Set <var>exponents prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-3">Push the checkpoint</a>.</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-4">Push the checkpoint</a>.</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-23"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-exponent-negative">exponent-negative</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-)</dt><dd>
+          <p>Set <var>negatives prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-5">Push the checkpoint</a>.</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.)</dt><dd>
+          <p>Set <var>decimals prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-6">Push the checkpoint</a>.</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-9">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+          <p>Set <var id="table-sorting-model:sort-parser-mode-24"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> to "<a href="/breakup/specs/sortable-tables/#sort-parser-mode:-exponent-negative-number" id="table-sorting-model:sort-parser-mode:-exponent-negative-number">exponent-negative-number</a>".</p>
+         </dd><dt>If <var>c</var> is a U+0045 LATIN CAPITAL LETTER E character or a U+0065 LATIN SMALL LETTER E character</dt><dd>
+          <p>Set <var>exponents prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-7">Push the checkpoint</a>.</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-8">Push the checkpoint</a>.</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-25"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-exponent-number">exponent-number</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-)</dt><dd>
+          <p>Set <var>negatives prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer-6">Push the buffer</a>.</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.)</dt><dd>
+          <p>Set <var>decimals prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-9">Push the checkpoint</a>.</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-10">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+         </dd><dt>If <var>c</var> is a U+0045 LATIN CAPITAL LETTER E character or a U+0065 LATIN SMALL LETTER E character</dt><dd>
+          <p>Set <var>exponents prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-10">Push the checkpoint</a>.</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer-7">Push the buffer</a>.</p>
+         </dd></dl>
+       </dd><dt>If <var id="table-sorting-model:sort-parser-mode-26"><a href="/breakup/specs/sortable-tables/#sort-parser-mode">mode</a></var> is "<dfn id="sort-parser-mode:-exponent-negative-number">exponent-negative-number</dfn>"</dt><dd>
+        <p>Run the appropriate substeps from the following list:</p>
+        <dl class="switch"><dt>If <var>c</var> is a U+002D HYPHEN-MINUS character (-)</dt><dd>
+          <p>Set <var>negatives prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-11">Push the checkpoint</a>.</p>
+         </dd><dt>If <var>c</var> is a U+002E FULL STOP character (.)</dt><dd>
+          <p>Set <var>decimals prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-12">Push the checkpoint</a>.</p>
+         </dd><dt>If <var>c</var> is an <a href="/breakup/specs/core-algorithms/#ascii-digits" id="table-sorting-model:ascii-digits-11">ASCII digit</a></dt><dd>
+          <p>Append <var>c</var> to <var>buffer</var>.</p>
+         </dd><dt>If <var>c</var> is a U+0045 LATIN CAPITAL LETTER E character or a U+0065 LATIN SMALL LETTER E character</dt><dd>
+          <p>Set <var>exponents prejudiced</var> to true.</p>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-checkpoint" id="table-sorting-model:sort-parser-push-the-checkpoint-13">Push the checkpoint</a>.</p>
+         </dd><dt>Otherwise</dt><dd>
+          <p><a href="/breakup/specs/sortable-tables/#sort-parser-push-the-buffer" id="table-sorting-model:sort-parser-push-the-buffer-8">Push the buffer</a>.</p>
+         </dd></dl>
+       </dd></dl>
+
+     </li><li>
+
+      <p>Increment <var>index</var> by one.</p>
+
+     </li><li>
+
+      <p>If <var>index</var> is greater than the number of characters in <var>value</var>, stop repeating these substeps and continue along the overall steps.
+      Otherwise, return to the step labeled <i>top of loop</i>.</p>
+
+     </li></ol>
+
+   </li><li>
+    <p>Let <var>numbers</var> be an empty list.</p>
+    <p>Let <var>number strings</var> be an empty list.</p>
+    <p>Let <var>non-numeric strings</var> be an empty list.</p>
+   </li><li>
+
+    <p>For each even-numbered entry in <var>raw strings</var>, in order, starting from the
+    first entry (numbered 0), append an entry to <var>non-numeric strings</var> that
+    consists of the result of <a href="/breakup/specs/sortable-tables/#trimming-and-collapsing" id="table-sorting-model:trimming-and-collapsing">trimming and collapsing</a> the value of the entry.</p>
+
+   </li><li>
+
+    <p>If <var>raw strings</var> has more than one entry, then, for each odd-numbered entry
+    in <var>raw strings</var>, in order, starting from the second entry (numbered 1),
+    append an entry to <var>number strings</var> that consists of the value of the entry,
+    and append an entry to <var>number strings</var> that consists of the result of parsing
+    the value of the entry using the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-floating-point-number-values" id="table-sorting-model:rules-for-parsing-floating-point-number-values">rules for parsing floating-point number
+    values</a>.</p>
+
+   </li><li>
+
+    <p>Return <var>numbers</var>, <var>number strings</var>, <var>non-numeric strings</var>, and <var>raw strings</var> respectively.</p>
+
+   </li></ol>
+
+  <p>When the user agent is required by the step above to perform a <dfn id="locale-specific-string-comparison">locale-specific string
+  comparison</dfn> of two strings <var>a</var> and <var>b</var> in the context of
+  an element <var>e</var>, the user agent must apply the Unicode Collation Algorithm, using
+  the Default Unicode Collation Element Table as customised for the <a href="/breakup/specs/html-attributes/#language" id="table-sorting-model:language">language</a> of the
+  element <var>e</var> in the Common Locale Data Repository, to the strings <var>a</var> and <var>b</var>, ignoring case. If the result of this algorithm places
+  <var>a</var> first, then return "a before b"; if it places <var>b</var> first,
+  then return "b before a"; otherwise, if they compare as equal, then return "equal". [[!UCA]] [[!CLDR]]</p>
+
+  <p>When the user agent is required by the step above to perform a <dfn id="raw-string-comparison">raw string comparison</dfn>
+  of two strings <var>a</var> and <var>b</var>, the user agent must apply the
+  Unicode Collation Algorithm, using the Default Unicode Collation Element Table without
+  customizations, to the strings <var>a</var> and <var>b</var>. If the result of
+  this algorithm places <var>a</var> first, then return "a before b"; if it places <var>b</var> first, then return "b before a"; otherwise, if they compare as equal, then return
+  "equal". [[!UCA]]</p>
+
+  <p>Where the steps above refer to <dfn id="trimming-and-collapsing">trimming and collapsing</dfn> a string <var>value</var>, it means running the following algorithm:</p>
+
+  <ol><li><p><a href="/breakup/specs/core-algorithms/#strip-leading-and-trailing-whitespace" id="table-sorting-model:strip-leading-and-trailing-whitespace">Strip leading and trailing whitespace</a> from <var>value</var>.</p></li><li><p>Replace any sequence of one or more <a href="/breakup/specs/core-algorithms/#space-character" id="table-sorting-model:space-character-2">space characters</a>
+   in <var>value</var> with a single U+0020 SPACE character.</p></li></ol>
+
+  <hr>
+
+  <p>When any of the descendants of a <a href="/breakup/specs/sortable-tables/#sorting-enabled-table-element" id="table-sorting-model:sorting-enabled-table-element-3">sorting-enabled <code>table</code> element</a> change
+  in any way (including attributes changing), and when a <code id="table-sorting-model:the-table-element-14"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element becomes a
+  <a href="/breakup/specs/sortable-tables/#sorting-enabled-table-element" id="table-sorting-model:sorting-enabled-table-element-4">sorting-enabled <code>table</code> element</a>, the <code id="table-sorting-model:the-table-element-15"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element is said to
+  become <dfn id="a-table-with-a-pending-sort">a table with a pending sort</dfn>. When a <code id="table-sorting-model:the-table-element-16"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element becomes <a href="/breakup/specs/sortable-tables/#a-table-with-a-pending-sort" id="table-sorting-model:a-table-with-a-pending-sort">a
+  table with a pending sort</a>, the user agent must <a href="/breakup/specs/browser-dom/#queue-a-microtask" id="table-sorting-model:queue-a-microtask">queue a microtask</a> that applies
+  the <a href="/breakup/specs/sortable-tables/#table-sorting-algorithm" id="table-sorting-model:table-sorting-algorithm">table sorting algorithm</a> to that <code id="table-sorting-model:the-table-element-17"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code>, and then flags the
+  <code id="table-sorting-model:the-table-element-18"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> as no longer being <a href="/breakup/specs/sortable-tables/#a-table-with-a-pending-sort" id="table-sorting-model:a-table-with-a-pending-sort-2">a table with a pending sort</a>.</p>
+
+  <hr>
+
+  <p>When the user agent is to <dfn id="set-the-sort-key">set the sort key</dfn> to a <code id="table-sorting-model:the-th-element-17"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element <var>target</var>, it must run the following algorithm:</p>
+
+  <ol><li><p>Let <var>table</var> be the <code id="table-sorting-model:the-table-element-19"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> of the <a href="/breakup/specs/html-tables/#concept-table" id="table-sorting-model:concept-table-8">table</a> of which <var>target</var> is a header cell.</p></li><li><p>If <code id="table-sorting-model:the-th-element-18"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> is a <a href="/breakup/specs/sortable-tables/#sorting-enabled-th-element" id="table-sorting-model:sorting-enabled-th-element-3">sorting-enabled <code>th</code> element</a> whose
+   <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality-6">column key ordinality</a> is 1, then: if its <a href="/breakup/specs/sortable-tables/#column-sort-direction" id="table-sorting-model:column-sort-direction-4">column sort direction</a> is
+   <i>normal</i>, set that element's <code id="table-sorting-model:attr-th-sorted-11"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute to the
+   string "<code>reversed</code>", otherwise, set it to the empty string; then, abort these
+   steps.</p></li><li><p>Let <var>current headers</var> be the <a href="/breakup/specs/sortable-tables/#sorting-enabled-th-elements-of-the-table-element" id="table-sorting-model:sorting-enabled-th-elements-of-the-table-element-2">sorting-enabled <code>th</code>
+   elements of the <code>table</code> element</a> <var>table</var>, excluding <var>target</var>.</p></li><li><p>Sort <var>current headers</var> by their <code id="table-sorting-model:attr-th-sorted-12"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attributes' <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality-7">column key ordinality</a>, in ascending
+   order, with elements that have the same <a href="/breakup/specs/sortable-tables/#column-key-ordinality" id="table-sorting-model:column-key-ordinality-8">column key ordinality</a> being sorted in
+   <a href="/breakup/specs/core-algorithms/#tree-order" id="table-sorting-model:tree-order-6">tree order</a>.</p></li><li><p>Let <var>level</var> be 2.</p></li><li>
+
+    <p>For each <code id="table-sorting-model:the-th-element-19"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element <var>th</var> in <var>current
+    headers</var>, in order, run the following substeps:</p>
+
+    <ol><li><p>If <var>th</var>'s <code id="table-sorting-model:attr-th-sorted-13"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute's
+     <a href="/breakup/specs/sortable-tables/#column-sort-direction" id="table-sorting-model:column-sort-direction-5">column sort direction</a> is <i>normal</i>, then set <var>th</var>'s <code id="table-sorting-model:attr-th-sorted-14"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute to a <a href="/breakup/specs/core-algorithms/#valid-integer" id="table-sorting-model:valid-integer">valid integer</a> whose value is
+     <var>level</var>. Otherwise, set it to the concatenation of the string "<code>reversed</code>", a U+0020 SPACE character, and a <a href="/breakup/specs/core-algorithms/#valid-integer" id="table-sorting-model:valid-integer-2">valid integer</a> whose
+     value is <var>level</var>.</p>
+
+     </li><li><p>Increment <var>level</var> by 1.</p></li></ol>
+
+   </li><li><p>Set <var>target</var>'s <code id="table-sorting-model:attr-th-sorted-15"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute to
+   the empty string.</p></li></ol>
+
+  <hr>
+
+  <p>The <a href="/breakup/specs/html-interacton-attr/#activation-behaviour" id="table-sorting-model:activation-behaviour">activation behaviour</a> of a <a href="/breakup/specs/sortable-tables/#sorting-interface-th-element" id="table-sorting-model:sorting-interface-th-element">sorting interface <code>th</code>
+  element</a> is to <a href="/breakup/specs/sortable-tables/#set-the-sort-key" id="table-sorting-model:set-the-sort-key">set the sort key</a> to the <code id="table-sorting-model:the-th-element-20"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element.</p>
+
+  <p class="note">The <code id="table-sorting-model:the-table-element-20"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> will be sorted the next time the user agent <a href="/breakup/specs/browser-dom/#perform-a-microtask-checkpoint" id="table-sorting-model:perform-a-microtask-checkpoint">performs a microtask checkpoint</a>.</p>
+
+  
+
+  <dl class="domintro"><dt><var>th</var> . <code id="table-sorting-model:dom-th-sort"><a href="/breakup/specs/sortable-tables/#dom-th-sort">sort</a></code>()</dt><dd>
+
+    <p>Act as if the user had indicated that this was to be the new primary sort column.</p>
+
+    <p>The <code id="table-sorting-model:the-table-element-21"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> won't actually be sorted until the script terminates.</p>
+
+   </dd><dt><var>table</var> . <code id="table-sorting-model:dom-table-stopsorting"><a href="/breakup/specs/sortable-tables/#dom-table-stopsorting">stopSorting</a></code>()</dt><dd>
+
+    <p>Removes all the <code id="table-sorting-model:attr-th-sorted-16"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attributes that are causing the
+    table to automatically sort its contents, if any.</p>
+
+   </dd></dl>
+
+  
+
+  <p>The <code id="table-sorting-model:the-th-element-21"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element's <dfn id="dom-th-sort"><code>sort()</code></dfn> method, when
+  invoked, must run the following steps:</p>
+
+  <ol><li><p>If the <code id="table-sorting-model:the-th-element-22"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element is not a <a href="/breakup/specs/sortable-tables/#sorting-capable-th-element" id="table-sorting-model:sorting-capable-th-element-7">sorting-capable <code>th</code>
+   element</a>, then abort these steps.</p></li><li>
+
+    <p><a href="/breakup/specs/sortable-tables/#set-the-sort-key" id="table-sorting-model:set-the-sort-key-2">Set the sort key</a> to the <code id="table-sorting-model:the-th-element-23"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element.</p>
+
+    <p class="note">The <code id="table-sorting-model:the-table-element-22"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> will be sorted the next time the user agent <a href="/breakup/specs/browser-dom/#perform-a-microtask-checkpoint" id="table-sorting-model:perform-a-microtask-checkpoint-2">performs a microtask checkpoint</a>.</p>
+
+   </li></ol>
+
+
+  <p>The <code id="table-sorting-model:the-table-element-23"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code> element's <dfn id="dom-table-stopsorting"><code>stopSorting()</code></dfn> method, when invoked, must remove
+  the <code id="table-sorting-model:attr-th-sorted-17"><a href="/breakup/specs/sortable-tables/#attr-th-sorted">sorted</a></code> attribute of all the <a href="/breakup/specs/sortable-tables/#sorting-enabled-th-elements-of-the-table-element" id="table-sorting-model:sorting-enabled-th-elements-of-the-table-element-3">sorting-enabled
+  <code>th</code> elements of the table element</a> on which the method was invoked.</p></section></body></html>
