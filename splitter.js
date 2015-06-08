@@ -32,8 +32,8 @@ function makeDoc (data, cb) {
 }
 
 function moveOver ($el, doc) {
-    var $newEl = $el.clone();
-    var el = doc.importNode($newEl.get(0), true);
+    var $newEl = $el.clone()
+    ,   el = doc.importNode($newEl.get(0), true);
     doc.body.appendChild(el);
     $el.remove();
 }
@@ -63,7 +63,7 @@ jsdom.env(
             splits.push({ title: spec, abstract: config[spec].abstract });
             config[spec].content.forEach(function (id) {
                 // this assumes that all non-strings are instructions to unwrap, may be true, might not
-                var $secs = (typeof id === "string") ? section(id) : section(id).find("> section");
+                var $secs = (typeof id === "string") ? section(id) : section(id.id).find("> section");
                 $secs.each(function () {
                     var $s = $(this);
                     $s.find("[id]")
@@ -92,9 +92,10 @@ jsdom.env(
                     makeDoc(data, function (err, doc) {
                         if (err) return console.error(err);
                         config[spec].content.forEach(function (id) {
+                            
                             if (typeof id === "string") moveOver(section(id), doc);
                             else if (id.unwrap) {
-                                section(id).find("> section")
+                                section(id.id).find("> section")
                                             .each(function () {
                                                 moveOver($(this), doc);
                                             });
@@ -108,6 +109,11 @@ jsdom.env(
                         //      premap references to know which are normative
                         //      replace them
                         //      use a template for the whole doc
+                        //      remove hN numbers
+                        //      make all hN h2
+                        //      escape things that look like references (typically in WebIDL)
+                        //      make WebIDL work
+                        //      move ID to <section>
                         // copy over the dependencies
 
                         // save it
@@ -130,7 +136,7 @@ jsdom.env(
         
         // save an index pointing to all of the above
         var specList = splits.map(function (s) {
-            return "<dt>" + s.title + "</dt>\n<dd>" + s.abstract + "</dd>";
+            return "<dt><a href='./" + s.title + "/'>" + s.title + "</a></dt>\n<dd>" + s.abstract + "</dd>";
         }).join("\n");
         fs.writeFileSync(jn(options.out, "index.html"), tmpl("index", { specs: specList }), { encoding: "utf8" });
     }
