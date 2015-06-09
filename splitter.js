@@ -99,7 +99,7 @@ jsdom.env(
 
         // create a mapping of all IDs and links based on which document they end up in
         for (var spec in config.split) {
-            splits.push({ title: spec, abstract: config.split[spec].abstract });
+            splits.push({ link: spec, title: config.split[spec].title, abstract: config.split[spec].abstract });
             config.split[spec].content.forEach(function (id) {
                 // this assumes that all non-strings are instructions to unwrap, may be true, might not
                 var $secs = (typeof id === "string") ? section(id) : section(id.id).find("> section");
@@ -222,7 +222,7 @@ jsdom.env(
         
         // save an index pointing to all of the above
         var specList = splits.map(function (s) {
-            return "<dt><a href='./" + s.title + "/'>" + s.title + "</a></dt>\n<dd>" + s.abstract + "</dd>";
+            return "<dt><a href='./" + s.link + "/'>" + s.title + "</a></dt>\n<dd>" + s.abstract + "</dd>";
         }).join("\n");
         fs.writeFileSync(jn(options.out, "index.html"), tmpl("index", { specs: specList }), { encoding: "utf8" });
     }
