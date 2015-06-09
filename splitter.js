@@ -192,8 +192,19 @@ jsdom.env(
                             ;
                         });
 
-                        // XXX
-                        // copy over the dependencies
+                        // copy over the dependencies (this does not include demos, styles, fonts)
+                        console.log("\t- Copying images");
+                        var depends = {};
+                        $doc("img[src]").each(function () { depends[$(this).attr("src")] = true; });
+                        for (var src in depends) {
+                            console.log("\t  # copying " + src);
+                            var target = jn(options.out, spec, src)
+                            ,   orig = jn(__dirname, "source", src)
+                            ,   targetDir = pth.dirname(target)
+                            ;
+                            fs.mkdirpSync(targetDir);
+                            fs.copySync(orig, target);
+                        }
 
                         // save it
                         console.log("\t- Saving the document");
