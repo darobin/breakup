@@ -3447,8 +3447,8 @@
   The same <code id="reflecting-content-attributes-in-idl-attributes:domtokenlist-3"><a href="/breakup/specs/core-algorithms/#domtokenlist">DOMTokenList</a></code> or <code id="reflecting-content-attributes-in-idl-attributes:domsettabletokenlist-3"><a href="/breakup/specs/core-algorithms/#domsettabletokenlist">DOMSettableTokenList</a></code> object must be returned
   every time for each attribute.</p>
 
-  <p>If a reflecting IDL attribute has the type <code id="reflecting-content-attributes-in-idl-attributes:htmlelement"><a href="#htmlelement">HTMLElement</a></code>, or an interface that
-  descends from <code id="reflecting-content-attributes-in-idl-attributes:htmlelement-2"><a href="#htmlelement">HTMLElement</a></code>, then, on getting, it must run the following algorithm
+  <p>If a reflecting IDL attribute has the type <code id="reflecting-content-attributes-in-idl-attributes:htmlelement"><a href="/breakup/specs/html-scripting/#htmlelement">HTMLElement</a></code>, or an interface that
+  descends from <code id="reflecting-content-attributes-in-idl-attributes:htmlelement-2"><a href="/breakup/specs/html-scripting/#htmlelement">HTMLElement</a></code>, then, on getting, it must run the following algorithm
   (stopping at the first point where a value is returned):</p>
 
   <ol><li>If the corresponding content attribute is absent, then the IDL attribute must return
@@ -3477,7 +3477,7 @@
 
   <section><h2>The <code id="the-htmlallcollection-interface:htmlallcollection"><a href="/breakup/specs/core-algorithms/#htmlallcollection">HTMLAllCollection</a></code> interface</h2>
 
-  <p>The <code id="the-htmlallcollection-interface:htmlallcollection-2"><a href="/breakup/specs/core-algorithms/#htmlallcollection">HTMLAllCollection</a></code> interface is used for the legacy <code id="the-htmlallcollection-interface:dom-document-all"><a href="#dom-document-all">document.all</a></code> attribute. It operates similarly to
+  <p>The <code id="the-htmlallcollection-interface:htmlallcollection-2"><a href="/breakup/specs/core-algorithms/#htmlallcollection">HTMLAllCollection</a></code> interface is used for the legacy <code id="the-htmlallcollection-interface:dom-document-all"><a href="/breakup/specs/html-obsolete/#dom-document-all">document.all</a></code> attribute. It operates similarly to
   <code id="the-htmlallcollection-interface:htmlcollection"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code>; the main differences are that its <code id="the-htmlallcollection-interface:dom-htmlallcollection-nameditem"><a href="/breakup/specs/core-algorithms/#dom-htmlallcollection-nameditem">namedItem()</a></code> method returns an
   <code id="the-htmlallcollection-interface:htmlcollection-2"><a href="/breakup/specs/core-algorithms/#htmlcollection">HTMLCollection</a></code> object when there are multiple matching elements, and that its <code id="the-htmlallcollection-interface:dom-htmlallcollection-item"><a href="/breakup/specs/core-algorithms/#dom-htmlallcollection-item">item()</a></code> method can be used as a synonym for its <code id="the-htmlallcollection-interface:dom-htmlallcollection-nameditem-2"><a href="/breakup/specs/core-algorithms/#dom-htmlallcollection-nameditem">namedItem()</a></code> method.</p>
 
@@ -3519,12 +3519,12 @@
   
   <p>The following elements are <dfn id="all-named-elements">"all"-named elements</dfn>:
    <code id="the-htmlallcollection-interface:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, 
-   <code id="the-htmlallcollection-interface:the-applet-element"><a href="#the-applet-element">applet</a></code>,
+   <code id="the-htmlallcollection-interface:the-applet-element"><a href="/breakup/specs/html-obsolete/#the-applet-element">applet</a></code>,
    <code id="the-htmlallcollection-interface:the-button-element-2"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code>, 
    <code id="the-htmlallcollection-interface:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
    <code id="the-htmlallcollection-interface:the-form-element-2"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
-   <code id="the-htmlallcollection-interface:frame"><a href="#frame">frame</a></code>,
-   <code id="the-htmlallcollection-interface:frameset"><a href="#frameset">frameset</a></code>,
+   <code id="the-htmlallcollection-interface:frame"><a href="/breakup/specs/html-obsolete/#frame">frame</a></code>,
+   <code id="the-htmlallcollection-interface:frameset"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code>,
    <code id="the-htmlallcollection-interface:the-iframe-element-2"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, 
    <code id="the-htmlallcollection-interface:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>,
    <code id="the-htmlallcollection-interface:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code>,
@@ -3656,7 +3656,7 @@ interface <dfn id="radionodelist">RadioNodeList</dfn> : <a href="/breakup/specs/
   attribute unsigned long <a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-length" id="the-htmloptionscollection-interface:dom-htmloptionscollection-length">length</a>; // shadows inherited length
   <a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-nameditem" id="the-htmloptionscollection-interface:dom-htmloptionscollection-nameditem">legacycaller</a> <a href="/breakup/specs/html-forms/#htmloptionelement" id="the-htmloptionscollection-interface:htmloptionelement">HTMLOptionElement</a>? (DOMString name);
   <a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-setter" id="the-htmloptionscollection-interface:dom-htmloptionscollection-setter">setter creator</a> void (unsigned long index, <a href="/breakup/specs/html-forms/#htmloptionelement" id="the-htmloptionscollection-interface:htmloptionelement-2">HTMLOptionElement</a>? option);
-  void <a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-add" id="the-htmloptionscollection-interface:dom-htmloptionscollection-add">add</a>((<a href="/breakup/specs/html-forms/#htmloptionelement" id="the-htmloptionscollection-interface:htmloptionelement-3">HTMLOptionElement</a> or <a href="/breakup/specs/html-forms/#htmloptgroupelement" id="the-htmloptionscollection-interface:htmloptgroupelement">HTMLOptGroupElement</a>) element, optional (<a href="#htmlelement" id="the-htmloptionscollection-interface:htmlelement">HTMLElement</a> or long)? before = null);
+  void <a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-add" id="the-htmloptionscollection-interface:dom-htmloptionscollection-add">add</a>((<a href="/breakup/specs/html-forms/#htmloptionelement" id="the-htmloptionscollection-interface:htmloptionelement-3">HTMLOptionElement</a> or <a href="/breakup/specs/html-forms/#htmloptgroupelement" id="the-htmloptionscollection-interface:htmloptgroupelement">HTMLOptGroupElement</a>) element, optional (<a href="/breakup/specs/html-scripting/#htmlelement" id="the-htmloptionscollection-interface:htmlelement">HTMLElement</a> or long)? before = null);
   void <a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-remove" id="the-htmloptionscollection-interface:dom-htmloptionscollection-remove">remove</a>(long index);
   attribute long <a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-selectedindex" id="the-htmloptionscollection-interface:dom-htmloptionscollection-selectedindex">selectedIndex</a>;
 };</pre>
@@ -3668,7 +3668,7 @@ interface <dfn id="radionodelist">RadioNodeList</dfn> : <a href="/breakup/specs/
    </dd><dt><var>element</var> = <var>collection</var> . <code id="the-htmloptionscollection-interface:dom-htmlcollection-item-2"><a href="/breakup/specs/core-algorithms/#dom-htmlcollection-item">item</a></code>(<var>index</var>)</dt><dt><var>collection</var>[<var>index</var>]</dt><dd>
     <p>Returns the item with index <var>index</var> from the collection. The items are sorted in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-htmloptionscollection-interface:tree-order">tree order</a>.</p>
    </dd><dt><var>element</var> = <var>collection</var> . <code id="the-htmloptionscollection-interface:dom-htmloptionscollection-nameditem-2"><a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-nameditem">namedItem</a></code>(<var>name</var>)</dt><dt><var>nodeList</var> = <var>collection</var> . <code id="the-htmloptionscollection-interface:dom-htmloptionscollection-nameditem-3"><a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-nameditem">namedItem</a></code>(<var>name</var>)</dt><dt><var>collection</var>[<var>name</var>]</dt><dt><var>collection</var>(<var>name</var>)</dt><dd>
-    <p>Returns the item with <a href="/breakup/specs/core-algorithms/#concept-id" id="the-htmloptionscollection-interface:concept-id">ID</a> or <code id="the-htmloptionscollection-interface:attr-option-name"><a href="#attr-option-name">name</a></code> <var>name</var> from the collection.</p>
+    <p>Returns the item with <a href="/breakup/specs/core-algorithms/#concept-id" id="the-htmloptionscollection-interface:concept-id">ID</a> or <code id="the-htmloptionscollection-interface:attr-option-name"><a href="/breakup/specs/html-obsolete/#attr-option-name">name</a></code> <var>name</var> from the collection.</p>
     <p>If there are multiple matching items, then the first is returned.</p>
    </dd><dt><var>collection</var> . <code id="the-htmloptionscollection-interface:dom-htmloptionscollection-add-2"><a href="/breakup/specs/core-algorithms/#dom-htmloptionscollection-add">add</a></code>(<var>element</var> [, <var>before</var> ] )</dt><dd>
     <p>Inserts <var>element</var> before the node given by <var>before</var>.</p>
@@ -3705,9 +3705,9 @@ interface <dfn id="radionodelist">RadioNodeList</dfn> : <a href="/breakup/specs/
   or adds any <code id="the-htmloptionscollection-interface:the-optgroup-element"><a href="/breakup/specs/html-forms/#the-optgroup-element">optgroup</a></code> elements, and never adds new children to existing
   <code id="the-htmloptionscollection-interface:the-optgroup-element-2"><a href="/breakup/specs/html-forms/#the-optgroup-element">optgroup</a></code> elements (though it can remove children from them).</p>
 
-  <p>The <a href="/breakup/specs/core-algorithms/#supported-property-names" id="the-htmloptionscollection-interface:supported-property-names">supported property names</a> consist of the non-empty values of all the <code id="the-htmloptionscollection-interface:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> and <code id="the-htmloptionscollection-interface:attr-option-name-2"><a href="#attr-option-name">name</a></code> attributes of all the
+  <p>The <a href="/breakup/specs/core-algorithms/#supported-property-names" id="the-htmloptionscollection-interface:supported-property-names">supported property names</a> consist of the non-empty values of all the <code id="the-htmloptionscollection-interface:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> and <code id="the-htmloptionscollection-interface:attr-option-name-2"><a href="/breakup/specs/html-obsolete/#attr-option-name">name</a></code> attributes of all the
   elements <a href="/breakup/specs/core-algorithms/#represented-by-the-collection" id="the-htmloptionscollection-interface:represented-by-the-collection-3">represented by the collection</a>, in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-htmloptionscollection-interface:tree-order-2">tree order</a>, ignoring later
-  duplicates, with the <code id="the-htmloptionscollection-interface:the-id-attribute-2"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> of an element preceding its <code id="the-htmloptionscollection-interface:attr-option-name-3"><a href="#attr-option-name">name</a></code> if it contributes both, they differ from each other, and neither is
+  duplicates, with the <code id="the-htmloptionscollection-interface:the-id-attribute-2"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> of an element preceding its <code id="the-htmloptionscollection-interface:attr-option-name-3"><a href="/breakup/specs/html-obsolete/#attr-option-name">name</a></code> if it contributes both, they differ from each other, and neither is
   the duplicate of an earlier entry.</p>
 
   <p>The properties exposed in this way must be <a href="/breakup/specs/core-algorithms/#unenumerable" id="the-htmloptionscollection-interface:unenumerable">unenumerable</a>.</p>

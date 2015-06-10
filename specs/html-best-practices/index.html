@@ -32,7 +32,640 @@
     </section>
   
 
-<section><h2>Common idioms without dedicated elements</h2>
+<section><h2>Semantics</h2>
+
+  <p>Elements, attributes, and attribute values in HTML are defined (by this specification) to have
+  certain meanings (semantics). For example, the <code id="semantics-2:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> element represents an ordered list,
+  and the <code id="semantics-2:attr-lang"><a href="/breakup/specs/html-attributes/#attr-lang">lang</a></code> attribute represents the language of the content.</p>
+
+  <p>These definitions allow HTML processors, such as Web browsers or search engines, to present and
+  use documents and applications in a wide variety of contexts that the author might not have
+  considered.</p>
+
+  <div class="example">
+
+   <p>As a simple example, consider a Web page written by an author who only considered desktop
+   computer Web browsers:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;My Page&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;h1&gt;Welcome to my page&lt;/h1&gt;
+  &lt;p&gt;I like cars and lorries and have a big Jeep!&lt;/p&gt;
+  &lt;h2&gt;Where I live&lt;/h2&gt;
+  &lt;p&gt;I live in a small hut on a mountain!&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+   <p>Because HTML conveys <em>meaning</em>, rather than presentation, the same
+   page can also be used by a small browser on a mobile phone, without any change to the page.
+   Instead of headings being in large letters as on the desktop, for example, the browser on the
+   mobile phone might use the same size text for the whole the page, but with the headings in
+   bold.</p>
+
+   <p>But it goes further than just differences in screen size: the same page could equally be used
+   by a blind user using a browser based around speech synthesis, which instead of displaying the
+   page on a screen, reads the page to the user, e.g. using headphones. Instead of large text for
+   the headings, the speech browser might use a different volume or a slower voice.</p>
+
+   <p>That's not all, either. Since the browsers know which parts of the page are the headings, they
+   can create a document outline that the user can use to quickly navigate around the document,
+   using keys for "jump to next heading" or "jump to previous heading". Such features are especially
+   common with speech browsers, where users would otherwise find quickly navigating a page quite
+   difficult.</p>
+
+   <p>Even beyond browsers, software can make use of this information. Search engines can use the
+   headings to more effectively index a page, or to provide quick links to subsections of the page
+   from their results. Tools can use the headings to create a table of contents (that is in fact how
+   this very specification's table of contents is generated).</p>
+
+   <p>This example has focused on headings, but the same principle applies to all of the semantics
+   in HTML.</p>
+
+  </div>
+
+  <p>Authors must not use elements, attributes, or attribute values for purposes other than their
+  appropriate intended semantic purpose, as doing so prevents software from correctly processing the
+  page.</p>
+
+  
+
+  <div class="example">
+
+   <p>The document in this next example is similarly non-conforming, despite
+   being syntactically correct, because the data placed in the cells is clearly
+   not tabular data, and the <code id="semantics-2:the-cite-element"><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code> element mis-used:</p>
+
+   <pre class="bad">&lt;!DOCTYPE HTML&gt;
+&lt;html lang="en-GB"&gt;
+ &lt;head&gt; &lt;title&gt; Demonstration &lt;/title&gt; &lt;/head&gt;
+ &lt;body&gt;
+  &lt;table&gt;
+   &lt;tr&gt; &lt;td&gt; My favourite animal is the cat. &lt;/td&gt; &lt;/tr&gt;
+   &lt;tr&gt;
+    &lt;td&gt;
+     —&lt;a href="http://example.org/~ernest/"&gt;&lt;cite&gt;Ernest&lt;/cite&gt;&lt;/a&gt;,
+     in an essay from 1992
+    &lt;/td&gt;
+   &lt;/tr&gt;
+  &lt;/table&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+   <p>This would make software that relies on these semantics fail: for example,
+   a speech browser that allowed a blind user to navigate tables in the document
+   would report the quote above as a table, confusing the user; similarly, a
+   tool that extracted titles of works from pages would extract "Ernest" as the
+   title of a work, even though it's actually a person's name, not a title.</p>
+
+   <p>A corrected version of this document might be:</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;html lang="en-GB"&gt;
+ &lt;head&gt; &lt;title&gt; Demonstration &lt;/title&gt; &lt;/head&gt;
+ &lt;body&gt;
+  &lt;blockquote&gt;
+   &lt;p&gt; My favourite animal is the cat. &lt;/p&gt;
+  &lt;/blockquote&gt;
+  &lt;p&gt;
+   —&lt;a href="http://example.org/~ernest/"&gt;Ernest&lt;/a&gt;,
+   in an essay from 1992
+  &lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div>
+
+  <p>Authors must not use elements, attributes, or attribute values that are not permitted by this
+  specification or <a href="/breakup/specs/core-algorithms/#other-applicable-specifications" id="semantics-2:other-applicable-specifications">other applicable specifications</a>, as doing so makes it significantly
+  harder for the language to be extended in the future.</p>
+
+  <div class="example">
+
+   <p>In the next example, there is a non-conforming attribute value ("carpet") and a non-conforming
+   attribute ("texture"), which is not permitted by this specification:</p>
+
+   <pre class="bad">&lt;label&gt;Carpet: &lt;input type="carpet" name="c" texture="deep pile"&gt;&lt;/label&gt;</pre>
+
+   <p>Here would be an alternative and correct way to mark this up:</p>
+
+   <pre>&lt;label&gt;Carpet: &lt;input type="text" class="carpet" name="c" data-texture="deep pile"&gt;&lt;/label&gt;</pre>
+
+  </div>
+
+  <p>Through scripting and using other mechanisms, the values of attributes, text, and indeed the
+  entire structure of the document may change dynamically while a user agent is processing it. The
+  semantics of a document at an instant in time are those represented by the state of the document
+  at that instant in time, and the semantics of a document can therefore change over time. User
+  agents must update their presentation of the document as this
+  occurs.</p>
+
+  <p class="example">HTML has a <code id="semantics-2:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code> element that describes a progress bar. If its
+  "value" attribute is dynamically updated by a script, the UA would update the rendering to show
+  the progress changing.</p></section><section><h2>Element definitions</h2>
+
+  <p>Each element in this specification has a definition that includes the following
+  information:</p>
+
+  <dl><dt><dfn id="concept-element-categories">Categories</dfn></dt><dd><p>A list of <a href="/breakup/specs/html-best-practices/#content-categories" id="element-definitions:content-categories">categories</a> to which the element belongs.
+   These are used when defining the <a href="/breakup/specs/html-best-practices/#content-models" id="element-definitions:content-models">content models</a> for each element.</p></dd><dt><dfn id="concept-element-contexts">Contexts in which this element can be used</dfn></dt><dd>
+
+    <p>A <em>non-normative</em> description of where the element can be used. This information is
+    redundant with the content models of elements that allow this one as a child, and is provided
+    only as a convenience.</p>
+
+    <p class="note">For simplicity, only the most specific expectations are listed. For example, an
+    element that is both <a href="/breakup/specs/html-best-practices/#flow-content-2" id="element-definitions:flow-content-2">flow content</a> and <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="element-definitions:phrasing-content-2">phrasing content</a> can be used
+    anywhere that either <a href="/breakup/specs/html-best-practices/#flow-content-2" id="element-definitions:flow-content-2-2">flow content</a> or <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="element-definitions:phrasing-content-2-2">phrasing content</a> is expected, but
+    since anywhere that <a href="/breakup/specs/html-best-practices/#flow-content-2" id="element-definitions:flow-content-2-3">flow content</a> is expected, <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="element-definitions:phrasing-content-2-3">phrasing content</a> is also
+    expected (since all <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="element-definitions:phrasing-content-2-4">phrasing content</a> is <a href="/breakup/specs/html-best-practices/#flow-content-2" id="element-definitions:flow-content-2-4">flow content</a>), only "where
+    <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="element-definitions:phrasing-content-2-5">phrasing content</a> is expected" will be listed.</p>
+
+   </dd><dt><dfn id="concept-element-content-model">Content model</dfn></dt><dd><p>A normative description of what content must be included as children and descendants of
+   the element.</p></dd><dt><dfn id="concept-element-tag-omission">Tag omission in text/html</dfn></dt><dd><p>A <em>non-normative</em> description of whether, in the <code id="element-definitions:text/html"><a href="#text/html">text/html</a></code> syntax, the
+   <a href="/breakup/specs/html-syntax/#syntax-start-tag" id="element-definitions:syntax-start-tag">start</a> and <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="element-definitions:syntax-end-tag">end</a> tags can
+   be omitted. This information is redundant with the normative requirements given in the <a href="/breakup/specs/html-syntax/#syntax-tag-omission" id="element-definitions:syntax-tag-omission">optional tags</a> section, and is provided in the element
+   definitions only as a convenience.</p></dd><dt><dfn id="concept-element-attributes">Content attributes</dfn></dt><dd><p>A normative list of attributes that may be specified on the element (except where
+   otherwise disallowed), along with non-normative descriptions of those attributes. (The content to
+   the left of the dash is normative, the content to the right of the dash is not.)</p></dd><dt><dfn id="concept-element-dom">DOM interface</dfn></dt><dd><p>A normative definition of a DOM interface that such elements must implement.</p></dd></dl>
+
+  <p>This is then followed by a description of what the element <a href="/breakup/specs/html-scripting/#represents" id="element-definitions:represents">represents</a>, along with
+  any additional normative conformance criteria that may apply to authors and implementations. Examples are sometimes also included.</p>
+
+
+  <section><h2>Attributes</h2>
+
+  <p id="attribute-text">Except where otherwise specified, attributes on <a href="/breakup/specs/core-algorithms/#html-elements" id="attributes:html-elements">HTML elements</a>
+  may have any string value, including the empty string. Except where explicitly stated, there is no
+  restriction on what text can be specified in such attributes.</p></section></section><section><h2><dfn>Content models</dfn></h2>
+
+  <p>Each element defined in this specification has a content model: a description of the element's
+  expected <a href="/breakup/specs/html-best-practices/#concept-html-contents" id="content-models:concept-html-contents">contents</a>. An <a href="/breakup/specs/core-algorithms/#html-elements" id="content-models:html-elements">HTML
+  element</a> must have contents that match the requirements described in the element's content
+  model. The <dfn id="concept-html-contents">contents</dfn> of an element are its children in the
+  DOM, except for <code id="content-models:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code> elements, where the children are those in the <a href="/breakup/specs/html-template/#template-contents" id="content-models:template-contents">template
+  contents</a> (a separate <code id="content-models:documentfragment"><a href="/breakup/specs/core-algorithms/#documentfragment">DocumentFragment</a></code> assigned to the element when the element
+  is created).</p>
+
+  <p>The <a href="/breakup/specs/core-algorithms/#space-character" id="content-models:space-character">space characters</a> are always allowed between elements.
+  User agents represent these characters between elements in the source markup as <code id="content-models:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code>
+  nodes in the DOM. Empty
+  <code id="content-models:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes and <code id="content-models:text-3"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes consisting of just sequences of those
+  characters are considered <dfn id="inter-element-whitespace">inter-element whitespace</dfn>.</p>
+
+  <p><a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="content-models:inter-element-whitespace">Inter-element whitespace</a>, comment nodes, and processing instruction nodes must be
+  ignored when establishing whether an element's contents match the element's content model or not,
+  and must be ignored when following algorithms that define document and element semantics.</p>
+
+  <p class="note">Thus, an element <var>A</var> is said to be <i>preceded or followed</i>
+  by a second element <var>B</var> if <var>A</var> and <var>B</var> have
+  the same parent node and there are no other element nodes or <code id="content-models:text-4"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes (other than
+  <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="content-models:inter-element-whitespace-2">inter-element whitespace</a>) between them. Similarly, a node is the <i>only child</i> of
+  an element if that element contains no other nodes other than <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="content-models:inter-element-whitespace-3">inter-element
+  whitespace</a>, comment nodes, and processing instruction nodes.</p>
+
+  <p>Authors must not use <a href="/breakup/specs/core-algorithms/#html-elements" id="content-models:html-elements-2">HTML elements</a> anywhere except where they are explicitly
+  allowed, as defined for each element, or as explicitly required by other specifications. For XML
+  compound documents, these contexts could be inside elements from other namespaces, if those
+  elements are defined as providing the relevant contexts.</p>
+
+  <div class="example">
+   <p>For example, the Atom specification defines a <code>content</code> element. When its
+   <code>type</code> attribute has the value <code>xhtml</code>, the Atom
+   specification requires that it contain a single HTML <code id="content-models:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element. Thus, a
+   <code id="content-models:the-div-element-2"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element is allowed in that context, even though this is not explicitly
+   normatively stated by this specification. [[ATOM]]</p>
+  </div>
+
+  <p>In addition, <a href="/breakup/specs/core-algorithms/#html-elements" id="content-models:html-elements-3">HTML elements</a> may be orphan nodes (i.e. without a parent node).</p>
+
+  <div class="example">
+
+   <p>For example, creating a <code id="content-models:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> element and storing it in a global variable in a
+   script is conforming, even though <code id="content-models:the-td-element-2"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code> elements are otherwise only supposed to be used
+   inside <code id="content-models:the-tr-element"><a href="/breakup/specs/html-tables/#the-tr-element">tr</a></code> elements.</p>
+
+   <pre>var data = {
+  name: "Banana",
+  cell: document.createElement('td'),
+};</pre>
+
+  </div>
+
+
+  <section><h2>The "nothing" content model</h2>
+
+  <p>When an element's content model is <dfn id="concept-content-nothing">nothing</dfn>, the
+  element must contain no <code id="the-nothing-content-model:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes (other than <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="the-nothing-content-model:inter-element-whitespace">inter-element whitespace</a>)
+  and no element nodes.</p>
+
+  <p class="note">Most HTML elements whose content model is "nothing" are also, for convenience,
+  <a href="/breakup/specs/html-syntax/#void-elements" id="the-nothing-content-model:void-elements">void elements</a> (elements that have no <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-nothing-content-model:syntax-end-tag">end tag</a> in
+  the <a href="#syntax">HTML syntax</a>). However, these are entirely separate concepts.</p></section>
+
+
+  <section><h2>Kinds of content</h2>
+
+  <p>Each element in HTML falls into zero or more <dfn id="content-categories">categories</dfn>
+  that group elements with similar characteristics together. The following broad categories are used
+  in this specification:</p>
+
+  <ul class="brief"><li><a href="/breakup/specs/html-best-practices/#metadata-content-2" id="kinds-of-content:metadata-content-2">Metadata content</a></li><li><a href="/breakup/specs/html-best-practices/#flow-content-2" id="kinds-of-content:flow-content-2">Flow content</a></li><li><a href="/breakup/specs/html-best-practices/#sectioning-content-2" id="kinds-of-content:sectioning-content-2">Sectioning content</a></li><li><a href="/breakup/specs/html-best-practices/#heading-content-2" id="kinds-of-content:heading-content-2">Heading content</a></li><li><a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="kinds-of-content:phrasing-content-2">Phrasing content</a></li><li><a href="/breakup/specs/html-best-practices/#embedded-content-category" id="kinds-of-content:embedded-content-category">Embedded content</a></li><li><a href="/breakup/specs/html-best-practices/#interactive-content-2" id="kinds-of-content:interactive-content-2">Interactive content</a></li></ul>
+
+  <p class="note">Some elements also fall into other categories, which are defined in other parts of
+  this specification.</p>
+
+  <p>These categories are related as follows:</p>
+
+  
+  <p></p>
+
+  <p>Sectioning content, heading content, phrasing content, embedded content, and interactive
+  content are all types of flow content. Metadata is sometimes flow content. Metadata and
+  interactive content are sometimes phrasing content. Embedded content is also a type of phrasing
+  content, and sometimes is interactive content.</p>
+
+  <p>Other categories are also used for specific purposes, e.g. form controls are specified using a
+  number of categories to define common requirements. Some elements have unique requirements and do
+  not fit into any particular category.</p>
+
+
+  <section><h2>Metadata content</h2>
+
+  <p><dfn id="metadata-content-2">Metadata content</dfn> is content that sets up the presentation or behaviour of the rest of
+  the content, or that sets up the relationship of the document with other documents, or that
+  conveys other "out of band" information.</p>
+
+  
+  <ul class="brief category-list"><li><code id="metadata-content:the-base-element"><a href="/breakup/specs/html-linking/#the-base-element">base</a></code></li><li><code id="metadata-content:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code></li><li><code id="metadata-content:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code></li><li><code id="metadata-content:the-noscript-element"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code></li><li><code id="metadata-content:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code></li><li><code id="metadata-content:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code></li><li><code id="metadata-content:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></li><li><code id="metadata-content:the-title-element"><a href="/breakup/specs/html-structure/#the-title-element">title</a></code></li></ul>
+
+  <p>Elements from other namespaces whose semantics are primarily metadata-related (e.g. RDF) are
+  also <a href="/breakup/specs/html-best-practices/#metadata-content-2" id="metadata-content:metadata-content-2">metadata content</a>.</p>
+
+  <div class="example">
+
+   <p>Thus, in the XML serialisation, one can use RDF, like this:</p>
+
+   <pre>&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#"&gt;
+ &lt;head&gt;
+  &lt;title&gt;Hedral's Home Page&lt;/title&gt;
+  &lt;r:RDF&gt;
+   &lt;Person xmlns="http://www.w3.org/2000/10/swap/pim/contact#"
+           r:about="http://hedral.example.com/#"&gt;
+    &lt;fullName&gt;Cat Hedral&lt;/fullName&gt;
+    &lt;mailbox r:resource="mailto:hedral@damowmow.com"/&gt;
+    &lt;personalTitle&gt;Sir&lt;/personalTitle&gt;
+   &lt;/Person&gt;
+  &lt;/r:RDF&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;h1&gt;My home page&lt;/h1&gt;
+  &lt;p&gt;I like playing with string, I guess. Sister says squirrels are fun
+  too so sometimes I follow her to play with them.&lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+   <p>This isn't possible in the HTML serialisation, however.</p>
+
+  </div></section>
+
+
+  <section><h2>Flow content</h2>
+
+  <p>Most elements that are used in the body of documents and applications are categorised as
+  <dfn id="flow-content-2">flow content</dfn>.</p>
+
+  
+  <ul class="brief category-list"><li><code id="flow-content:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code></li><li><code id="flow-content:the-abbr-element"><a href="/breakup/specs/html-text/#the-abbr-element">abbr</a></code></li><li><code id="flow-content:the-address-element"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code></li><li><code id="flow-content:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> (if it is a descendant of a <code id="flow-content:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element)</li><li><code id="flow-content:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code></li><li><code id="flow-content:the-aside-element"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code></li><li><code id="flow-content:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code></li><li><code id="flow-content:the-b-element"><a href="/breakup/specs/html-text/#the-b-element">b</a></code></li><li><code id="flow-content:the-bdi-element"><a href="/breakup/specs/html-text/#the-bdi-element">bdi</a></code></li><li><code id="flow-content:the-bdo-element"><a href="/breakup/specs/html-text/#the-bdo-element">bdo</a></code></li><li><code id="flow-content:the-blockquote-element"><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code></li><li><code id="flow-content:the-br-element"><a href="/breakup/specs/html-text/#the-br-element">br</a></code></li><li><code id="flow-content:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code></li><li><code id="flow-content:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code></li><li><code id="flow-content:the-cite-element"><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code></li><li><code id="flow-content:the-code-element"><a href="/breakup/specs/html-text/#the-code-element">code</a></code></li><li><code id="flow-content:the-data-element"><a href="/breakup/specs/html-text/#the-data-element">data</a></code></li><li><code id="flow-content:the-datalist-element"><a href="/breakup/specs/html-forms/#the-datalist-element">datalist</a></code></li><li><code id="flow-content:the-del-element"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code></li><li><code id="flow-content:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code></li><li><code id="flow-content:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code></li><li><code id="flow-content:the-dialog-element"><a href="/breakup/specs/html-ui/#the-dialog-element">dialog</a></code></li><li><code id="flow-content:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code></li><li><code id="flow-content:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code></li><li><code id="flow-content:the-em-element"><a href="/breakup/specs/html-text/#the-em-element">em</a></code></li><li><code id="flow-content:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code></li><li><code id="flow-content:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code></li><li><code id="flow-content:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code></li><li><code id="flow-content:the-footer-element"><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code></li><li><code id="flow-content:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code></li><li><code id="flow-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code></li><li><code id="flow-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-2"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h2</a></code></li><li><code id="flow-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-3"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h3</a></code></li><li><code id="flow-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-4"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h4</a></code></li><li><code id="flow-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-5"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h5</a></code></li><li><code id="flow-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code></li><li><code id="flow-content:the-header-element"><a href="/breakup/specs/html-sectioning/#the-header-element">header</a></code></li><li><code id="flow-content:the-hr-element"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code></li><li><code id="flow-content:the-i-element"><a href="/breakup/specs/html-text/#the-i-element">i</a></code></li><li><code id="flow-content:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code></li><li><code id="flow-content:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code></li><li><code id="flow-content:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code></li><li><code id="flow-content:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code></li><li><code id="flow-content:the-kbd-element"><a href="/breakup/specs/html-text/#the-kbd-element">kbd</a></code></li><li><code id="flow-content:the-keygen-element"><a href="/breakup/specs/html-forms/#the-keygen-element">keygen</a></code></li><li><code id="flow-content:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code></li><li><code id="flow-content:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> (if the <code id="flow-content:names:-the-itemprop-attribute"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop</a></code> attribute is present)</li><li><code id="flow-content:the-main-element"><a href="/breakup/specs/html-sectioning/#the-main-element">main</a></code></li><li><code id="flow-content:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code></li><li><code id="flow-content:the-mark-element"><a href="/breakup/specs/html-text/#the-mark-element">mark</a></code></li><li><code id="flow-content:math"><a href="#math">math</a></code></li><li><code id="flow-content:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code></li><li><code id="flow-content:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> (if the <code id="flow-content:names:-the-itemprop-attribute-2"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop</a></code> attribute is present)</li><li><code id="flow-content:the-meter-element"><a href="/breakup/specs/html-forms/#the-meter-element">meter</a></code></li><li><code id="flow-content:the-nav-element"><a href="/breakup/specs/html-sectioning/#the-nav-element">nav</a></code></li><li><code id="flow-content:the-noscript-element"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code></li><li><code id="flow-content:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code></li><li><code id="flow-content:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code></li><li><code id="flow-content:the-output-element"><a href="/breakup/specs/html-forms/#the-output-element">output</a></code></li><li><code id="flow-content:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code></li><li><code id="flow-content:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code></li><li><code id="flow-content:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code></li><li><code id="flow-content:the-q-element"><a href="/breakup/specs/html-text/#the-q-element">q</a></code></li><li><code id="flow-content:the-ruby-element"><a href="/breakup/specs/html-text/#the-ruby-element">ruby</a></code></li><li><code id="flow-content:the-s-element"><a href="/breakup/specs/html-text/#the-s-element">s</a></code></li><li><code id="flow-content:the-samp-element"><a href="/breakup/specs/html-text/#the-samp-element">samp</a></code></li><li><code id="flow-content:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code></li><li><code id="flow-content:the-section-element"><a href="/breakup/specs/html-sectioning/#the-section-element">section</a></code></li><li><code id="flow-content:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code></li><li><code id="flow-content:the-small-element"><a href="/breakup/specs/html-text/#the-small-element">small</a></code></li><li><code id="flow-content:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code></li><li><code id="flow-content:the-strong-element"><a href="/breakup/specs/html-text/#the-strong-element">strong</a></code></li><li><code id="flow-content:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> (if the <code id="flow-content:attr-style-scoped"><a href="/breakup/specs/html-styling/#attr-style-scoped">scoped</a></code> attribute is present)</li><li><code id="flow-content:the-sub-and-sup-elements"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sub</a></code></li><li><code id="flow-content:the-sub-and-sup-elements-2"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sup</a></code></li><li><code id="flow-content:svg"><a href="#svg">svg</a></code></li><li><code id="flow-content:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code></li><li><code id="flow-content:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></li><li><code id="flow-content:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code></li><li><code id="flow-content:the-time-element"><a href="/breakup/specs/html-text/#the-time-element">time</a></code></li><li><code id="flow-content:the-u-element"><a href="/breakup/specs/html-text/#the-u-element">u</a></code></li><li><code id="flow-content:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code></li><li><code id="flow-content:the-var-element"><a href="/breakup/specs/html-text/#the-var-element">var</a></code></li><li><code id="flow-content:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code></li><li><code id="flow-content:the-wbr-element"><a href="/breakup/specs/html-text/#the-wbr-element">wbr</a></code></li><li><a href="/breakup/specs/html-best-practices/#text-content" id="flow-content:text-content">Text</a></li></ul></section>
+
+
+  <section><h2>Sectioning content</h2>
+
+  <p><dfn id="sectioning-content-2">Sectioning content</dfn> is content that defines the scope of <a href="/breakup/specs/html-best-practices/#heading-content-2" id="sectioning-content:heading-content-2">headings</a> and <a href="/breakup/specs/html-sectioning/#the-footer-element" id="sectioning-content:the-footer-element">footers</a>.</p>
+
+  
+  <ul class="brief category-list"><li><code id="sectioning-content:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code></li><li><code id="sectioning-content:the-aside-element"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code></li><li><code id="sectioning-content:the-nav-element"><a href="/breakup/specs/html-sectioning/#the-nav-element">nav</a></code></li><li><code id="sectioning-content:the-section-element"><a href="/breakup/specs/html-sectioning/#the-section-element">section</a></code></li></ul>
+
+  <p>Each <a href="/breakup/specs/html-best-practices/#sectioning-content-2" id="sectioning-content:sectioning-content-2">sectioning content</a> element potentially has a heading and an
+  <a href="/breakup/specs/html-sectioning/#outline" id="sectioning-content:outline">outline</a>. See the section on <a href="/breakup/specs/html-sectioning/#headings-and-sections" id="sectioning-content:headings-and-sections">headings and sections</a> for further
+  details.</p>
+
+  <p class="note">There are also certain elements that are <a href="/breakup/specs/html-sectioning/#sectioning-root" id="sectioning-content:sectioning-root">sectioning
+  roots</a>. These are distinct from <a href="/breakup/specs/html-best-practices/#sectioning-content-2" id="sectioning-content:sectioning-content-2-2">sectioning content</a>, but they can also have an
+  <a href="/breakup/specs/html-sectioning/#outline" id="sectioning-content:outline-2">outline</a>.</p></section>
+
+
+  <section><h2>Heading content</h2>
+
+  <p><dfn id="heading-content-2">Heading content</dfn> defines the header of a section (whether explicitly marked up using
+  <a href="/breakup/specs/html-best-practices/#sectioning-content-2" id="heading-content:sectioning-content-2">sectioning content</a> elements, or implied by the heading content itself).</p>
+
+  
+  <ul class="brief category-list"><li><code id="heading-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code></li><li><code id="heading-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-2"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h2</a></code></li><li><code id="heading-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-3"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h3</a></code></li><li><code id="heading-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-4"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h4</a></code></li><li><code id="heading-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-5"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h5</a></code></li><li><code id="heading-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code></li></ul></section>
+
+
+  <section><h2>Phrasing content</h2>
+
+  <p><dfn id="phrasing-content-2">Phrasing content</dfn> is the text of the document, as well as elements that mark up that
+  text at the intra-paragraph level. Runs of <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="phrasing-content:phrasing-content-2">phrasing content</a> form <a href="/breakup/specs/html-best-practices/#paragraph" id="phrasing-content:paragraph">paragraphs</a>.</p>
+
+  
+  <ul class="brief category-list"><li><code id="phrasing-content:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code></li><li><code id="phrasing-content:the-abbr-element"><a href="/breakup/specs/html-text/#the-abbr-element">abbr</a></code></li><li><code id="phrasing-content:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code> (if it is a descendant of a <code id="phrasing-content:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> element)</li><li><code id="phrasing-content:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code></li><li><code id="phrasing-content:the-b-element"><a href="/breakup/specs/html-text/#the-b-element">b</a></code></li><li><code id="phrasing-content:the-bdi-element"><a href="/breakup/specs/html-text/#the-bdi-element">bdi</a></code></li><li><code id="phrasing-content:the-bdo-element"><a href="/breakup/specs/html-text/#the-bdo-element">bdo</a></code></li><li><code id="phrasing-content:the-br-element"><a href="/breakup/specs/html-text/#the-br-element">br</a></code></li><li><code id="phrasing-content:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code></li><li><code id="phrasing-content:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code></li><li><code id="phrasing-content:the-cite-element"><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code></li><li><code id="phrasing-content:the-code-element"><a href="/breakup/specs/html-text/#the-code-element">code</a></code></li><li><code id="phrasing-content:the-data-element"><a href="/breakup/specs/html-text/#the-data-element">data</a></code></li><li><code id="phrasing-content:the-datalist-element"><a href="/breakup/specs/html-forms/#the-datalist-element">datalist</a></code></li><li><code id="phrasing-content:the-del-element"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code></li><li><code id="phrasing-content:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code></li><li><code id="phrasing-content:the-em-element"><a href="/breakup/specs/html-text/#the-em-element">em</a></code></li><li><code id="phrasing-content:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code></li><li><code id="phrasing-content:the-i-element"><a href="/breakup/specs/html-text/#the-i-element">i</a></code></li><li><code id="phrasing-content:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code></li><li><code id="phrasing-content:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code></li><li><code id="phrasing-content:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code></li><li><code id="phrasing-content:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code></li><li><code id="phrasing-content:the-kbd-element"><a href="/breakup/specs/html-text/#the-kbd-element">kbd</a></code></li><li><code id="phrasing-content:the-keygen-element"><a href="/breakup/specs/html-forms/#the-keygen-element">keygen</a></code></li><li><code id="phrasing-content:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code></li><li><code id="phrasing-content:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code> (if the <code id="phrasing-content:names:-the-itemprop-attribute"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop</a></code> attribute is present)</li><li><code id="phrasing-content:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code></li><li><code id="phrasing-content:the-mark-element"><a href="/breakup/specs/html-text/#the-mark-element">mark</a></code></li><li><code id="phrasing-content:math"><a href="#math">math</a></code></li><li><code id="phrasing-content:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> (if the <code id="phrasing-content:names:-the-itemprop-attribute-2"><a href="http://www.w3.org/TR/microdata/#attr-itemprop">itemprop</a></code> attribute is present)</li><li><code id="phrasing-content:the-meter-element"><a href="/breakup/specs/html-forms/#the-meter-element">meter</a></code></li><li><code id="phrasing-content:the-noscript-element"><a href="/breakup/specs/html-scripting/#the-noscript-element">noscript</a></code></li><li><code id="phrasing-content:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code></li><li><code id="phrasing-content:the-output-element"><a href="/breakup/specs/html-forms/#the-output-element">output</a></code></li><li><code id="phrasing-content:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code></li><li><code id="phrasing-content:the-q-element"><a href="/breakup/specs/html-text/#the-q-element">q</a></code></li><li><code id="phrasing-content:the-ruby-element"><a href="/breakup/specs/html-text/#the-ruby-element">ruby</a></code></li><li><code id="phrasing-content:the-s-element"><a href="/breakup/specs/html-text/#the-s-element">s</a></code></li><li><code id="phrasing-content:the-samp-element"><a href="/breakup/specs/html-text/#the-samp-element">samp</a></code></li><li><code id="phrasing-content:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code></li><li><code id="phrasing-content:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code></li><li><code id="phrasing-content:the-small-element"><a href="/breakup/specs/html-text/#the-small-element">small</a></code></li><li><code id="phrasing-content:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code></li><li><code id="phrasing-content:the-strong-element"><a href="/breakup/specs/html-text/#the-strong-element">strong</a></code></li><li><code id="phrasing-content:the-sub-and-sup-elements"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sub</a></code></li><li><code id="phrasing-content:the-sub-and-sup-elements-2"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sup</a></code></li><li><code id="phrasing-content:svg"><a href="#svg">svg</a></code></li><li><code id="phrasing-content:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></li><li><code id="phrasing-content:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code></li><li><code id="phrasing-content:the-time-element"><a href="/breakup/specs/html-text/#the-time-element">time</a></code></li><li><code id="phrasing-content:the-u-element"><a href="/breakup/specs/html-text/#the-u-element">u</a></code></li><li><code id="phrasing-content:the-var-element"><a href="/breakup/specs/html-text/#the-var-element">var</a></code></li><li><code id="phrasing-content:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code></li><li><code id="phrasing-content:the-wbr-element"><a href="/breakup/specs/html-text/#the-wbr-element">wbr</a></code></li><li><a href="/breakup/specs/html-best-practices/#text-content" id="phrasing-content:text-content">Text</a></li></ul>
+
+  <p class="note">Most elements that are categorised as phrasing content can only contain elements
+  that are themselves categorised as phrasing content, not any flow content.</p>
+
+  <p><dfn id="text-content">Text</dfn>, in the context of content models, means either nothing,
+  or <code id="phrasing-content:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes. <a href="/breakup/specs/html-best-practices/#text-content" id="phrasing-content:text-content-2">Text</a> is sometimes used as a content
+  model on its own, but is also <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="phrasing-content:phrasing-content-2-2">phrasing content</a>, and can be <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="phrasing-content:inter-element-whitespace">inter-element
+  whitespace</a> (if the <code id="phrasing-content:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes are empty or contain just <a href="/breakup/specs/core-algorithms/#space-character" id="phrasing-content:space-character">space characters</a>).</p>
+
+  <p><code id="phrasing-content:text-3"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes and attribute values must consist of <a href="/breakup/specs/core-algorithms/#unicode-character" id="phrasing-content:unicode-character">Unicode characters</a>, must not contain U+0000 characters, must not contain
+  permanently undefined Unicode characters (noncharacters), and must not contain <a href="/breakup/specs/core-algorithms/#control-characters" id="phrasing-content:control-characters">control characters</a>
+  other than <a href="/breakup/specs/core-algorithms/#space-character" id="phrasing-content:space-character-2">space characters</a>.
+
+   
+  
+
+  This specification includes extra constraints on the exact value of <code id="phrasing-content:text-4"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes and
+  attribute values depending on their precise context.
+
+  
+
+  </p></section>
+
+
+
+  <section><h2>Embedded content</h2>
+
+  <p><dfn id="embedded-content-category">Embedded content</dfn> is content that imports another
+  resource into the document, or content from another vocabulary that
+  is inserted into the document.</p>
+
+  
+  <ul class="brief category-list"><li><code id="embedded-content-2:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code></li><li><code id="embedded-content-2:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code></li><li><code id="embedded-content-2:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code></li><li><code id="embedded-content-2:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code></li><li><code id="embedded-content-2:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code></li><li><code id="embedded-content-2:math"><a href="#math">math</a></code></li><li><code id="embedded-content-2:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code></li><li><code id="embedded-content-2:svg"><a href="#svg">svg</a></code></li><li><code id="embedded-content-2:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code></li></ul>
+
+  <p>Elements that are from namespaces other than the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="embedded-content-2:html-namespace-2">HTML namespace</a> and that convey
+  content but not metadata, are <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="embedded-content-2:embedded-content-category">embedded content</a> for the purposes of the content models
+  defined in this specification. (For example, MathML, or SVG.)</p>
+
+  <p>Some embedded content elements can have <dfn id="fallback-content">fallback content</dfn>: content that is to be used
+  when the external resource cannot be used (e.g. because it is of an unsupported format). The
+  element definitions state what the fallback is, if any.</p></section>
+  
+
+
+  <section><h2>Interactive content</h2>
+
+
+
+  <p><dfn id="interactive-content-2">Interactive content</dfn> is content that is specifically intended for user
+  interaction.</p>
+
+  
+  <ul class="brief category-list"><li><code id="interactive-content:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code></li><li><code id="interactive-content:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code> (if the <code id="interactive-content:attr-media-controls"><a href="/breakup/specs/html-media/#attr-media-controls">controls</a></code> attribute is present)</li><li><code id="interactive-content:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code></li><li><code id="interactive-content:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code></li><li><code id="interactive-content:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code></li><li><code id="interactive-content:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code></li><li><code id="interactive-content:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> (if the <code id="interactive-content:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute is present)</li><li><code id="interactive-content:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> (if the <code id="interactive-content:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is <em>not</em> in the <a href="/breakup/specs/html-forms/#hidden-state-(type=hidden)" id="interactive-content:hidden-state-(type=hidden)">Hidden</a> state)</li><li><code id="interactive-content:the-keygen-element"><a href="/breakup/specs/html-forms/#the-keygen-element">keygen</a></code></li><li><code id="interactive-content:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code></li><li><code id="interactive-content:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> (if the <code id="interactive-content:attr-hyperlink-usemap-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute is present)</li><li><code id="interactive-content:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code></li><li><code id="interactive-content:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code></li><li><a href="/breakup/specs/sortable-tables/#sorting-interface-th-element" id="interactive-content:sorting-interface-th-element">sorting interface <code>th</code> elements</a></li><li><code id="interactive-content:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> (if the <code id="interactive-content:attr-media-controls-2"><a href="/breakup/specs/html-media/#attr-media-controls">controls</a></code> attribute is present)</li></ul>
+
+  <p>The <code id="interactive-content:attr-tabindex"><a href="/breakup/specs/html-interacton-attr/#attr-tabindex">tabindex</a></code> attribute can also make any element into
+  <a href="/breakup/specs/html-best-practices/#interactive-content-2" id="interactive-content:interactive-content-2">interactive content</a>.</p></section>
+
+
+
+  <section><h2>Palpable content</h2>
+
+  <p>As a general rule, elements whose content model allows any <a href="/breakup/specs/html-best-practices/#flow-content-2" id="palpable-content:flow-content-2">flow content</a> or
+  <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="palpable-content:phrasing-content-2">phrasing content</a> should have at least one node in its <a href="/breakup/specs/html-best-practices/#concept-html-contents" id="palpable-content:concept-html-contents">contents</a> that is <dfn id="palpable-content-2">palpable content</dfn> and that does
+  not have the <code id="palpable-content:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute specified.</p>
+
+  <p>This requirement is not a hard requirement, however, as there are many cases where an element
+  can be empty legitimately, for example when it is used as a placeholder which will later be filled
+  in by a script, or when the element is part of a template and would on most pages be filled in but
+  on some pages is not relevant.</p>
+
+  <p>Conformance checkers are encouraged to provide a mechanism for authors to find elements that
+  fail to fulfill this requirement, as an authoring aid.</p>
+
+  <p>The following elements are palpable content:</p>
+
+  
+  <ul class="brief category-list"><li><code id="palpable-content:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code></li><li><code id="palpable-content:the-abbr-element"><a href="/breakup/specs/html-text/#the-abbr-element">abbr</a></code></li><li><code id="palpable-content:the-address-element"><a href="/breakup/specs/html-blocks/#the-address-element">address</a></code></li><li><code id="palpable-content:the-article-element"><a href="/breakup/specs/html-sectioning/#the-article-element">article</a></code></li><li><code id="palpable-content:the-aside-element"><a href="/breakup/specs/html-sectioning/#the-aside-element">aside</a></code></li><li><code id="palpable-content:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code> (if the <code id="palpable-content:attr-media-controls"><a href="/breakup/specs/html-media/#attr-media-controls">controls</a></code> attribute is present)</li><li><code id="palpable-content:the-b-element"><a href="/breakup/specs/html-text/#the-b-element">b</a></code></li><li><code id="palpable-content:the-bdi-element"><a href="/breakup/specs/html-text/#the-bdi-element">bdi</a></code></li><li><code id="palpable-content:the-bdo-element"><a href="/breakup/specs/html-text/#the-bdo-element">bdo</a></code></li><li><code id="palpable-content:the-blockquote-element"><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code></li><li><code id="palpable-content:the-button-element"><a href="/breakup/specs/html-forms/#the-button-element">button</a></code></li><li><code id="palpable-content:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code></li><li><code id="palpable-content:the-cite-element"><a href="/breakup/specs/html-text/#the-cite-element">cite</a></code></li><li><code id="palpable-content:the-code-element"><a href="/breakup/specs/html-text/#the-code-element">code</a></code></li><li><code id="palpable-content:the-data-element"><a href="/breakup/specs/html-text/#the-data-element">data</a></code></li><li><code id="palpable-content:the-details-element"><a href="/breakup/specs/html-ui/#the-details-element">details</a></code></li><li><code id="palpable-content:the-dfn-element"><a href="/breakup/specs/html-text/#the-dfn-element">dfn</a></code></li><li><code id="palpable-content:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code></li><li><code id="palpable-content:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code> (if the element's children include at least one name-value group)</li><li><code id="palpable-content:the-em-element"><a href="/breakup/specs/html-text/#the-em-element">em</a></code></li><li><code id="palpable-content:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code></li><li><code id="palpable-content:the-fieldset-element"><a href="/breakup/specs/html-forms/#the-fieldset-element">fieldset</a></code></li><li><code id="palpable-content:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code></li><li><code id="palpable-content:the-footer-element"><a href="/breakup/specs/html-sectioning/#the-footer-element">footer</a></code></li><li><code id="palpable-content:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code></li><li><code id="palpable-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code></li><li><code id="palpable-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-2"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h2</a></code></li><li><code id="palpable-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-3"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h3</a></code></li><li><code id="palpable-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-4"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h4</a></code></li><li><code id="palpable-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-5"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h5</a></code></li><li><code id="palpable-content:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code></li><li><code id="palpable-content:the-header-element"><a href="/breakup/specs/html-sectioning/#the-header-element">header</a></code></li><li><code id="palpable-content:the-i-element"><a href="/breakup/specs/html-text/#the-i-element">i</a></code></li><li><code id="palpable-content:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code></li><li><code id="palpable-content:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code></li><li><code id="palpable-content:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> (if the <code id="palpable-content:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is <em>not</em> in the <a href="/breakup/specs/html-forms/#hidden-state-(type=hidden)" id="palpable-content:hidden-state-(type=hidden)">Hidden</a> state)</li><li><code id="palpable-content:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code></li><li><code id="palpable-content:the-kbd-element"><a href="/breakup/specs/html-text/#the-kbd-element">kbd</a></code></li><li><code id="palpable-content:the-keygen-element"><a href="/breakup/specs/html-forms/#the-keygen-element">keygen</a></code></li><li><code id="palpable-content:the-label-element"><a href="/breakup/specs/html-forms/#the-label-element">label</a></code></li><li><code id="palpable-content:the-main-element"><a href="/breakup/specs/html-sectioning/#the-main-element">main</a></code></li><li><code id="palpable-content:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code></li><li><code id="palpable-content:the-mark-element"><a href="/breakup/specs/html-text/#the-mark-element">mark</a></code></li><li><code id="palpable-content:math"><a href="#math">math</a></code></li><li><code id="palpable-content:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code> (if the <code id="palpable-content:attr-menu-type"><a href="/breakup/specs/html-ui/#attr-menu-type">type</a></code> attribute is in the <a href="/breakup/specs/html-ui/#toolbar-state" id="palpable-content:toolbar-state">toolbar</a> state)</li><li><code id="palpable-content:the-meter-element"><a href="/breakup/specs/html-forms/#the-meter-element">meter</a></code></li><li><code id="palpable-content:the-nav-element"><a href="/breakup/specs/html-sectioning/#the-nav-element">nav</a></code></li><li><code id="palpable-content:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code></li><li><code id="palpable-content:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code> (if the element's children include at least one <code id="palpable-content:the-li-element"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element)</li><li><code id="palpable-content:the-output-element"><a href="/breakup/specs/html-forms/#the-output-element">output</a></code></li><li><code id="palpable-content:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code></li><li><code id="palpable-content:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code></li><li><code id="palpable-content:the-progress-element"><a href="/breakup/specs/html-forms/#the-progress-element">progress</a></code></li><li><code id="palpable-content:the-q-element"><a href="/breakup/specs/html-text/#the-q-element">q</a></code></li><li><code id="palpable-content:the-ruby-element"><a href="/breakup/specs/html-text/#the-ruby-element">ruby</a></code></li><li><code id="palpable-content:the-s-element"><a href="/breakup/specs/html-text/#the-s-element">s</a></code></li><li><code id="palpable-content:the-samp-element"><a href="/breakup/specs/html-text/#the-samp-element">samp</a></code></li><li><code id="palpable-content:the-section-element"><a href="/breakup/specs/html-sectioning/#the-section-element">section</a></code></li><li><code id="palpable-content:the-select-element"><a href="/breakup/specs/html-forms/#the-select-element">select</a></code></li><li><code id="palpable-content:the-small-element"><a href="/breakup/specs/html-text/#the-small-element">small</a></code></li><li><code id="palpable-content:the-span-element"><a href="/breakup/specs/html-text/#the-span-element">span</a></code></li><li><code id="palpable-content:the-strong-element"><a href="/breakup/specs/html-text/#the-strong-element">strong</a></code></li><li><code id="palpable-content:the-sub-and-sup-elements"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sub</a></code></li><li><code id="palpable-content:the-sub-and-sup-elements-2"><a href="/breakup/specs/html-text/#the-sub-and-sup-elements">sup</a></code></li><li><code id="palpable-content:svg"><a href="#svg">svg</a></code></li><li><code id="palpable-content:the-table-element"><a href="/breakup/specs/html-tables/#the-table-element">table</a></code></li><li><code id="palpable-content:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code></li><li><code id="palpable-content:the-time-element"><a href="/breakup/specs/html-text/#the-time-element">time</a></code></li><li><code id="palpable-content:the-u-element"><a href="/breakup/specs/html-text/#the-u-element">u</a></code></li><li><code id="palpable-content:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code> (if the element's children include at least one <code id="palpable-content:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element)</li><li><code id="palpable-content:the-var-element"><a href="/breakup/specs/html-text/#the-var-element">var</a></code></li><li><code id="palpable-content:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code></li><li><a href="/breakup/specs/html-best-practices/#text-content" id="palpable-content:text-content">Text</a> that is not <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="palpable-content:inter-element-whitespace">inter-element whitespace</a></li></ul></section>
+
+
+  <section><h2>Script-supporting elements</h2>
+
+  <p><dfn id="script-supporting-elements-2">Script-supporting elements</dfn> are those that do not <a href="/breakup/specs/html-scripting/#represents" id="script-supporting-elements:represents">represent</a> anything themselves (i.e. they are not rendered), but are
+  used to support scripts, e.g. to provide functionality for the user.</p>
+
+  <p>The following elements are script-supporting elements:</p>
+
+  
+  <ul class="brief category-list"><li><code id="script-supporting-elements:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code></li><li><code id="script-supporting-elements:the-template-element"><a href="/breakup/specs/html-template/#the-template-element">template</a></code></li></ul></section></section>
+
+
+
+  <section><h2>Transparent content models</h2>
+
+  <p>Some elements are described as <dfn id="transparent">transparent</dfn>; they have "transparent" in the
+  description of their content model. The content model of a <a href="/breakup/specs/html-best-practices/#transparent" id="transparent-content-models:transparent">transparent</a> element is
+  derived from the content model of its parent element: the elements required in the part of the
+  content model that is "transparent" are the same elements as required in the part of the content
+  model of the parent of the transparent element in which the transparent element finds itself.</p>
+
+  <div class="example">
+
+   <p>For instance, an <code id="transparent-content-models:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> element inside a <code id="transparent-content-models:the-ruby-element"><a href="/breakup/specs/html-text/#the-ruby-element">ruby</a></code> element cannot contain an
+   <code id="transparent-content-models:the-rt-element"><a href="/breakup/specs/html-text/#the-rt-element">rt</a></code> element, because the part of the <code id="transparent-content-models:the-ruby-element-2"><a href="/breakup/specs/html-text/#the-ruby-element">ruby</a></code> element's content model that
+   allows <code id="transparent-content-models:the-ins-element-2"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> elements is the part that allows <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="transparent-content-models:phrasing-content-2">phrasing content</a>, and the
+   <code id="transparent-content-models:the-rt-element-2"><a href="/breakup/specs/html-text/#the-rt-element">rt</a></code> element is not <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="transparent-content-models:phrasing-content-2-2">phrasing content</a>.</p>
+
+  </div>
+
+
+
+  <p class="note">In some cases, where transparent elements are nested in each other, the process
+  has to be applied iteratively.</p>
+
+  <div class="example">
+
+   <p>Consider the following markup fragment:</p>
+
+   <pre>&lt;p&gt;&lt;object&gt;&lt;param&gt;&lt;ins&gt;&lt;map&gt;&lt;a href="/"&gt;Apples&lt;/a&gt;&lt;/map&gt;&lt;/ins&gt;&lt;/object&gt;&lt;/p&gt;</pre>
+
+   <p>To check whether "Apples" is allowed inside the <code id="transparent-content-models:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element, the content models are
+   examined. The <code id="transparent-content-models:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code> element's content model is transparent, as is the <code id="transparent-content-models:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code>
+   element's, as is the <code id="transparent-content-models:the-ins-element-3"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> element's, as is the part of the <code id="transparent-content-models:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
+   element's in which the <code id="transparent-content-models:the-ins-element-4"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> element is found. The <code id="transparent-content-models:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element is
+   found in the <code id="transparent-content-models:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element, whose content model is <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="transparent-content-models:phrasing-content-2-3">phrasing content</a>. Thus,
+   "Apples" is allowed, as text is phrasing content.</p>
+
+  </div>
+
+  <p>When a transparent element has no parent, then the part of its content model that is
+  "transparent" must instead be treated as accepting any <a href="/breakup/specs/html-best-practices/#flow-content-2" id="transparent-content-models:flow-content-2">flow content</a>.</p></section>
+
+
+  <section><h2>Paragraphs</h2>
+
+  <p class="note">The term <a href="/breakup/specs/html-best-practices/#paragraph" id="paragraphs:paragraph">paragraph</a> as defined in this section is used for more than
+  just the definition of the <code id="paragraphs:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element. The <a href="/breakup/specs/html-best-practices/#paragraph" id="paragraphs:paragraph-2">paragraph</a> concept defined here
+  is used to describe how to interpret documents. The <code id="paragraphs:the-p-element-2"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element is merely one of
+  several ways of marking up a <a href="/breakup/specs/html-best-practices/#paragraph" id="paragraphs:paragraph-3">paragraph</a>.</p>
+
+  
+  <p>A <dfn id="paragraph">paragraph</dfn> is typically a run of <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="paragraphs:phrasing-content-2">phrasing content</a> that forms a block
+  of text with one or more sentences that discuss a particular topic, as in typography, but can also
+  be used for more general thematic grouping. For instance, an address is also a paragraph, as is a
+  part of a form, a byline, or a stanza in a poem.</p>
+
+  <div class="example">
+
+   <p>In the following example, there are two paragraphs in a section. There is also a heading,
+   which contains phrasing content that is not a paragraph. Note how the comments and
+   <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="paragraphs:inter-element-whitespace">inter-element whitespace</a> do not form paragraphs.</p>
+
+   <pre>&lt;section&gt;
+  &lt;h1&gt;Example of paragraphs&lt;/h1&gt;
+  This is the &lt;em&gt;first&lt;/em&gt; paragraph in this example.
+  &lt;p&gt;This is the second.&lt;/p&gt;
+  &lt;!-- This is not a paragraph. --&gt;
+&lt;/section&gt;</pre>
+
+  </div>
+
+  <p>Paragraphs in <a href="/breakup/specs/html-best-practices/#flow-content-2" id="paragraphs:flow-content-2">flow content</a> are defined relative to what the document looks like
+  without the <code id="paragraphs:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, <code id="paragraphs:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code>, <code id="paragraphs:the-del-element"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code>, and <code id="paragraphs:the-map-element"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> elements
+  complicating matters, since those elements, with their hybrid content models, can straddle
+  paragraph boundaries, as shown in the first two examples below.</p>
+
+  <p class="note">Generally, having elements straddle paragraph boundaries is best avoided.
+  Maintaining such markup can be difficult.</p>
+
+  <div class="example">
+
+   <p>The following example takes the markup from the earlier example and puts <code id="paragraphs:the-ins-element-2"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> and
+   <code id="paragraphs:the-del-element-2"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code> elements around some of the markup to show that the text was changed (though in
+   this case, the changes admittedly don't make much sense). Notice how this example has exactly the
+   same paragraphs as the previous one, despite the <code id="paragraphs:the-ins-element-3"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> and <code id="paragraphs:the-del-element-3"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code> elements
+   — the <code id="paragraphs:the-ins-element-4"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code> element straddles the heading and the first paragraph, and the
+   <code id="paragraphs:the-del-element-4"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code> element straddles the boundary between the two paragraphs.</p>
+
+   <pre>&lt;section&gt;
+  &lt;ins&gt;&lt;h1&gt;Example of paragraphs&lt;/h1&gt;
+  This is the &lt;em&gt;first&lt;/em&gt; paragraph in&lt;/ins&gt; this example&lt;del&gt;.
+  &lt;p&gt;This is the second.&lt;/p&gt;&lt;/del&gt;
+  &lt;!-- This is not a paragraph. --&gt;
+&lt;/section&gt;</pre>
+
+  </div>
+
+  
+
+  <p>Let <var>view</var> be a view of the DOM that replaces all <code id="paragraphs:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>,
+  <code id="paragraphs:the-ins-element-5"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code>, <code id="paragraphs:the-del-element-5"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code>, and <code id="paragraphs:the-map-element-2"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> elements in the document with their <a href="/breakup/specs/html-best-practices/#concept-html-contents" id="paragraphs:concept-html-contents">contents</a>. Then, in <var>view</var>, for each run
+  of sibling <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="paragraphs:phrasing-content-2-2">phrasing content</a> nodes uninterrupted by other types of content, in an
+  element that accepts content other than <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="paragraphs:phrasing-content-2-3">phrasing content</a> as well as <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="paragraphs:phrasing-content-2-4">phrasing
+  content</a>, let <var>first</var> be the first node of the run, and let <var>last</var> be the last node of the run. For each such run that consists of at least one
+  node that is neither <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="paragraphs:embedded-content-category">embedded content</a> nor <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="paragraphs:inter-element-whitespace-2">inter-element whitespace</a>, a
+  paragraph exists in the original DOM from immediately before <var>first</var> to
+  immediately after <var>last</var>. (Paragraphs can thus span across <code id="paragraphs:the-a-element-3"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>,
+  <code id="paragraphs:the-ins-element-6"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code>, <code id="paragraphs:the-del-element-6"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code>, and <code id="paragraphs:the-map-element-3"><a href="/breakup/specs/html-linking/#the-map-element">map</a></code> elements.)</p>
+
+  <p>Conformance checkers may warn authors of cases where they have paragraphs that overlap each
+  other (this can happen with <code id="paragraphs:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>, <code id="paragraphs:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code>, <code id="paragraphs:the-audio-element"><a href="/breakup/specs/html-media/#the-audio-element">audio</a></code>, and
+  <code id="paragraphs:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements, and indirectly through elements in other namespaces that allow HTML
+  to be further embedded therein, like <code id="paragraphs:svg"><a href="#svg">svg</a></code> or <code id="paragraphs:math"><a href="#math">math</a></code>).</p>
+  
+
+  
+
+  <p>A <a href="/breakup/specs/html-best-practices/#paragraph" id="paragraphs:paragraph-4">paragraph</a> is also formed explicitly by <code id="paragraphs:the-p-element-3"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> elements.</p>
+
+  <p class="note">The <code id="paragraphs:the-p-element-4"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element can be used to wrap individual paragraphs when there
+  would otherwise not be any content other than phrasing content to separate the paragraphs from
+  each other.</p>
+
+  <div class="example">
+
+   <p>In the following example, the link spans half of the first paragraph, all of the heading
+   separating the two paragraphs, and half of the second paragraph. It straddles the paragraphs and
+   the heading.</p>
+
+   <pre>&lt;header&gt;
+ Welcome!
+ &lt;a href="about.html"&gt;
+  This is home of...
+  &lt;h1&gt;The Falcons!&lt;/h1&gt;
+  The Lockheed Martin multirole jet fighter aircraft!
+ &lt;/a&gt;
+ This page discusses the F-16 Fighting Falcon's innermost secrets.
+&lt;/header&gt;</pre>
+
+   <p>Here is another way of marking this up, this time showing the paragraphs explicitly, and
+   splitting the one link element into three:</p>
+
+   <pre>&lt;header&gt;
+ &lt;p&gt;Welcome! &lt;a href="about.html"&gt;This is home of...&lt;/a&gt;&lt;/p&gt;
+ &lt;h1&gt;&lt;a href="about.html"&gt;The Falcons!&lt;/a&gt;&lt;/h1&gt;
+ &lt;p&gt;&lt;a href="about.html"&gt;The Lockheed Martin multirole jet
+ fighter aircraft!&lt;/a&gt; This page discusses the F-16 Fighting
+ Falcon's innermost secrets.&lt;/p&gt;
+&lt;/header&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   
+
+   <p>It is possible for paragraphs to overlap when using certain elements that define fallback
+   content. For example, in the following section:</p>
+
+   <pre>&lt;section&gt;
+ &lt;h1&gt;My Cats&lt;/h1&gt;
+ You can play with my cat simulator.
+ &lt;object data="cats.sim"&gt;
+  To see the cat simulator, use one of the following links:
+  &lt;ul&gt;
+   &lt;li&gt;&lt;a href="cats.sim"&gt;Download simulator file&lt;/a&gt;
+   &lt;li&gt;&lt;a href="http://sims.example.com/watch?v=LYds5xY4INU"&gt;Use online simulator&lt;/a&gt;
+  &lt;/ul&gt;
+  Alternatively, upgrade to the Mellblom Browser.
+ &lt;/object&gt;
+ I'm quite proud of it.
+&lt;/section&gt;</pre>
+
+   <p>There are five paragraphs:</p>
+
+   <ol class="brief"><li>The paragraph that says "You can play with my cat simulator. <i>object</i> I'm
+    quite proud of it.", where <i>object</i> is the <code id="paragraphs:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element.</li><li>The paragraph that says "To see the cat simulator, use one of the following links:".</li><li>The paragraph that says "Download simulator file".</li><li>The paragraph that says "Use online simulator".</li><li>The paragraph that says "Alternatively, upgrade to the Mellblom Browser.".</li></ol>
+
+   <p>The first paragraph is overlapped by the other four. A user agent that supports the "cats.sim"
+   resource will only show the first one, but a user agent that shows the fallback will confusingly
+   show the first sentence of the first paragraph as if it was in the same paragraph as the second
+   one, and will show the last paragraph as if it was at the start of the second sentence of the
+   first paragraph.</p>
+
+   <p>To avoid this confusion, explicit <code id="paragraphs:the-p-element-5"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> elements can be used. For example:</p>
+
+   
+   <pre>&lt;section&gt;
+ &lt;h1&gt;My Cats&lt;/h1&gt;
+ &lt;p&gt;You can play with my cat simulator.&lt;/p&gt;
+ &lt;object data="cats.sim"&gt;
+  &lt;p&gt;To see the cat simulator, use one of the following links:&lt;/p&gt;
+  &lt;ul&gt;
+   &lt;li&gt;&lt;a href="cats.sim"&gt;Download simulator file&lt;/a&gt;
+   &lt;li&gt;&lt;a href="http://sims.example.com/watch?v=LYds5xY4INU"&gt;Use online simulator&lt;/a&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;Alternatively, upgrade to the Mellblom Browser.&lt;/p&gt;
+ &lt;/object&gt;
+ &lt;p&gt;I'm quite proud of it.&lt;/p&gt;
+&lt;/section&gt;</pre>
+
+  </div></section></section><section><h2>Common idioms without dedicated elements</h2>
 
   <section>
   <h2>Subheadings, subtitles, alternative titles and taglines</h2>

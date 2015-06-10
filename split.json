@@ -40,8 +40,8 @@
             ]
         }
     ,   "browser-dom":  {
-            "title":    "The Browser DOM"
-        ,   "abstract": "Some DOM interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>."
+            "title":    "The Browser Object Model"
+        ,   "abstract": "Some interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>."
         ,   "content":  [
                 "#documents"
             ,   "#windows"
@@ -64,10 +64,14 @@
         }
     ,   "rendering-html":  {
             "title":    "Rendering HTML"
-        ,   "XXX":      "WE LOSE THE SMALL BLURB INTRO HERE"
         ,   "abstract": "The default style sheet and general rendering advice for HTML."
         ,   "content":  [
                 {
+                    "id":               "#rendering"
+                ,   "noSubSections":    true
+                ,   "title":            "Foreword"
+                }
+            ,   {
                     "id":       "#rendering"
                 ,   "unwrap":   true
                 }
@@ -118,6 +122,11 @@
         ,   "abstract": "Drag &amp drop support for HTML."
         ,   "content":  [
                 {
+                    "id":               "#dnd"
+                ,   "noSubSections":    true
+                ,   "title":            "Foreword"
+                }
+            ,   {
                     "id":       "#dnd"
                 ,   "unwrap":   true
                 }
@@ -233,7 +242,13 @@
             "title":    "Scripting HTML"
         ,   "abstract": "Putting scripts in HTML."
         ,   "content":  [
-                "#the-script-element"
+                {
+                    "id":               "#scripting-3"
+                ,   "noSubSections":    true
+                ,   "title":            "Introduction"
+                }
+            ,   "#elements-in-the-dom"
+            ,   "#the-script-element"
             ,   "#the-noscript-element"
             ]
         }
@@ -349,7 +364,10 @@
             "title":    "HTML Best Practices"
         ,   "abstract": "There is currently very little in here, but the idea is to progressively move over everything related to linting and advice."
         ,   "content":  [
-                "#common-idioms"
+                "#semantics-2"
+            ,   "#element-definitions"
+            ,   "#content-models"
+            ,   "#common-idioms"
             ]
         }
     ,   "html-embedding":  {
@@ -360,6 +378,7 @@
             ,   "#the-embed-element"
             ,   "#the-object-element"
             ,   "#the-param-element"
+            ,   "#dimension-attributes"
             ]
         }
     ,   "html-media":  {
@@ -379,6 +398,54 @@
         ,   "content":  [
                 {
                     "id":       "#interactive-elements"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-bidi":  {
+            "title":    "HTML Requirements Relating to the Bidirectional Algorithm"
+        ,   "abstract": "Bidirectional."
+        ,   "content":  [
+                {
+                    "id":       "#requirements-relating-to-the-bidirectional-algorithm"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-aria-integration":  {
+            "title":    "HTML ARIA Integration"
+        ,   "abstract": "This should most likely be placed in one of the existing HTML/ARIA documents."
+        ,   "content":  [
+                "#wai-aria"
+            ,   "#allowed-aria-roles\\,-states-and-properties"
+            ]
+        }
+    ,   "html-mathml":  {
+            "title":    "HTML MathML Integration"
+        ,   "abstract": "MathML."
+        ,   "content":  [
+                {
+                    "id":       "#mathml"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-svg":  {
+            "title":    "HTML SVG Integration"
+        ,   "abstract": "SVG."
+        ,   "content":  [
+                {
+                    "id":       "#svg-0"
+                ,   "unwrap":   true
+                }
+            ]
+        }
+    ,   "html-obsolete":  {
+            "title":    "Obsolete HTML Features"
+        ,   "abstract": "This specification provides a dustbin for the Web."
+        ,   "content":  [
+                {
+                    "id":       "#obsolete"
                 ,   "unwrap":   true
                 }
             ]

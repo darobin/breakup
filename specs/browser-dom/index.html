@@ -1,6 +1,6 @@
 <html lang="en"><head>
     <meta charset="utf-8">
-    <title>The Browser DOM</title>
+    <title>The Browser Object Model</title>
     <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
     <script class="remove">
       var respecConfig = {
@@ -19,7 +19,7 @@
   <body>
     <section id="abstract">
       <p>
-        Some DOM interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>.
+        Some interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>.
       </p>
     </section>
     <section id="sotd">
@@ -107,7 +107,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <a href="/breakup/specs/browser-dom/#dom-document-nameditem" id="the-document-object:dom-document-nameditem">getter</a> object (DOMString name);
   attribute DOMString <a href="/breakup/specs/browser-dom/#document.title" id="the-document-object:document.title">title</a>;
   attribute DOMString <a href="/breakup/specs/html-attributes/#dom-document-dir" id="the-document-object:dom-document-dir">dir</a>;
-  attribute <a href="#htmlelement" id="the-document-object:htmlelement">HTMLElement</a>? <a href="/breakup/specs/browser-dom/#dom-document-body" id="the-document-object:dom-document-body">body</a>;
+  attribute <a href="/breakup/specs/html-scripting/#htmlelement" id="the-document-object:htmlelement">HTMLElement</a>? <a href="/breakup/specs/browser-dom/#dom-document-body" id="the-document-object:dom-document-body">body</a>;
   readonly attribute <a href="/breakup/specs/html-structure/#htmlheadelement" id="the-document-object:htmlheadelement">HTMLHeadElement</a>? <a href="/breakup/specs/browser-dom/#dom-document-head" id="the-document-object:dom-document-head">head</a>;
   [SameObject] readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-document-object:htmlcollection">HTMLCollection</a> <a href="/breakup/specs/browser-dom/#dom-document-images" id="the-document-object:dom-document-images">images</a>;
   [SameObject] readonly attribute <a href="/breakup/specs/core-algorithms/#htmlcollection" id="the-document-object:htmlcollection-2">HTMLCollection</a> <a href="/breakup/specs/browser-dom/#dom-document-embeds" id="the-document-object:dom-document-embeds">embeds</a>;
@@ -143,7 +143,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   // special <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="the-document-object:event-handler-idl-attributes">event handler IDL attributes</a> that only apply to Document objects
   [LenientThis] attribute <a href="/breakup/specs/browser-dom/#eventhandler" id="the-document-object:eventhandler">EventHandler</a> <a href="/breakup/specs/browser-dom/#handler-onreadystatechange" id="the-document-object:handler-onreadystatechange">onreadystatechange</a>;
 
-  // <a href="#Document-partial">also has obsolete members</a>
+  // <a href="/breakup/specs/html-obsolete/#Document-partial">also has obsolete members</a>
 };
 <a href="/breakup/specs/browser-dom/#document" id="the-document-object:document-3">Document</a> implements <a href="/breakup/specs/browser-dom/#globaleventhandlers" id="the-document-object:globaleventhandlers">GlobalEventHandlers</a>;</pre></section>
 
@@ -372,22 +372,22 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
     <p>Can be set, to replace <a href="/breakup/specs/browser-dom/#the-body-element-2" id="dom-tree-accessors:the-body-element-2-2">the body element</a>.</p>
 
-    <p>If the new value is not a <code id="dom-tree-accessors:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> or <code id="dom-tree-accessors:frameset"><a href="#frameset">frameset</a></code> element, this will throw
+    <p>If the new value is not a <code id="dom-tree-accessors:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> or <code id="dom-tree-accessors:frameset"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code> element, this will throw
     a <code id="dom-tree-accessors:hierarchyrequesterror"><a href="/breakup/specs/core-algorithms/#hierarchyrequesterror">HierarchyRequestError</a></code> exception.</p>
 
    </dd></dl>
 
   <p><dfn id="the-body-element-2">The body element</dfn> of a document is the first child of <a href="/breakup/specs/browser-dom/#the-html-element-2" id="dom-tree-accessors:the-html-element-2-2">the <code>html</code>
-  element</a> that is either a <code id="dom-tree-accessors:the-body-element-3"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element or a <code id="dom-tree-accessors:frameset-2"><a href="#frameset">frameset</a></code> element. If
+  element</a> that is either a <code id="dom-tree-accessors:the-body-element-3"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element or a <code id="dom-tree-accessors:frameset-2"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code> element. If
   there is no such element, it is null.</p>
 
   
 
   <p>The <dfn id="dom-document-body"><code>body</code></dfn> attribute, on getting, must return
   <a href="/breakup/specs/browser-dom/#the-body-element-2" id="dom-tree-accessors:the-body-element-2-3">the body element</a> of the document (either a <code id="dom-tree-accessors:the-body-element-4"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> element, a
-  <code id="dom-tree-accessors:frameset-3"><a href="#frameset">frameset</a></code> element, or null). On setting, the following algorithm must be run:</p>
+  <code id="dom-tree-accessors:frameset-3"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code> element, or null). On setting, the following algorithm must be run:</p>
 
-  <ol><li>If the new value is not a <code id="dom-tree-accessors:the-body-element-5"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> or <code id="dom-tree-accessors:frameset-4"><a href="#frameset">frameset</a></code> element, then throw a
+  <ol><li>If the new value is not a <code id="dom-tree-accessors:the-body-element-5"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> or <code id="dom-tree-accessors:frameset-4"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code> element, then throw a
    <code id="dom-tree-accessors:hierarchyrequesterror-2"><a href="/breakup/specs/core-algorithms/#hierarchyrequesterror">HierarchyRequestError</a></code> exception and abort these steps.</li><li>Otherwise, if the new value is the same as <a href="/breakup/specs/browser-dom/#the-body-element-2" id="dom-tree-accessors:the-body-element-2-4">the body element</a>, do nothing. Abort
    these steps.</li><li>Otherwise, if <a href="/breakup/specs/browser-dom/#the-body-element-2" id="dom-tree-accessors:the-body-element-2-5">the body element</a> is not null, then replace that element with the
    new value in the DOM, as if the root element's <code>replaceChild()</code> method had
@@ -549,7 +549,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <p id="dom-document-namedItem-which">The <code id="dom-tree-accessors:document-21"><a href="/breakup/specs/browser-dom/#document">Document</a></code> interface <a href="/breakup/specs/core-algorithms/#support-named-properties" id="dom-tree-accessors:support-named-properties">supports named properties</a>. The <a href="/breakup/specs/core-algorithms/#supported-property-names" id="dom-tree-accessors:supported-property-names">supported property names</a> at
   any moment consist of the values of the <code>name</code> content attributes of
   all the
-    <code id="dom-tree-accessors:the-applet-element"><a href="#the-applet-element">applet</a></code>,
+    <code id="dom-tree-accessors:the-applet-element"><a href="/breakup/specs/html-obsolete/#the-applet-element">applet</a></code>,
     <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed">exposed</a> <code id="dom-tree-accessors:the-embed-element-3"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
     <code id="dom-tree-accessors:the-form-element-3"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
     <code id="dom-tree-accessors:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>,
@@ -557,7 +557,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
     <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-2">exposed</a> <code id="dom-tree-accessors:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
   elements in the <code id="dom-tree-accessors:document-22"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that have non-empty <code>name</code> content
   attributes, and the values of the <code id="dom-tree-accessors:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attributes of all the
-    <code id="dom-tree-accessors:the-applet-element-2"><a href="#the-applet-element">applet</a></code> and
+    <code id="dom-tree-accessors:the-applet-element-2"><a href="/breakup/specs/html-obsolete/#the-applet-element">applet</a></code> and
     <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-3">exposed</a> <code id="dom-tree-accessors:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code>
   elements in the <code id="dom-tree-accessors:document-23"><a href="/breakup/specs/browser-dom/#document">Document</a></code> that have non-empty <code id="dom-tree-accessors:the-id-attribute-2"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content
   attributes, and the values of the <code id="dom-tree-accessors:the-id-attribute-3"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attributes of all the
@@ -598,15 +598,15 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   <p><dfn id="dom-document-nameditem-filter">Named elements</dfn> with the name <var>name</var>, for the purposes of the above algorithm, are those that are either:</p>
 
-  <ul><li><code id="dom-tree-accessors:the-applet-element-3"><a href="#the-applet-element">applet</a></code>, <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-4">exposed</a> <code id="dom-tree-accessors:the-embed-element-4"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="dom-tree-accessors:the-form-element-4"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
+  <ul><li><code id="dom-tree-accessors:the-applet-element-3"><a href="/breakup/specs/html-obsolete/#the-applet-element">applet</a></code>, <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-4">exposed</a> <code id="dom-tree-accessors:the-embed-element-4"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="dom-tree-accessors:the-form-element-4"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
    <code id="dom-tree-accessors:the-iframe-element-4"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, <code id="dom-tree-accessors:the-img-element-6"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-5">exposed</a> <code id="dom-tree-accessors:the-object-element-3"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that
-   have a <code>name</code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-applet-element-4"><a href="#the-applet-element">applet</a></code> or <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-6">exposed</a> <code id="dom-tree-accessors:the-object-element-4"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-6"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-img-element-7"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-7"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute
+   have a <code>name</code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-applet-element-4"><a href="/breakup/specs/html-obsolete/#the-applet-element">applet</a></code> or <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-6">exposed</a> <code id="dom-tree-accessors:the-object-element-4"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-6"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute whose value is <var>name</var>, or</li><li><code id="dom-tree-accessors:the-img-element-7"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> elements that have an <code id="dom-tree-accessors:the-id-attribute-7"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute
    whose value is <var>name</var>, and that have a non-empty <code>name</code>
    content attribute present also.</li></ul>
 
   <p>An <code id="dom-tree-accessors:the-embed-element-5"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> or <code id="dom-tree-accessors:the-object-element-5"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> element is said to be <dfn id="exposed">exposed</dfn> if it has
   no <a href="/breakup/specs/browser-dom/#exposed" id="dom-tree-accessors:exposed-7">exposed</a> <code id="dom-tree-accessors:the-object-element-6"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> ancestor, and, for <code id="dom-tree-accessors:the-object-element-7"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements, is
-  additionally either not showing its <a href="#fallback-content" id="dom-tree-accessors:fallback-content">fallback content</a> or has no <code id="dom-tree-accessors:the-object-element-8"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> or
+  additionally either not showing its <a href="/breakup/specs/html-best-practices/#fallback-content" id="dom-tree-accessors:fallback-content">fallback content</a> or has no <code id="dom-tree-accessors:the-object-element-8"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> or
   <code id="dom-tree-accessors:the-embed-element-6"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code> descendants.</p>
 
   
@@ -667,8 +667,8 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   presented to the user.</p>
 
   <p class="note">A tab or window in a Web browser typically contains a <a href="/breakup/specs/browser-dom/#browsing-context" id="windows:browsing-context">browsing
-  context</a>, as does an <code id="windows:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> or <code id="windows:frame"><a href="#frame">frame</a></code>s in a
-  <code id="windows:frameset"><a href="#frameset">frameset</a></code>.</p>
+  context</a>, as does an <code id="windows:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code> or <code id="windows:frame"><a href="/breakup/specs/html-obsolete/#frame">frame</a></code>s in a
+  <code id="windows:frameset"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code>.</p>
 
   <p>Each <a href="/breakup/specs/browser-dom/#browsing-context" id="windows:browsing-context-2">browsing context</a> has a corresponding <code id="windows:windowproxy"><a href="/breakup/specs/browser-dom/#windowproxy">WindowProxy</a></code> object.</p>
 
@@ -1344,7 +1344,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   void <a href="http://www.w3.org/TR/webmessaging/#dom-window-postmessage" id="the-window-object:dom-window-postmessage">postMessage</a>(any message, DOMString targetOrigin, optional sequence&lt;<a href="/breakup/specs/core-algorithms/#transferable" id="the-window-object:transferable">Transferable</a>&gt; transfer);
 
-  // <a href="#Window-partial">also has obsolete members</a>
+  // <a href="/breakup/specs/html-obsolete/#Window-partial">also has obsolete members</a>
 };
 <a href="/breakup/specs/browser-dom/#window" id="the-window-object:window-2">Window</a> implements <a href="/breakup/specs/browser-dom/#globaleventhandlers" id="the-window-object:globaleventhandlers">GlobalEventHandlers</a>;
 <a href="/breakup/specs/browser-dom/#window" id="the-window-object:window-3">Window</a> implements <a href="/breakup/specs/browser-dom/#windoweventhandlers" id="the-window-object:windoweventhandlers">WindowEventHandlers</a>;</pre>
@@ -1664,8 +1664,8 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
 
   <ul><li>the <a href="/breakup/specs/browser-dom/#browsing-context-name" id="named-access-on-the-window-object:browsing-context-name">browsing context name</a> of any <a href="/breakup/specs/browser-dom/#child-browsing-context" id="named-access-on-the-window-object:child-browsing-context">child browsing context</a> of the
    <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document">active document</a> whose name is not the empty string,</li><li>the value of the <code>name</code> content attribute for all <code id="named-access-on-the-window-object:the-a-element"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>,
-   <code id="named-access-on-the-window-object:the-applet-element"><a href="#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="named-access-on-the-window-object:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
-   <code id="named-access-on-the-window-object:frameset"><a href="#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, and <code id="named-access-on-the-window-object:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements in the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-2">active
+   <code id="named-access-on-the-window-object:the-applet-element"><a href="/breakup/specs/html-obsolete/#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="named-access-on-the-window-object:the-form-element"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>,
+   <code id="named-access-on-the-window-object:frameset"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, and <code id="named-access-on-the-window-object:the-object-element"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements in the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-2">active
    document</a> that have a non-empty <code>name</code> content attribute, and</li><li>the value of the <code id="named-access-on-the-window-object:the-id-attribute"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute of any <a href="/breakup/specs/core-algorithms/#html-elements" id="named-access-on-the-window-object:html-elements">HTML element</a> in the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-3">active document</a> with a non-empty <code id="named-access-on-the-window-object:the-id-attribute-2"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute.</li></ul>
 
   <p>To <a href="/breakup/specs/core-algorithms/#determine-the-value-of-a-named-property" id="named-access-on-the-window-object:determine-the-value-of-a-named-property">determine the value of a named property</a> <var>name</var> when <dfn id="dom-window-nameditem">the <code>Window</code> object is indexed for property
@@ -1701,8 +1701,8 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <p><dfn id="dom-window-nameditem-filter">Named objects</dfn> with the name <var>name</var>, for the purposes of the above algorithm, are those that are either:</p>
 
   <ul><li><a href="/breakup/specs/browser-dom/#child-browsing-context" id="named-access-on-the-window-object:child-browsing-context-2">child browsing contexts</a> of the <a href="/breakup/specs/browser-dom/#active-document" id="named-access-on-the-window-object:active-document-5">active
-   document</a> whose name is <var>name</var>,</li><li><code id="named-access-on-the-window-object:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, <code id="named-access-on-the-window-object:the-applet-element-2"><a href="#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element-2"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
-   <code id="named-access-on-the-window-object:the-form-element-2"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>, <code id="named-access-on-the-window-object:frameset-2"><a href="#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="named-access-on-the-window-object:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that
+   document</a> whose name is <var>name</var>,</li><li><code id="named-access-on-the-window-object:the-a-element-2"><a href="/breakup/specs/html-linking/#the-a-element">a</a></code>, <code id="named-access-on-the-window-object:the-applet-element-2"><a href="/breakup/specs/html-obsolete/#the-applet-element">applet</a></code>, <code id="named-access-on-the-window-object:the-area-element-2"><a href="/breakup/specs/html-linking/#the-area-element">area</a></code>, <code id="named-access-on-the-window-object:the-embed-element-2"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>,
+   <code id="named-access-on-the-window-object:the-form-element-2"><a href="/breakup/specs/html-forms/#the-form-element">form</a></code>, <code id="named-access-on-the-window-object:frameset-2"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code>, <code id="named-access-on-the-window-object:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code>, or <code id="named-access-on-the-window-object:the-object-element-2"><a href="/breakup/specs/html-embedding/#the-object-element">object</a></code> elements that
    have a <code>name</code> content attribute whose value is <var>name</var>, or</li><li><a href="/breakup/specs/core-algorithms/#html-elements" id="named-access-on-the-window-object:html-elements-2">HTML elements</a> that have an <code id="named-access-on-the-window-object:the-id-attribute-3"><a href="/breakup/specs/html-attributes/#the-id-attribute">id</a></code> content attribute
    whose value is <var>name</var>.</li></ul></section>
 
@@ -2262,7 +2262,7 @@ x === this; // true</pre>
    </dd><dt>The <dfn id="sandboxed-plugins-browsing-context-flag">sandboxed plugins browsing context flag</dfn></dt><dd>
 
     <p>This flag prevents content from instantiating <a href="/breakup/specs/core-algorithms/#plugin" id="sandboxing:plugin">plugins</a>, whether
-    using <a href="/breakup/specs/html-embedding/#sandboxPluginEmbed">the <code>embed</code> element</a>, <a href="/breakup/specs/html-embedding/#sandboxPluginObject">the <code>object</code> element</a>, <a href="#sandboxPluginApplet">the <code>applet</code> element</a>, or through <a href="/breakup/specs/browsing/#sandboxPluginNavigate">navigation</a> of a <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="sandboxing:nested-browsing-context">nested browsing context</a>, unless
+    using <a href="/breakup/specs/html-embedding/#sandboxPluginEmbed">the <code>embed</code> element</a>, <a href="/breakup/specs/html-embedding/#sandboxPluginObject">the <code>object</code> element</a>, <a href="/breakup/specs/html-obsolete/#sandboxPluginApplet">the <code>applet</code> element</a>, or through <a href="/breakup/specs/browsing/#sandboxPluginNavigate">navigation</a> of a <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="sandboxing:nested-browsing-context">nested browsing context</a>, unless
     those <a href="/breakup/specs/core-algorithms/#plugin" id="sandboxing:plugin-2">plugins</a> can be <a href="/breakup/specs/core-algorithms/#concept-plugin-secure" id="sandboxing:concept-plugin-secure">secured</a>.</p>
 
    </dd><dt>The <dfn id="sandboxed-seamless-iframes-flag">sandboxed seamless iframes flag</dfn></dt><dd>
@@ -4403,14 +4403,14 @@ typedef <a href="/breakup/specs/browser-dom/#onbeforeunloadeventhandlernonnull" 
   <hr>
 
   <p>The following are the <a href="/breakup/specs/browser-dom/#event-handlers" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handlers-3">event handlers</a> (and their corresponding <a href="/breakup/specs/browser-dom/#event-handler-event-type" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-event-type-3">event handler event types</a>) that must be
-  supported by all <a href="/breakup/specs/core-algorithms/#html-elements" id="event-handlers-on-elements,-document-objects,-and-window-objects:html-elements-2">HTML elements</a> other than <code id="event-handlers-on-elements,-document-objects,-and-window-objects:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> and <code id="event-handlers-on-elements,-document-objects,-and-window-objects:frameset"><a href="#frameset">frameset</a></code>
+  supported by all <a href="/breakup/specs/core-algorithms/#html-elements" id="event-handlers-on-elements,-document-objects,-and-window-objects:html-elements-2">HTML elements</a> other than <code id="event-handlers-on-elements,-document-objects,-and-window-objects:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code> and <code id="event-handlers-on-elements,-document-objects,-and-window-objects:frameset"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code>
   elements, as both <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-content-attributes-2">event handler content attributes</a> and <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-idl-attributes-3">event handler IDL
   attributes</a>; that must be supported by all <code id="event-handlers-on-elements,-document-objects,-and-window-objects:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code>
   objects, as <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-idl-attributes-4">event handler IDL attributes</a>; and that must be
   supported by all <code id="event-handlers-on-elements,-document-objects,-and-window-objects:window-3"><a href="/breakup/specs/browser-dom/#window">Window</a></code> objects, as <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-idl-attributes-5">event handler IDL attributes</a> on the
   <code id="event-handlers-on-elements,-document-objects,-and-window-objects:window-4"><a href="/breakup/specs/browser-dom/#window">Window</a></code> objects themselves, and with corresponding <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-content-attributes-3">event handler content
   attributes</a> and <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-idl-attributes-6">event handler IDL attributes</a> exposed on all <code id="event-handlers-on-elements,-document-objects,-and-window-objects:the-body-element-2"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code>
-  and <code id="event-handlers-on-elements,-document-objects,-and-window-objects:frameset-2"><a href="#frameset">frameset</a></code> elements that are owned by <a href="/breakup/specs/browser-dom/#concept-document-window" id="event-handlers-on-elements,-document-objects,-and-window-objects:concept-document-window">that
+  and <code id="event-handlers-on-elements,-document-objects,-and-window-objects:frameset-2"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code> elements that are owned by <a href="/breakup/specs/browser-dom/#concept-document-window" id="event-handlers-on-elements,-document-objects,-and-window-objects:concept-document-window">that
   <code>Window</code> object's <code>Document</code>s</a>:</p>
 
   <table><thead><tr><th><a href="/breakup/specs/browser-dom/#event-handlers" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handlers-4">Event handler</a> </th><th><a href="/breakup/specs/browser-dom/#event-handler-event-type" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-event-type-4">Event handler event type</a>
@@ -4428,7 +4428,7 @@ typedef <a href="/breakup/specs/browser-dom/#onbeforeunloadeventhandlernonnull" 
   supported by <code id="event-handlers-on-elements,-document-objects,-and-window-objects:window-5"><a href="/breakup/specs/browser-dom/#window">Window</a></code> objects, as <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-idl-attributes-7">event handler IDL attributes</a> on the
   <code id="event-handlers-on-elements,-document-objects,-and-window-objects:window-6"><a href="/breakup/specs/browser-dom/#window">Window</a></code> objects themselves, and with corresponding <a href="/breakup/specs/browser-dom/#event-handler-content-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-content-attributes-4">event handler content
   attributes</a> and <a href="/breakup/specs/browser-dom/#event-handler-idl-attributes" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-idl-attributes-8">event handler IDL attributes</a> exposed on all <code id="event-handlers-on-elements,-document-objects,-and-window-objects:the-body-element-3"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code>
-  and <code id="event-handlers-on-elements,-document-objects,-and-window-objects:frameset-3"><a href="#frameset">frameset</a></code> elements that are owned by <a href="/breakup/specs/browser-dom/#concept-document-window" id="event-handlers-on-elements,-document-objects,-and-window-objects:concept-document-window-2">that
+  and <code id="event-handlers-on-elements,-document-objects,-and-window-objects:frameset-3"><a href="/breakup/specs/html-obsolete/#frameset">frameset</a></code> elements that are owned by <a href="/breakup/specs/browser-dom/#concept-document-window" id="event-handlers-on-elements,-document-objects,-and-window-objects:concept-document-window-2">that
   <code>Window</code> object's <code>Document</code>s</a>:</p>
 
   <table><thead><tr><th><a href="/breakup/specs/browser-dom/#event-handlers" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handlers-6">Event handler</a> </th><th><a href="/breakup/specs/browser-dom/#event-handler-event-type" id="event-handlers-on-elements,-document-objects,-and-window-objects:event-handler-event-type-6">Event handler event type</a>
@@ -4551,7 +4551,7 @@ interface <dfn id="windoweventhandlers">WindowEventHandlers</dfn> {
 
   <section><h2>Event firing</h2>
 
-  <p>Certain operations and methods are defined as firing events on elements. For example, the <code id="event-firing:dom-click"><a href="/breakup/specs/html-interacton-attr/#dom-click">click()</a></code> method on the <code id="event-firing:htmlelement"><a href="#htmlelement">HTMLElement</a></code> interface is defined as
+  <p>Certain operations and methods are defined as firing events on elements. For example, the <code id="event-firing:dom-click"><a href="/breakup/specs/html-interacton-attr/#dom-click">click()</a></code> method on the <code id="event-firing:htmlelement"><a href="/breakup/specs/html-scripting/#htmlelement">HTMLElement</a></code> interface is defined as
   firing a <code id="event-firing:event-click"><a href="/breakup/specs/core-algorithms/#event-click">click</a></code> event on the element. [[!DOMEVENTS]]</p>
 
   <p><dfn id="fire-a-simple-event">Firing a simple event named <var>e</var></dfn>

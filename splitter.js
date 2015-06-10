@@ -101,8 +101,11 @@ jsdom.env(
         for (var spec in config.split) {
             splits.push({ link: spec, title: config.split[spec].title, abstract: config.split[spec].abstract });
             config.split[spec].content.forEach(function (id) {
-                // this assumes that all non-strings are instructions to unwrap, may be true, might not
-                var $secs = (typeof id === "string") ? section(id) : section(id.id).find("> section");
+                var $secs;
+                if (typeof id === "string") $secs = section(id);
+                else if (id.unwrap) $secs = section(id.id).find("> section");
+                else if (id.noSubSections) $secs = section(id.id).find("> *:not(section)");
+                else console.error("Don't know how to process: ", id);
                 $secs.each(function () {
                     var $s = $(this);
                     $s.find("[id]")
@@ -140,6 +143,17 @@ jsdom.env(
                                             .each(function () {
                                                 moveOver($(this), doc);
                                             });
+                            }
+                            else if (id.noSubSections) {
+                                var $newSec = $("<section><h2></h2></section>")
+                                                .find("h2")
+                                                    .html(id.title)
+                                                .end()
+                                                .find("section")
+                                                    .append(section(id.id).find("> *:not(section)"))
+                                                .end()
+                                ;
+                                moveOver($newSec, doc);
                             }
                             else {
                                 console.error("Unknown processing for id", id);
