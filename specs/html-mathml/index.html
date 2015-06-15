@@ -32,4 +32,85 @@
     </section>
   
 
-</body></html>
+<section><h2>MathML</h2>
+
+  <p>The <dfn id="math"><code>math</code></dfn> element from the <a href="/breakup/specs/core-algorithms/#mathml-namespace" id="mathml:mathml-namespace">MathML namespace</a>
+  falls into the <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="mathml:embedded-content-category">embedded content</a>, <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="mathml:phrasing-content-2">phrasing content</a>, and <a href="/breakup/specs/html-best-practices/#flow-content-2" id="mathml:flow-content-2">flow
+  content</a> categories for the purposes of the content models in this specification.</p>
+
+  <p>This specification refers to several specific MathML elements, in particular:
+    <dfn id="math:annotation-xml"><code>annotation-xml</code></dfn>,
+    <dfn id="math:merror"><code>merror</code></dfn>,
+    <dfn id="math:mi"><code>mi</code></dfn>,
+    <dfn id="math:mn"><code>mn</code></dfn>,
+    <dfn id="math:mo"><code>mo</code></dfn>,
+    <dfn id="math:ms"><code>ms</code></dfn>, and
+    <dfn id="math:mtext"><code>mtext</code></dfn>.
+  </p>
+
+  <p>When the MathML <code id="mathml:math:annotation-xml"><a href="/breakup/specs/html-mathml/#math:annotation-xml">annotation-xml</a></code> element contains
+  elements from the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="mathml:html-namespace-2">HTML namespace</a>, such elements must all be <a href="/breakup/specs/html-best-practices/#flow-content-2" id="mathml:flow-content-2-2">flow
+  content</a>. [[!MATHML]]</p>
+
+  <p>When the MathML token elements (<code id="mathml:math:mi"><a href="/breakup/specs/html-mathml/#math:mi">mi</a></code>, <code id="mathml:math:mo"><a href="/breakup/specs/html-mathml/#math:mo">mo</a></code>, <code id="mathml:math:mn"><a href="/breakup/specs/html-mathml/#math:mn">mn</a></code>, <code id="mathml:math:ms"><a href="/breakup/specs/html-mathml/#math:ms">ms</a></code>,
+  and <code id="mathml:math:mtext"><a href="/breakup/specs/html-mathml/#math:mtext">mtext</a></code>) are descendants of HTML elements, they may contain
+  <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="mathml:phrasing-content-2-2">phrasing content</a> elements from the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="mathml:html-namespace-2-2">HTML namespace</a>. [[!MATHML]]</p>
+  
+
+  
+
+  
+
+  <p>User agents must handle text other than <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="mathml:inter-element-whitespace">inter-element whitespace</a> found in MathML
+  elements whose content models do not allow straight text by pretending for the purposes of MathML
+  content models, layout, and rendering that that text is actually wrapped in an <code id="mathml:math:mtext-2"><a href="/breakup/specs/html-mathml/#math:mtext">mtext</a></code> element in the <a href="/breakup/specs/core-algorithms/#mathml-namespace" id="mathml:mathml-namespace-2">MathML namespace</a>. (Such text is not,
+  however, conforming.)</p>
+
+  <p>User agents must act as if any MathML element whose contents does not match the element's
+  content model was replaced, for the purposes of MathML layout and rendering, by an <code id="mathml:math:merror"><a href="/breakup/specs/html-mathml/#math:merror">merror</a></code> element in the <a href="/breakup/specs/core-algorithms/#mathml-namespace" id="mathml:mathml-namespace-3">MathML namespace</a> containing some
+  appropriate error message.</p>
+
+  <p>To enable authors to use MathML tools that only accept MathML in its XML form, interactive HTML
+  user agents are encouraged to provide a way to export any MathML fragment as an XML
+  namespace-well-formed XML fragment.</p>
+
+  
+
+  <p>The semantics of MathML elements are defined by the MathML specification and <a href="/breakup/specs/core-algorithms/#other-applicable-specifications" id="mathml:other-applicable-specifications">other
+  applicable specifications</a>. [[!MATHML]]</p>
+
+  <div class="example">
+
+   <p>Here is an example of the use of MathML in an HTML document:</p>
+
+   <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+ &lt;head&gt;
+  &lt;title&gt;The quadratic formula&lt;/title&gt;
+ &lt;/head&gt;
+ &lt;body&gt;
+  &lt;h1&gt;The quadratic formula&lt;/h1&gt;
+  &lt;p&gt;
+   &lt;math&gt;
+    &lt;mi&gt;x&lt;/mi&gt;
+    &lt;mo&gt;=&lt;/mo&gt;
+    &lt;mfrac&gt;
+     &lt;mrow&gt;
+      &lt;mo form="prefix"&gt;−&lt;/mo&gt; &lt;mi&gt;b&lt;/mi&gt;
+      &lt;mo&gt;±&lt;/mo&gt;
+      &lt;msqrt&gt;
+       &lt;msup&gt; &lt;mi&gt;b&lt;/mi&gt; &lt;mn&gt;2&lt;/mn&gt; &lt;/msup&gt;
+       &lt;mo&gt;−&lt;/mo&gt;
+       &lt;mn&gt;4&lt;/mn&gt; &lt;mo&gt;⁢&lt;/mo&gt; &lt;mi&gt;a&lt;/mi&gt; &lt;mo&gt;⁢&lt;/mo&gt; &lt;mi&gt;c&lt;/mi&gt;
+      &lt;/msqrt&gt;
+     &lt;/mrow&gt;
+     &lt;mrow&gt;
+      &lt;mn&gt;2&lt;/mn&gt; &lt;mo&gt;⁢&lt;/mo&gt; &lt;mi&gt;a&lt;/mi&gt;
+     &lt;/mrow&gt;
+    &lt;/mfrac&gt;
+   &lt;/math&gt;
+  &lt;/p&gt;
+ &lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div></section></body></html>

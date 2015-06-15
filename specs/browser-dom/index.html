@@ -326,7 +326,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <p>The <dfn id="document.title"><code>title</code></dfn> attribute
   must, on getting, run the following algorithm:</p>
 
-  <ol><li><p>If the <a href="/breakup/specs/core-algorithms/#root-element" id="dom-tree-accessors:root-element">root element</a> is an <code id="dom-tree-accessors:svg"><a href="#svg">svg</a></code> element in the <a href="/breakup/specs/core-algorithms/#svg-namespace" id="dom-tree-accessors:svg-namespace">SVG
+  <ol><li><p>If the <a href="/breakup/specs/core-algorithms/#root-element" id="dom-tree-accessors:root-element">root element</a> is an <code id="dom-tree-accessors:svg"><a href="/breakup/specs/html-svg/#svg">svg</a></code> element in the <a href="/breakup/specs/core-algorithms/#svg-namespace" id="dom-tree-accessors:svg-namespace">SVG
    namespace</a>, then let <var>value</var> be a concatenation of the data of all the
    child <code id="dom-tree-accessors:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes of the first <code>title</code> element in the <a href="/breakup/specs/core-algorithms/#svg-namespace" id="dom-tree-accessors:svg-namespace-2">SVG
    namespace</a> that is a child of the <a href="/breakup/specs/core-algorithms/#root-element" id="dom-tree-accessors:root-element-2">root element</a>. [[!SVG]]</p></li><li><p>Otherwise, let <var>value</var> be a concatenation of the data of all the child
@@ -337,7 +337,7 @@ partial /*sealed*/ interface <dfn id="document">Document</dfn> {
   <p>On setting, the steps corresponding to the first matching condition in the following list must
   be run:</p>
 
-  <dl class="switch"><dt>If the <a href="/breakup/specs/core-algorithms/#root-element" id="dom-tree-accessors:root-element-3">root element</a> is an <code id="dom-tree-accessors:svg-2"><a href="#svg">svg</a></code> element in the <a href="/breakup/specs/core-algorithms/#svg-namespace" id="dom-tree-accessors:svg-namespace-3">SVG
+  <dl class="switch"><dt>If the <a href="/breakup/specs/core-algorithms/#root-element" id="dom-tree-accessors:root-element-3">root element</a> is an <code id="dom-tree-accessors:svg-2"><a href="/breakup/specs/html-svg/#svg">svg</a></code> element in the <a href="/breakup/specs/core-algorithms/#svg-namespace" id="dom-tree-accessors:svg-namespace-3">SVG
    namespace</a> [[!SVG]]</dt><dd>
 
     <ol><li><p>Let <var>element</var> be the first <code>title</code> element in

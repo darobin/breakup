@@ -403,7 +403,7 @@
             ]
         }
     ,   "html-bidi":  {
-            "title":    "HTML Requirements Relating to the Bidirectional Algorithm"
+            "title":    "HTML Bidirectional Algorithm Requirements"
         ,   "abstract": "Bidirectional."
         ,   "content":  [
                 {
@@ -424,20 +424,14 @@
             "title":    "HTML MathML Integration"
         ,   "abstract": "MathML."
         ,   "content":  [
-                {
-                    "id":       "#mathml"
-                ,   "unwrap":   true
-                }
+                "#mathml"
             ]
         }
     ,   "html-svg":  {
             "title":    "HTML SVG Integration"
         ,   "abstract": "SVG."
         ,   "content":  [
-                {
-                    "id":       "#svg-0"
-                ,   "unwrap":   true
-                }
+                "#svg-0"
             ]
         }
     ,   "html-obsolete":  {
