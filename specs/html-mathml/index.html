@@ -35,7 +35,7 @@
 <section><h2>MathML</h2>
 
   <p>The <dfn id="math"><code>math</code></dfn> element from the <a href="/breakup/specs/core-algorithms/#mathml-namespace" id="mathml:mathml-namespace">MathML namespace</a>
-  falls into the <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="mathml:embedded-content-category">embedded content</a>, <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="mathml:phrasing-content-2">phrasing content</a>, and <a href="/breakup/specs/html-best-practices/#flow-content-2" id="mathml:flow-content-2">flow
+  falls into the <a href="/breakup/specs/html/#embedded-content-category" id="mathml:embedded-content-category">embedded content</a>, <a href="/breakup/specs/html/#phrasing-content-2" id="mathml:phrasing-content-2">phrasing content</a>, and <a href="/breakup/specs/html/#flow-content-2" id="mathml:flow-content-2">flow
   content</a> categories for the purposes of the content models in this specification.</p>
 
   <p>This specification refers to several specific MathML elements, in particular:
@@ -49,19 +49,19 @@
   </p>
 
   <p>When the MathML <code id="mathml:math:annotation-xml"><a href="/breakup/specs/html-mathml/#math:annotation-xml">annotation-xml</a></code> element contains
-  elements from the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="mathml:html-namespace-2">HTML namespace</a>, such elements must all be <a href="/breakup/specs/html-best-practices/#flow-content-2" id="mathml:flow-content-2-2">flow
+  elements from the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="mathml:html-namespace-2">HTML namespace</a>, such elements must all be <a href="/breakup/specs/html/#flow-content-2" id="mathml:flow-content-2-2">flow
   content</a>. [[!MATHML]]</p>
 
   <p>When the MathML token elements (<code id="mathml:math:mi"><a href="/breakup/specs/html-mathml/#math:mi">mi</a></code>, <code id="mathml:math:mo"><a href="/breakup/specs/html-mathml/#math:mo">mo</a></code>, <code id="mathml:math:mn"><a href="/breakup/specs/html-mathml/#math:mn">mn</a></code>, <code id="mathml:math:ms"><a href="/breakup/specs/html-mathml/#math:ms">ms</a></code>,
   and <code id="mathml:math:mtext"><a href="/breakup/specs/html-mathml/#math:mtext">mtext</a></code>) are descendants of HTML elements, they may contain
-  <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="mathml:phrasing-content-2-2">phrasing content</a> elements from the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="mathml:html-namespace-2-2">HTML namespace</a>. [[!MATHML]]</p>
+  <a href="/breakup/specs/html/#phrasing-content-2" id="mathml:phrasing-content-2-2">phrasing content</a> elements from the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="mathml:html-namespace-2-2">HTML namespace</a>. [[!MATHML]]</p>
   
 
   
 
   
 
-  <p>User agents must handle text other than <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="mathml:inter-element-whitespace">inter-element whitespace</a> found in MathML
+  <p>User agents must handle text other than <a href="/breakup/specs/html/#inter-element-whitespace" id="mathml:inter-element-whitespace">inter-element whitespace</a> found in MathML
   elements whose content models do not allow straight text by pretending for the purposes of MathML
   content models, layout, and rendering that that text is actually wrapped in an <code id="mathml:math:mtext-2"><a href="/breakup/specs/html-mathml/#math:mtext">mtext</a></code> element in the <a href="/breakup/specs/core-algorithms/#mathml-namespace" id="mathml:mathml-namespace-2">MathML namespace</a>. (Such text is not,
   however, conforming.)</p>

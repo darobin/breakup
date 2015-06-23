@@ -1,6 +1,6 @@
 <html lang="en"><head>
     <meta charset="utf-8">
-    <title>HTML Images</title>
+    <title>HTML Images and Figures</title>
     <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
     <script class="remove">
       var respecConfig = {
@@ -444,7 +444,7 @@ was an English &lt;a href="/wiki/Music_hall"&gt;music hall&lt;/a&gt; singer, ...
 
   <dl><dt>Media Queries [[!MQ]]</dt><dd><dfn id="media-condition">&lt;media-condition&gt;</dfn></dd><dt>CSS Values and Units [[!CSSVALUES]]</dt><dd><dfn id="length">&lt;length&gt;</dfn></dd><dt>CSS Syntax [[!CSSSYNTAX]]</dt><dd><dfn id="parse-a-comma-separated-list-of-component-values">Parse a comma-separated list of component values</dfn></dd><dd><dfn id="component-value">component value</dfn></dd><dd><dfn id="whitespace-token">&lt;whitespace-token&gt;</dfn></dd><dt>Fetch [[!FETCH]]</dt><dd><dfn id="concept-request-context">context</dfn></dd></dl></section><section><h2>The <dfn><code>picture</code></dfn> element</h2>
 
-  <dl class="element"><dt><a href="/breakup/specs/html-best-practices/#concept-element-categories" id="the-picture-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html-best-practices/#flow-content-2" id="the-picture-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="the-picture-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="/breakup/specs/html-best-practices/#embedded-content-category" id="the-picture-element:embedded-content-category">Embedded content</a>.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-contexts" id="the-picture-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="the-picture-element:embedded-content-category-2">embedded content</a> is expected.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-content-model" id="the-picture-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-picture-element:the-source-element-when-used-with-the-picture-element"><a href="/breakup/specs/html-images/#the-source-element-when-used-with-the-picture-element">source</a></code> elements, followed by one <code id="the-picture-element:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element, optionally intermixed with <a href="/breakup/specs/html-best-practices/#script-supporting-elements-2" id="the-picture-element:script-supporting-elements-2">script-supporting elements</a>.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-tag-omission" id="the-picture-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-attributes" id="the-picture-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-picture-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-dom" id="the-picture-element:concept-element-dom">DOM interface</a>:</dt><dd>
+  <dl class="element"><dt><a href="/breakup/specs/html/#concept-element-categories" id="the-picture-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html/#flow-content-2" id="the-picture-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html/#phrasing-content-2" id="the-picture-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="/breakup/specs/html/#embedded-content-category" id="the-picture-element:embedded-content-category">Embedded content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-contexts" id="the-picture-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="/breakup/specs/html/#embedded-content-category" id="the-picture-element:embedded-content-category-2">embedded content</a> is expected.</dd><dt><a href="/breakup/specs/html/#concept-element-content-model" id="the-picture-element:concept-element-content-model">Content model</a>:</dt><dd>Zero or more <code id="the-picture-element:the-source-element-when-used-with-the-picture-element"><a href="/breakup/specs/html-images/#the-source-element-when-used-with-the-picture-element">source</a></code> elements, followed by one <code id="the-picture-element:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element, optionally intermixed with <a href="/breakup/specs/html/#script-supporting-elements-2" id="the-picture-element:script-supporting-elements-2">script-supporting elements</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-tag-omission" id="the-picture-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="/breakup/specs/html/#concept-element-attributes" id="the-picture-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-picture-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dt><a href="/breakup/specs/html/#concept-element-dom" id="the-picture-element:concept-element-dom">DOM interface</a>:</dt><dd>
 <pre class="idl">interface <dfn id="htmlpictureelement">HTMLPictureElement</dfn> : <a href="/breakup/specs/html-scripting/#htmlelement" id="the-picture-element:htmlelement">HTMLElement</a> {};</pre>
    </dd></dl>
 
@@ -463,7 +463,7 @@ was an English &lt;a href="/wiki/Music_hall"&gt;music hall&lt;/a&gt; singer, ...
   it merely provides a context for its contained <code id="the-picture-element:the-img-element-3"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element
   that enables it to choose from multiple <a href="/breakup/specs/core-algorithms/#url" id="the-picture-element:url">URLs</a>.</p></section><section><h2>The <dfn><code>source</code></dfn> element when used with the <code id="the-source-element-when-used-with-the-picture-element:the-picture-element"><a href="/breakup/specs/html-images/#the-picture-element">picture</a></code> element</h2>
 
-  <dl class="element"><dt><a href="/breakup/specs/html-best-practices/#concept-element-categories" id="the-source-element-when-used-with-the-picture-element:concept-element-categories">Categories</a>:</dt><dd>Same as for the <code id="the-source-element-when-used-with-the-picture-element:the-source-element"><a href="/breakup/specs/html-media/#the-source-element">source</a></code> element.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-contexts" id="the-source-element-when-used-with-the-picture-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-source-element-when-used-with-the-picture-element:the-picture-element-2"><a href="/breakup/specs/html-images/#the-picture-element">picture</a></code> element, before the <code id="the-source-element-when-used-with-the-picture-element:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-content-model" id="the-source-element-when-used-with-the-picture-element:concept-element-content-model">Content model</a>:</dt><dd>Same as for the <code id="the-source-element-when-used-with-the-picture-element:the-source-element-2"><a href="/breakup/specs/html-media/#the-source-element">source</a></code> element.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-attributes" id="the-source-element-when-used-with-the-picture-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-source-element-when-used-with-the-picture-element:global-attributes">Global attributes</a></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-srcset"><a href="/breakup/specs/html-images/#attr-picture-source-srcset">srcset</a></code></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-sizes"><a href="/breakup/specs/html-images/#attr-picture-source-sizes">sizes</a></code></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-media"><a href="/breakup/specs/html-images/#attr-picture-source-media">media</a></code></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-type"><a href="/breakup/specs/html-images/#attr-picture-source-type">type</a></code></dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-dom" id="the-source-element-when-used-with-the-picture-element:concept-element-dom">DOM interface</a>:</dt><dd>
+  <dl class="element"><dt><a href="/breakup/specs/html/#concept-element-categories" id="the-source-element-when-used-with-the-picture-element:concept-element-categories">Categories</a>:</dt><dd>Same as for the <code id="the-source-element-when-used-with-the-picture-element:the-source-element"><a href="/breakup/specs/html-media/#the-source-element">source</a></code> element.</dd><dt><a href="/breakup/specs/html/#concept-element-contexts" id="the-source-element-when-used-with-the-picture-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As a child of a <code id="the-source-element-when-used-with-the-picture-element:the-picture-element-2"><a href="/breakup/specs/html-images/#the-picture-element">picture</a></code> element, before the <code id="the-source-element-when-used-with-the-picture-element:the-img-element"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element.</dd><dt><a href="/breakup/specs/html/#concept-element-content-model" id="the-source-element-when-used-with-the-picture-element:concept-element-content-model">Content model</a>:</dt><dd>Same as for the <code id="the-source-element-when-used-with-the-picture-element:the-source-element-2"><a href="/breakup/specs/html-media/#the-source-element">source</a></code> element.</dd><dt><a href="/breakup/specs/html/#concept-element-attributes" id="the-source-element-when-used-with-the-picture-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-source-element-when-used-with-the-picture-element:global-attributes">Global attributes</a></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-srcset"><a href="/breakup/specs/html-images/#attr-picture-source-srcset">srcset</a></code></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-sizes"><a href="/breakup/specs/html-images/#attr-picture-source-sizes">sizes</a></code></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-media"><a href="/breakup/specs/html-images/#attr-picture-source-media">media</a></code></dd><dd><code id="the-source-element-when-used-with-the-picture-element:attr-picture-source-type"><a href="/breakup/specs/html-images/#attr-picture-source-type">type</a></code></dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd>None</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dt><a href="/breakup/specs/html/#concept-element-dom" id="the-source-element-when-used-with-the-picture-element:concept-element-dom">DOM interface</a>:</dt><dd>
 <pre class="idl">partial interface <a href="/breakup/specs/html-media/#htmlsourceelement" id="the-source-element-when-used-with-the-picture-element:htmlsourceelement">HTMLSourceElement</a> {
            attribute DOMString <a href="/breakup/specs/html-images/#dom-picture-source-srcset" id="the-source-element-when-used-with-the-picture-element:dom-picture-source-srcset">srcset</a>;
            attribute DOMString <a href="/breakup/specs/html-images/#dom-picture-source-sizes" id="the-source-element-when-used-with-the-picture-element:dom-picture-source-sizes">sizes</a>;
@@ -523,10 +523,10 @@ was an English &lt;a href="/wiki/Music_hall"&gt;music hall&lt;/a&gt; singer, ...
   <dfn id="dom-picture-source-media"><code>media</code></dfn> must <a href="/breakup/specs/core-algorithms/#reflect" id="the-source-element-when-used-with-the-picture-element:reflect">reflect</a> the
   respective content attributes of the same name.</p></section><section><h2>The <dfn><code>img</code></dfn> element</h2>
 
-  <dl class="element"><dt><a href="/breakup/specs/html-best-practices/#concept-element-categories" id="the-img-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html-best-practices/#flow-content-2" id="the-img-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="the-img-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="/breakup/specs/html-best-practices/#embedded-content-category" id="the-img-element:embedded-content-category">Embedded content</a>.</dd><dd><a href="/breakup/specs/html-forms/#form-associated-element" id="the-img-element:form-associated-element">Form-associated element</a>.</dd><dd>If the element has a <code id="the-img-element:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute: <a href="/breakup/specs/html-best-practices/#interactive-content-2" id="the-img-element:interactive-content-2">Interactive content</a>.</dd><dd><a href="/breakup/specs/html-best-practices/#palpable-content-2" id="the-img-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-contexts" id="the-img-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="the-img-element:embedded-content-category-2">embedded content</a> is expected.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-content-model" id="the-img-element:concept-element-content-model">Content model</a>:</dt><dd>Empty.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-tag-omission" id="the-img-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>No <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-img-element:syntax-end-tag">end tag</a>.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-attributes" id="the-img-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-img-element:global-attributes">Global attributes</a></dd><dd><code id="the-img-element:attr-img-alt"><a href="/breakup/specs/html-images/#attr-img-alt">alt</a></code> — Replacement text for use when images are not available</dd><dd><code id="the-img-element:attr-img-src"><a href="/breakup/specs/html-images/#attr-img-src">src</a></code> — Address of the resource</dd><dd><code id="the-img-element:attr-img-srcset"><a href="/breakup/specs/html-images/#attr-img-srcset">srcset</a></code> — Images to use in different situations (e.g. high-resolution displays, small monitors, etc)</dd><dd><code id="the-img-element:attr-img-sizes"><a href="/breakup/specs/html-images/#attr-img-sizes">sizes</a></code></dd><dd><code id="the-img-element:attr-img-crossorigin"><a href="/breakup/specs/html-images/#attr-img-crossorigin">crossorigin</a></code> — How the element handles crossorigin requests</dd><dd><code id="the-img-element:attr-hyperlink-usemap-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> — Name of <a href="/breakup/specs/html-linking/#image-map" id="the-img-element:image-map">image map</a> to use</dd><dd><code id="the-img-element:attr-img-ismap"><a href="/breakup/specs/html-images/#attr-img-ismap">ismap</a></code> — Whether the image is a server-side image map</dd><dd><code id="the-img-element:attr-dim-width"><a href="/breakup/specs/html-embedding/#attr-dim-width">width</a></code> — Horizontal dimension</dd><dd><code id="the-img-element:attr-dim-height"><a href="/breakup/specs/html-embedding/#attr-dim-height">height</a></code> — Vertical dimension</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-presentation"><code title="">presentation</code></a> role only, for an 
+  <dl class="element"><dt><a href="/breakup/specs/html/#concept-element-categories" id="the-img-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html/#flow-content-2" id="the-img-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html/#phrasing-content-2" id="the-img-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="/breakup/specs/html/#embedded-content-category" id="the-img-element:embedded-content-category">Embedded content</a>.</dd><dd><a href="/breakup/specs/html-forms/#form-associated-element" id="the-img-element:form-associated-element">Form-associated element</a>.</dd><dd>If the element has a <code id="the-img-element:attr-hyperlink-usemap"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> attribute: <a href="/breakup/specs/html/#interactive-content-2" id="the-img-element:interactive-content-2">Interactive content</a>.</dd><dd><a href="/breakup/specs/html/#palpable-content-2" id="the-img-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-contexts" id="the-img-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="/breakup/specs/html/#embedded-content-category" id="the-img-element:embedded-content-category-2">embedded content</a> is expected.</dd><dt><a href="/breakup/specs/html/#concept-element-content-model" id="the-img-element:concept-element-content-model">Content model</a>:</dt><dd>Empty.</dd><dt><a href="/breakup/specs/html/#concept-element-tag-omission" id="the-img-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>No <a href="/breakup/specs/html-syntax/#syntax-end-tag" id="the-img-element:syntax-end-tag">end tag</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-attributes" id="the-img-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-img-element:global-attributes">Global attributes</a></dd><dd><code id="the-img-element:attr-img-alt"><a href="/breakup/specs/html-images/#attr-img-alt">alt</a></code> — Replacement text for use when images are not available</dd><dd><code id="the-img-element:attr-img-src"><a href="/breakup/specs/html-images/#attr-img-src">src</a></code> — Address of the resource</dd><dd><code id="the-img-element:attr-img-srcset"><a href="/breakup/specs/html-images/#attr-img-srcset">srcset</a></code> — Images to use in different situations (e.g. high-resolution displays, small monitors, etc)</dd><dd><code id="the-img-element:attr-img-sizes"><a href="/breakup/specs/html-images/#attr-img-sizes">sizes</a></code></dd><dd><code id="the-img-element:attr-img-crossorigin"><a href="/breakup/specs/html-images/#attr-img-crossorigin">crossorigin</a></code> — How the element handles crossorigin requests</dd><dd><code id="the-img-element:attr-hyperlink-usemap-2"><a href="/breakup/specs/html-linking/#attr-hyperlink-usemap">usemap</a></code> — Name of <a href="/breakup/specs/html-linking/#image-map" id="the-img-element:image-map">image map</a> to use</dd><dd><code id="the-img-element:attr-img-ismap"><a href="/breakup/specs/html-images/#attr-img-ismap">ismap</a></code> — Whether the image is a server-side image map</dd><dd><code id="the-img-element:attr-dim-width"><a href="/breakup/specs/html-embedding/#attr-dim-width">width</a></code> — Horizontal dimension</dd><dd><code id="the-img-element:attr-dim-height"><a href="/breakup/specs/html-embedding/#attr-dim-height">height</a></code> — Vertical dimension</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-presentation"><code title="">presentation</code></a> role only, for an 
    <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element whose <code>alt</code> attribute's value is empty (<code title="">alt=""</code>), otherwise 
    <a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">any role value</a>.</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
-   <a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="/breakup/specs/html-best-practices/#concept-element-dom" id="the-img-element:concept-element-dom">DOM interface</a>:</dt><dd>
+   <a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-dom" id="the-img-element:concept-element-dom">DOM interface</a>:</dt><dd>
 <pre class="idl">[NamedConstructor=<a href="/breakup/specs/html-images/#dom-image" id="the-img-element:dom-image">Image</a>(optional unsigned long width, optional unsigned long height)]
 interface <dfn id="htmlimageelement">HTMLImageElement</dfn> : <a href="/breakup/specs/html-scripting/#htmlelement" id="the-img-element:htmlelement">HTMLElement</a> {
            attribute DOMString <a href="/breakup/specs/html-images/#dom-img-alt" id="the-img-element:dom-img-alt">alt</a>;
@@ -557,7 +557,7 @@ interface <dfn id="htmlimageelement">HTMLImageElement</dfn> : <a href="/breakup/
   is the embedded content; the value of
   the <dfn id="attr-img-alt"><code>alt</code></dfn> attribute provides equivalent content for
   those who cannot process images or who have image loading disabled (i.e. it is the
-  <code id="the-img-element:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element's <a href="/breakup/specs/html-best-practices/#fallback-content" id="the-img-element:fallback-content">fallback content</a>).</p>
+  <code id="the-img-element:the-img-element-2"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element's <a href="/breakup/specs/html/#fallback-content" id="the-img-element:fallback-content">fallback content</a>).</p>
 
   <p>The requirements on the <code id="the-img-element:attr-img-alt-2"><a href="/breakup/specs/html-images/#attr-img-alt">alt</a></code> attribute's value are described
   <a href="/breakup/specs/html-images/#alt">in the next section</a>.</p>
@@ -1480,11 +1480,11 @@ interface <dfn id="htmlimageelement">HTMLImageElement</dfn> : <a href="/breakup/
 
     <ol><li><p>If the image has a <code id="the-img-element:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute whose value is not
      the empty string, then the value of that attribute is the caption information; abort these
-     steps.</p></li><li><p>If the image is a descendant of a <code id="the-img-element:the-figure-element"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element that has a child
-     <code id="the-img-element:the-figcaption-element"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element, and, ignoring the <code id="the-img-element:the-figcaption-element-2"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element and its
-     descendants, the <code id="the-img-element:the-figure-element-2"><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element has no <a href="/breakup/specs/html-best-practices/#flow-content-2" id="the-img-element:flow-content-2-2">flow content</a> descendants other
-     than <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="the-img-element:inter-element-whitespace">inter-element whitespace</a> and the <code id="the-img-element:the-img-element-66"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element, then the contents of the first such
-     <code id="the-img-element:the-figcaption-element-3"><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element are the caption information; abort these steps.</p></li><li><p>There is no caption information.</p></li></ol>
+     steps.</p></li><li><p>If the image is a descendant of a <code id="the-img-element:the-figure-element"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element that has a child
+     <code id="the-img-element:the-figcaption-element"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element, and, ignoring the <code id="the-img-element:the-figcaption-element-2"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element and its
+     descendants, the <code id="the-img-element:the-figure-element-2"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element has no <a href="/breakup/specs/html/#flow-content-2" id="the-img-element:flow-content-2-2">flow content</a> descendants other
+     than <a href="/breakup/specs/html/#inter-element-whitespace" id="the-img-element:inter-element-whitespace">inter-element whitespace</a> and the <code id="the-img-element:the-img-element-66"><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element, then the contents of the first such
+     <code id="the-img-element:the-figcaption-element-3"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element are the caption information; abort these steps.</p></li><li><p>There is no caption information.</p></li></ol>
 
    </dd><dt>If the <code id="the-img-element:attr-img-src-16"><a href="/breakup/specs/html-images/#attr-img-src">src</a></code> attribute is not set and either the <code id="the-img-element:attr-img-alt-10"><a href="/breakup/specs/html-images/#attr-img-alt">alt</a></code> attribute is set to the empty string or the <code id="the-img-element:attr-img-alt-11"><a href="/breakup/specs/html-images/#attr-img-alt">alt</a></code> attribute is not set at all</dt><dd>
 
@@ -1957,8 +1957,8 @@ the time Marco had stuck his tongue out...&lt;/p&gt;</pre>
   &lt;/table&gt;
   &lt;/figure&gt;
   </pre>
-  <p class="note">The <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element is used to group the Bar Chart image and data table. 
-  The <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element provides a caption for the grouped content.</p>
+  <p class="note">The <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element is used to group the Bar Chart image and data table. 
+  The <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element provides a caption for the grouped content.</p>
   
   </div>
   <p class="note">For any of the examples in this section the <code><a href="/breakup/specs/html-ui/#the-details-element">details</a></code> and <code><a href="/breakup/specs/html-ui/#the-summary-element">summary</a></code> 
@@ -2069,7 +2069,7 @@ the time Marco had stuck his tongue out...&lt;/p&gt;</pre>
   <div class="example">
   <p>Here's another example of the same <a href="/breakup/specs/html-images/#piechart">pie chart</a> image, 
   showing a short text alternative included in the <code>alt</code> attribute 
-  and a longer text alternative in text. The <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> and <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> 
+  and a longer text alternative in text. The <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> and <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> 
   elements are used to associate the longer text alternative with the image. The <code>alt</code> attribute is used
   to label the image.</p>
 
@@ -2322,7 +2322,7 @@ the time Marco had stuck his tongue out...&lt;/p&gt;</pre>
   <div class="example">
   <p>This first example shows an image uploaded to a photo-sharing site. The photo is of a cat, sitting in the bath. The image has a 
   text alternative provided using the <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element's <code>alt</code> attribute. It also has a caption provided by including 
-  the <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element in a <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element and using a <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element to identify the caption text.</p>
+  the <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element in a <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element and using a <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element to identify the caption text.</p>
   
   <p><img alt="Lola the cat sitting under an umbrella in the bath tub." height="242" src="images/lola.png" width="300"></p>
   <p>Lola prefers a bath to a shower.</p>
@@ -2337,8 +2337,8 @@ the time Marco had stuck his tongue out...&lt;/p&gt;</pre>
   <div class="example">
   <p>This example is of an image that defies a complete description, as the subject of the image is open to interpretation.
   The image has a text alternative in the <code>alt</code> attribute which gives users who cannot view the image a sense 
-  of what the image is. It also has a caption provided by including the <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element in a <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> 
-  element and using a <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element to identify the caption text.</p>
+  of what the image is. It also has a caption provided by including the <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element in a <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> 
+  element and using a <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element to identify the caption text.</p>
   
   <p><img alt="An abstract, freeform, vertically symmetrical, black inkblot on a light background." height="197" src="images/inkblot1.png" width="300"></p>
   <p>The first of the ten cards in the Rorschach test.</p>
@@ -2360,8 +2360,8 @@ the time Marco had stuck his tongue out...&lt;/p&gt;</pre>
   <div class="example">
   <p>This example is fairly typical; the title and a time stamp are included in the image, automatically generated
   by the webcam software. It would be better if the text information was not included in the image, but as it is part
-  of the image, include it as part of the text alternative. A caption is also provided using the <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>
-  and <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> elements.  As the image is provided to give a visual indication of the current weather near a building,
+  of the image, include it as part of the text alternative. A caption is also provided using the <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>
+  and <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> elements.  As the image is provided to give a visual indication of the current weather near a building,
   a link to a local weather forecast is provided, as with automatically generated and uploaded webcam images it may be impractical to
   provide such information as a text alternative.</p>
 
@@ -2391,20 +2391,20 @@ the time Marco had stuck his tongue out...&lt;/p&gt;</pre>
   <h2>When a text alternative is not available at the time of publication</h2>
 
   <p>In some cases an image is included in a published document, but the author is unable to provide an appropriate text alternative. 
-  In such cases the minimum requirement is to provide a caption for the image using the <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> and <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> 
+  In such cases the minimum requirement is to provide a caption for the image using the <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> and <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> 
   elements under the following conditions:</p>
 
   <ul id="figcaption-as-alt-condition">
-  <li>The <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element is in a <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element
-  </li><li>The <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> element contains a <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element
-  </li><li>The <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element contains content other than inter-element whitespace
-  </li><li>Ignoring the <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element and its descendants, the <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>
+  <li>The <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element is in a <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element
+  </li><li>The <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element contains a <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element
+  </li><li>The <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element contains content other than inter-element whitespace
+  </li><li>Ignoring the <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element and its descendants, the <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>
   element has no <code><a href="http://www.w3.org/html/wg/drafts/2dcontext/master/#text-0">Text</a></code> node descendants other than inter-element whitespace, and no 
   embedded content descendant other than the <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element.
   </li></ul>
 
-  <p class="note">In other words, the only content of the <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> is an <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element and a <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code>
-  element, and the <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element must include (caption) content.</p>
+  <p class="note">In other words, the only content of the <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> is an <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element and a <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code>
+  element, and the <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element must include (caption) content.</p>
   <p class="note">Such cases are to be kept to an absolute
     minimum. If there is even the slightest possibility of the author
     having the ability to provide real alternative text, then it would
@@ -2425,7 +2425,7 @@ the time Marco had stuck his tongue out...&lt;/p&gt;</pre>
   &lt;/figure&gt;
   </pre>
   <p>Notice that even in this example, as much useful information
-    as possible is still included in the <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> element.</p>
+    as possible is still included in the <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element.</p>
   </div>
 
   <div class="example">
@@ -2685,7 +2685,7 @@ or the appropriateness of the <code>alt</code> text.</p>
 
   <!-- WHATWG recommend use of @title this is bad for usability and accessibility -->
   <p>For images that have captions, markup generators should use the
-  <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code> and <code><a href="/breakup/specs/html-figures/#the-figcaption-element">figcaption</a></code> elements to provide the
+  <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> and <code><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> elements to provide the
   image's caption.</p>
     <p>As a last resort, implementors should either set the <code><a href="/breakup/specs/html-images/#attr-img-alt">alt</a></code> attribute to the empty string, under
   the assumption that the image is a purely decorative image that
@@ -2732,7 +2732,7 @@ or the appropriateness of the <code>alt</code> text.</p>
    <!-- when editing this list, search for the two other occurrences
    of 'critical-no-alt' -->
 
-   <li><p>The <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element is in a <code><a href="/breakup/specs/html-figures/#the-figure-element">figure</a></code>
+   <li><p>The <code><a href="/breakup/specs/html-images/#the-img-element">img</a></code> element is in a <code><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>
    element that satisfies <a href="/breakup/specs/html-images/#figcaption-as-alt-condition">the
    conditions described above</a>.</p></li>
 
@@ -2762,4 +2762,198 @@ or the appropriateness of the <code>alt</code> text.</p>
 
 </section>
 
-</section></section></body></html>
+</section></section><section><h2>The <dfn><code>figure</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="/breakup/specs/html/#concept-element-categories" id="the-figure-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html/#flow-content-2" id="the-figure-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html-structure/#sectioning-root" id="the-figure-element:sectioning-root">Sectioning root</a>.</dd><dd><a href="/breakup/specs/html/#palpable-content-2" id="the-figure-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-contexts" id="the-figure-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="/breakup/specs/html/#flow-content-2" id="the-figure-element:flow-content-2-2">flow content</a> is expected.</dd><dt><a href="/breakup/specs/html/#concept-element-content-model" id="the-figure-element:concept-element-content-model">Content model</a>:</dt><dd>Either: One <code id="the-figure-element:the-figcaption-element"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element followed by <a href="/breakup/specs/html/#flow-content-2" id="the-figure-element:flow-content-2-3">flow content</a>.</dd><dd>Or: <a href="/breakup/specs/html/#flow-content-2" id="the-figure-element:flow-content-2-4">Flow content</a> followed by one <code id="the-figure-element:the-figcaption-element-2"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element.</dd><dd>Or: <a href="/breakup/specs/html/#flow-content-2" id="the-figure-element:flow-content-2-5">Flow content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-tag-omission" id="the-figure-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="/breakup/specs/html/#concept-element-attributes" id="the-figure-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-figure-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-dom" id="the-figure-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-figure-element:htmlelement"><a href="/breakup/specs/html-scripting/#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  
+
+  <p>The <code id="the-figure-element:the-figure-element"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element <a href="/breakup/specs/html-scripting/#represents" id="the-figure-element:represents">represents</a> some <a href="/breakup/specs/html/#flow-content-2" id="the-figure-element:flow-content-2-6">flow content</a>,
+  optionally with a caption, that is self-contained (like a complete sentence) and is typically
+  referenced as a single unit from the main flow of the document.</p>
+
+  <p class="note">Self-contained in this context does not necessarily mean independent. For example,
+  each sentence in a paragraph is self-contained; an image that is part of a sentence would be
+  inappropriate for <code id="the-figure-element:the-figure-element-2"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>, but an entire sentence made of images would be fitting.</p>
+
+  <p>The element can thus be used to annotate illustrations, diagrams, photos, code listings, etc.</p>
+
+  <div class="note">
+
+   <p>When a <code id="the-figure-element:the-figure-element-3"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> is referred to from the main content of the document by identifying
+   it by its caption (e.g. by figure number), it enables such content to be easily moved away from
+   that primary content, e.g. to the side of the page, to dedicated pages, or to an appendix, without
+   affecting the flow of the document.</p>
+
+   <p>If a <code id="the-figure-element:the-figure-element-4"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element is referenced by its relative position, e.g. "in the
+   photograph above" or "as the next figure shows", then moving the figure would disrupt the page's
+   meaning. Authors are encouraged to consider using labels to refer to figures, rather than using
+   such relative references, so that the page can easily be restyled without affecting the page's
+   meaning.</p>
+
+  </div>
+
+  <p>The first <code id="the-figure-element:the-figcaption-element-3"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element child of the element, if
+  any, represents the caption of the <code id="the-figure-element:the-figure-element-5"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element's contents. If there is no child
+  <code id="the-figure-element:the-figcaption-element-4"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element, then there is no caption.</p>
+
+  <p>A <code id="the-figure-element:the-figure-element-6"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element's contents are part of the surrounding flow. If the purpose of
+  the page is to display the figure, for example a photograph on an image sharing site, the
+  <code id="the-figure-element:the-figure-element-7"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> and <code id="the-figure-element:the-figcaption-element-5"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> elements can be used to explicitly provide a
+  caption for that figure. For content that is only tangentially related, or that serves a separate
+  purpose than the surrounding flow, the <code id="the-figure-element:the-aside-element"><a href="/breakup/specs/html-structure/#the-aside-element">aside</a></code> element should be used (and can itself
+  wrap a <code id="the-figure-element:the-figure-element-8"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>). For example, a pull quote that repeats content from an
+  <code id="the-figure-element:the-article-element"><a href="/breakup/specs/html-structure/#the-article-element">article</a></code> would be more appropriate in an <code id="the-figure-element:the-aside-element-2"><a href="/breakup/specs/html-structure/#the-aside-element">aside</a></code> than in a
+  <code id="the-figure-element:the-figure-element-9"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>, because it isn't part of the content, it's a repetition of the content for
+  the purposes of enticing readers or highlighting key topics.</p>
+
+  <div class="example">
+
+   <p>This example shows the <code id="the-figure-element:the-figure-element-10"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element to mark up a code listing.</p>
+
+   <pre>&lt;p&gt;In &lt;a href="#l4"&gt;listing 4&lt;/a&gt; we see the primary core interface
+API declaration.&lt;/p&gt;
+&lt;figure id="l4"&gt;
+ &lt;figcaption&gt;Listing 4. The primary core interface API declaration.&lt;/figcaption&gt;
+ &lt;pre&gt;&lt;code&gt;interface PrimaryCore {
+ boolean verifyDataLine();
+ void sendData(in sequence&amp;lt;byte&gt; data);
+ void initSelfDestruct();
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/figure&gt;
+&lt;p&gt;The API is designed to use UTF-8.&lt;/p&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>Here we see a <code id="the-figure-element:the-figure-element-11"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element to mark up a photo that is the main content of the
+   page (as in a gallery).</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;title&gt;Bubbles at work — My Gallery™&lt;/title&gt;
+&lt;figure&gt;
+ &lt;img src="bubbles-work.jpeg"
+      alt="Bubbles, sitting in his office chair, works on his
+           latest project intently."&gt;
+ &lt;figcaption&gt;Bubbles at work&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;nav&gt;&lt;a href="19414.html"&gt;Prev&lt;/a&gt; — &lt;a href="19416.html"&gt;Next&lt;/a&gt;&lt;/nav&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In this example, we see an image that is <em>not</em> a figure, as well as an image and a
+   video that are. The first image is literally part of the example's second sentence, so it's not a
+   self-contained unit, and thus <code id="the-figure-element:the-figure-element-12"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> would be inappropriate.</p>
+
+   <pre>&lt;h2&gt;Malinko's comics&lt;/h2&gt;
+
+&lt;p&gt;This case centered on some sort of "intellectual property"
+infringement related to a comic (see Exhibit A). The suit started
+after a trailer ending with these words:
+
+&lt;blockquote&gt;
+ &lt;img src="promblem-packed-action.png" alt="ROUGH COPY! Promblem-Packed Action!"&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;...was aired. A lawyer, armed with a Bigger Notebook, launched a
+preemptive strike using snowballs. A complete copy of the trailer is
+included with Exhibit B.
+
+&lt;figure&gt;
+ &lt;img src="ex-a.png" alt="Two squiggles on a dirty piece of paper."&gt;
+ &lt;figcaption&gt;Exhibit A. The alleged &lt;cite&gt;rough copy&lt;/cite&gt; comic.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+ &lt;video src="ex-b.mov"&gt;&lt;/video&gt;
+ &lt;figcaption&gt;Exhibit B. The &lt;cite&gt;Rough Copy&lt;/cite&gt; trailer.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;The case was resolved out of court.</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>Here, a part of a poem is marked up using <code id="the-figure-element:the-figure-element-13"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>.</p>
+
+   <pre>&lt;figure&gt;
+ &lt;p&gt;'Twas brillig, and the slithy toves&lt;br&gt;
+ Did gyre and gimble in the wabe;&lt;br&gt;
+ All mimsy were the borogoves,&lt;br&gt;
+ And the mome raths outgrabe.&lt;/p&gt;
+ &lt;figcaption&gt;&lt;cite&gt;Jabberwocky&lt;/cite&gt; (first verse). Lewis Carroll, 1832-98&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>In this example, which could be part of a much larger work discussing a castle, nested
+   <code id="the-figure-element:the-figure-element-14"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> elements are used to provide both a group caption and individual captions for
+   each figure in the group:</p>
+
+   <pre>&lt;figure&gt;
+ &lt;figcaption&gt;The castle through the ages: 1423, 1858, and 1999 respectively.&lt;/figcaption&gt;
+ &lt;figure&gt;
+  &lt;figcaption&gt;Etching. Anonymous, ca. 1423.&lt;/figcaption&gt;
+  &lt;img src="castle1423.jpeg" alt="The castle has one tower, and a tall wall around it."&gt;
+ &lt;/figure&gt;
+ &lt;figure&gt;
+  &lt;figcaption&gt;Oil-based paint on canvas. Maria Towle, 1858.&lt;/figcaption&gt;
+  &lt;img src="castle1858.jpeg" alt="The castle now has two towers and two walls."&gt;
+ &lt;/figure&gt;
+ &lt;figure&gt;
+  &lt;figcaption&gt;Film photograph. Peter Jankle, 1999.&lt;/figcaption&gt;
+  &lt;img src="castle1999.jpeg" alt="The castle lies in ruins, the original tower all that remains in one piece."&gt;
+ &lt;/figure&gt;
+&lt;/figure&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>The previous example could also be more succintly written as follows (using <code id="the-figure-element:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attributes in place of the nested
+   <code id="the-figure-element:the-figure-element-15"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code>/<code id="the-figure-element:the-figcaption-element-6"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> pairs):</p>
+
+   <pre>&lt;figure&gt;
+ &lt;img src="castle1423.jpeg" title="Etching. Anonymous, ca. 1423."
+      alt="The castle has one tower, and a tall wall around it."&gt;
+ &lt;img src="castle1858.jpeg" title="Oil-based paint on canvas. Maria Towle, 1858."
+      alt="The castle now has two towers and two walls."&gt;
+ &lt;img src="castle1999.jpeg" title="Film photograph. Peter Jankle, 1999."
+      alt="The castle lies in ruins, the original tower all that remains in one piece."&gt;
+ &lt;figcaption&gt;The castle through the ages: 1423, 1858, and 1999 respectively.&lt;/figcaption&gt;
+&lt;/figure&gt;</pre>
+
+  </div>
+
+  <div class="example">
+
+   <p>The figure is sometimes referenced only implicitly from the content:</p>
+
+   
+
+   <pre>&lt;article&gt;
+ &lt;h1&gt;Fiscal negotiations stumble in Congress as deadline nears&lt;/h1&gt;
+ &lt;figure&gt;
+  &lt;img src="obama-reid.jpeg" alt="Obama and Reid sit together smiling in the Oval Office."&gt;
+  &lt;figcaption&gt;Barrak Obama and Harry Reid. White House press photograph.&lt;/figcaption&gt;
+ &lt;/figure&gt;
+ &lt;p&gt;Negotiations in Congress to end the fiscal impasse sputtered on Tuesday, leaving both chambers
+ grasping for a way to reopen the government and raise the country's borrowing authority with a
+ Thursday deadline drawing near.&lt;/p&gt;
+ ...
+&lt;/article&gt;</pre>
+
+  </div></section><section><h2>The <dfn><code>figcaption</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="/breakup/specs/html/#concept-element-categories" id="the-figcaption-element:concept-element-categories">Categories</a>:</dt><dd>None.</dd><dt><a href="/breakup/specs/html/#concept-element-contexts" id="the-figcaption-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>As the first or last child of a <code id="the-figcaption-element:the-figure-element"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element.</dd><dt><a href="/breakup/specs/html/#concept-element-content-model" id="the-figcaption-element:concept-element-content-model">Content model</a>:</dt><dd><a href="/breakup/specs/html/#flow-content-2" id="the-figcaption-element:flow-content-2">Flow content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-tag-omission" id="the-figcaption-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="/breakup/specs/html/#concept-element-attributes" id="the-figcaption-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-figcaption-element:global-attributes">Global attributes</a></dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-dom" id="the-figcaption-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-figcaption-element:htmlelement"><a href="/breakup/specs/html-scripting/#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-figcaption-element:the-figcaption-element"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element <a href="/breakup/specs/html-scripting/#represents" id="the-figcaption-element:represents">represents</a> a caption or legend for the rest of
+  the contents of the <code id="the-figcaption-element:the-figcaption-element-2"><a href="/breakup/specs/html-images/#the-figcaption-element">figcaption</a></code> element's parent <code id="the-figcaption-element:the-figure-element-2"><a href="/breakup/specs/html-images/#the-figure-element">figure</a></code> element, if any.</p></section></body></html>

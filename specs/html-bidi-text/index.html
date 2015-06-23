@@ -1,0 +1,370 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>HTML Bidirectional Text</title>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+    <script class="remove">
+      var respecConfig = {
+              specStatus:     "ED"
+          ,   shortName:      "html-bidi-text"
+          ,   editors:      [{ name: "Up for the taking" }]
+          ,   wg:             "HTML Working Group"
+          ,   wgURI:          "http://www.w3.org/html/wg/"
+          ,   wgPublicList:   "public-html"
+          ,   wgPatentURI:    "http://www.w3.org/2004/01/pp-impl/40318/status"
+          ,   license:        "cc-by"
+          ,   processVersion: "2014"
+        };
+    </script>
+  </head>
+  <body>
+    <section id="abstract">
+      <p>
+        How to handle bidirectional content in HTML.
+      </p>
+    </section>
+    <section id="sotd">
+      <p>
+        This specification is an experimental breakup of the
+        <a href="http://www.w3.org/TR/html51/">HTML specification</a>. You can see the full list on
+        <a href="https://darobin.github.io/breakup/specs/">the index page</a> and take part in the
+        discussion in <a href="https://github.com/darobin/breakup/">the repository</a>.
+      </p>
+    </section>
+  
+
+<section><h2>The <dfn><code>bdi</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="/breakup/specs/html/#concept-element-categories" id="the-bdi-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html/#flow-content-2" id="the-bdi-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html/#phrasing-content-2" id="the-bdi-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="/breakup/specs/html/#palpable-content-2" id="the-bdi-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-contexts" id="the-bdi-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="/breakup/specs/html/#phrasing-content-2" id="the-bdi-element:phrasing-content-2-2">phrasing content</a> is expected.</dd><dt><a href="/breakup/specs/html/#concept-element-content-model" id="the-bdi-element:concept-element-content-model">Content model</a>:</dt><dd><a href="/breakup/specs/html/#phrasing-content-2" id="the-bdi-element:phrasing-content-2-3">Phrasing content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-tag-omission" id="the-bdi-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="/breakup/specs/html/#concept-element-attributes" id="the-bdi-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-bdi-element:global-attributes">Global attributes</a></dd><dd>Also, the <code id="the-bdi-element:the-dir-attribute"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> global attribute has special semantics on this element.</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+   <a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-dom" id="the-bdi-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-bdi-element:htmlelement"><a href="/breakup/specs/html-scripting/#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-bdi-element:the-bdi-element"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element <a href="/breakup/specs/html-scripting/#represents" id="the-bdi-element:represents">represents</a> a span of text that is to be isolated from
+  its surroundings for the purposes of bidirectional text formatting. [[!BIDI]]</p>
+
+  <p class="note">The <code id="the-bdi-element:the-dir-attribute-2"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> global attribute defaults to <code id="the-bdi-element:attr-dir-auto"><a href="/breakup/specs/html-attributes/#attr-dir-auto">auto</a></code> on this element (it never inherits from the parent element like
+  with other elements).</p>
+
+  
+
+  <p class="note">This element <a href="/breakup/specs/html-bidi-text/#bidireq">has rendering requirements involving the
+  bidirectional algorithm</a>.</p>
+
+  
+
+  <div class="example">
+
+   <p>This element is especially useful when embedding user-generated content with an unknown
+   directionality.</p>
+
+   <p>In this example, usernames are shown along with the number of posts that the user has
+   submitted. If the <code id="the-bdi-element:the-bdi-element-2"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element were not used, the username of the Arabic user would
+   end up confusing the text (the bidirectional algorithm would put the colon and the number "3"
+   next to the word "User" rather than next to the word "posts").</p>
+
+   <pre>&lt;ul&gt;
+ &lt;li&gt;User &lt;bdi&gt;jcranmer&lt;/bdi&gt;: 12 posts.
+ &lt;li&gt;User &lt;bdi&gt;hober&lt;/bdi&gt;: 5 posts.
+ &lt;li&gt;User &lt;bdi&gt;<bdo dir="rtl">إيان</bdo>&lt;/bdi&gt;: 3 posts.
+&lt;/ul&gt;</pre>
+
+   <figure>
+    <img src="img/sample-bdi.png">
+    <figcaption>When using the <code id="the-bdi-element:the-bdi-element-3"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element, the username acts as expected.</figcaption>
+   </figure>
+
+   <figure>
+    <img src="img/sample-not-bdi.png">
+    <figcaption>If the <code id="the-bdi-element:the-bdi-element-4"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element were to be replaced by a <code id="the-bdi-element:the-b-element"><a href="/breakup/specs/html-text/#the-b-element">b</a></code> element, the username would confuse the bidirectional algorithm and the third bullet would end up saying "User 3 :", followed by the Arabic name (right-to-left), followed by "posts" and a period.</figcaption>
+   </figure>
+
+  </div></section><section><h2>The <dfn><code>bdo</code></dfn> element</h2>
+
+  <dl class="element"><dt><a href="/breakup/specs/html/#concept-element-categories" id="the-bdo-element:concept-element-categories">Categories</a>:</dt><dd><a href="/breakup/specs/html/#flow-content-2" id="the-bdo-element:flow-content-2">Flow content</a>.</dd><dd><a href="/breakup/specs/html/#phrasing-content-2" id="the-bdo-element:phrasing-content-2">Phrasing content</a>.</dd><dd><a href="/breakup/specs/html/#palpable-content-2" id="the-bdo-element:palpable-content-2">Palpable content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-contexts" id="the-bdo-element:concept-element-contexts">Contexts in which this element can be used</a>:</dt><dd>Where <a href="/breakup/specs/html/#phrasing-content-2" id="the-bdo-element:phrasing-content-2-2">phrasing content</a> is expected.</dd><dt><a href="/breakup/specs/html/#concept-element-content-model" id="the-bdo-element:concept-element-content-model">Content model</a>:</dt><dd><a href="/breakup/specs/html/#phrasing-content-2" id="the-bdo-element:phrasing-content-2-3">Phrasing content</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-tag-omission" id="the-bdo-element:concept-element-tag-omission">Tag omission in text/html</a>:</dt><dd>Neither tag is omissible.</dd><dt><a href="/breakup/specs/html/#concept-element-attributes" id="the-bdo-element:concept-element-attributes">Content attributes</a>:</dt><dd><a href="/breakup/specs/html-attributes/#global-attributes" id="the-bdo-element:global-attributes">Global attributes</a></dd><dd>Also, the <code id="the-bdo-element:the-dir-attribute"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> global attribute has special semantics on this element.</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#aria-role-attribute">ARIA role attribute</a> values:</dt><dd><a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">Any role value</a>.</dd><dt>Allowed <a href="/breakup/specs/html-aria-integration/#state-and-property-attributes">ARIA State and Property Attributes</a>:</dt><dd><a href="/breakup/specs/html-aria-integration/#index-aria-global">Global aria-* attributes</a></dd><dd>Any <code title="">aria-*</code> attributes 
+    <a href="/breakup/specs/html-aria-integration/#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd><dt><a href="/breakup/specs/html/#concept-element-dom" id="the-bdo-element:concept-element-dom">DOM interface</a>:</dt><dd>Uses <code id="the-bdo-element:htmlelement"><a href="/breakup/specs/html-scripting/#htmlelement">HTMLElement</a></code>.</dd></dl>
+
+  <p>The <code id="the-bdo-element:the-bdo-element"><a href="/breakup/specs/html-bidi-text/#the-bdo-element">bdo</a></code> element <a href="/breakup/specs/html-scripting/#represents" id="the-bdo-element:represents">represents</a> explicit text directionality formatting
+  control for its children. It allows authors to override the Unicode bidirectional algorithm by
+  explicitly specifying a direction override. [[!BIDI]]</p>
+
+  <p>Authors must specify the <code id="the-bdo-element:the-dir-attribute-2"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute on this element, with the
+  value <code id="the-bdo-element:attr-dir-ltr"><a href="/breakup/specs/html-attributes/#attr-dir-ltr">ltr</a></code> to specify a left-to-right override and with the value <code id="the-bdo-element:attr-dir-rtl"><a href="/breakup/specs/html-attributes/#attr-dir-rtl">rtl</a></code> to
+  specify a right-to-left override. The <code id="the-bdo-element:attr-dir-auto"><a href="/breakup/specs/html-attributes/#attr-dir-auto">auto</a></code> value must not be specified.</p>
+
+  
+
+  <p class="note">This element <a href="/breakup/specs/html-bidi-text/#bidireq">has rendering requirements involving the
+  bidirectional algorithm</a>.</p></section><section><h2>The <dfn><code>dir</code></dfn> attribute</h2>
+
+  <p>The <code id="the-dir-attribute:the-dir-attribute"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute specifies the element's text directionality.
+  The attribute is an <a href="/breakup/specs/core-algorithms/#enumerated-attribute" id="the-dir-attribute:enumerated-attribute">enumerated attribute</a> with the following keywords and states:</p>
+
+  <dl><dt>The <dfn id="attr-dir-ltr"><code>ltr</code></dfn> keyword, which maps to the <dfn id="attr-dir-ltr-state">ltr</dfn> state</dt><dd>
+
+    <p>Indicates that the contents of the element are explicitly directionally isolated
+    left-to-right text.</p>
+
+   </dd><dt>The <dfn id="attr-dir-rtl"><code>rtl</code></dfn> keyword, which maps to the <dfn id="attr-dir-rtl-state">rtl</dfn> state</dt><dd>
+
+    <p>Indicates that the contents of the element are explicitly directionally isolated
+    right-to-left text.</p>
+
+   </dd><dt>The <dfn id="attr-dir-auto"><code>auto</code></dfn> keyword, which maps to the <dfn id="attr-dir-auto-state">auto</dfn> state</dt><dd>
+
+    <p>Indicates that the contents of the element are explicitly directionally isolated text, but
+    that the direction is to be determined programmatically using the contents of the element (as
+    described below).</p>
+
+    <p class="note">The heuristic used by this state is very crude (it just looks at the first
+    character with a strong directionality, in a manner analogous to the Paragraph Level
+    determination in the bidirectional algorithm). Authors are urged to only use this value as a
+    last resort when the direction of the text is truly unknown and no better server-side heuristic
+    can be applied. [[!BIDI]]</p>
+
+    <p class="note">For <code id="the-dir-attribute:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> and <code id="the-dir-attribute:the-pre-element"><a href="/breakup/specs/html-structure/#the-pre-element">pre</a></code> elements, the heuristic is
+    applied on a per-paragraph level.</p>
+
+   </dd></dl>
+
+  <p>The attribute has no <i id="the-dir-attribute:invalid-value-default"><a href="/breakup/specs/core-algorithms/#invalid-value-default">invalid value default</a></i> and no <i id="the-dir-attribute:missing-value-default"><a href="/breakup/specs/core-algorithms/#missing-value-default">missing value default</a></i>.</p>
+
+  <hr>
+
+  <p><dfn id="the-directionality">The directionality</dfn> of an element (any element, not just an <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements">HTML element</a>) is either '<dfn id="concept-ltr">ltr</dfn>' or '<dfn id="concept-rtl">rtl</dfn>', and is determined as per the first appropriate set of steps from
+  the following list:</p>
+
+  <dl class="switch"><dt>If the element's <code id="the-dir-attribute:the-dir-attribute-2"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-ltr-state" id="the-dir-attribute:attr-dir-ltr-state">ltr</a> state</dt><dt>If the element is a <a href="/breakup/specs/core-algorithms/#root-element" id="the-dir-attribute:root-element">root element</a> and the <code id="the-dir-attribute:the-dir-attribute-3"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is not in a defined state (i.e. it is not present or has an invalid value)</dt><dt>If the element is an <code id="the-dir-attribute:the-input-element"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="the-dir-attribute:attr-input-type"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#telephone-state-(type=tel)" id="the-dir-attribute:telephone-state-(type=tel)">Telephone</a> state, and the <code id="the-dir-attribute:the-dir-attribute-4"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is not in a defined state (i.e. it is not present or has an invalid value)</dt><dd><p><a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality">The directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr">ltr</a>'.</p></dd><dt>If the element's <code id="the-dir-attribute:the-dir-attribute-5"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-rtl-state" id="the-dir-attribute:attr-dir-rtl-state">rtl</a> state</dt><dd><p><a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-2">The directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl">rtl</a>'.</p></dd><dt>If the element is an <code id="the-dir-attribute:the-input-element-2"><a href="/breakup/specs/html-forms/#the-input-element">input</a></code> element whose <code id="the-dir-attribute:attr-input-type-2"><a href="/breakup/specs/html-forms/#attr-input-type">type</a></code> attribute is in the <a href="/breakup/specs/html-forms/#text-(type=text)-state-and-search-state-(type=search)" id="the-dir-attribute:text-(type=text)-state-and-search-state-(type=search)">Text</a>, <a href="/breakup/specs/html-forms/#text-(type=text)-state-and-search-state-(type=search)" id="the-dir-attribute:text-(type=text)-state-and-search-state-(type=search)-2">Search</a>,
+   <a href="/breakup/specs/html-forms/#telephone-state-(type=tel)" id="the-dir-attribute:telephone-state-(type=tel)-2">Telephone</a>, <a href="/breakup/specs/html-forms/#url-state-(type=url)" id="the-dir-attribute:url-state-(type=url)">URL</a>, or <a href="/breakup/specs/html-forms/#e-mail-state-(type=email)" id="the-dir-attribute:e-mail-state-(type=email)">E-mail</a>
+   state, and the <code id="the-dir-attribute:the-dir-attribute-6"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state">auto</a> state</dt><dt>If the element is a <code id="the-dir-attribute:the-textarea-element-2"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> element and the <code id="the-dir-attribute:the-dir-attribute-7"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state-2">auto</a> state</dt><dd>
+
+    <p>If the element's <a href="/breakup/specs/html-forms/#concept-fe-value" id="the-dir-attribute:concept-fe-value">value</a> contains a character of
+    bidirectional character type AL or R, and there is no character of bidirectional character type
+    L anywhere before it in the element's <a href="/breakup/specs/html-forms/#concept-fe-value" id="the-dir-attribute:concept-fe-value-2">value</a>, then
+    <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-3">the directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl-2">rtl</a>'. [[!BIDI]]</p>
+
+    <p>Otherwise, if the element's <a href="/breakup/specs/html-forms/#concept-fe-value" id="the-dir-attribute:concept-fe-value-3">value</a> is not the empty
+    string, or if the element is a <a href="/breakup/specs/core-algorithms/#root-element" id="the-dir-attribute:root-element-2">root element</a>, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-4">the directionality</a> of the
+    element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-2">ltr</a>'.</p>
+
+    <p>Otherwise, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-5">the directionality</a> of the element is the same as the element's parent
+    element's <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-6">directionality</a>.</p>
+
+   </dd><dt>If the element's <code id="the-dir-attribute:the-dir-attribute-8"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state-3">auto</a> state</dt><dt>If the element is a <code id="the-dir-attribute:the-bdi-element"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element and the <code id="the-dir-attribute:the-dir-attribute-9"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+   attribute is not in a defined state (i.e. it is not present or has an invalid value)</dt><dd>
+
+    <p>Find the first character in <a href="/breakup/specs/core-algorithms/#tree-order" id="the-dir-attribute:tree-order">tree order</a> that matches the following criteria:</p>
+
+    <ul><li><p>The character is from a <code id="the-dir-attribute:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node that is a descendant of the element whose
+     <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-7">directionality</a> is being determined.</p></li><li><p>The character is of bidirectional character type L, AL, or R. [[!BIDI]]</p></li><li>
+
+      <p>The character is not in a <code id="the-dir-attribute:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node that has an ancestor element that is a
+      descendant of the element whose <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-8">directionality</a> is
+      being determined and that is either:</p>
+
+      <ul class="brief"><li>A <code id="the-dir-attribute:the-bdi-element-2"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element.
+       </li><li>A <code id="the-dir-attribute:the-script-element"><a href="/breakup/specs/html-scripting/#the-script-element">script</a></code> element.
+       </li><li>A <code id="the-dir-attribute:the-style-element"><a href="/breakup/specs/html-styling/#the-style-element">style</a></code> element.
+       </li><li>A <code id="the-dir-attribute:the-textarea-element-3"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> element.
+       </li><li>An element with a <code id="the-dir-attribute:the-dir-attribute-10"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute in a defined state.
+      </li></ul>
+
+     </li></ul>
+
+    <p>If such a character is found and it is of bidirectional character type AL or R, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-9">the
+    directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl-3">rtl</a>'.</p>
+
+    <p>If such a character is found and it is of bidirectional character type L, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-10">the
+    directionality</a> of the element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-3">ltr</a>'.</p>
+
+    <p>Otherwise, if the element is a <a href="/breakup/specs/core-algorithms/#root-element" id="the-dir-attribute:root-element-3">root element</a>, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-11">the directionality</a> of
+    the element is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-4">ltr</a>'.</p>
+
+    <p>Otherwise, <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-12">the directionality</a> of the element the same as the element's parent
+    element's <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-13">directionality</a>.</p>
+
+   </dd><dt>If the element has a parent element and the <code id="the-dir-attribute:the-dir-attribute-11"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is
+   not in a defined state (i.e. it is not present or has an invalid value)</dt><dd><p><a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-14">The directionality</a> of the element is the same as the element's parent
+   element's <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-15">directionality</a>.</p></dd></dl>
+
+  <p class="note">Since the <code id="the-dir-attribute:the-dir-attribute-12"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is only defined for
+  <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements-2">HTML elements</a>, it cannot be present on elements from other namespaces. Thus, elements
+  from other namespaces always just inherit their <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-16">directionality</a> from their parent element, or, if they don't have one,
+  default to '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-5">ltr</a>'.</p>
+
+  
+
+  <p class="note">This attribute <a href="/breakup/specs/html-bidi-text/#bidireq">has rendering requirements involving the
+  bidirectional algorithm</a>.</p>
+
+  
+
+  <hr>
+
+  <p>The <dfn id="directionality-of-the-attribute">directionality of an attribute</dfn> of an
+  <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements-3">HTML element</a>, which is used when the text of that attribute is
+  to be included in the rendering in some manner, is determined as per the first appropriate set of
+  steps from the following list:</p>
+
+  <dl class="switch"><dt>If the attribute is a <a href="/breakup/specs/html-attributes/#directionality-capable-attribute" id="the-dir-attribute:directionality-capable-attribute">directionality-capable attribute</a> and the element's <code id="the-dir-attribute:the-dir-attribute-13"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute is in the <a href="/breakup/specs/html-attributes/#attr-dir-auto-state" id="the-dir-attribute:attr-dir-auto-state-4">auto</a>
+   state</dt><dd>
+
+    <p>Find the first character (in logical order) of the attribute's value that is of bidirectional
+    character type L, AL, or R. [[!BIDI]]</p>
+
+    <p>If such a character is found and it is of bidirectional character type AL or R, the
+    <a href="/breakup/specs/html-attributes/#directionality-of-the-attribute" id="the-dir-attribute:directionality-of-the-attribute">directionality of the attribute</a> is '<a href="/breakup/specs/html-attributes/#concept-rtl" id="the-dir-attribute:concept-rtl-4">rtl</a>'.</p>
+
+    <p>Otherwise, the <a href="/breakup/specs/html-attributes/#directionality-of-the-attribute" id="the-dir-attribute:directionality-of-the-attribute-2">directionality of the attribute</a> is '<a href="/breakup/specs/html-attributes/#concept-ltr" id="the-dir-attribute:concept-ltr-6">ltr</a>'.</p>
+
+   </dd><dt>Otherwise</dt><dd>The <a href="/breakup/specs/html-attributes/#directionality-of-the-attribute" id="the-dir-attribute:directionality-of-the-attribute-3">directionality of the attribute</a> is the same as <a href="/breakup/specs/html-attributes/#the-directionality" id="the-dir-attribute:the-directionality-17">the element's directionality</a>.</dd></dl>
+
+  <p>The following attributes are <dfn id="directionality-capable-attribute">directionality-capable attributes</dfn>:</p>
+
+  <ul class="brief"><li><code id="the-dir-attribute:attr-th-abbr"><a href="/breakup/specs/html-tables/#attr-th-abbr">abbr</a></code> on <code id="the-dir-attribute:the-th-element"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> elements</li><li><code>alt</code> on <code id="the-dir-attribute:attr-area-alt"><a href="/breakup/specs/html-linking/#attr-area-alt">area</a></code>,
+                                    <code id="the-dir-attribute:attr-img-alt"><a href="/breakup/specs/html-images/#attr-img-alt">img</a></code>, and
+                                    <code id="the-dir-attribute:attr-input-alt"><a href="/breakup/specs/html-forms/#attr-input-alt">input</a></code> elements</li><li><code id="the-dir-attribute:attr-meta-content"><a href="/breakup/specs/html-metadata/#attr-meta-content">content</a></code> on <code id="the-dir-attribute:the-meta-element"><a href="/breakup/specs/html-metadata/#the-meta-element">meta</a></code> elements, if the <code id="the-dir-attribute:attr-meta-name"><a href="/breakup/specs/html-metadata/#attr-meta-name">name</a></code> attribute specifies a metadata name whose value is primarily intended to be human-readable rather than machine-readable</li><li><code>label</code> on <code id="the-dir-attribute:attr-menuitem-label"><a href="/breakup/specs/html-ui/#attr-menuitem-label">menuitem</a></code>,
+                                      <code id="the-dir-attribute:attr-menu-label"><a href="/breakup/specs/html-ui/#attr-menu-label">menu</a></code>,
+                                      <code id="the-dir-attribute:attr-optgroup-label"><a href="/breakup/specs/html-forms/#attr-optgroup-label">optgroup</a></code>,
+                                      <code id="the-dir-attribute:attr-option-label"><a href="/breakup/specs/html-forms/#attr-option-label">option</a></code>, and
+                                      <code id="the-dir-attribute:attr-track-label"><a href="/breakup/specs/html-media/#attr-track-label">track</a></code> elements</li><li><code>placeholder</code> on <code id="the-dir-attribute:attr-input-placeholder"><a href="/breakup/specs/html-forms/#attr-input-placeholder">input</a></code> and
+                                            <code id="the-dir-attribute:attr-textarea-placeholder"><a href="/breakup/specs/html-forms/#attr-textarea-placeholder">textarea</a></code> elements</li><li><code id="the-dir-attribute:attr-title"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> on all <a href="/breakup/specs/core-algorithms/#html-elements" id="the-dir-attribute:html-elements-4">HTML elements</a></li></ul>
+
+  <hr>
+
+  <dl class="domintro"><dt><var>document</var> . <code id="the-dir-attribute:dom-dir"><a href="/breakup/specs/html-attributes/#dom-dir">dir</a></code> [ = <var>value</var> ]</dt><dd>
+    <p>Returns <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2">the <code>html</code> element</a>'s <code id="the-dir-attribute:the-dir-attribute-14"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute's value, if any.</p>
+    <p>Can be set, to either "<code>ltr</code>", "<code>rtl</code>", or "<code>auto</code>" to replace <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2-2">the <code>html</code> element</a>'s <code id="the-dir-attribute:the-dir-attribute-15"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute's value.</p>
+    <p>If there is no <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2-3"><code>html</code> element</a>, returns the empty string and ignores new values.</p>
+   </dd></dl>
+
+  
+
+  <p>The <dfn id="dom-dir"><code>dir</code></dfn> IDL attribute on an element must
+  <a href="/breakup/specs/core-algorithms/#reflect" id="the-dir-attribute:reflect">reflect</a> the <code id="the-dir-attribute:the-dir-attribute-16"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> content attribute of that element,
+  <a href="/breakup/specs/core-algorithms/#limited-to-only-known-values" id="the-dir-attribute:limited-to-only-known-values">limited to only known values</a>.</p>
+
+  <p>The <dfn id="dom-document-dir"><code>dir</code></dfn> IDL attribute on <code id="the-dir-attribute:document"><a href="/breakup/specs/browser-dom/#document">Document</a></code>
+  objects must <a href="/breakup/specs/core-algorithms/#reflect" id="the-dir-attribute:reflect-2">reflect</a> the <code id="the-dir-attribute:the-dir-attribute-17"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> content attribute of
+  <a href="/breakup/specs/browser-dom/#the-html-element-2" id="the-dir-attribute:the-html-element-2-4">the <code>html</code> element</a>, if any, <a href="/breakup/specs/core-algorithms/#limited-to-only-known-values" id="the-dir-attribute:limited-to-only-known-values-2">limited to only known values</a>. If
+  there is no such element, then the attribute must return the empty string and do nothing on
+  setting.</p>
+
+  
+
+  <p class="note">Authors are strongly encouraged to use the <code id="the-dir-attribute:the-dir-attribute-18"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code>
+  attribute to indicate text direction rather than using CSS, since that way their documents will
+  continue to render correctly even in the absence of CSS (e.g. as interpreted by search
+  engines).</p>
+
+  <div class="example">
+
+   <p>This markup fragment is of an IM conversation.</p>
+
+   <pre>&lt;p dir=auto class="u1"&gt;&lt;b&gt;&lt;bdi&gt;Student&lt;/bdi&gt;:&lt;/b&gt; How do you write "What's your name?" in Arabic?&lt;/p&gt;
+&lt;p dir=auto class="u2"&gt;&lt;b&gt;&lt;bdi&gt;Teacher&lt;/bdi&gt;:&lt;/b&gt; ما اسمك؟&lt;/p&gt;
+&lt;p dir=auto class="u1"&gt;&lt;b&gt;&lt;bdi&gt;Student&lt;/bdi&gt;:&lt;/b&gt; Thanks.&lt;/p&gt;
+&lt;p dir=auto class="u2"&gt;&lt;b&gt;&lt;bdi&gt;Teacher&lt;/bdi&gt;:&lt;/b&gt; That's written "شكرًا".&lt;/p&gt;
+&lt;p dir=auto class="u2"&gt;&lt;b&gt;&lt;bdi&gt;Teacher&lt;/bdi&gt;:&lt;/b&gt; Do you know how to write "Please"?&lt;/p&gt;
+&lt;p dir=auto class="u1"&gt;&lt;b&gt;&lt;bdi&gt;Student&lt;/bdi&gt;:&lt;/b&gt; "من فضلك", right?&lt;/p&gt;</pre>
+
+
+
+   <p>Given a suitable style sheet and the default alignment styles for the <code id="the-dir-attribute:the-p-element"><a href="/breakup/specs/html-structure/#the-p-element">p</a></code> element,
+   namely to align the text to the <i>start edge</i> of the paragraph, the resulting rendering could
+   be as follows:</p>
+
+   <p><img width="366" src="img/im.png" height="157" alt="Each paragraph rendered as a separate block, with the paragraphs left-aligned except the second paragraph and the last one, which would  be right aligned, with the usernames ('Student' and 'Teacher' in this example) flush right, with a colon to their left, and the text first to the left of that."></p>
+
+   <p>As noted earlier, the <code id="the-dir-attribute:attr-dir-auto"><a href="/breakup/specs/html-attributes/#attr-dir-auto">auto</a></code> value is not a panacea. The
+   final paragraph in this example is misinterpreted as being right-to-left text, since it begins
+   with an Arabic character, which causes the "right?" to be to the left of the Arabic text.</p>
+
+  </div></section><section><h2>Authoring conformance criteria for bidirectional-algorithm formatting characters</h2>
+  
+
+  <p><a href="/breakup/specs/html/#text-content" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:text-content">Text content</a> in <a href="/breakup/specs/core-algorithms/#html-elements" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:html-elements">HTML elements</a> with <code id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:text"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> nodes in their
+  <a href="/breakup/specs/html/#concept-html-contents" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:concept-html-contents">contents</a>, and text in attributes of <a href="/breakup/specs/core-algorithms/#html-elements" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:html-elements-2">HTML
+  elements</a> that allow free-form text, may contain characters in the ranges U+202A to U+202E
+  and U+2066 to U+2069 (the bidirectional-algorithm formatting characters). However, the use of
+  these characters is restricted so that any embedding or overrides generated by these characters do
+  not start and end with different parent elements, and so that all such embeddings and overrides
+  are explicitly terminated by a U+202C POP DIRECTIONAL FORMATTING character. This helps reduce
+  incidences of text being reused in a manner that has unforeseen effects on the bidirectional
+  algorithm. [[!BIDI]]</p>
+
+  <p>The aforementioned restrictions are defined by specifying that certain parts of documents form
+  <a href="/breakup/specs/html-bidi-text/#bidirectional-algorithm-formatting-character-ranges" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:bidirectional-algorithm-formatting-character-ranges">bidirectional-algorithm formatting character ranges</a>, and then imposing a requirement
+  on such ranges.</p>
+
+  <p>The strings resulting from applying the following algorithm to an <a href="/breakup/specs/core-algorithms/#html-elements" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:html-elements-3">HTML element</a> <var>element</var> are <a href="/breakup/specs/html-bidi-text/#bidirectional-algorithm-formatting-character-ranges" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:bidirectional-algorithm-formatting-character-ranges-2">bidirectional-algorithm
+  formatting character ranges</a>:</p>
+
+  <ol><li><p>Let <var>output</var> be an empty list of strings.</p></li><li><p>Let <var>string</var> be an empty string.</p></li><li><p>Let <var>node</var> be the first child node of <var>element</var>, if
+   any, or null otherwise.</p></li><li><p><i>Loop</i>: If <var>node</var> is null, jump to the step labeled
+   <i>end</i>.</p></li><li>
+
+    <p>Process <var>node</var> according to the first matching step from the following
+    list:</p>
+
+    <dl class="switch"><dt>If <var>node</var> is a <code id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:text-2"><a href="/breakup/specs/core-algorithms/#text">Text</a></code> node</dt><dd><p>Append the text data of <var>node</var> to <var>string</var>.</p></dd><dt>If <var>node</var> is a <code id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:the-br-element"><a href="/breakup/specs/html-text/#the-br-element">br</a></code> element</dt><dt>If <var>node</var> is an <a href="/breakup/specs/core-algorithms/#html-elements" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:html-elements-4">HTML element</a> that is
+     <a href="/breakup/specs/html/#flow-content-2" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:flow-content-2">flow content</a> but that is not also <a href="/breakup/specs/html/#phrasing-content-2" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:phrasing-content-2">phrasing content</a></dt><dd><p>If <var>string</var> is not the empty string, push <var>string</var>
+     onto <var>output</var>, and let <var>string</var> be empty string.</p></dd><dt>Otherwise</dt><dd>Do nothing.</dd></dl>
+
+   </li><li><p>Let <var>node</var> be <var>node</var>'s next sibling, if any, or null
+   otherwise.</p></li><li><p>Jump to the step labeled <i>loop</i>.</p></li><li><p><i>End</i>: If <var>string</var> is not the empty string, push <var>string</var> onto <var>output</var>.</p></li><li><p>Return <var>output</var> as the <a href="/breakup/specs/html-bidi-text/#bidirectional-algorithm-formatting-character-ranges" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:bidirectional-algorithm-formatting-character-ranges-3">bidirectional-algorithm formatting
+   character ranges</a>.</p></li></ol>
+
+  <p>The value of a namespace-less attribute of an <a href="/breakup/specs/core-algorithms/#html-elements" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:html-elements-5">HTML element</a>
+  is a <a href="/breakup/specs/html-bidi-text/#bidirectional-algorithm-formatting-character-ranges" id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:bidirectional-algorithm-formatting-character-ranges-4">bidirectional-algorithm
+  formatting character range</a>.</p>
+
+
+
+  <p>Any strings that, as described above, are <dfn id="bidirectional-algorithm-formatting-character-ranges">bidirectional-algorithm formatting character
+  ranges</dfn> must match the <code>string</code> production in the following ABNF, the
+  character set for which is Unicode. [[!ABNF]]</p>
+
+  <pre>string        = *( plaintext ( embedding / override / isolation ) ) plaintext
+embedding     = ( lre / rle ) string pdf
+override      = ( lro / rlo ) string pdf
+isolation     = ( lri / rli / fsi ) string pdi
+lre           = %x202A ; U+202A LEFT-TO-RIGHT EMBEDDING
+rle           = %x202B ; U+202B RIGHT-TO-LEFT EMBEDDING
+lro           = %x202D ; U+202D LEFT-TO-RIGHT OVERRIDE
+rlo           = %x202E ; U+202E RIGHT-TO-LEFT OVERRIDE
+pdf           = %x202C ; U+202C POP DIRECTIONAL FORMATTING
+lri           = %x2066 ; U+2066 LEFT-TO-RIGHT ISOLATE
+rli           = %x2067 ; U+2067 RIGHT-TO-LEFT ISOLATE
+fsi           = %x2068 ; U+2068 FIRST STRONG ISOLATE
+pdi           = %x2069 ; U+2069 POP DIRECTIONAL ISOLATE
+plaintext     = *( %x0000-2029 / %x202F-2065 / %x206A-10FFFF )
+                ; any string with no bidirectional-algorithm formatting characters</pre>
+
+  <p class="note">While the U+2069 POP DIRECTIONAL ISOLATE character implicitly also ends open
+  embeddings and overrides, text that relies on this implicit scope closure is not conforming to
+  this specification. All strings of embeddings, overrides, and isolations need to be explicitly
+  terminated to conform to this section's requirements.</p>
+
+  <p class="note">Authors are encouraged to use the <code id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:the-dir-attribute"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute, the
+  <code id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:the-bdo-element"><a href="/breakup/specs/html-bidi-text/#the-bdo-element">bdo</a></code> element, and the <code id="authoring-conformance-criteria-for-bidirectional-algorithm-formatting-characters:the-bdi-element"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element, rather than maintaining the
+  bidirectional-algorithm formatting characters manually. The bidirectional-algorithm formatting
+  characters interact poorly with CSS.</p></section><section><h2>User agent conformance criteria</h2>
+
+  <p>User agents must implement the Unicode bidirectional algorithm to determine the proper ordering
+  of characters when rendering documents and parts of documents. [[!BIDI]]</p>
+
+  <p>The mapping of HTML to the Unicode bidirectional algorithm must be done in one of three ways.
+  Either the user agent must implement CSS, including in particular the CSS 'unicode-bidi',
+  'direction', and 'content' properties, and must have, in its user agent style sheet, the rules
+  using those properties given in this specification's <a href="#rendering">rendering</a> section,
+  or, alternatively, the user agent must act as if it implemented just the aforementioned properties
+  and had a user agent style sheet that included all the aforementioned rules, but without letting
+  style sheets specified in documents override them, or, alternatively, the user agent must
+  implement another styling language with equivalent semantics. [[!CSSWM]] [[!CSSGC]]</p>
+
+  <p id="bidireq">The following elements and attributes have requirements defined by the <a href="#rendering">rendering</a> section that, due to the requirements in this section, are
+  requirements on all user agents (not just those that <a href="/breakup/specs/core-algorithms/#renderingUA">support the suggested
+  default rendering</a>):</p>
+
+  <ul class="brief"><li><code id="user-agent-conformance-criteria:the-dir-attribute"><a href="/breakup/specs/html-attributes/#the-dir-attribute">dir</a></code> attribute</li><li><code id="user-agent-conformance-criteria:the-bdi-element"><a href="/breakup/specs/html-bidi-text/#the-bdi-element">bdi</a></code> element</li><li><code id="user-agent-conformance-criteria:the-bdo-element"><a href="/breakup/specs/html-bidi-text/#the-bdo-element">bdo</a></code> element</li><li><code id="user-agent-conformance-criteria:the-br-element"><a href="/breakup/specs/html-text/#the-br-element">br</a></code> element</li><li><code id="user-agent-conformance-criteria:the-pre-element"><a href="/breakup/specs/html-structure/#the-pre-element">pre</a></code> element</li><li><code id="user-agent-conformance-criteria:the-textarea-element"><a href="/breakup/specs/html-forms/#the-textarea-element">textarea</a></code> element</li><li><code id="user-agent-conformance-criteria:the-wbr-element"><a href="/breakup/specs/html-text/#the-wbr-element">wbr</a></code> element</li></ul></section></body></html>

@@ -245,7 +245,7 @@ NETWORK:
     <dl><dt><dfn id="concept-appcache-master">Master entries</dfn>
 
      </dt><dd><p class="note">These are documents that were added to the cache because a <a href="/breakup/specs/browser-dom/#browsing-context" id="appcache:browsing-context">browsing
-     context</a> was <a href="/breakup/specs/browsing/#navigate" id="appcache:navigate">navigated</a> to that document and the document
+     context</a> was <a href="/breakup/specs/browser-dom/#navigate" id="appcache:navigate">navigated</a> to that document and the document
      indicated that this was its cache, using the <code id="appcache:attr-html-manifest"><a href="/breakup/specs/html-structure/#attr-html-manifest">manifest</a></code>
      attribute.</p>
 
@@ -350,7 +350,7 @@ NETWORK:
   object. A <a href="/breakup/specs/appcache/#cache-host" id="appcache:cache-host">cache host</a> can be associated with an <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-7">application cache</a>.</p>
 
   <p>A <code id="appcache:document-3"><a href="/breakup/specs/browser-dom/#document">Document</a></code> initially is not associated with an <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-8">application cache</a>, but
-  can become associated with one early during the page load process, when steps <a href="/breakup/specs/html-syntax/#parser-appcache">in the parser</a> and in the <a href="/breakup/specs/browsing/#navigate" id="appcache:navigate-2">navigation</a>
+  can become associated with one early during the page load process, when steps <a href="/breakup/specs/html-syntax/#parser-appcache">in the parser</a> and in the <a href="/breakup/specs/browser-dom/#navigate" id="appcache:navigate-2">navigation</a>
   sections cause <a href="/breakup/specs/appcache/#concept-appcache-init" id="appcache:concept-appcache-init">cache selection</a> to occur.</p>
 
   <p>A <code id="appcache:sharedworkerglobalscope-2"><a href="http://www.w3.org/TR/workers/#sharedworkerglobalscope">SharedWorkerGlobalScope</a></code> can be associated with an <a href="/breakup/specs/appcache/#application-cache" id="appcache:application-cache-9">application cache</a>
@@ -1292,9 +1292,9 @@ NETWORK:
     <p>Mark the entry for the resource from which <var>document</var> was taken in the
     <a href="/breakup/specs/appcache/#application-cache" id="the-application-cache-selection-algorithm:application-cache-2">application cache</a> from which it was loaded as <a href="/breakup/specs/appcache/#concept-appcache-foreign" id="the-application-cache-selection-algorithm:concept-appcache-foreign">foreign</a>.</p>
 
-    <p>Restart the current navigation from the top of the <a href="/breakup/specs/browsing/#navigate" id="the-application-cache-selection-algorithm:navigate">navigation
+    <p>Restart the current navigation from the top of the <a href="/breakup/specs/browser-dom/#navigate" id="the-application-cache-selection-algorithm:navigate">navigation
     algorithm</a>, undoing any changes that were made as part of the initial load (changes can be
-    avoided by ensuring that the step to <a href="/breakup/specs/browsing/#update-the-session-history-with-the-new-page" id="the-application-cache-selection-algorithm:update-the-session-history-with-the-new-page">update the session history with the new page</a>
+    avoided by ensuring that the step to <a href="/breakup/specs/browser-dom/#update-the-session-history-with-the-new-page" id="the-application-cache-selection-algorithm:update-the-session-history-with-the-new-page">update the session history with the new page</a>
     is only ever completed <em>after</em> this <a href="/breakup/specs/appcache/#concept-appcache-init" id="the-application-cache-selection-algorithm:concept-appcache-init">application cache
     selection algorithm</a> is run, though this is not required).</p>
 

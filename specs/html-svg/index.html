@@ -35,7 +35,7 @@
 <section><h2>SVG</h2>
 
   <p>The <dfn id="svg"><code>svg</code></dfn> element from the <a href="/breakup/specs/core-algorithms/#svg-namespace" id="svg-0:svg-namespace">SVG namespace</a> falls into the
-  <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="svg-0:embedded-content-category">embedded content</a>, <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="svg-0:phrasing-content-2">phrasing content</a>, and <a href="/breakup/specs/html-best-practices/#flow-content-2" id="svg-0:flow-content-2">flow content</a>
+  <a href="/breakup/specs/html/#embedded-content-category" id="svg-0:embedded-content-category">embedded content</a>, <a href="/breakup/specs/html/#phrasing-content-2" id="svg-0:phrasing-content-2">phrasing content</a>, and <a href="/breakup/specs/html/#flow-content-2" id="svg-0:flow-content-2">flow content</a>
   categories for the purposes of the content models in this specification.</p>
 
   
@@ -47,10 +47,10 @@
   
 
   <p>When the SVG <code>foreignObject</code> element contains elements from the <a href="/breakup/specs/core-algorithms/#html-namespace-2" id="svg-0:html-namespace-2">HTML
-  namespace</a>, such elements must all be <a href="/breakup/specs/html-best-practices/#flow-content-2" id="svg-0:flow-content-2-2">flow content</a>. [[!SVG]]</p>
+  namespace</a>, such elements must all be <a href="/breakup/specs/html/#flow-content-2" id="svg-0:flow-content-2-2">flow content</a>. [[!SVG]]</p>
 
   <p>The content model for <code>title</code> elements in the <a href="/breakup/specs/core-algorithms/#svg-namespace" id="svg-0:svg-namespace-2">SVG namespace</a>
-  inside <a href="/breakup/specs/core-algorithms/#html-documents" id="svg-0:html-documents">HTML documents</a> is <a href="/breakup/specs/html-best-practices/#phrasing-content-2" id="svg-0:phrasing-content-2-2">phrasing content</a>. (This further constrains the
+  inside <a href="/breakup/specs/core-algorithms/#html-documents" id="svg-0:html-documents">HTML documents</a> is <a href="/breakup/specs/html/#phrasing-content-2" id="svg-0:phrasing-content-2-2">phrasing content</a>. (This further constrains the
   requirements given in the SVG specification.)</p>
 
   <p>The semantics of SVG elements are defined by the SVG specification and <a href="/breakup/specs/core-algorithms/#other-applicable-specifications" id="svg-0:other-applicable-specifications">other applicable
@@ -76,7 +76,7 @@
    have the <a href="/breakup/specs/browser-dom/#same-origin" id="svg-0:same-origin">same</a> <a href="/breakup/specs/browser-dom/#effective-script-origin" id="svg-0:effective-script-origin">effective script origin</a> as the
    element's <a id="svg-0:node-document" href="https://dom.spec.whatwg.org/#concept-node-document" data-x-internal="node-document">node document</a>, then return null and abort these
    steps.</p></li><li><p>If the <a href="/breakup/specs/browser-dom/#nested-browsing-context" id="svg-0:nested-browsing-context-3">nested browsing context</a>'s <a href="/breakup/specs/browser-dom/#active-document" id="svg-0:active-document-2">active document</a> was created by
-   the <a href="/breakup/specs/browsing/#read-xml" id="svg-0:read-xml">page load processing model for XML files</a> section because
-   <span>the sniffed type of the resource</span> in the <a href="/breakup/specs/browsing/#navigate" id="svg-0:navigate">navigate</a> algorithm was
+   the <a href="/breakup/specs/browser-dom/#read-xml" id="svg-0:read-xml">page load processing model for XML files</a> section because
+   <span>the sniffed type of the resource</span> in the <a href="/breakup/specs/browser-dom/#navigate" id="svg-0:navigate">navigate</a> algorithm was
    <code id="svg-0:image/svg+xml"><a href="#image/svg+xml">image/svg+xml</a></code>, then return that <code id="svg-0:document-2"><a href="/breakup/specs/browser-dom/#document">Document</a></code> object and abort these
    steps.</p></li><li><p>Otherwise, return null.</p></li></ol></section></body></html>

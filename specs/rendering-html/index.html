@@ -53,7 +53,7 @@
   boxes, or some equivalent in other styling languages.</p>
 
   <p class="note">Just being off-screen does not mean the element is not <a href="/breakup/specs/rendering-html/#being-rendered" id="introduction-16:being-rendered">being
-  rendered</a>. The presence of the <code id="introduction-16:the-hidden-attribute"><a href="/breakup/specs/html-interacton-attr/#the-hidden-attribute">hidden</a></code> attribute normally
+  rendered</a>. The presence of the <code id="introduction-16:the-hidden-attribute"><a href="/breakup/specs/html-ui/#the-hidden-attribute">hidden</a></code> attribute normally
   means the element is not <a href="/breakup/specs/rendering-html/#being-rendered" id="introduction-16:being-rendered-2">being rendered</a>, though this might be overridden by the style
   sheets.</p>
 
@@ -289,22 +289,22 @@ form { margin-bottom: 1em; }</pre>
 
   <hr>
 
-  <p>The <code id="flow-content-3:center"><a href="/breakup/specs/html-obsolete/#center">center</a></code> element, and the <code id="flow-content-3:the-div-element"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element when it has an <code id="flow-content-3:attr-div-align"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code> attribute whose value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="flow-content-3:ascii-case-insensitive">ASCII
+  <p>The <code id="flow-content-3:center"><a href="/breakup/specs/html-obsolete/#center">center</a></code> element, and the <code id="flow-content-3:the-div-element"><a href="/breakup/specs/html-structure/#the-div-element">div</a></code> element when it has an <code id="flow-content-3:attr-div-align"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code> attribute whose value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="flow-content-3:ascii-case-insensitive">ASCII
   case-insensitive</a> match for either the string "<code>center</code>" or the string
   "<code>middle</code>", are expected to center text within themselves, as if they had
   their 'text-align' property set to 'center' in a <a href="/breakup/specs/rendering-html/#presentational-hints" id="flow-content-3:presentational-hints-2">presentational hint</a>, and to <a href="/breakup/specs/rendering-html/#align-descendants" id="flow-content-3:align-descendants">align descendants</a> to the center.</p>
 
-  <p>The <code id="flow-content-3:the-div-element-2"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element, when it has an <code id="flow-content-3:attr-div-align-2"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code>
+  <p>The <code id="flow-content-3:the-div-element-2"><a href="/breakup/specs/html-structure/#the-div-element">div</a></code> element, when it has an <code id="flow-content-3:attr-div-align-2"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code>
   attribute whose value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="flow-content-3:ascii-case-insensitive-2">ASCII case-insensitive</a> match for the string "<code>left</code>", is expected to left-align text within itself, as if it had its
   'text-align' property set to 'left' in a <a href="/breakup/specs/rendering-html/#presentational-hints" id="flow-content-3:presentational-hints-3">presentational
   hint</a>, and to <a href="/breakup/specs/rendering-html/#align-descendants" id="flow-content-3:align-descendants-2">align descendants</a> to the left.</p>
 
-  <p>The <code id="flow-content-3:the-div-element-3"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element, when it has an <code id="flow-content-3:attr-div-align-3"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code>
+  <p>The <code id="flow-content-3:the-div-element-3"><a href="/breakup/specs/html-structure/#the-div-element">div</a></code> element, when it has an <code id="flow-content-3:attr-div-align-3"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code>
   attribute whose value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="flow-content-3:ascii-case-insensitive-3">ASCII case-insensitive</a> match for the string "<code>right</code>", is expected to right-align text within itself, as if it had its
   'text-align' property set to 'right' in a <a href="/breakup/specs/rendering-html/#presentational-hints" id="flow-content-3:presentational-hints-4">presentational
   hint</a>, and to <a href="/breakup/specs/rendering-html/#align-descendants" id="flow-content-3:align-descendants-3">align descendants</a> to the right.</p>
 
-  <p>The <code id="flow-content-3:the-div-element-4"><a href="/breakup/specs/html-blocks/#the-div-element">div</a></code> element, when it has an <code id="flow-content-3:attr-div-align-4"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code>
+  <p>The <code id="flow-content-3:the-div-element-4"><a href="/breakup/specs/html-structure/#the-div-element">div</a></code> element, when it has an <code id="flow-content-3:attr-div-align-4"><a href="/breakup/specs/html-obsolete/#attr-div-align">align</a></code>
   attribute whose value is an <a href="/breakup/specs/core-algorithms/#ascii-case-insensitive" id="flow-content-3:ascii-case-insensitive-4">ASCII case-insensitive</a> match for the string "<code>justify</code>", is expected to full-justify text within itself, as if it had its
   'text-align' property set to 'justify' in a <a href="/breakup/specs/rendering-html/#presentational-hints" id="flow-content-3:presentational-hints-5">presentational
   hint</a>, and to <a href="/breakup/specs/rendering-html/#align-descendants" id="flow-content-3:align-descendants-4">align descendants</a> to the left.</p></section>
@@ -784,12 +784,12 @@ ul[type=disc i], li[type=disc i] { list-style-type: disc; }
 ul[type=circle i], li[type=circle i] { list-style-type: circle; }
 ul[type=square i], li[type=square i] { list-style-type: square; }</pre>
 
-  <p>When rendering <code id="lists:the-li-element"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> elements, non-CSS user agents are expected to use the
-  <a href="/breakup/specs/html-lists/#ordinal-value" id="lists:ordinal-value">ordinal value</a> of the <code id="lists:the-li-element-2"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> element to render the counter in the list item
+  <p>When rendering <code id="lists:the-li-element"><a href="/breakup/specs/html-tables/#the-li-element">li</a></code> elements, non-CSS user agents are expected to use the
+  <a href="/breakup/specs/html-tables/#ordinal-value" id="lists:ordinal-value">ordinal value</a> of the <code id="lists:the-li-element-2"><a href="/breakup/specs/html-tables/#the-li-element">li</a></code> element to render the counter in the list item
   marker.</p>
 
   <p id="css-list-rendering" class="critical">This specification does not yet define the
-  CSS-specific rules for rendering <code id="lists:the-li-element-3"><a href="/breakup/specs/html-lists/#the-li-element">li</a></code> elements, because CSS doesn't yet provide
+  CSS-specific rules for rendering <code id="lists:the-li-element-3"><a href="/breakup/specs/html-tables/#the-li-element">li</a></code> elements, because CSS doesn't yet provide
   sufficient hooks for this purpose.</p></section>
 
 
@@ -1134,16 +1134,16 @@ table {
   <section><h2>Margin collapsing quirks</h2>
 
   <p>A node is <dfn id="concept-rendering-substantial">substantial</dfn> if it is a text node
-  that is not <a href="/breakup/specs/html-best-practices/#inter-element-whitespace" id="margin-collapsing-quirks:inter-element-whitespace">inter-element whitespace</a>, or if it is an element node.</p>
+  that is not <a href="/breakup/specs/html/#inter-element-whitespace" id="margin-collapsing-quirks:inter-element-whitespace">inter-element whitespace</a>, or if it is an element node.</p>
 
   <p>A node is <dfn id="concept-rendering-blank">blank</dfn> if it is an element that contains no
   <a href="/breakup/specs/rendering-html/#concept-rendering-substantial" id="margin-collapsing-quirks:concept-rendering-substantial">substantial</a> nodes.</p>
 
   <p>The <dfn id="concept-rendering-elements-with-margins">elements with default margins</dfn>
-  are the following elements: <code id="margin-collapsing-quirks:the-blockquote-element"><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>, <code id="margin-collapsing-quirks:dir"><a href="/breakup/specs/html-obsolete/#dir">dir</a></code>, <code id="margin-collapsing-quirks:the-dl-element"><a href="/breakup/specs/html-lists/#the-dl-element">dl</a></code>,
-  <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-2"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h2</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-3"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h3</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-4"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h4</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-5"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h5</a></code>,
-  <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-sectioning/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code>, <code id="margin-collapsing-quirks:listing"><a href="/breakup/specs/html-obsolete/#listing">listing</a></code>, <code id="margin-collapsing-quirks:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>, <code id="margin-collapsing-quirks:multicol"><a href="/breakup/specs/html-obsolete/#multicol">multicol</a></code>, <code id="margin-collapsing-quirks:the-ol-element"><a href="/breakup/specs/html-lists/#the-ol-element">ol</a></code>,
-  <code id="margin-collapsing-quirks:the-p-element"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code>, <code id="margin-collapsing-quirks:plaintext"><a href="/breakup/specs/html-obsolete/#plaintext">plaintext</a></code>, <code id="margin-collapsing-quirks:the-pre-element"><a href="/breakup/specs/html-blocks/#the-pre-element">pre</a></code>, <code id="margin-collapsing-quirks:the-ul-element"><a href="/breakup/specs/html-lists/#the-ul-element">ul</a></code>, <code id="margin-collapsing-quirks:xmp"><a href="/breakup/specs/html-obsolete/#xmp">xmp</a></code></p>
+  are the following elements: <code id="margin-collapsing-quirks:the-blockquote-element"><a href="/breakup/specs/html-structure/#the-blockquote-element">blockquote</a></code>, <code id="margin-collapsing-quirks:dir"><a href="/breakup/specs/html-obsolete/#dir">dir</a></code>, <code id="margin-collapsing-quirks:the-dl-element"><a href="/breakup/specs/html-tables/#the-dl-element">dl</a></code>,
+  <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements"><a href="/breakup/specs/html-structure/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h1</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-2"><a href="/breakup/specs/html-structure/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h2</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-3"><a href="/breakup/specs/html-structure/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h3</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-4"><a href="/breakup/specs/html-structure/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h4</a></code>, <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-5"><a href="/breakup/specs/html-structure/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h5</a></code>,
+  <code id="margin-collapsing-quirks:the-h1,-h2,-h3,-h4,-h5,-and-h6-elements-6"><a href="/breakup/specs/html-structure/#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements">h6</a></code>, <code id="margin-collapsing-quirks:listing"><a href="/breakup/specs/html-obsolete/#listing">listing</a></code>, <code id="margin-collapsing-quirks:the-menu-element"><a href="/breakup/specs/html-ui/#the-menu-element">menu</a></code>, <code id="margin-collapsing-quirks:multicol"><a href="/breakup/specs/html-obsolete/#multicol">multicol</a></code>, <code id="margin-collapsing-quirks:the-ol-element"><a href="/breakup/specs/html-tables/#the-ol-element">ol</a></code>,
+  <code id="margin-collapsing-quirks:the-p-element"><a href="/breakup/specs/html-structure/#the-p-element">p</a></code>, <code id="margin-collapsing-quirks:plaintext"><a href="/breakup/specs/html-obsolete/#plaintext">plaintext</a></code>, <code id="margin-collapsing-quirks:the-pre-element"><a href="/breakup/specs/html-structure/#the-pre-element">pre</a></code>, <code id="margin-collapsing-quirks:the-ul-element"><a href="/breakup/specs/html-tables/#the-ul-element">ul</a></code>, <code id="margin-collapsing-quirks:xmp"><a href="/breakup/specs/html-obsolete/#xmp">xmp</a></code></p>
 
   <p>In <a href="/breakup/specs/core-algorithms/#quirks-mode" id="margin-collapsing-quirks:quirks-mode">quirks mode</a>, any <a href="/breakup/specs/rendering-html/#concept-rendering-elements-with-margins" id="margin-collapsing-quirks:concept-rendering-elements-with-margins">element
   with default margins</a> that is the child of a <code id="margin-collapsing-quirks:the-body-element"><a href="/breakup/specs/html-structure/#the-body-element">body</a></code>, <code id="margin-collapsing-quirks:the-td-element"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code>, or
@@ -1162,7 +1162,7 @@ table {
   no <a href="/breakup/specs/rendering-html/#concept-rendering-substantial" id="margin-collapsing-quirks:concept-rendering-substantial-4">substantial</a> following siblings, and is <a href="/breakup/specs/rendering-html/#concept-rendering-blank" id="margin-collapsing-quirks:concept-rendering-blank-2">blank</a>, is expected to have a user-agent level style sheet
   rule that sets its 'margin-top' property to zero.</p>
 
-  <p>In <a href="/breakup/specs/core-algorithms/#quirks-mode" id="margin-collapsing-quirks:quirks-mode-4">quirks mode</a>, any <code id="margin-collapsing-quirks:the-p-element-2"><a href="/breakup/specs/html-blocks/#the-p-element">p</a></code> element that is the child of a <code id="margin-collapsing-quirks:the-td-element-4"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code>
+  <p>In <a href="/breakup/specs/core-algorithms/#quirks-mode" id="margin-collapsing-quirks:quirks-mode-4">quirks mode</a>, any <code id="margin-collapsing-quirks:the-p-element-2"><a href="/breakup/specs/html-structure/#the-p-element">p</a></code> element that is the child of a <code id="margin-collapsing-quirks:the-td-element-4"><a href="/breakup/specs/html-tables/#the-td-element">td</a></code>
   or <code id="margin-collapsing-quirks:the-th-element-4"><a href="/breakup/specs/html-tables/#the-th-element">th</a></code> element and has no <a href="/breakup/specs/rendering-html/#concept-rendering-substantial" id="margin-collapsing-quirks:concept-rendering-substantial-5">substantial</a> following siblings, is expected to have a
   user-agent level style sheet rule that sets its 'margin-bottom' property to zero.</p></section>
 
@@ -1193,7 +1193,7 @@ input:not([type=image]), textarea { box-sizing: border-box; }</pre>
 
 
 
-  <section><h2>The <code id="the-hr-element-2:the-hr-element"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element</h2>
+  <section><h2>The <code id="the-hr-element-2:the-hr-element"><a href="/breakup/specs/html-structure/#the-hr-element">hr</a></code> element</h2>
 
   <pre class="css">@namespace url(http://www.w3.org/1999/xhtml);
 
@@ -1208,14 +1208,14 @@ hr[align=right] { margin-left: auto; margin-right: 0; }
 hr[align=center] { margin-left: auto; margin-right: auto; }
 hr[color], hr[noshade] { border-style: solid; }</pre>
 
-  <p>If an <code id="the-hr-element-2:the-hr-element-2"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element has either a <code id="the-hr-element-2:attr-hr-color"><a href="/breakup/specs/html-obsolete/#attr-hr-color">color</a></code> attribute
+  <p>If an <code id="the-hr-element-2:the-hr-element-2"><a href="/breakup/specs/html-structure/#the-hr-element">hr</a></code> element has either a <code id="the-hr-element-2:attr-hr-color"><a href="/breakup/specs/html-obsolete/#attr-hr-color">color</a></code> attribute
   or a <code id="the-hr-element-2:attr-hr-noshade"><a href="/breakup/specs/html-obsolete/#attr-hr-noshade">noshade</a></code> attribute, and furthermore also has a <code id="the-hr-element-2:attr-hr-size"><a href="/breakup/specs/html-obsolete/#attr-hr-size">size</a></code> attribute, and parsing that attribute's value using the
   <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="the-hr-element-2:rules-for-parsing-non-negative-integers">rules for parsing non-negative integers</a> doesn't generate an error, then the user
   agent is expected to use the parsed value divided by two as a pixel length for
   <a href="/breakup/specs/rendering-html/#presentational-hints" id="the-hr-element-2:presentational-hints-2">presentational hints</a> for the properties 'border-top-width', 'border-right-width',
   'border-bottom-width', and 'border-left-width' on the element.</p>
 
-  <p>Otherwise, if an <code id="the-hr-element-2:the-hr-element-3"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element has neither a <code id="the-hr-element-2:attr-hr-color-2"><a href="/breakup/specs/html-obsolete/#attr-hr-color">color</a></code>
+  <p>Otherwise, if an <code id="the-hr-element-2:the-hr-element-3"><a href="/breakup/specs/html-structure/#the-hr-element">hr</a></code> element has neither a <code id="the-hr-element-2:attr-hr-color-2"><a href="/breakup/specs/html-obsolete/#attr-hr-color">color</a></code>
   attribute nor a <code id="the-hr-element-2:attr-hr-noshade-2"><a href="/breakup/specs/html-obsolete/#attr-hr-noshade">noshade</a></code> attribute, but does have a <code id="the-hr-element-2:attr-hr-size-2"><a href="/breakup/specs/html-obsolete/#attr-hr-size">size</a></code> attribute, and parsing that attribute's value using the
   <a href="/breakup/specs/core-algorithms/#rules-for-parsing-non-negative-integers" id="the-hr-element-2:rules-for-parsing-non-negative-integers-2">rules for parsing non-negative integers</a> doesn't generate an error, then: if the
   parsed value is one, then the user agent is expected to use the attribute as a <a href="/breakup/specs/rendering-html/#presentational-hints" id="the-hr-element-2:presentational-hints-3">presentational hint</a> setting the element's
@@ -1223,10 +1223,10 @@ hr[color], hr[noshade] { border-style: solid; }</pre>
   agent is expected to use the parsed value minus two as a pixel length for <a href="/breakup/specs/rendering-html/#presentational-hints" id="the-hr-element-2:presentational-hints-4">presentational
   hints</a> for the 'height' property on the element.</p>
 
-  <p>The <code id="the-hr-element-2:attr-hr-width"><a href="/breakup/specs/html-obsolete/#attr-hr-width">width</a></code> attribute on an <code id="the-hr-element-2:the-hr-element-4"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element <a href="/breakup/specs/rendering-html/#maps-to-the-dimension-property" id="the-hr-element-2:maps-to-the-dimension-property">maps
+  <p>The <code id="the-hr-element-2:attr-hr-width"><a href="/breakup/specs/html-obsolete/#attr-hr-width">width</a></code> attribute on an <code id="the-hr-element-2:the-hr-element-4"><a href="/breakup/specs/html-structure/#the-hr-element">hr</a></code> element <a href="/breakup/specs/rendering-html/#maps-to-the-dimension-property" id="the-hr-element-2:maps-to-the-dimension-property">maps
   to the dimension property</a> 'width' on the element.</p>
 
-  <p>When an <code id="the-hr-element-2:the-hr-element-5"><a href="/breakup/specs/html-blocks/#the-hr-element">hr</a></code> element has a <code id="the-hr-element-2:attr-hr-color-3"><a href="/breakup/specs/html-obsolete/#attr-hr-color">color</a></code> attribute, its
+  <p>When an <code id="the-hr-element-2:the-hr-element-5"><a href="/breakup/specs/html-structure/#the-hr-element">hr</a></code> element has a <code id="the-hr-element-2:attr-hr-color-3"><a href="/breakup/specs/html-obsolete/#attr-hr-color">color</a></code> attribute, its
   value is expected to be parsed using the <a href="/breakup/specs/core-algorithms/#rules-for-parsing-a-legacy-colour-value" id="the-hr-element-2:rules-for-parsing-a-legacy-colour-value">rules for parsing a legacy colour value</a>, and
   if that does not return an error, the user agent is expected to treat the attribute as a <a href="/breakup/specs/rendering-html/#presentational-hints" id="the-hr-element-2:presentational-hints-5">presentational hint</a> setting the element's 'color' property to
   the resulting colour.</p></section>
@@ -1282,7 +1282,7 @@ legend {
   <p>The <code id="embedded-content-rendering-rules:the-embed-element"><a href="/breakup/specs/html-embedding/#the-embed-element">embed</a></code>, <code id="embedded-content-rendering-rules:the-iframe-element"><a href="/breakup/specs/html-embedding/#the-iframe-element">iframe</a></code>, and <code id="embedded-content-rendering-rules:the-video-element"><a href="/breakup/specs/html-media/#the-video-element">video</a></code> elements are expected to be
   treated as replaced elements.</p>
 
-  <p>A <code id="embedded-content-rendering-rules:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element that <a href="/breakup/specs/html-scripting/#represents" id="embedded-content-rendering-rules:represents">represents</a> <a href="/breakup/specs/html-best-practices/#embedded-content-category" id="embedded-content-rendering-rules:embedded-content-category">embedded content</a> is
+  <p>A <code id="embedded-content-rendering-rules:the-canvas-element"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> element that <a href="/breakup/specs/html-scripting/#represents" id="embedded-content-rendering-rules:represents">represents</a> <a href="/breakup/specs/html/#embedded-content-category" id="embedded-content-rendering-rules:embedded-content-category">embedded content</a> is
   expected to be treated as a replaced element; the contents of such elements are the element's
   bitmap, if any, or else a transparent black bitmap with the same intrinsic dimensions as the
   element. Other <code id="embedded-content-rendering-rules:the-canvas-element-2"><a href="/breakup/specs/html-canvas/#the-canvas-element">canvas</a></code> elements are expected to be treated as ordinary elements in the
@@ -2299,15 +2299,15 @@ keygen { binding: <i>keygen</i>; }</pre>
 
   <p>User agents are expected to allow the user to control aspects of <a href="/breakup/specs/html-linking/#hyperlink" id="links,-forms,-and-navigation:hyperlink">hyperlink</a>
   activation and <a href="/breakup/specs/html-forms/#form-submission-2" id="links,-forms,-and-navigation:form-submission-2">form submission</a>, such as which <a href="/breakup/specs/browser-dom/#browsing-context" id="links,-forms,-and-navigation:browsing-context">browsing context</a> is to be
-  used for the subsequent <a href="/breakup/specs/browsing/#navigate" id="links,-forms,-and-navigation:navigate">navigation</a>.</p>
+  used for the subsequent <a href="/breakup/specs/browser-dom/#navigate" id="links,-forms,-and-navigation:navigate">navigation</a>.</p>
 
   <p>User agents are expected to allow users to discover the destination of <a href="/breakup/specs/html-linking/#hyperlink" id="links,-forms,-and-navigation:hyperlink-2">hyperlinks</a> and of <a href="/breakup/specs/html-forms/#the-form-element" id="links,-forms,-and-navigation:the-form-element">forms</a> before triggering their
-  <a href="/breakup/specs/browsing/#navigate" id="links,-forms,-and-navigation:navigate-2">navigation</a>.</p>
+  <a href="/breakup/specs/browser-dom/#navigate" id="links,-forms,-and-navigation:navigate-2">navigation</a>.</p>
 
   
 
-  <p>User agents may allow users to <a href="/breakup/specs/browsing/#navigate" id="links,-forms,-and-navigation:navigate-3">navigate</a> <a href="/breakup/specs/browser-dom/#browsing-context" id="links,-forms,-and-navigation:browsing-context-2">browsing contexts</a> to the resources <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="links,-forms,-and-navigation:resolve-a-url">indicated</a> by
-  the <code>cite</code> attributes on <code id="links,-forms,-and-navigation:the-q-element"><a href="/breakup/specs/html-text/#the-q-element">q</a></code>, <code id="links,-forms,-and-navigation:the-blockquote-element"><a href="/breakup/specs/html-blocks/#the-blockquote-element">blockquote</a></code>,
+  <p>User agents may allow users to <a href="/breakup/specs/browser-dom/#navigate" id="links,-forms,-and-navigation:navigate-3">navigate</a> <a href="/breakup/specs/browser-dom/#browsing-context" id="links,-forms,-and-navigation:browsing-context-2">browsing contexts</a> to the resources <a href="/breakup/specs/core-algorithms/#resolve-a-url" id="links,-forms,-and-navigation:resolve-a-url">indicated</a> by
+  the <code>cite</code> attributes on <code id="links,-forms,-and-navigation:the-q-element"><a href="/breakup/specs/html-text/#the-q-element">q</a></code>, <code id="links,-forms,-and-navigation:the-blockquote-element"><a href="/breakup/specs/html-structure/#the-blockquote-element">blockquote</a></code>,
   <code id="links,-forms,-and-navigation:the-ins-element"><a href="/breakup/specs/html-edits/#the-ins-element">ins</a></code>, and <code id="links,-forms,-and-navigation:the-del-element"><a href="/breakup/specs/html-edits/#the-del-element">del</a></code> elements.</p>
 
   <p>User agents may surface <a href="/breakup/specs/html-linking/#hyperlink" id="links,-forms,-and-navigation:hyperlink-4">hyperlinks</a> created by <code id="links,-forms,-and-navigation:the-link-element"><a href="/breakup/specs/html-metadata/#the-link-element">link</a></code>
@@ -2330,7 +2330,7 @@ keygen { binding: <i>keygen</i>; }</pre>
   form of a tooltip. When the user is unable to use a pointing device, then the user agent is
   expected to make the content available in some other fashion, e.g. by making the element a
   <i>focusable area</i> and always displaying the <a href="/breakup/specs/html-attributes/#advisory-information" id="the-title-attribute-2:advisory-information-2">advisory information</a> of the currently
-  <a href="/breakup/specs/html-interacton-attr/#focused" id="the-title-attribute-2:focused">focused</a> element, or by showing the <a href="/breakup/specs/html-attributes/#advisory-information" id="the-title-attribute-2:advisory-information-3">advisory information</a> of the elements
+  <a href="/breakup/specs/html-ui/#focused" id="the-title-attribute-2:focused">focused</a> element, or by showing the <a href="/breakup/specs/html-attributes/#advisory-information" id="the-title-attribute-2:advisory-information-3">advisory information</a> of the elements
   under the user's finger on a touch device as the user pans around the screen.</p>
 
   <p>U+000A LINE FEED (LF) characters are expected to cause line breaks in the tooltip; U+0009
@@ -2340,7 +2340,7 @@ keygen { binding: <i>keygen</i>; }</pre>
 
   <div class="example">
 
-   <p>For example, a visual user agent could make elements with a <code id="the-title-attribute-2:attr-title-2"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute <a href="/breakup/specs/html-interacton-attr/#focusable-area" id="the-title-attribute-2:focusable-area">focusable</a>, and could make any <a href="/breakup/specs/html-interacton-attr/#focused" id="the-title-attribute-2:focused-2">focused</a> element with a
+   <p>For example, a visual user agent could make elements with a <code id="the-title-attribute-2:attr-title-2"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute <a href="/breakup/specs/html-ui/#focusable-area" id="the-title-attribute-2:focusable-area">focusable</a>, and could make any <a href="/breakup/specs/html-ui/#focused" id="the-title-attribute-2:focused-2">focused</a> element with a
    <code id="the-title-attribute-2:attr-title-3"><a href="/breakup/specs/html-attributes/#attr-title">title</a></code> attribute show its tooltip under the element while the
    element has focus. This would allow a user to tab around the document to find all the advisory
    text.</p>
