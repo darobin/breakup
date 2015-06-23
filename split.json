@@ -21,6 +21,12 @@
                     "id":       "#introduction"
                 ,   "unwrap":   true
                 }
+            ,   "#semantics-2"
+            ,   "#element-definitions"
+            ,   "#content-models"
+            ,   "#writing"
+            ,   "#writing-xhtml-documents"
+            ,   "#common-idioms"
             ,   "#elements-3"
             ,   "#attributes-3"
             ,   "#element-interfaces"
@@ -39,6 +45,21 @@
                 }
             ]
         }
+    ,   "html-scripting":  {
+            "title":    "Scripting HTML"
+        ,   "abstract": "Putting scripts in HTML."
+        ,   "content":  [
+                {
+                    "id":               "#scripting-3"
+                ,   "noSubSections":    true
+                ,   "title":            "Introduction"
+                }
+            ,   "#scripting"
+            ,   "#elements-in-the-dom"
+            ,   "#the-script-element"
+            ,   "#the-noscript-element"
+            ]
+        }
     ,   "browser-dom":  {
             "title":    "The Browser Object Model"
         ,   "abstract": "Some interfaces and behaviours used in browsers such as <code>History</code> or <code>Location</code>."
@@ -51,6 +72,20 @@
             ,   "#history"
             ,   {
                     "id":       "#webappapis"
+                ,   "unwrap":   true
+                }
+            ,   "#browsing-the-web"
+            ]
+        }
+    ,   "html-bidi-text":  {
+            "title":    "HTML Bidirectional Text"
+        ,   "abstract": "How to handle bidirectional content in HTML."
+        ,   "content":  [
+                "#the-bdi-element"
+            ,   "#the-bdo-element"
+            ,   "#the-dir-attribute"
+            ,   {
+                    "id":       "#requirements-relating-to-the-bidirectional-algorithm"
                 ,   "unwrap":   true
                 }
             ]
@@ -78,7 +113,7 @@
             ]
         }
     ,   "html-syntax":  {
-            "title":    "The HTML Syntax"
+            "title":    "HTML Parsing and Serialization"
         ,   "abstract": "Rules for parsing and producing HTML documents."
         ,   "content":  [
                 {
@@ -88,7 +123,7 @@
             ]
         }
     ,   "xhtml-syntax":  {
-            "title":    "The XHTML Syntax"
+            "title":    "XHTML Parsing and Serialization"
         ,   "abstract": "Rules for parsing and producing XHTML documents."
         ,   "content":  [
                 {
@@ -103,16 +138,6 @@
         ,   "content":  [
                 {
                     "id":       "#offline"
-                ,   "unwrap":   true
-                }
-            ]
-        }
-    ,   "browsing":  {
-            "title":    "Browsing the Web"
-        ,   "abstract": "How navigation works."
-        ,   "content":  [
-                {
-                    "id":       "#browsing-the-web"
                 ,   "unwrap":   true
                 }
             ]
@@ -140,17 +165,6 @@
                     "id":       "#editing-2"
                 ,   "unwrap":   true
                 }
-            ]
-        }
-    ,   "html-interacton-attr":  {
-            "title":    "HTML Interactivity Attributes"
-        ,   "abstract": "A set of attributes that enables essential interactivity features."
-        ,   "content":  [
-                "#the-hidden-attribute"
-            ,   "#inert-subtrees"
-            ,   "#activation"
-            ,   "#focus"
-            ,   "#assigning-keyboard-shortcuts"
             ]
         }
     ,   "html-canvas":  {
@@ -185,8 +199,8 @@
             ]
         }
     ,   "html-tables":  {
-            "title":    "HTML Tables"
-        ,   "abstract": "Tables, your secret layout friend!"
+            "title":    "HTML Tables and Lists"
+        ,   "abstract": "Tables, your secret layout friend! Now with added lists."
         ,   "content":  [
                 "#the-table-element"
             ,   "#the-caption-element"
@@ -200,6 +214,12 @@
             ,   "#the-th-element"
             ,   "#attributes-common-to-td-and-th-elements"
             ,   "#processing-model-3"
+            ,   "#the-ul-element"
+            ,   "#the-ol-element"
+            ,   "#the-li-element"
+            ,   "#the-dl-element"
+            ,   "#the-dt-element"
+            ,   "#the-dd-element"
             ]
         }
     ,   "html-structure":  {
@@ -210,13 +230,7 @@
             ,   "#the-head-element"
             ,   "#the-title-element"
             ,   "#the-body-element"
-            ]
-        }
-    ,   "html-sectioning":  {
-            "title":    "Sections in HTML"
-        ,   "abstract": "How to make sections of various types in HTML."
-        ,   "content":  [
-                "#the-article-element"
+            ,   "#the-article-element"
             ,   "#the-section-element"
             ,   "#the-nav-element"
             ,   "#the-aside-element"
@@ -225,6 +239,12 @@
             ,   "#the-footer-element"
             ,   "#the-main-element"
             ,   "#headings-and-sections"
+            ,   "#the-p-element"
+            ,   "#the-div-element"
+            ,   "#the-hr-element"
+            ,   "#the-pre-element"
+            ,   "#the-blockquote-element"
+            ,   "#the-address-element"
             ]
         }
     ,   "html-styling":  {
@@ -236,52 +256,6 @@
             ,   "#link-type-stylesheet"
             ,   "#disabled-elements"
             ,   "#selectors"
-            ]
-        }
-    ,   "html-scripting":  {
-            "title":    "Scripting HTML"
-        ,   "abstract": "Putting scripts in HTML."
-        ,   "content":  [
-                {
-                    "id":               "#scripting-3"
-                ,   "noSubSections":    true
-                ,   "title":            "Introduction"
-                }
-            ,   "#elements-in-the-dom"
-            ,   "#the-script-element"
-            ,   "#the-noscript-element"
-            ]
-        }
-    ,   "html-blocks":  {
-            "title":    "HTML Blocks"
-        ,   "abstract": "Blocks."
-        ,   "content":  [
-                "#the-p-element"
-            ,   "#the-div-element"
-            ,   "#the-hr-element"
-            ,   "#the-pre-element"
-            ,   "#the-blockquote-element"
-            ,   "#the-address-element"
-            ]
-        }
-    ,   "html-lists":  {
-            "title":    "HTML Lists"
-        ,   "abstract": "Lists."
-        ,   "content":  [
-                "#the-ul-element"
-            ,   "#the-ol-element"
-            ,   "#the-li-element"
-            ,   "#the-dl-element"
-            ,   "#the-dt-element"
-            ,   "#the-dd-element"
-            ]
-        }
-    ,   "html-figures":  {
-            "title":    "HTML Figures"
-        ,   "abstract": "Figures."
-        ,   "content":  [
-                "#the-figure-element"
-            ,   "#the-figcaption-element"
             ]
         }
     ,   "html-metadata":  {
@@ -305,7 +279,7 @@
             ]
         }
     ,   "html-images":  {
-            "title":    "HTML Images"
+            "title":    "HTML Images and Figures"
         ,   "abstract": "Pretty pictures."
         ,   "content":  [
                 "#introduction-3"
@@ -313,6 +287,8 @@
             ,   "#the-picture-element"
             ,   "#the-source-element-when-used-with-the-picture-element"
             ,   "#the-img-element"
+            ,   "#the-figure-element"
+            ,   "#the-figcaption-element"
             ]
         }
     ,   "html-text":  {
@@ -343,31 +319,19 @@
             ,   "#the-b-element"
             ,   "#the-u-element"
             ,   "#the-mark-element"
-            ,   "#the-bdi-element"
-            ,   "#the-bdo-element"
             ,   "#the-span-element"
             ,   "#the-br-element"
             ,   "#the-wbr-element"
             ]
         }
     ,   "html-edits":  {
-            "title":    "HTML Edits"
+            "title":    "HTML Change Tracking Elements"
         ,   "abstract": "Stuff that's changed."
         ,   "content":  [
                 {
                     "id":       "#edits"
                 ,   "unwrap":   true
                 }
-            ]
-        }
-    ,   "html-best-practices":  {
-            "title":    "HTML Best Practices"
-        ,   "abstract": "There is currently very little in here, but the idea is to progressively move over everything related to linting and advice."
-        ,   "content":  [
-                "#semantics-2"
-            ,   "#element-definitions"
-            ,   "#content-models"
-            ,   "#common-idioms"
             ]
         }
     ,   "html-embedding":  {
@@ -400,16 +364,11 @@
                     "id":       "#interactive-elements"
                 ,   "unwrap":   true
                 }
-            ]
-        }
-    ,   "html-bidi":  {
-            "title":    "HTML Bidirectional Algorithm Requirements"
-        ,   "abstract": "Bidirectional."
-        ,   "content":  [
-                {
-                    "id":       "#requirements-relating-to-the-bidirectional-algorithm"
-                ,   "unwrap":   true
-                }
+            ,   "#the-hidden-attribute"
+            ,   "#inert-subtrees"
+            ,   "#activation"
+            ,   "#focus"
+            ,   "#assigning-keyboard-shortcuts"
             ]
         }
     ,   "html-aria-integration":  {
